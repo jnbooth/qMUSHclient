@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WorldPrefs</class>
+ <widget class="QDialog" name="WorldPrefs">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>670</width>
+    <height>640</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>World Options</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="_2">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QTreeWidget" name="settings_tree">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>170</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="itemsExpandable">
+        <bool>true</bool>
+       </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Setting</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>General</string>
+        </property>
+        <property name="flags">
+         <set>ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+        </property>
+        <item>
+         <property name="text">
+          <string>IP address</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Connecting</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Logging</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Chat</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Appearance</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Output</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>MXP/Pueblo</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ANSI Colour</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Custom Colour</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Input</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Commands</string>
+         </property>
+        </item>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="contents"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="button_group">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>button_group</sender>
+   <signal>accepted()</signal>
+   <receiver>WorldPrefs</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>button_group</sender>
+   <signal>rejected()</signal>
+   <receiver>WorldPrefs</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

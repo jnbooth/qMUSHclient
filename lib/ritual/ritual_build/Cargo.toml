@@ -1,0 +1,14 @@
+[package]
+name = "ritual_build"
+edition = "2018"
+version = "0.4.0"
+authors = ["Pavel Strakhov <ri@idzaaus.org>"]
+description = "Build script implementation for C++ library wrappers"
+repository = "https://github.com/rust-qt/ritual"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+
+ritual_common = { version = "0.4.0", path = "../ritual_common" }
+
+log = "0.4.6"

@@ -1,0 +1,9 @@
+max_width = 101
+use_field_init_shorthand = true
+unstable_features = true
+match_arm_blocks = false
+imports_granularity = "Module"
+overflow_delimited_expr = true
+reorder_impl_items = true
+group_imports = "StdExternalCrate"
+wrap_comments = true

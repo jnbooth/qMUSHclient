@@ -1,0 +1,1341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>App</class>
+ <widget class="QMainWindow" name="App">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>795</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>qMUSHclient</string>
+  </property>
+  <property name="documentMode">
+   <bool>true</bool>
+  </property>
+  <widget class="QTabWidget" name="world_tabs">
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="documentMode">
+    <bool>true</bool>
+   </property>
+   <property name="tabsClosable">
+    <bool>true</bool>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
+   </property>
+   <property name="tabBarAutoHide">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>795</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="action_new"/>
+    <addaction name="action_open_world"/>
+    <addaction name="action_open_worlds_in_startup_list"/>
+    <addaction name="action_close_world"/>
+    <addaction name="action_import"/>
+    <addaction name="action_plugins"/>
+    <addaction name="action_plugin_wizard"/>
+    <addaction name="action_save_world_details"/>
+    <addaction name="action_save_world_details_as"/>
+    <addaction name="action_save_selection"/>
+    <addaction name="separator"/>
+    <addaction name="action_print"/>
+    <addaction name="action_print_setup"/>
+    <addaction name="action_global_preferences"/>
+    <addaction name="action_log_session"/>
+    <addaction name="action_reload_defaults"/>
+    <addaction name="action_world_properties"/>
+    <addaction name="action_windows_socket_info"/>
+    <addaction name="separator"/>
+    <addaction name="action_rec_1"/>
+    <addaction name="action_rec_2"/>
+    <addaction name="action_rec_3"/>
+    <addaction name="action_rec_4"/>
+    <addaction name="action_rec_5"/>
+    <addaction name="separator"/>
+    <addaction name="action_exit"/>
+   </widget>
+   <widget class="QMenu" name="menu_edit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="action_undo"/>
+    <addaction name="separator"/>
+    <addaction name="action_cut"/>
+    <addaction name="action_copy"/>
+    <addaction name="action_copy_as_html"/>
+    <addaction name="action_paste"/>
+    <addaction name="separator"/>
+    <addaction name="action_paste_to_world"/>
+    <addaction name="action_recall_last_word"/>
+    <addaction name="separator"/>
+    <addaction name="action_select_all"/>
+    <addaction name="action_spell_check"/>
+    <addaction name="separator"/>
+    <addaction name="action_generate_character_name"/>
+    <addaction name="action_reload_names_file"/>
+    <addaction name="action_generate_unique_id"/>
+    <addaction name="separator"/>
+    <addaction name="action_color_picker"/>
+    <addaction name="action_debug_packets"/>
+    <addaction name="separator"/>
+    <addaction name="action_go_to_matching_brace"/>
+    <addaction name="action_select_to_matching_brace"/>
+    <addaction name="separator"/>
+    <addaction name="action_convert_clipboard_forum_codes"/>
+   </widget>
+   <widget class="QMenu" name="menu_view">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="action_world_toolbar"/>
+    <addaction name="action_activity_toolbar"/>
+    <addaction name="action_status_bar"/>
+    <addaction name="action_info_bar"/>
+    <addaction name="separator"/>
+    <addaction name="action_reset_toolbar_locations"/>
+    <addaction name="action_always_on_top"/>
+    <addaction name="action_full_screen_mode"/>
+   </widget>
+   <widget class="QMenu" name="menu_connection">
+    <property name="title">
+     <string>&amp;Connection</string>
+    </property>
+    <addaction name="action_quick_connect"/>
+    <addaction name="separator"/>
+    <addaction name="action_connect"/>
+    <addaction name="action_disconnect"/>
+    <addaction name="separator"/>
+    <addaction name="action_auto_connect"/>
+    <addaction name="action_reconnect_on_disconnect"/>
+    <addaction name="separator"/>
+    <addaction name="action_connect_to_all_open_worlds"/>
+    <addaction name="action_connect_to_worlds_in_startup_list"/>
+   </widget>
+   <widget class="QMenu" name="menu_input">
+    <property name="title">
+     <string>&amp;Input</string>
+    </property>
+    <addaction name="action_next_command"/>
+    <addaction name="action_previous_command"/>
+    <addaction name="action_repeat_last_command"/>
+    <addaction name="action_quit_from_this_world"/>
+    <addaction name="separator"/>
+    <addaction name="action_command_history"/>
+    <addaction name="action_clear_command_history"/>
+    <addaction name="action_discard_queued_commands"/>
+    <addaction name="separator"/>
+    <addaction name="action_auto_say"/>
+    <addaction name="action_send_file"/>
+    <addaction name="action_global_change"/>
+    <addaction name="action_key_name"/>
+   </widget>
+   <widget class="QMenu" name="menu_display">
+    <property name="title">
+     <string>&amp;Display</string>
+    </property>
+    <addaction name="action_start"/>
+    <addaction name="action_page_up"/>
+    <addaction name="action_page_down"/>
+    <addaction name="action_end"/>
+    <addaction name="action_line_up"/>
+    <addaction name="action_line_down"/>
+    <addaction name="separator"/>
+    <addaction name="action_activity_list"/>
+    <addaction name="action_pause_output"/>
+    <addaction name="separator"/>
+    <addaction name="action_find"/>
+    <addaction name="action_find_again"/>
+    <addaction name="action_recall_text"/>
+    <addaction name="action_go_to_line"/>
+    <addaction name="separator"/>
+    <addaction name="action_go_to_url"/>
+    <addaction name="action_send_mail_to"/>
+    <addaction name="separator"/>
+    <addaction name="action_clear_output_buffer"/>
+    <addaction name="action_stop_sound_playing"/>
+    <addaction name="separator"/>
+    <addaction name="action_bookmark_selection"/>
+    <addaction name="action_go_to_bookmark"/>
+    <addaction name="action_highlight_word"/>
+    <addaction name="action_multi_line_trigger"/>
+    <addaction name="action_text_attributes"/>
+    <addaction name="separator"/>
+    <addaction name="action_no_command_echo"/>
+   </widget>
+   <widget class="QMenu" name="menu_game">
+    <property name="title">
+     <string>&amp;Game</string>
+    </property>
+    <widget class="QMenu" name="menu_configure">
+     <property name="title">
+      <string>&amp;Configure</string>
+     </property>
+     <addaction name="action_all_configuration"/>
+     <addaction name="separator"/>
+    </widget>
+    <addaction name="menu_configure"/>
+    <addaction name="action_chat_sessions"/>
+    <addaction name="action_wrap_output"/>
+    <addaction name="separator"/>
+    <addaction name="action_test_trigger"/>
+    <addaction name="separator"/>
+    <addaction name="action_minimize_program"/>
+    <addaction name="separator"/>
+    <addaction name="action_immediate"/>
+    <addaction name="action_edit_script_file"/>
+    <addaction name="action_reload_script_file"/>
+    <addaction name="action_trace"/>
+    <addaction name="separator"/>
+    <addaction name="action_reset_all_timers"/>
+    <addaction name="separator"/>
+    <addaction name="action_send_to_all_worlds"/>
+    <addaction name="action_mapper"/>
+    <addaction name="action_do_mapper_special"/>
+    <addaction name="action_add_mapper_comment"/>
+   </widget>
+   <widget class="QMenu" name="menu_Window">
+    <property name="title">
+     <string>&amp;Window</string>
+    </property>
+    <addaction name="action_new_window"/>
+    <addaction name="action_cascade"/>
+    <addaction name="action_title_horizontally"/>
+    <addaction name="action_tile_vertically"/>
+    <addaction name="action_arrange_icons"/>
+    <addaction name="action_minimize"/>
+    <addaction name="action_close_all_notepad_windows"/>
+    <addaction name="action_maximize"/>
+    <addaction name="action_restore"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_tip_of_the_day"/>
+    <addaction name="separator"/>
+    <addaction name="action_getting_started"/>
+    <addaction name="separator"/>
+    <addaction name="action_contents"/>
+    <addaction name="action_index"/>
+    <addaction name="action_using_help"/>
+    <addaction name="separator"/>
+    <addaction name="action_bug_reports"/>
+    <addaction name="action_documentation_web_page"/>
+    <addaction name="action_forum"/>
+    <addaction name="action_functions_list"/>
+    <addaction name="action_functions_web_page"/>
+    <addaction name="action_mud_lists"/>
+    <addaction name="action_qmushclient_web_page"/>
+    <addaction name="action_plugins_list"/>
+    <addaction name="action_regular_expressions_web_page"/>
+    <addaction name="action_about_qmushclient"/>
+   </widget>
+   <addaction name="menu_file"/>
+   <addaction name="menu_edit"/>
+   <addaction name="menu_view"/>
+   <addaction name="menu_connection"/>
+   <addaction name="menu_input"/>
+   <addaction name="menu_display"/>
+   <addaction name="menu_game"/>
+   <addaction name="menu_Window"/>
+   <addaction name="menu_Help"/>
+  </widget>
+  <action name="action_new">
+   <property name="text">
+    <string>&amp;New World...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="action_open_world">
+   <property name="text">
+    <string>&amp;Open World...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="action_open_worlds_in_startup_list">
+   <property name="text">
+    <string>Open Worlds in Startup List</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+O</string>
+   </property>
+  </action>
+  <action name="action_close_world">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Close World</string>
+   </property>
+  </action>
+  <action name="action_import">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Import...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+I</string>
+   </property>
+  </action>
+  <action name="action_plugins">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Pl&amp;ugins...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+P</string>
+   </property>
+  </action>
+  <action name="action_plugin_wizard">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Plugin Wizard...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+P</string>
+   </property>
+  </action>
+  <action name="action_save_world_details">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Save World Details</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_save_world_details_as">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save World Details &amp;As...</string>
+   </property>
+  </action>
+  <action name="action_save_selection">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save Selection...</string>
+   </property>
+  </action>
+  <action name="action_print">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Print...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="action_print_setup">
+   <property name="text">
+    <string>Print Se&amp;tup...</string>
+   </property>
+  </action>
+  <action name="action_global_preferences">
+   <property name="text">
+    <string>&amp;Global Preferences...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+G</string>
+   </property>
+  </action>
+  <action name="action_log_session">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Log Session...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+J</string>
+   </property>
+  </action>
+  <action name="action_reload_defaults">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Reload Defaults</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+R</string>
+   </property>
+  </action>
+  <action name="action_world_properties">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;World Properties...</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Return</string>
+   </property>
+  </action>
+  <action name="action_windows_socket_info">
+   <property name="text">
+    <string>Windows Socket Info...</string>
+   </property>
+  </action>
+  <action name="action_exit">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+  </action>
+  <action name="action_undo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="action_cut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Cu&amp;t</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="action_copy">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="action_copy_as_html">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Copy as HTML</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+C</string>
+   </property>
+  </action>
+  <action name="action_paste">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="action_paste_to_world">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Paste to &amp;World...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+V</string>
+   </property>
+  </action>
+  <action name="action_recall_last_word">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Recall Last Word</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Backspace</string>
+   </property>
+  </action>
+  <action name="action_select_all">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Select &amp;All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="action_spell_check">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Sp&amp;ell Check</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+J</string>
+   </property>
+  </action>
+  <action name="action_generate_character_name">
+   <property name="text">
+    <string>&amp;Generate Character Name...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+N</string>
+   </property>
+  </action>
+  <action name="action_reload_names_file">
+   <property name="text">
+    <string>&amp;Reload Names File...</string>
+   </property>
+  </action>
+  <action name="action_generate_unique_id">
+   <property name="text">
+    <string>Generate Unique I&amp;D...</string>
+   </property>
+  </action>
+  <action name="actionNotepad">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Notepad</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+W</string>
+   </property>
+  </action>
+  <action name="actionFlip_To_Notepad">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Flip To Notepad</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Space</string>
+   </property>
+  </action>
+  <action name="action_color_picker">
+   <property name="text">
+    <string>Color Picker</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+P</string>
+   </property>
+  </action>
+  <action name="action_debug_packets">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Debug Packets</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+F11</string>
+   </property>
+  </action>
+  <action name="action_go_to_matching_brace">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Go to &amp;Matching Brace</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="action_select_to_matching_brace">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Select to Matching Br&amp;ace</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+E</string>
+   </property>
+  </action>
+  <action name="action_convert_clipboard_forum_codes">
+   <property name="text">
+    <string>Convert Clipboard Forum Codes</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+O</string>
+   </property>
+  </action>
+  <action name="action_rec_1">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string notr="true">&amp;1 </string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_rec_2">
+   <property name="text">
+    <string notr="true">&amp;2 </string>
+   </property>
+   <property name="whatsThis">
+    <string/>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_rec_3">
+   <property name="text">
+    <string notr="true">&amp;3 </string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_rec_4">
+   <property name="text">
+    <string notr="true">&amp;4 </string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_rec_5">
+   <property name="text">
+    <string notr="true">&amp;5 </string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_world_toolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;World Toolbar</string>
+   </property>
+  </action>
+  <action name="action_activity_toolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Activity Toolbar</string>
+   </property>
+  </action>
+  <action name="action_status_bar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Status Bar</string>
+   </property>
+  </action>
+  <action name="action_info_bar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Info Bar</string>
+   </property>
+  </action>
+  <action name="action_reset_toolbar_locations">
+   <property name="text">
+    <string>&amp;Reset Toolbar Locations</string>
+   </property>
+  </action>
+  <action name="action_always_on_top">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Always &amp;On Top</string>
+   </property>
+  </action>
+  <action name="action_full_screen_mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Full Screen Mode</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+F</string>
+   </property>
+  </action>
+  <action name="action_quick_connect">
+   <property name="text">
+    <string>&amp;Quick Connect...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+K</string>
+   </property>
+  </action>
+  <action name="action_connect">
+   <property name="text">
+    <string>&amp;Connect</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K</string>
+   </property>
+  </action>
+  <action name="action_disconnect">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Disconnect</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+K</string>
+   </property>
+  </action>
+  <action name="action_auto_connect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Auto Connect</string>
+   </property>
+  </action>
+  <action name="action_reconnect_on_disconnect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Reconnect On Disconnect</string>
+   </property>
+  </action>
+  <action name="action_connect_to_all_open_worlds">
+   <property name="text">
+    <string>Connect To All Open &amp;Worlds</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+K</string>
+   </property>
+  </action>
+  <action name="action_connect_to_worlds_in_startup_list">
+   <property name="text">
+    <string>Connect To Worlds &amp;In Startup List</string>
+   </property>
+  </action>
+  <action name="actionActivate_Input_Area">
+   <property name="text">
+    <string>Activate &amp;Input Area</string>
+   </property>
+  </action>
+  <action name="action_next_command">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Next Command</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Down</string>
+   </property>
+  </action>
+  <action name="action_previous_command">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Previous Command</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Up</string>
+   </property>
+  </action>
+  <action name="action_repeat_last_command">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Repeat Last Command</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="action_quit_from_this_world">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Quit From This World...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Q</string>
+   </property>
+  </action>
+  <action name="action_command_history">
+   <property name="text">
+    <string>Command &amp;History...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="action_clear_command_history">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Clear Command History...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+D</string>
+   </property>
+  </action>
+  <action name="action_discard_queued_commands">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Discard 0 Queued Commands</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="action_auto_say">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Auto Say</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
+   </property>
+  </action>
+  <action name="action_send_file">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Send File...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+O</string>
+   </property>
+  </action>
+  <action name="action_global_change">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Global Change...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+G</string>
+   </property>
+  </action>
+  <action name="action_key_name">
+   <property name="text">
+    <string>&amp;Key Name...</string>
+   </property>
+  </action>
+  <action name="action_start">
+   <property name="text">
+    <string>&amp;Start</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Home</string>
+   </property>
+  </action>
+  <action name="action_page_up">
+   <property name="text">
+    <string>Page &amp;Up</string>
+   </property>
+   <property name="shortcut">
+    <string>PgUp</string>
+   </property>
+  </action>
+  <action name="action_page_down">
+   <property name="text">
+    <string>Page &amp;Down</string>
+   </property>
+   <property name="shortcut">
+    <string>PgDown</string>
+   </property>
+  </action>
+  <action name="action_end">
+   <property name="text">
+    <string>&amp;End</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+End</string>
+   </property>
+  </action>
+  <action name="action_line_up">
+   <property name="text">
+    <string>Line Up</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Up</string>
+   </property>
+  </action>
+  <action name="action_line_down">
+   <property name="text">
+    <string>Line Down</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Down</string>
+   </property>
+  </action>
+  <action name="action_activity_list">
+   <property name="text">
+    <string>&amp;Activity List</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
+   </property>
+  </action>
+  <action name="action_pause_output">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Pause &amp;Output</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Space</string>
+   </property>
+  </action>
+  <action name="action_find">
+   <property name="text">
+    <string>&amp;Find...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="action_find_again">
+   <property name="text">
+    <string>Find Again</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
+   </property>
+  </action>
+  <action name="action_recall_text">
+   <property name="text">
+    <string>&amp;Recall Text...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="action_go_to_line">
+   <property name="text">
+    <string>Go To Line...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+L</string>
+   </property>
+  </action>
+  <action name="action_go_to_url">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Go To URL...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+J</string>
+   </property>
+  </action>
+  <action name="action_clear_output_buffer">
+   <property name="text">
+    <string>Clear Output Buffer...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+C</string>
+   </property>
+  </action>
+  <action name="action_stop_sound_playing">
+   <property name="text">
+    <string>Stop Sound Playing</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+B</string>
+   </property>
+  </action>
+  <action name="action_bookmark_selection">
+   <property name="text">
+    <string>&amp;Bookmark Selection</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+B</string>
+   </property>
+  </action>
+  <action name="action_go_to_bookmark">
+   <property name="text">
+    <string>&amp;Go To Bookmark</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="action_highlight_word">
+   <property name="text">
+    <string>&amp;Highlight Word...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+H</string>
+   </property>
+  </action>
+  <action name="action_multi_line_trigger">
+   <property name="text">
+    <string>&amp;Multi-Line Trigger...</string>
+   </property>
+  </action>
+  <action name="action_text_attributes">
+   <property name="text">
+    <string>&amp;Text Attributes...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+A</string>
+   </property>
+  </action>
+  <action name="action_no_command_echo">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>No Command Echo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+E</string>
+   </property>
+  </action>
+  <action name="action_send_mail_to">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Send Mail To...</string>
+   </property>
+  </action>
+  <action name="action_all_configuration">
+   <property name="text">
+    <string>&amp;All Configuration...</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Return</string>
+   </property>
+  </action>
+  <action name="action_chat_sessions">
+   <property name="text">
+    <string>Chat Sessions</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+C</string>
+   </property>
+  </action>
+  <action name="action_wrap_output">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Wrap &amp;Output</string>
+   </property>
+  </action>
+  <action name="action_test_trigger">
+   <property name="text">
+    <string>Test &amp;Trigger...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F12</string>
+   </property>
+  </action>
+  <action name="action_minimize_program">
+   <property name="text">
+    <string>Minimize &amp;Program</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="action_immediate">
+   <property name="text">
+    <string>&amp;Immediate...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="action_edit_script_file">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Edit Script File...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+M</string>
+   </property>
+  </action>
+  <action name="action_reload_script_file">
+   <property name="text">
+    <string>&amp;Reload Script File</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+R</string>
+   </property>
+  </action>
+  <action name="action_trace">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Tr&amp;ace</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+T</string>
+   </property>
+  </action>
+  <action name="action_reset_all_timers">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Reset All Timers</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+T</string>
+   </property>
+  </action>
+  <action name="action_send_to_all_worlds">
+   <property name="text">
+    <string>&amp;Send To All Worlds...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+S</string>
+   </property>
+  </action>
+  <action name="action_mapper">
+   <property name="text">
+    <string>&amp;Mapper</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+M</string>
+   </property>
+  </action>
+  <action name="action_do_mapper_special">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Do Mapper Special...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+D</string>
+   </property>
+  </action>
+  <action name="action_add_mapper_comment">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Add Mapper Comment...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+D</string>
+   </property>
+  </action>
+  <action name="action_new_window">
+   <property name="text">
+    <string>&amp;New Window</string>
+   </property>
+  </action>
+  <action name="action_cascade">
+   <property name="text">
+    <string>&amp;Cascade</string>
+   </property>
+  </action>
+  <action name="action_title_horizontally">
+   <property name="text">
+    <string>&amp;Title Horizontally</string>
+   </property>
+  </action>
+  <action name="action_tile_vertically">
+   <property name="text">
+    <string>Tile Vertically</string>
+   </property>
+  </action>
+  <action name="action_arrange_icons">
+   <property name="text">
+    <string>&amp;Arrange Icons</string>
+   </property>
+  </action>
+  <action name="action_minimize">
+   <property name="text">
+    <string>&amp;Minimize</string>
+   </property>
+  </action>
+  <action name="action_close_all_notepad_windows">
+   <property name="text">
+    <string>Close A&amp;ll Notepad Windows</string>
+   </property>
+  </action>
+  <action name="action_maximize">
+   <property name="text">
+    <string>Maximize</string>
+   </property>
+  </action>
+  <action name="action_restore">
+   <property name="text">
+    <string>Restore</string>
+   </property>
+  </action>
+  <action name="action_tip_of_the_day">
+   <property name="text">
+    <string>&amp;Tip Of The Day...</string>
+   </property>
+  </action>
+  <action name="action_getting_started">
+   <property name="text">
+    <string>&amp;Getting Started...</string>
+   </property>
+  </action>
+  <action name="action_contents">
+   <property name="text">
+    <string>&amp;Contents</string>
+   </property>
+  </action>
+  <action name="action_index">
+   <property name="text">
+    <string>&amp;Index</string>
+   </property>
+  </action>
+  <action name="action_using_help">
+   <property name="text">
+    <string>&amp;Using Help</string>
+   </property>
+  </action>
+  <action name="action_bug_reports">
+   <property name="text">
+    <string>&amp;Bug Reports...</string>
+   </property>
+  </action>
+  <action name="action_documentation_web_page">
+   <property name="text">
+    <string>&amp;Documentation Web Page...</string>
+   </property>
+  </action>
+  <action name="action_forum">
+   <property name="text">
+    <string>&amp;Forum...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+F</string>
+   </property>
+  </action>
+  <action name="action_functions_list">
+   <property name="text">
+    <string>Functions &amp;List...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+L</string>
+   </property>
+  </action>
+  <action name="action_functions_web_page">
+   <property name="text">
+    <string>Fu&amp;nctions Web Page...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+U</string>
+   </property>
+  </action>
+  <action name="action_mud_lists">
+   <property name="text">
+    <string>&amp;MUD Lists...</string>
+   </property>
+  </action>
+  <action name="action_qmushclient_web_page">
+   <property name="text">
+    <string>qMUSHclient &amp;Web Page...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+W</string>
+   </property>
+  </action>
+  <action name="action_plugins_list">
+   <property name="text">
+    <string>&amp;Plugins List...</string>
+   </property>
+  </action>
+  <action name="action_regular_expressions_web_page">
+   <property name="text">
+    <string>Regular &amp;Expressions Web Page...</string>
+   </property>
+  </action>
+  <action name="action_about_qmushclient">
+   <property name="text">
+    <string>&amp;About qMUSHclient...</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

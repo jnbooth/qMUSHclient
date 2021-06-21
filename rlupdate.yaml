@@ -1,0 +1,4 @@
+sources:
+- src/
+ts:
+- resources/app_en.ts
