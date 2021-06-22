@@ -692,32 +692,6 @@ impl PrefsOutput {
 }
 
 #[derive(Debug)]
-pub struct HelloWorld {
-    pub widget: QBox<QDialog>,
-    pub horizontal_layout: QPtr<QHBoxLayout>,
-    pub label_hello_world: QPtr<QLabel>,
-    pub say_hi: QPtr<QLineEdit>,
-}
-impl HelloWorld {
-    pub fn load<P: CastInto<Ptr<QWidget>>>(parent: P) -> Self {
-        unsafe {
-            let loader = QUiLoader::new_0a();
-            loader.set_language_change_enabled(true);
-            let bytes = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><ui version=\"4.0\"><class>HelloWorld</class><widget class=\"QDialog\" name=\"HelloWorld\"><property name=\"geometry\"><rect><x>0</x><y>0</y><width>400</width><height>300</height></rect></property><property name=\"windowTitle\"><string>Dialog</string></property><layout class=\"QHBoxLayout\" name=\"horizontalLayout\"><item><widget class=\"QLabel\" name=\"label_HelloWorld\"><property name=\"text\"><string>Hello world!</string></property></widget></item><item><widget class=\"QLineEdit\" name=\"SayHi\"/></item></layout></widget><resources/><connections/></ui>".as_bytes();
-            let widget = loader.load_bytes_with_parent(bytes, parent);
-            assert!(!widget.is_null(), "invalid ui file");
-            Self {
-                horizontal_layout: widget.find_child("horizontalLayout").unwrap(),
-                label_hello_world: widget.find_child("label_HelloWorld").unwrap(),
-                say_hi: widget.find_child("SayHi").unwrap(),
-                widget: QBox::from_q_ptr(widget.into_q_ptr().dynamic_cast()),
-            }
-        }
-    }
-}
-
-
-#[derive(Debug)]
 pub struct App {
     pub widget: QBox<QMainWindow>,
     pub world_tabs: QPtr<QTabWidget>,
