@@ -218,14 +218,19 @@ mod tests {
     fn arguments() {
         let args = Arguments::parse(r#"EL RName '<FONT COLOR=Red><B>' FLAG="RoomName""#).unwrap();
         let should_be = Arguments {
-            positional: ["EL", "RName", "<FONT COLOR=Red><B>"].iter().map(ToString::to_string).collect(),
-            named: [("flag", "RoomName")].iter().map(|(k, v)| (k.to_string(), v.to_string())).collect(),
+            positional: ["EL", "RName", "<FONT COLOR=Red><B>"]
+                .iter()
+                .map(ToString::to_string)
+                .collect(),
+            named: [("flag", "RoomName")]
+                .iter()
+                .map(|(k, v)| (k.to_string(), v.to_string()))
+                .collect(),
             keywords: Default::default(),
         };
         assert_eq!(args, should_be);
     }
 }
-
 
 // Just some nicknames for internal use
 type Idx<'a> = ArgumentIndex<'a>;

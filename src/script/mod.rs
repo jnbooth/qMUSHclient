@@ -4,4 +4,4 @@ mod plugin;
 
 pub use callback::Callback;
 pub use convert::{ScriptArg, ScriptArgs, ScriptRes};
-pub use plugin::{Plugin, PluginId, PluginHandler, PluginMetadata};
+pub use plugin::{Plugin, PluginHandler, PluginId, PluginMetadata};

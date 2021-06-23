@@ -474,7 +474,7 @@ impl_fmt!(CharFormat);
 
 impl CharFormat {
     pub fn set_font(&self, font: &RFont) {
-        unsafe { 
+        unsafe {
             self.0.set_font_1a(font);
         }
     }

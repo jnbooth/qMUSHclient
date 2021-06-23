@@ -1,9 +1,9 @@
-use crate::Version;
 use crate::binding::color::{RColor, RColorPair};
 use crate::binding::RFont;
 use crate::client::color::{Colors, WorldColor};
 use crate::enums::Enum;
 use crate::script::{PluginId, PluginMetadata};
+use crate::Version;
 use chrono::{DateTime, Local};
 use hashbrown::HashMap;
 use qt_core::{GlobalColor, Key};

@@ -11,7 +11,7 @@ macro_rules! qt_field {
         pub fn $set(&self, $get: $t) {
             unsafe { self.0.$set($get) }
         }
-    }
+    };
 }
 
 pub mod color;

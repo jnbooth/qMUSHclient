@@ -476,10 +476,7 @@ impl Client {
 
     fn mxp_make_entity(&mut self, key: &str, mut words: mxp::Words) -> Result<(), mxp::ParseError> {
         if mxp::EntityMap::global(key).is_some() {
-            return Err(mxp::ParseError::new(
-                words.as_str(),
-                mxp::Error::CannotRedefineEntity,
-            ));
+            return Err(mxp::ParseError::new(key, mxp::Error::CannotRedefineEntity));
         }
         match words.next() {
             Some(body) // once told me

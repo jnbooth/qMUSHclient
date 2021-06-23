@@ -28,7 +28,7 @@ impl Display for RFont {
     }
 }
 
-impl CastFrom<&RFont> for cpp_core::Ref<QFont> where {
+impl CastFrom<&RFont> for cpp_core::Ref<QFont> {
     #[inline]
     unsafe fn cast_from(value: &RFont) -> Self {
         value.0.as_ref()
@@ -62,21 +62,25 @@ impl RFont {
         unsafe { self.0.family() }.to_std_string()
     }
     pub fn set_family(&self, family: &str) {
-        unsafe { self.0.set_family(&QString::from_std_str(family)); }
+        unsafe {
+            self.0.set_family(&QString::from_std_str(family));
+        }
     }
 
     pub fn size(&self) -> c_int {
         unsafe { self.0.point_size() }
     }
     pub fn set_size(&self, size: c_int) {
-        unsafe { self.0.set_point_size(size); }
+        unsafe {
+            self.0.set_point_size(size);
+        }
     }
 
     pub fn style_hint(&self) -> StyleHint {
         unsafe { self.0.style_hint() }
     }
     pub fn set_style_hint(&self, style_hint: StyleHint) {
-        unsafe { 
+        unsafe {
             let strategy = self.0.style_strategy();
             self.0.set_style_hint_2a(style_hint, strategy);
         }
@@ -109,6 +113,8 @@ impl<'de> Deserialize<'de> for RFont {
 
 impl Serialize for RFont {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        unsafe { self.0.to_string() }.to_std_string().serialize(serializer)
+        unsafe { self.0.to_string() }
+            .to_std_string()
+            .serialize(serializer)
     }
 }

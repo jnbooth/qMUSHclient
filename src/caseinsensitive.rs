@@ -213,7 +213,9 @@ impl<'a, S: ?Sized + ToOwned + AsRef<str>> CaseFold<'a, S> {
             Self::BorrowedAscii(s) => s,
             Self::Unicode(s) => s.borrow(),
             Self::BorrowedUnicode(s) => s,
-        }.as_ref().to_case_fold()
+        }
+        .as_ref()
+        .to_case_fold()
     }
 
     #[inline]
@@ -227,7 +229,13 @@ impl<'a, S: ?Sized + ToOwned + AsRef<str>> CaseFold<'a, S> {
     }
 
     #[inline]
-    fn pair<'b, Rhs: ?Sized + ToOwned + AsRef<str>>(&'a self, other: &'b CaseFold<'b, Rhs>) -> Result<(&'a ascii::CaseFold<str>, &'b ascii::CaseFold<str>), (&'a unicode::CaseFold<str>, &'b unicode::CaseFold<str>)> {
+    fn pair<'b, Rhs: ?Sized + ToOwned + AsRef<str>>(
+        &'a self,
+        other: &'b CaseFold<'b, Rhs>,
+    ) -> Result<
+        (&'a ascii::CaseFold<str>, &'b ascii::CaseFold<str>),
+        (&'a unicode::CaseFold<str>, &'b unicode::CaseFold<str>),
+    > {
         match (self.try_ascii(), other.try_ascii()) {
             (Ok(x), Ok(y)) => Ok((x, y)),
             (Ok(_), Err(y)) => Err((self.as_unicode(), y)),
@@ -287,14 +295,14 @@ impl<'a, S: ?Sized + AsRef<str> + ToOwned> Ord for CaseFold<'a, S> {
     }
 }
 
-
 impl<'a, S: AsRef<str> + ToOwned> Borrow<unicode::CaseFold<str>> for CaseFold<'a, S> {
     fn borrow(&self) -> &unicode::CaseFold<str> {
         self.as_unicode()
     }
 }
 
-pub type CaseFoldMap<K, V, S = DefaultHashBuilder> = AsRefHashMap<unicode::CaseFold<str>, CaseFold<'static, K>, V, S>;
+pub type CaseFoldMap<K, V, S = DefaultHashBuilder> =
+    AsRefHashMap<unicode::CaseFold<str>, CaseFold<'static, K>, V, S>;
 
 macro_rules! impl_ci {
     ($t:ty) => {
@@ -367,14 +375,15 @@ macro_rules! impl_ci {
             }
         }
 
-        pub type CaseFoldMap<K, V, S = hashbrown::hash_map::DefaultHashBuilder> = super::AsRefHashMap<CaseFold<$t>, CaseFold<K>, V, S>;
+        pub type CaseFoldMap<K, V, S = hashbrown::hash_map::DefaultHashBuilder> =
+            super::AsRefHashMap<CaseFold<$t>, CaseFold<K>, V, S>;
     };
 }
 
 pub mod ascii {
     use super::ToCaseFold;
-    use std::{iter, slice};
     use std::hash::{Hash, Hasher};
+    use std::{iter, slice};
 
     #[derive(Clone, Debug, Default)]
     pub struct CaseFold<S: ?Sized>(S);
@@ -418,9 +427,9 @@ pub mod ascii {
 
 pub mod unicode {
     use super::ToCaseFold;
-    use std::iter;
     use std::char::ToLowercase;
     use std::hash::{Hash, Hasher};
+    use std::iter;
     use std::str::Chars;
 
     #[derive(Clone, Debug, Default)]

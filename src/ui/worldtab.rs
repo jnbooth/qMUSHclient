@@ -50,11 +50,13 @@ impl uic::WorldTab {
         }
     }
     fn colorify(&self, world: &World) {
-        self.output.set_background_color(world.color(&WorldColor::BLACK));
+        self.output
+            .set_background_color(world.color(&WorldColor::BLACK));
         unsafe {
             self.output.document().set_default_font(&world.input_font);
             // QLineEdit requires a little coaxing to enable transparency
-            self.input.set_frame(world.input_colors.background.alpha() == 255);
+            self.input
+                .set_frame(world.input_colors.background.alpha() == 255);
             self.input.set_style_sheet(&world.input_colors.stylesheet());
         }
     }

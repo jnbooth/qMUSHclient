@@ -240,7 +240,8 @@ impl EntityMap {
                 u8::from_str_radix(&key[1..], 16)
             } else {
                 u8::from_str_radix(key, 10)
-            }.map_err(|_| ParseError::new(key, Error::InvalidEntityNumber))?;
+            }
+            .map_err(|_| ParseError::new(key, Error::InvalidEntityNumber))?;
             if id < 32 && id != b'\t' && id != b'\n' && id != b'\r' {
                 Err(ParseError::new(key, Error::DisallowedEntityNumber))
             } else {

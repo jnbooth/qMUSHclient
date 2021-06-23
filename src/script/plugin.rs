@@ -366,7 +366,11 @@ impl<U: 'static + UserData + Clone> PluginHandler<U> {
     }
 
     pub fn load_plugin(&mut self, metadata: PluginMetadata) -> mlua::Result<()> {
-        if let Some(old) = self.plugins.iter().position(|x| x.metadata.source == metadata.source) {
+        if let Some(old) = self
+            .plugins
+            .iter()
+            .position(|x| x.metadata.source == metadata.source)
+        {
             self.plugins.remove(old);
         }
         let engine = Lua::new();

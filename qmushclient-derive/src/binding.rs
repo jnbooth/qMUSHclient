@@ -1,11 +1,14 @@
 use proc_macro::TokenStream;
-use quote::{ToTokens, quote};
+use quote::{quote, ToTokens};
 use syn::*;
 
 #[inline]
 fn _parse_generic(ty: &Type) -> Option<&Type> {
     let segments = match ty {
-        Type::Path(TypePath{path: Path{segments,..},..}) => Some(segments),
+        Type::Path(TypePath {
+            path: Path { segments, .. },
+            ..
+        }) => Some(segments),
         _ => None,
     }?;
     let last = segments.last()?;
@@ -60,18 +63,5 @@ pub fn derive_binding(input: TokenStream) -> TokenStream {
         }
     };
 
-/*
-    if let Some(inner_ty) = parse_generic(&field_ty) {
-        let ext = quote! {
-            impl #impl_generics cpp_core::CastFrom<&#name> for cpp_core::Ref<#inner_ty> #ty_generics #where_clause {
-                #[inline]
-                unsafe fn cast_from(value: &#name) -> Self {
-                    value.#field_name.as_ref()
-                }
-            }
-        };
-        expanded.append_all(ext);
-    }
-*/
     TokenStream::from(expanded)
 }

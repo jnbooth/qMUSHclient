@@ -6,7 +6,7 @@ use std::str;
 pub struct Tag {
     /// Name of tag we opened
     pub name: String,
-    /// Was it secure mode at the time?  
+    /// Was it secure mode at the time?
     pub secure: bool,
     /// Protected from reset?
     pub no_reset: bool,
@@ -27,35 +27,35 @@ pub enum TagFlag {
 pub enum Action {
     /// eg. <send href="go west"> west
     Send,
-    /// bold                           
+    /// bold
     Bold,
-    /// underline                      
+    /// underline
     Underline,
-    /// italic                         
+    /// italic
     Italic,
-    /// eg. <color fore=red back=blue>              
+    /// eg. <color fore=red back=blue>
     Color,
     /// version request
     Version,
-    /// Font appearance             
+    /// Font appearance
     Font,
-    /// play sound                  
+    /// play sound
     Sound,
-    /// send username               
+    /// send username
     User,
-    /// send password               
+    /// send password
     Password,
     /// causes a new connect to open
     Relocate,
-    /// frame                       
+    /// frame
     Frame,
-    /// destination frame           
+    /// destination frame
     Dest,
-    /// show image                  
+    /// show image
     Image,
-    /// sound/image filter          
+    /// sound/image filter
     Filter,
-    /// Hyperlink (secure)      
+    /// Hyperlink (secure)
     Hyperlink,
     /// Hard Line break (secure)
     Br,
@@ -73,15 +73,15 @@ pub enum Action {
     H6,
     /// Horizontal rule (secure)
     Hr,
-    /// non-breaking newline     
+    /// non-breaking newline
     NoBr,
     /// Paragraph break (secure)
     P,
-    /// Strikethrough          
+    /// Strikethrough
     Strike,
     /// Client script (secure)
     Script,
-    /// Small text            
+    /// Small text
     Small,
     /// Non-proportional font
     Tt,
@@ -103,7 +103,7 @@ pub enum Action {
     Afk,
 
     // recent
-    /// gauge                  
+    /// gauge
     Gauge,
     /// status
     Stat,
@@ -146,7 +146,6 @@ pub struct Atom {
     /// Supported arguments, e.g. href, hint
     pub args: &'static [&'static str],
 }
-
 
 impl Atom {
     pub const fn exists(name: &str) -> bool {

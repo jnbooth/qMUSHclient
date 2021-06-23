@@ -1,5 +1,5 @@
-use crate::binding::RFont;
 use crate::binding::color::{HasPalette, RColor};
+use crate::binding::RFont;
 use crate::enums::Enum;
 use cpp_core::StaticUpcast;
 use qt_core::{CheckState, QBox, QObject, QPtr, QString, SlotNoArgs};
@@ -121,9 +121,9 @@ macro_rules! impl_int {
                 this.editing_finished().connect(&receiver);
             }
         }
-        impl QForm<$t> for QDoubleSpinBox { // milli-
+        impl QForm<$t> for QDoubleSpinBox {
             unsafe fn get_rust(this: QPtr<Self>) -> $t {
-                (this.value() * 1000.0) as $t
+                (this.value() * 1000.0) as $t // milli-
             }
             unsafe fn connect_rust(this: QPtr<Self>, t: &$t, receiver: QBox<SlotNoArgs>) {
                 this.set_value(*t as c_double / 1000.0);

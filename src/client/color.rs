@@ -204,28 +204,30 @@ static NAMED_COLORS: Lazy<HashMap<String, RColor>> = Lazy::new(|| {
         ("whitesmoke", 0xF5F5F5),
         ("yellow", 0xFFFF00),
         ("yellowgreen", 0x9ACD32),
-    ].iter().map(|&(s, code)| (s.to_owned(), RColor::from_code(0xFF000000 | code))).collect()
+    ]
+    .iter()
+    .map(|&(s, code)| (s.to_owned(), RColor::from_code(0xFF000000 | code)))
+    .collect()
 });
 
 static XTERM_COLORS: Lazy<[RColor; 256]> = Lazy::new(|| {
     let mut vec = Vec::with_capacity(256);
     vec.extend_from_slice(&[
-        RColor::rgb(0, 0, 0), // black
-        RColor::rgb(128, 0, 0), // maroon
-        RColor::rgb(0, 128, 0), // green
-        RColor::rgb(128, 128, 0), // olive
-        RColor::rgb(0, 0, 128), // navy
-        RColor::rgb(128, 0, 128), // purple
-        RColor::rgb(0, 128, 128), // teal
+        RColor::rgb(0, 0, 0),       // black
+        RColor::rgb(128, 0, 0),     // maroon
+        RColor::rgb(0, 128, 0),     // green
+        RColor::rgb(128, 128, 0),   // olive
+        RColor::rgb(0, 0, 128),     // navy
+        RColor::rgb(128, 0, 128),   // purple
+        RColor::rgb(0, 128, 128),   // teal
         RColor::rgb(192, 192, 192), // silver
-
         RColor::rgb(128, 128, 128), // gray
-        RColor::rgb(255, 0, 0), // red
-        RColor::rgb(0, 255, 0), // lime
-        RColor::rgb(255, 255, 0), // yellow
-        RColor::rgb(0, 0, 255), // blue
-        RColor::rgb(255, 0, 255), // magenta
-        RColor::rgb(0, 255, 255), // cyan
+        RColor::rgb(255, 0, 0),     // red
+        RColor::rgb(0, 255, 0),     // lime
+        RColor::rgb(255, 255, 0),   // yellow
+        RColor::rgb(0, 0, 255),     // blue
+        RColor::rgb(255, 0, 255),   // magenta
+        RColor::rgb(0, 255, 255),   // cyan
         RColor::rgb(255, 255, 255), // white
     ]);
     const COLOR_SCALE: [u8; 6] = [

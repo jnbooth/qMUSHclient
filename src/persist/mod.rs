@@ -48,7 +48,8 @@ pub fn load_world(path: &str) -> Result<World, Box<dyn std::error::Error>> {
         //1 => bincode::deserialize_from::<_, v3::World>(file)?.try_into()?,
         _ => Err(Box::new(bincode::ErrorKind::Custom(
             "Incompatible version".to_owned(),
-        ))).map_err(Into::into),
+        )))
+        .map_err(Into::into),
     }
 }
 

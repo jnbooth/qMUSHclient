@@ -192,6 +192,7 @@ impl WorldPrefs {
             .insert(key, P::new(&self.ui.widget, self.world.clone()));
     }
 
+    #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         unsafe {
             for page in self.pages.values() {
@@ -200,10 +201,7 @@ impl WorldPrefs {
                 self.ui.contents.add_widget(page);
             }
             self.ui.settings_tree.expand_all();
-            self.ui
-                .settings_tree
-                .current_item_changed()
-                .connect(&self.slot_choose_page());
+            self.ui.settings_tree.current_item_changed().connect(&self.slot_choose_page());
             self.browse("IP address");
         }
     }
@@ -267,8 +265,13 @@ impl_prefpage!(PrefsProxy);
 impl_prefpagenew!(PrefsProxy);
 
 impl PrefsProxy {
+    #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
-        connect_world!(self, proxy_username, proxy_password,);
+        connect_world!(
+            self,
+            proxy_username,
+            proxy_password,
+        );
     }
 }
 
@@ -281,6 +284,7 @@ impl_prefpage!(PrefsAddress);
 impl_prefpagenew!(PrefsAddress);
 
 impl PrefsAddress {
+    #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         connect_world!(
             self,
@@ -293,10 +297,7 @@ impl PrefsAddress {
             save_world_automatically,
         );
         unsafe {
-            self.ui
-                .proxy_password_button
-                .clicked()
-                .connect(&self.slot_open_proxy_settings());
+            self.ui.proxy_password_button.clicked().connect(&self.slot_open_proxy_settings());
         }
     }
 
@@ -331,15 +332,16 @@ impl PrefPageNew for PrefsConnecting {
 }
 
 impl PrefsConnecting {
+    #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         unsafe {
-            connect_world!(self, player);
-            connect_world!(self, password);
-            connect_world!(self, connect_method);
-            self.ui
-                .connect_text
-                .text_changed()
-                .connect(&self.slot_update_connect_text());
+            connect_world!(
+                self,
+                player,
+                password,
+                connect_method,
+            );
+            self.ui.connect_text.text_changed().connect(&self.slot_update_connect_text());
         }
     }
 
@@ -398,6 +400,7 @@ const DEFAULT_POSTAMBLE: &'static str = r#"        </font>
 </html>"#;
 
 impl PrefsLogging {
+    #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         connect_world!(
             self,
@@ -425,10 +428,7 @@ impl PrefsLogging {
             "Text files (*.txt)",
         );
         unsafe {
-            self.ui
-                .button_box
-                .help_requested()
-                .connect(&self.slot_show_help());
+            self.ui.button_box.help_requested().connect(&self.slot_show_help());
             let reset = self.ui.button_box.button(StandardButton::RestoreDefaults);
             reset.clicked().connect(&self.slot_set_defaults());
             self.enable_if(
@@ -625,6 +625,7 @@ impl PrefPageNew for PrefsColor {
 }
 
 impl PrefsColor {
+    #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         connect_world!(self, use_default_colors);
         self.setcolors(&self.world.upgrade().unwrap().borrow().ansi_colors);
