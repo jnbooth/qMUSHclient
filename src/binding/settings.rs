@@ -5,7 +5,6 @@ use qt_core::q_meta_type::Type;
 use qt_core::{QBox, QSettings, QString, QStringList};
 use std::convert::TryFrom;
 use std::fmt::{self, Display, Formatter};
-use std::iter::FromIterator;
 use std::ops::Deref;
 
 pub trait StoreAsQ {
@@ -87,16 +86,15 @@ impl RSettings {
                 .set_value(&QString::from_std_str(key), &variant.into_raw());
         }
     }
-    pub fn get_list<I, O>(&self, key: &str) -> Result<O, Error>
+    pub fn get_list<I>(&self, key: &str) -> Result<impl Iterator<Item = I>, Error>
     where
         I: StoreAsQ,
-        O: FromIterator<I>,
         CppBox<I::ListStore>: TryFrom<RVariant>,
         Error: From<<CppBox<I::ListStore> as TryFrom<RVariant>>::Error>,
     {
         let attempt = self.qget(key);
         let store: CppBox<I::ListStore> = CppBox::try_from(attempt)?;
-        Ok(unsafe { store.cpp_iter().map(StoreAsQ::from_store).collect() })
+        Ok(unsafe { store.cpp_iter().map(StoreAsQ::from_store) })
     }
 
     /// # Safety

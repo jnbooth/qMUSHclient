@@ -78,6 +78,7 @@
      <string>Edit</string>
     </property>
     <addaction name="action_undo"/>
+    <addaction name="action_redo"/>
     <addaction name="separator"/>
     <addaction name="action_cut"/>
     <addaction name="action_copy"/>
@@ -261,6 +262,10 @@
    <addaction name="menu_Help"/>
   </widget>
   <action name="action_new">
+   <property name="icon">
+    <iconset theme="document-new">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;New World...</string>
    </property>
@@ -269,6 +274,10 @@
    </property>
   </action>
   <action name="action_open_world">
+   <property name="icon">
+    <iconset theme="document-open">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Open World...</string>
    </property>
@@ -288,6 +297,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="window-close">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Close World</string>
    </property>
@@ -295,6 +308,10 @@
   <action name="action_import">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="document-import">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Import...</string>
@@ -306,6 +323,10 @@
   <action name="action_plugins">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="plugins">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Pl&amp;ugins...</string>
@@ -329,6 +350,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="document-save">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save World Details</string>
    </property>
@@ -339,6 +364,10 @@
   <action name="action_save_world_details_as">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="document-save-as">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Save World Details &amp;As...</string>
@@ -356,6 +385,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="document-print">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Print...</string>
    </property>
@@ -369,6 +402,10 @@
    </property>
   </action>
   <action name="action_global_preferences">
+   <property name="icon">
+    <iconset theme="configure">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Global Preferences...</string>
    </property>
@@ -418,13 +455,24 @@
    </property>
   </action>
   <action name="action_exit">
+   <property name="icon">
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
    </property>
   </action>
   <action name="action_undo">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-undo">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
@@ -437,6 +485,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="edit-cut">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Cu&amp;t</string>
    </property>
@@ -447,6 +499,10 @@
   <action name="action_copy">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-copy">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Copy</string>
@@ -469,6 +525,10 @@
   <action name="action_paste">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-paste">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Paste</string>
@@ -503,6 +563,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="edit-select-all">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Select &amp;All</string>
    </property>
@@ -513,6 +577,10 @@
   <action name="action_spell_check">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="tools-check-spelling">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Sp&amp;ell Check</string>
@@ -562,6 +630,10 @@
    </property>
   </action>
   <action name="action_color_picker">
+   <property name="icon">
+    <iconset theme="color-picker">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Color Picker</string>
    </property>
@@ -716,6 +788,10 @@
    </property>
   </action>
   <action name="action_quick_connect">
+   <property name="icon">
+    <iconset theme="quickopen">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Quick Connect...</string>
    </property>
@@ -724,6 +800,10 @@
    </property>
   </action>
   <action name="action_connect">
+   <property name="icon">
+    <iconset theme="network-connect">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Connect</string>
    </property>
@@ -734,6 +814,10 @@
   <action name="action_disconnect">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="network-disconnect">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Disconnect</string>
@@ -780,6 +864,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="go-next">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Next Command</string>
    </property>
@@ -791,6 +879,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="go-previous">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Previous Command</string>
    </property>
@@ -801,6 +893,10 @@
   <action name="action_repeat_last_command">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="media-playlist-repeat">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Repeat Last Command</string>
@@ -821,6 +917,10 @@
    </property>
   </action>
   <action name="action_command_history">
+   <property name="icon">
+    <iconset theme="shallow-history">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Command &amp;History...</string>
    </property>
@@ -831,6 +931,10 @@
   <action name="action_clear_command_history">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-clear-history">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Clear Command History...</string>
@@ -865,6 +969,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="document-send">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Send File...</string>
    </property>
@@ -889,6 +997,10 @@
    </property>
   </action>
   <action name="action_start">
+   <property name="icon">
+    <iconset theme="go-top">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Start</string>
    </property>
@@ -897,6 +1009,10 @@
    </property>
   </action>
   <action name="action_page_up">
+   <property name="icon">
+    <iconset theme="go-up">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Page &amp;Up</string>
    </property>
@@ -905,6 +1021,10 @@
    </property>
   </action>
   <action name="action_page_down">
+   <property name="icon">
+    <iconset theme="go-down">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Page &amp;Down</string>
    </property>
@@ -913,6 +1033,10 @@
    </property>
   </action>
   <action name="action_end">
+   <property name="icon">
+    <iconset theme="go-bottom">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;End</string>
    </property>
@@ -951,6 +1075,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="media-playback-pause">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Pause &amp;Output</string>
    </property>
@@ -959,6 +1087,10 @@
    </property>
   </action>
   <action name="action_find">
+   <property name="icon">
+    <iconset theme="edit-find">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Find...</string>
    </property>
@@ -983,6 +1115,10 @@
    </property>
   </action>
   <action name="action_go_to_line">
+   <property name="icon">
+    <iconset theme="go-jump">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Go To Line...</string>
    </property>
@@ -993,6 +1129,10 @@
   <action name="action_go_to_url">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="internet-services">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Go To URL...</string>
@@ -1010,6 +1150,10 @@
    </property>
   </action>
   <action name="action_stop_sound_playing">
+   <property name="icon">
+    <iconset theme="media-playback-stop">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Stop Sound Playing</string>
    </property>
@@ -1018,6 +1162,10 @@
    </property>
   </action>
   <action name="action_bookmark_selection">
+   <property name="icon">
+    <iconset theme="bookmark-new">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Bookmark Selection</string>
    </property>
@@ -1034,6 +1182,10 @@
    </property>
   </action>
   <action name="action_highlight_word">
+   <property name="icon">
+    <iconset theme="draw-highlight">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Highlight Word...</string>
    </property>
@@ -1068,6 +1220,10 @@
   <action name="action_send_mail_to">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="mail-send">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Send Mail To...</string>
@@ -1204,6 +1360,10 @@
    </property>
   </action>
   <action name="action_new_window">
+   <property name="icon">
+    <iconset theme="window-new">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;New Window</string>
    </property>
@@ -1229,26 +1389,46 @@
    </property>
   </action>
   <action name="action_minimize">
+   <property name="icon">
+    <iconset theme="window-minimize">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Minimize</string>
    </property>
   </action>
   <action name="action_close_all_notepad_windows">
+   <property name="icon">
+    <iconset theme="document-close">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Close A&amp;ll Notepad Windows</string>
    </property>
   </action>
   <action name="action_maximize">
+   <property name="icon">
+    <iconset theme="window-maximize">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Maximize</string>
    </property>
   </action>
   <action name="action_restore">
+   <property name="icon">
+    <iconset theme="window-restore">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Restore</string>
    </property>
   </action>
   <action name="action_tip_of_the_day">
+   <property name="icon">
+    <iconset theme="dialog-information">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Tip Of The Day...</string>
    </property>
@@ -1259,6 +1439,10 @@
    </property>
   </action>
   <action name="action_contents">
+   <property name="icon">
+    <iconset theme="help-contents">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Contents</string>
    </property>
@@ -1269,11 +1453,19 @@
    </property>
   </action>
   <action name="action_using_help">
+   <property name="icon">
+    <iconset theme="help-about">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Using Help</string>
    </property>
   </action>
   <action name="action_bug_reports">
+   <property name="icon">
+    <iconset theme="tools-report-bug">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Bug Reports...</string>
    </property>
@@ -1333,6 +1525,21 @@
   <action name="action_about_qmushclient">
    <property name="text">
     <string>&amp;About qMUSHclient...</string>
+   </property>
+  </action>
+  <action name="action_redo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-redo">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y, Ctrl+Shift+Z</string>
    </property>
   </action>
  </widget>

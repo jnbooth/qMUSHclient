@@ -7,8 +7,9 @@ use crate::constants::branding;
 use crate::tr::TrContext;
 use crate::world::World;
 use cpp_core::{CastInto, Ptr};
-use qt_core::{QListOfInt, QPtr, QString, QUrl, SlotNoArgs, slot};
+use qt_core::{slot, FocusReason, QListOfInt, QPtr, QString, QUrl, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
+use qt_gui::q_text_cursor::MoveOperation;
 use qt_gui::QDesktopServices;
 use qt_network::q_abstract_socket::SocketError;
 use qt_network::{QTcpSocket, SlotOfSocketError};
@@ -16,6 +17,27 @@ use qt_widgets::q_message_box::{ButtonRole, Icon, StandardButton};
 use qt_widgets::*;
 use std::cell::{self, RefCell};
 use std::rc::Rc;
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum SelectionMode {
+    Neither,
+    Input,
+    Output,
+}
+
+impl SelectionMode {
+    fn get_current(input: &QPtr<QLineEdit>, output: &QPtr<QTextBrowser>) -> Self {
+        unsafe {
+            if input.has_selected_text() {
+                Self::Input
+            } else if output.text_cursor().has_selection() {
+                Self::Output
+            } else {
+                Self::Neither
+            }
+        }
+    }
+}
 
 impl uic::WorldTab {
     fn init(&self) {
@@ -40,7 +62,7 @@ impl uic::WorldTab {
 
 #[derive(RWidget, TrContext)]
 pub struct WorldTab {
-    ui: uic::WorldTab,
+    pub ui: uic::WorldTab,
     pub client: RefCell<Client>,
     pub saved: RefCell<Option<String>>,
     socket: QPtr<QTcpSocket>,
@@ -72,14 +94,45 @@ impl WorldTab {
         this
     }
 
+    #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         unsafe {
             self.ui.output.set_read_only(true);
-            self.socket
-                .error_occurred()
-                .connect(&self.slot_socket_error());
+            self.socket.error_occurred().connect(&self.slot_socket_error());
             self.socket.ready_read().connect(&self.slot_receive());
             self.ui.input.return_pressed().connect(&self.slot_send());
+            self.ui.input.editing_finished().connect(&self.slot_deselect());
+            self.ui.input.selection_changed().connect(&self.slot_input_selected());
+            self.ui.output.selection_changed().connect(&self.slot_output_selected());
+        }
+    }
+
+    pub fn selection_mode(&self) -> SelectionMode {
+        unsafe {
+            if self.ui.input.has_selected_text() {
+                SelectionMode::Input
+            } else if self.ui.output.text_cursor().has_selection() {
+                SelectionMode::Output
+            } else {
+                SelectionMode::Neither
+            }
+        }
+    }
+
+    pub fn connect_selection_changed<F: FnMut(SelectionMode) + 'static>(&self, mut f: F) {
+        let input = self.ui.input.clone();
+        let output = self.ui.output.clone();
+        let mut mode = SelectionMode::get_current(&input, &output);
+        unsafe {
+            let slot = SlotNoArgs::new(self.widget(), move || {
+                let new_mode = SelectionMode::get_current(&input, &output);
+                if new_mode != mode {
+                    f(new_mode);
+                    mode = new_mode;
+                }
+            });
+            self.ui.input.selection_changed().connect(&slot);
+            self.ui.output.selection_changed().connect(&slot);
         }
     }
 
@@ -162,9 +215,37 @@ impl WorldTab {
     #[slot(SlotNoArgs)]
     fn report_bug(&self) {
         unsafe {
-            QDesktopServices::open_url(&QUrl::new_1a(&QString::from_std_str(
-                &format!("{}/issues", branding::REPO)
-            )));
+            QDesktopServices::open_url(&QUrl::new_1a(&QString::from_std_str(&format!(
+                "{}/issues",
+                branding::REPO
+            ))));
+        }
+    }
+
+    #[slot(SlotNoArgs)]
+    fn deselect(&self) {
+        unsafe {
+            self.ui.input.deselect();
+        }
+    }
+    #[slot(SlotNoArgs)]
+    fn input_selected(&self) {
+        unsafe {
+            if self.ui.input.has_selected_text() {
+                self.ui.output.move_cursor_1a(MoveOperation::End);
+            }
+        }
+    }
+    #[slot(SlotNoArgs)]
+    fn output_selected(&self) {
+        unsafe {
+            if self.ui.output.text_cursor().has_selection() {
+                self.ui.input.deselect();
+                //self.ui.input.set_focus_policy(FocusPolicy::StrongFocus);
+                self.ui.output.set_focus_1a(FocusReason::MouseFocusReason);
+            } else {
+                self.ui.input.set_focus_1a(FocusReason::MouseFocusReason);
+            }
         }
     }
 
