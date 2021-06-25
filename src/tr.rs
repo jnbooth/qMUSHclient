@@ -8,6 +8,7 @@ use std::os::raw::{c_char, c_int};
 /// It's probably best to let a procedural macro derive this automatically rather than messing with
 /// stuff like [`std::ffi::CStr::from_bytes_with_nul_unchecked`] on a one-by-one basis.
 pub trait TrContext {
+    // FIXME(#51911) convert into an associated constant once const derefs are possible
     fn class_name() -> &'static CStr;
 }
 

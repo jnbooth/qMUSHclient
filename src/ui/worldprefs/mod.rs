@@ -381,7 +381,7 @@ struct PrefsLogging {
 impl_prefpage!(PrefsLogging);
 impl_prefpagenew!(PrefsLogging);
 
-const DEFAULT_PREAMBLE: &'static str = r#"<html>
+const DEFAULT_PREAMBLE: &str = r#"<html>
   <head>
     <title>Log of %N session</title>
     <style type="text/css">
@@ -393,7 +393,7 @@ const DEFAULT_PREAMBLE: &'static str = r#"<html>
       <code>
         <font size=2 face="FixedSys, Lucida Console, Courier New, Courier">"#;
 
-const DEFAULT_POSTAMBLE: &'static str = r#"        </font>
+const DEFAULT_POSTAMBLE: &str = r#"        </font>
       </code>
     </pre>
   </body>

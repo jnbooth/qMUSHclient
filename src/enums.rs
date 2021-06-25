@@ -112,6 +112,7 @@ impl_word!(i32);
 
 #[repr(transparent)]
 pub struct EnumSet<T: Enum> {
+    // FIXME(#57563) replace with `const fn from_raw(T::Rep)` if const_fn_trait_bound is stabilized
     pub raw: T::Rep,
 }
 
@@ -269,16 +270,25 @@ where
     }
 }
 
+#[macro_use]
+macro_rules! enums {
+    () => ($crate::enums::EnumSet{raw: $crate::enums::Wordlike::ZERO});
+    ($($i:expr),+ $(,)?) => ({
+        #[cfg(debug_assertions)]
+        let _ = [$($i),+]; // all items are same type
+        #[allow(unused_imports)]
+        use $crate::enums::{Enum, EnumSet};
+        EnumSet{raw: 0$(|$i.bit())*}
+    });
+}
+
 impl<T: Enum> EnumSet<T>
 where
     T::Rep: Wordlike,
 {
-    pub const EMPTY: Self = Self {
-        raw: Wordlike::ZERO,
-    };
     #[inline]
     pub fn new() -> Self {
-        Self::EMPTY
+        enums![]
     }
 
     pub fn clear(&mut self) {
@@ -310,19 +320,6 @@ where
     pub fn from_raw(raw: T::Rep) -> Self {
         Self { raw }
     }
-}
-
-#[macro_use]
-macro_rules! enums {
-    () => ($crate::enums::EnumSet::EMPTY);
-    ($($i:expr),+ $(,)?) => ({
-        #[cfg(debug_assertions)] {
-            let _ = [$($i),+]; // all items are same type
-        }
-        #[allow(unused_imports)]
-        use $crate::enums::{Enum, EnumSet};
-        EnumSet{raw: 0$(|$i.bit())*}
-    });
 }
 
 impl<T: Enum + Copy + Ord> IntoIterator for EnumSet<T>
