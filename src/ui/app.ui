@@ -42,37 +42,6 @@
      <height>27</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_file">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="action_new"/>
-    <addaction name="action_open_world"/>
-    <addaction name="action_open_worlds_in_startup_list"/>
-    <addaction name="action_close_world"/>
-    <addaction name="action_import"/>
-    <addaction name="action_plugins"/>
-    <addaction name="action_plugin_wizard"/>
-    <addaction name="action_save_world_details"/>
-    <addaction name="action_save_world_details_as"/>
-    <addaction name="action_save_selection"/>
-    <addaction name="separator"/>
-    <addaction name="action_print"/>
-    <addaction name="action_print_setup"/>
-    <addaction name="action_global_preferences"/>
-    <addaction name="action_log_session"/>
-    <addaction name="action_reload_defaults"/>
-    <addaction name="action_world_properties"/>
-    <addaction name="action_windows_socket_info"/>
-    <addaction name="separator"/>
-    <addaction name="action_rec_1"/>
-    <addaction name="action_rec_2"/>
-    <addaction name="action_rec_3"/>
-    <addaction name="action_rec_4"/>
-    <addaction name="action_rec_5"/>
-    <addaction name="separator"/>
-    <addaction name="action_exit"/>
-   </widget>
    <widget class="QMenu" name="menu_edit">
     <property name="title">
      <string>Edit</string>
@@ -215,17 +184,18 @@
    </widget>
    <widget class="QMenu" name="menu_Window">
     <property name="title">
-     <string>&amp;Window</string>
+     <string>Window</string>
     </property>
+    <addaction name="action_maximize"/>
+    <addaction name="action_minimize"/>
+    <addaction name="action_restore"/>
+    <addaction name="separator"/>
     <addaction name="action_new_window"/>
     <addaction name="action_cascade"/>
     <addaction name="action_title_horizontally"/>
     <addaction name="action_tile_vertically"/>
     <addaction name="action_arrange_icons"/>
-    <addaction name="action_minimize"/>
     <addaction name="action_close_all_notepad_windows"/>
-    <addaction name="action_maximize"/>
-    <addaction name="action_restore"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -250,6 +220,37 @@
     <addaction name="action_plugins_list"/>
     <addaction name="action_regular_expressions_web_page"/>
     <addaction name="action_about_qmushclient"/>
+   </widget>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="action_new"/>
+    <addaction name="action_open_world"/>
+    <addaction name="action_open_worlds_in_startup_list"/>
+    <addaction name="action_close_world"/>
+    <addaction name="action_import"/>
+    <addaction name="action_plugins"/>
+    <addaction name="action_plugin_wizard"/>
+    <addaction name="action_save_world_details"/>
+    <addaction name="action_save_world_details_as"/>
+    <addaction name="action_save_selection"/>
+    <addaction name="separator"/>
+    <addaction name="action_print"/>
+    <addaction name="action_print_setup"/>
+    <addaction name="action_global_preferences"/>
+    <addaction name="action_log_session"/>
+    <addaction name="action_reload_defaults"/>
+    <addaction name="action_world_properties"/>
+    <addaction name="action_windows_socket_info"/>
+    <addaction name="separator"/>
+    <addaction name="action_rec_1"/>
+    <addaction name="action_rec_2"/>
+    <addaction name="action_rec_3"/>
+    <addaction name="action_rec_4"/>
+    <addaction name="action_rec_5"/>
+    <addaction name="separator"/>
+    <addaction name="action_exit"/>
    </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_edit"/>
@@ -286,6 +287,9 @@
    </property>
   </action>
   <action name="action_open_worlds_in_startup_list">
+   <property name="icon">
+    <iconset theme="view-pages-overview"/>
+   </property>
    <property name="text">
     <string>Open Worlds in Startup List</string>
    </property>
@@ -298,7 +302,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="window-close">
+    <iconset theme="document-close">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -339,6 +343,9 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="tools-wizard"/>
+   </property>
    <property name="text">
     <string>Plugin Wizard...</string>
    </property>
@@ -377,6 +384,9 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="select-rectangular"/>
+   </property>
    <property name="text">
     <string>Save Selection...</string>
    </property>
@@ -397,6 +407,9 @@
    </property>
   </action>
   <action name="action_print_setup">
+   <property name="icon">
+    <iconset theme="document-print-preview"/>
+   </property>
    <property name="text">
     <string>Print Se&amp;tup...</string>
    </property>
@@ -420,6 +433,9 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="text-x-log"/>
+   </property>
    <property name="text">
     <string>&amp;Log Session...</string>
    </property>
@@ -430,6 +446,9 @@
   <action name="action_reload_defaults">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="view-refresh"/>
    </property>
    <property name="text">
     <string>&amp;Reload Defaults</string>
@@ -442,6 +461,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="document-properties">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;World Properties...</string>
    </property>
@@ -450,6 +473,9 @@
    </property>
   </action>
   <action name="action_windows_socket_info">
+   <property name="icon">
+    <iconset theme="network-connect"/>
+   </property>
    <property name="text">
     <string>Windows Socket Info...</string>
    </property>
@@ -515,6 +541,9 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="format-text-code"/>
+   </property>
    <property name="text">
     <string>Copy as HTML</string>
    </property>
@@ -541,6 +570,9 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="special_paste"/>
+   </property>
    <property name="text">
     <string>Paste to &amp;World...</string>
    </property>
@@ -551,6 +583,9 @@
   <action name="action_recall_last_word">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="media-playlist-repeat-song"/>
    </property>
    <property name="text">
     <string>Recall Last Word</string>
@@ -659,6 +694,9 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="code-context"/>
+   </property>
    <property name="text">
     <string>Go to &amp;Matching Brace</string>
    </property>
@@ -669,6 +707,9 @@
   <action name="action_select_to_matching_brace">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="go-next-context"/>
    </property>
    <property name="text">
     <string>Select to Matching Br&amp;ace</string>
@@ -689,6 +730,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="document-open-recent">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string notr="true">&amp;1 </string>
    </property>
@@ -697,6 +742,10 @@
    </property>
   </action>
   <action name="action_rec_2">
+   <property name="icon">
+    <iconset theme="document-open-recent">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string notr="true">&amp;2 </string>
    </property>
@@ -708,6 +757,10 @@
    </property>
   </action>
   <action name="action_rec_3">
+   <property name="icon">
+    <iconset theme="document-open-recent">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string notr="true">&amp;3 </string>
    </property>
@@ -716,6 +769,10 @@
    </property>
   </action>
   <action name="action_rec_4">
+   <property name="icon">
+    <iconset theme="document-open-recent">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string notr="true">&amp;4 </string>
    </property>
@@ -724,6 +781,10 @@
    </property>
   </action>
   <action name="action_rec_5">
+   <property name="icon">
+    <iconset theme="document-open-recent">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string notr="true">&amp;5 </string>
    </property>
@@ -909,6 +970,9 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="user-offline"/>
+   </property>
    <property name="text">
     <string>&amp;Quit From This World...</string>
    </property>
@@ -947,6 +1011,9 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="process-stop"/>
+   </property>
    <property name="text">
     <string>&amp;Discard 0 Queued Commands</string>
    </property>
@@ -957,6 +1024,9 @@
   <action name="action_auto_say">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="dialog-messages"/>
    </property>
    <property name="text">
     <string>&amp;Auto Say</string>
@@ -984,6 +1054,9 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset theme="edit-find-replace"/>
+   </property>
    <property name="text">
     <string>Global Change...</string>
    </property>
@@ -992,6 +1065,9 @@
    </property>
   </action>
   <action name="action_key_name">
+   <property name="icon">
+    <iconset theme="input-keyboard"/>
+   </property>
    <property name="text">
     <string>&amp;Key Name...</string>
    </property>
@@ -1010,7 +1086,7 @@
   </action>
   <action name="action_page_up">
    <property name="icon">
-    <iconset theme="go-up">
+    <iconset theme="go-up-skip">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -1022,7 +1098,7 @@
   </action>
   <action name="action_page_down">
    <property name="icon">
-    <iconset theme="go-down">
+    <iconset theme="go-down-skip">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -1045,6 +1121,9 @@
    </property>
   </action>
   <action name="action_line_up">
+   <property name="icon">
+    <iconset theme="go-up"/>
+   </property>
    <property name="text">
     <string>Line Up</string>
    </property>
@@ -1053,6 +1132,9 @@
    </property>
   </action>
   <action name="action_line_down">
+   <property name="icon">
+    <iconset theme="go-down"/>
+   </property>
    <property name="text">
     <string>Line Down</string>
    </property>
@@ -1061,6 +1143,9 @@
    </property>
   </action>
   <action name="action_activity_list">
+   <property name="icon">
+    <iconset theme="table"/>
+   </property>
    <property name="text">
     <string>&amp;Activity List</string>
    </property>
@@ -1099,6 +1184,9 @@
    </property>
   </action>
   <action name="action_find_again">
+   <property name="icon">
+    <iconset theme="media-playlist-repeat"/>
+   </property>
    <property name="text">
     <string>Find Again</string>
    </property>
@@ -1107,6 +1195,9 @@
    </property>
   </action>
   <action name="action_recall_text">
+   <property name="icon">
+    <iconset theme="deep-history"/>
+   </property>
    <property name="text">
     <string>&amp;Recall Text...</string>
    </property>
@@ -1142,6 +1233,9 @@
    </property>
   </action>
   <action name="action_clear_output_buffer">
+   <property name="icon">
+    <iconset theme="edit-clear"/>
+   </property>
    <property name="text">
     <string>Clear Output Buffer...</string>
    </property>
@@ -1174,6 +1268,9 @@
    </property>
   </action>
   <action name="action_go_to_bookmark">
+   <property name="icon">
+    <iconset theme="go-jump"/>
+   </property>
    <property name="text">
     <string>&amp;Go To Bookmark</string>
    </property>
@@ -1194,6 +1291,9 @@
    </property>
   </action>
   <action name="action_multi_line_trigger">
+   <property name="icon">
+    <iconset theme="trim-to-selection"/>
+   </property>
    <property name="text">
     <string>&amp;Multi-Line Trigger...</string>
    </property>
@@ -1369,21 +1469,33 @@
    </property>
   </action>
   <action name="action_cascade">
+   <property name="icon">
+    <iconset theme="edit-group"/>
+   </property>
    <property name="text">
     <string>&amp;Cascade</string>
    </property>
   </action>
   <action name="action_title_horizontally">
+   <property name="icon">
+    <iconset theme="view-more-horizontal-symbolic"/>
+   </property>
    <property name="text">
     <string>&amp;Title Horizontally</string>
    </property>
   </action>
   <action name="action_tile_vertically">
+   <property name="icon">
+    <iconset theme="view-more-symbolic"/>
+   </property>
    <property name="text">
     <string>Tile Vertically</string>
    </property>
   </action>
   <action name="action_arrange_icons">
+   <property name="icon">
+    <iconset theme="dialog-rows-and-columns"/>
+   </property>
    <property name="text">
     <string>&amp;Arrange Icons</string>
    </property>
@@ -1399,7 +1511,7 @@
   </action>
   <action name="action_close_all_notepad_windows">
    <property name="icon">
-    <iconset theme="document-close">
+    <iconset theme="window-close">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -1453,10 +1565,6 @@
    </property>
   </action>
   <action name="action_using_help">
-   <property name="icon">
-    <iconset theme="help-about">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
    <property name="text">
     <string>&amp;Using Help</string>
    </property>
@@ -1523,6 +1631,10 @@
    </property>
   </action>
   <action name="action_about_qmushclient">
+   <property name="icon">
+    <iconset theme="help-about">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;About qMUSHclient...</string>
    </property>
