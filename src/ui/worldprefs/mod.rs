@@ -1,9 +1,6 @@
-use super::uic;
-use crate::binding::color::HasPalette;
-use crate::binding::{Browse, RColor, RDialog, RFont, RWidget};
-use crate::client::color::Colors;
-use crate::tr::TrContext;
-use crate::world::World;
+use std::cell::RefCell;
+use std::rc::{Rc, Weak};
+
 use cpp_core::{CastInto, Ptr, Ref};
 use hashbrown::HashMap;
 use qt_core::{slot, CheckState, QPtr, QString, SlotNoArgs, SlotOfInt};
@@ -11,8 +8,13 @@ use qt_gui::q_palette::ColorRole;
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::q_dialog_button_box::StandardButton;
 use qt_widgets::*;
-use std::cell::RefCell;
-use std::rc::{Rc, Weak};
+
+use super::uic;
+use crate::binding::color::HasPalette;
+use crate::binding::{Browse, RColor, RDialog, RFont, RWidget};
+use crate::client::color::Colors;
+use crate::tr::TrContext;
+use crate::world::World;
 
 mod qform;
 

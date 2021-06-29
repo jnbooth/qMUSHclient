@@ -1,12 +1,14 @@
-use crate::binding::color::{HasPalette, RColor};
-use crate::binding::RFont;
-use crate::enums::Enum;
+use std::convert::TryFrom;
+use std::os::raw::{c_double, c_int};
+
 use cpp_core::StaticUpcast;
 use qt_core::{CheckState, QBox, QObject, QPtr, QString, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
 use qt_widgets::*;
-use std::convert::TryFrom;
-use std::os::raw::{c_double, c_int};
+
+use crate::binding::color::{HasPalette, RColor};
+use crate::binding::RFont;
+use crate::enums::Enum;
 
 fn enum_from_index<E: Enum>(i: usize) -> Option<E> {
     E::enumerate().find(|e| e.index() == i)

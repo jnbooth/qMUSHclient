@@ -1,3 +1,16 @@
+use std::cell::{Cell, RefCell};
+use std::collections::VecDeque;
+use std::convert::TryFrom;
+use std::os::raw::c_int;
+use std::path::Path;
+use std::rc::Rc;
+
+use cpp_core::{CppBox, NullPtr};
+use qt_core::{slot, FocusReason, QCoreApplication, QPtr, QString, SlotNoArgs, SlotOfInt};
+use qt_widgets::q_dialog::DialogCode;
+use qt_widgets::q_message_box::Icon;
+use qt_widgets::*;
+
 use super::uic;
 use super::worldprefs::WorldPrefs;
 use super::worldtab::{SelectionMode, WorldTab};
@@ -5,17 +18,6 @@ use crate::binding::{RDialog, RSettings, RWidget};
 use crate::persist;
 use crate::tr::TrContext;
 use crate::world::World;
-use cpp_core::{CppBox, NullPtr};
-use qt_core::{slot, FocusReason, QCoreApplication, QPtr, QString, SlotNoArgs, SlotOfInt};
-use qt_widgets::q_dialog::DialogCode;
-use qt_widgets::q_message_box::Icon;
-use qt_widgets::*;
-use std::cell::{Cell, RefCell};
-use std::collections::VecDeque;
-use std::convert::TryFrom;
-use std::os::raw::c_int;
-use std::path::Path;
-use std::rc::Rc;
 
 const SAVE_DIR: &str = "/home/j/Downloads";
 

@@ -1,6 +1,7 @@
+use std::os::raw::{c_char, c_int};
+
 use cpp_core::CppBox;
 use qt_core::QString;
-use std::os::raw::{c_char, c_int};
 
 pub trait Printable {
     fn to_print(self) -> CppBox<QString>;

@@ -1,18 +1,18 @@
-use crate::binding::RFont;
+use std::borrow::Borrow;
+use std::os::raw::c_int;
 
-use super::color::{Colored, RColor};
-use super::{Binding, Printable, RImage};
 use cpp_core::{CppBox, Ptr, StaticUpcast};
 use qt_core::{LayoutDirection, QObject, QPtr, QString};
 use qt_gui::q_font::Weight;
 use qt_gui::q_text_cursor::{MoveMode, MoveOperation, SelectionType};
-use qt_gui::*;
-use qt_widgets::QTextEdit;
-use std::borrow::Borrow;
-use std::os::raw::c_int;
-
 pub use qt_gui::q_text_frame_format::Position as FramePosition;
 pub use qt_gui::q_text_list_format::Style as ListStyle;
+use qt_gui::*;
+use qt_widgets::QTextEdit;
+
+use super::color::{Colored, RColor};
+use super::{Binding, Printable, RImage};
+use crate::binding::RFont;
 pub type Position = c_int;
 
 /// # Safety

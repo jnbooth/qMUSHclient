@@ -1,8 +1,9 @@
-use cpp_core::{CppBox, Ptr};
-use qt_core::{QCoreApplication, QString};
 use std::ffi::{CStr, CString};
 use std::fmt::{self, Write};
 use std::os::raw::{c_char, c_int};
+
+use cpp_core::{CppBox, Ptr};
+use qt_core::{QCoreApplication, QString};
 
 /// Any object that calls tr! should implement this trait.
 /// It's probably best to let a procedural macro derive this automatically rather than messing with

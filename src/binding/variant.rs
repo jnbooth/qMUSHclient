@@ -1,10 +1,12 @@
-use super::Binding;
-use cpp_core::CppBox;
-use qt_core::q_meta_type::Type;
-use qt_core::*;
 use std::convert::TryFrom;
 use std::fmt::{self, Display, Formatter};
 use std::os::raw::*;
+
+use cpp_core::CppBox;
+use qt_core::q_meta_type::Type;
+use qt_core::*;
+
+use super::Binding;
 
 const TYPE_NAMES: [&str; 88] = [
     "UnknownType",

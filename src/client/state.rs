@@ -1,7 +1,8 @@
+use std::time::{Duration, Instant};
+
 use super::mxp;
 use crate::enums::Enum;
 use crate::escape::telnet;
-use std::time::{Duration, Instant};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum MessageFlag {

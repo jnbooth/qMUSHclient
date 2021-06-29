@@ -1,11 +1,6 @@
-use super::uic;
-use crate::binding::color::Colored;
-use crate::binding::{QList, RWidget};
-use crate::client::color::WorldColor;
-use crate::client::Client;
-use crate::constants::branding;
-use crate::tr::TrContext;
-use crate::world::World;
+use std::cell::{self, RefCell};
+use std::rc::Rc;
+
 use cpp_core::{CastInto, Ptr};
 use qt_core::{slot, FocusReason, QListOfInt, QPtr, QString, QUrl, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
@@ -15,8 +10,15 @@ use qt_network::q_abstract_socket::SocketError;
 use qt_network::{QTcpSocket, SlotOfSocketError};
 use qt_widgets::q_message_box::{ButtonRole, Icon, StandardButton};
 use qt_widgets::*;
-use std::cell::{self, RefCell};
-use std::rc::Rc;
+
+use super::uic;
+use crate::binding::color::Colored;
+use crate::binding::{QList, RWidget};
+use crate::client::color::WorldColor;
+use crate::client::Client;
+use crate::constants::branding;
+use crate::tr::TrContext;
+use crate::world::World;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum SelectionMode {

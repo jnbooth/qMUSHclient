@@ -1,11 +1,12 @@
-use cpp_core::{CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
-use mlua::{self, FromLuaMulti, LightUserData, Lua, MultiValue, ToLua, ToLuaMulti, Value};
-use qt_core::{QBox, QObject, QPtr, QString};
 use std::collections::BTreeMap;
 use std::hash::{BuildHasher, Hash};
 use std::ops::Deref;
 use std::rc::Rc;
 use std::str;
+
+use cpp_core::{CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
+use mlua::{self, FromLuaMulti, LightUserData, Lua, MultiValue, ToLua, ToLuaMulti, Value};
+use qt_core::{QBox, QObject, QPtr, QString};
 
 pub trait ScriptRes: for<'lua> FromLuaMulti<'lua> {}
 impl<T: for<'lua> FromLuaMulti<'lua>> ScriptRes for T {}

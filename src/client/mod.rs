@@ -1,3 +1,18 @@
+use std::cell::RefCell;
+use std::convert::{TryFrom, TryInto};
+use std::io::{self, BufReader, Read, Write};
+use std::iter::Iterator;
+use std::ops::Deref;
+use std::rc::Rc;
+use std::time::Instant;
+use std::{mem, str};
+
+use cpp_core::CppBox;
+use qt_core::{AlignmentFlag, QBox, QPtr, QString};
+use qt_network::QTcpSocket;
+use qt_widgets::q_message_box::Icon;
+use qt_widgets::QTextBrowser;
+
 use crate::api::Api;
 use crate::binding::text::Cursor;
 use crate::binding::{Printable, RColor, RIODevice, RWidget};
@@ -12,19 +27,6 @@ use crate::script::{Callback, PluginHandler, PluginId};
 use crate::tr::TrContext;
 use crate::ui::{Notepad, Pad};
 use crate::world::{AutoConnect, UseMxp, World};
-use cpp_core::CppBox;
-use qt_core::{AlignmentFlag, QBox, QPtr, QString};
-use qt_network::QTcpSocket;
-use qt_widgets::q_message_box::Icon;
-use qt_widgets::QTextBrowser;
-use std::cell::RefCell;
-use std::convert::{TryFrom, TryInto};
-use std::io::{self, BufReader, Read, Write};
-use std::iter::Iterator;
-use std::ops::Deref;
-use std::rc::Rc;
-use std::time::Instant;
-use std::{mem, str};
 
 pub mod color;
 pub mod state;

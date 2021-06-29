@@ -1,3 +1,9 @@
+use std::cmp::Ordering;
+use std::fmt::{self, Debug, Display, Formatter};
+use std::hash::{Hash, Hasher};
+use std::mem;
+use std::os::raw::{c_int, c_uint};
+
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
 use qt_core::{GlobalColor, QString};
 use qt_gui::q_palette::ColorRole;
@@ -6,11 +12,6 @@ use qt_widgets::q_color_dialog::ColorDialogOption;
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::{QColorDialog, QTextEdit, QWidget};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
-use std::cmp::Ordering;
-use std::fmt::{self, Debug, Display, Formatter};
-use std::hash::{Hash, Hasher};
-use std::mem;
-use std::os::raw::{c_int, c_uint};
 
 pub struct RColor {
     inner: CppBox<QBrush>,

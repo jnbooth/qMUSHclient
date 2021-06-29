@@ -1,8 +1,10 @@
-use crate::enums::Enum;
-use crate::world::*;
-use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::{Read, Write};
+
+use serde::{Deserialize, Serialize};
+
+use crate::enums::Enum;
+use crate::world::*;
 
 #[allow(unused_macros)]
 macro_rules! from_old_version {

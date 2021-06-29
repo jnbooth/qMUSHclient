@@ -1,11 +1,13 @@
-use super::Printable;
-use crate::enums::Enum;
+use std::os::raw::c_int;
+
 use cpp_core::{Ptr, StaticUpcast};
 use qt_core::{q_event, Key, QFlags, QObject, QPtr, QString, SlotNoArgs};
 use qt_gui::QKeyEvent;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::{QAbstractButton, QFileDialog, QLineEdit, QMessageBox, QWidget};
-use std::os::raw::c_int;
+
+use super::Printable;
+use crate::enums::Enum;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Browse {

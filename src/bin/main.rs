@@ -1,11 +1,10 @@
 #![windows_subsystem = "windows"]
 
+use qmushclient::{App, RWidget};
 use qt_core::{
     q_init_resource, ApplicationAttribute, QCoreApplication, QLocale, QString, QTranslator,
 };
 use qt_widgets::QApplication;
-
-use qmushclient::{App, RWidget};
 
 fn load_translator() {
     unsafe {

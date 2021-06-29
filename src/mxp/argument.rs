@@ -1,12 +1,13 @@
-use crate::enums::{Enum, EnumSet};
-use hashbrown::hash_map;
-use mlua::{Lua, Value};
 use std::iter::{self, Chain, Enumerate, Map};
 use std::ops::{Deref, DerefMut};
 use std::{slice, str};
 
+use hashbrown::hash_map;
+use mlua::{Lua, Value};
+
 use super::{validate, Error, ParseError, Words};
 use crate::caseinsensitive::ascii::{CaseFold, CaseFoldMap};
+use crate::enums::{Enum, EnumSet};
 use crate::script::ScriptArg;
 
 pub type Argument = String;

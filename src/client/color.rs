@@ -1,11 +1,13 @@
-use crate::binding::RColor;
-use crate::escape::ansi;
+use std::borrow::Cow;
+use std::convert::TryInto;
+
 use hashbrown::HashMap;
 use mlua::{Error as E, FromLua, Lua, Value};
 use once_cell::sync::Lazy;
 use serde::{Deserialize, Serialize};
-use std::borrow::Cow;
-use std::convert::TryInto;
+
+use crate::binding::RColor;
+use crate::escape::ansi;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize)]
 pub enum WorldColor {

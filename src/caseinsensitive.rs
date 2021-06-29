@@ -1,4 +1,3 @@
-use hashbrown::hash_map::{DefaultHashBuilder, Entry, HashMap, OccupiedError};
 use std::borrow::{Borrow, ToOwned};
 use std::cmp::Ordering;
 use std::fmt::{self, Debug, Display, Formatter};
@@ -6,6 +5,8 @@ use std::hash::{BuildHasher, Hash, Hasher};
 use std::iter::FromIterator;
 use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
+
+use hashbrown::hash_map::{DefaultHashBuilder, Entry, HashMap, OccupiedError};
 
 pub struct AsRefHashMap<R: ?Sized, K, V, S = DefaultHashBuilder>(HashMap<K, V, S>, PhantomData<R>);
 

@@ -1,9 +1,10 @@
-use crate::binding::{Printable, RWidget};
-use crate::tr::TrContext;
 use cpp_core::CppBox;
 use hashbrown::HashMap;
 use qt_core::{AlignmentFlag, QBox, QString};
 use qt_widgets::QTextEdit;
+
+use crate::binding::{Printable, RWidget};
+use crate::tr::TrContext;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, TrContext)]
 pub enum Pad {

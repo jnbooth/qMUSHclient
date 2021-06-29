@@ -1,19 +1,19 @@
-use cpp_core::{CppDeletable, StaticUpcast};
-use qt_core::QString;
-use qt_core::q_process::ProcessError;
-use qt_core::{
-    q_file_device::FileError, QBox, QBuffer, QFile, QFileDevice, QIODevice, QObject, QProcess, QPtr,
-    QSaveFile,
-};
-use qt_network::q_abstract_socket::SocketError;
-use qt_network::q_local_socket::LocalSocketError;
-use qt_network::q_network_reply::NetworkError;
-use qt_network::{QAbstractSocket, QLocalSocket, QNetworkReply, QSslSocket, QTcpSocket, QUdpSocket};
 use std::fmt::{self, Debug, Formatter};
 use std::io::{self, Read, Write};
 use std::ops::Drop;
 use std::os::raw::c_char;
 use std::rc::Rc;
+
+use cpp_core::{CppDeletable, StaticUpcast};
+use qt_core::q_file_device::FileError;
+use qt_core::q_process::ProcessError;
+use qt_core::{
+    QBox, QBuffer, QFile, QFileDevice, QIODevice, QObject, QProcess, QPtr, QSaveFile, QString,
+};
+use qt_network::q_abstract_socket::SocketError;
+use qt_network::q_local_socket::LocalSocketError;
+use qt_network::q_network_reply::NetworkError;
+use qt_network::{QAbstractSocket, QLocalSocket, QNetworkReply, QSslSocket, QTcpSocket, QUdpSocket};
 
 pub struct RIODevice<Q: QIO> {
     dropper: Rc<QBox<Q>>,

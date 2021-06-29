@@ -1,12 +1,14 @@
-use super::Binding;
+use std::fmt::{self, Debug, Display, Formatter};
+use std::os::raw::c_int;
+
 use cpp_core::{CastFrom, CppBox};
 use qt_core::QString;
 use qt_gui::q_font::{Capitalization, Style, StyleHint};
 use qt_gui::q_font_database::SystemFont;
 use qt_gui::{QFont, QFontDatabase, QGuiApplication};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
-use std::fmt::{self, Debug, Display, Formatter};
-use std::os::raw::c_int;
+
+use super::Binding;
 
 #[derive(Binding)]
 pub struct RFont(CppBox<QFont>);

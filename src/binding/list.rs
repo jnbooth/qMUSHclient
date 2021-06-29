@@ -1,8 +1,9 @@
+use std::ops::Deref;
+use std::os::raw::c_int;
+
 use cpp_core::{cpp_iter, CastInto, CppBox, CppDeletable, CppIterator, Ref};
 use qt_core::*;
 use qt_widgets::*;
-use std::ops::Deref;
-use std::os::raw::c_int;
 
 type CppMap<I, From, To> = std::iter::Map<CppIterator<I, I>, fn(From) -> To>;
 

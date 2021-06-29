@@ -1,5 +1,3 @@
-use serde::de::{MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::cmp::{min, Ordering};
 use std::fmt::{self, Debug, Formatter};
 use std::hash::{Hash, Hasher};
@@ -7,6 +5,9 @@ use std::iter::{ExactSizeIterator, FilterMap, FromIterator, FusedIterator, Itera
 use std::marker::PhantomData;
 use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign, Not};
 use std::{slice, vec};
+
+use serde::de::{MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 pub trait Enum: Copy + Ord {
     /// The bitwise representation

@@ -1,5 +1,6 @@
-use crate::mxp::{self, Error, ParseError};
 use std::str::{self, CharIndices};
+
+use crate::mxp::{self, Error, ParseError};
 
 #[derive(Clone, Debug)]
 pub struct Words<'a> {

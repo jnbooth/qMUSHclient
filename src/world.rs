@@ -1,19 +1,21 @@
-use crate::binding::color::{RColor, RColorPair};
-use crate::binding::RFont;
-use crate::client::color::{Colors, WorldColor};
-use crate::enums::Enum;
-use crate::script::{PluginId, PluginMetadata};
-use crate::Version;
+use std::convert::TryInto;
+use std::fs::File;
+use std::io::{self, Read};
+use std::path::PathBuf;
+
 use chrono::{DateTime, Local};
 use hashbrown::HashMap;
 use qt_core::{GlobalColor, Key};
 use qt_gui::q_font_database::SystemFont;
 use qt_gui::q_palette::ColorRole;
 use serde::{Deserialize, Serialize};
-use std::convert::TryInto;
-use std::fs::File;
-use std::io::{self, Read};
-use std::path::PathBuf;
+
+use crate::binding::color::{RColor, RColorPair};
+use crate::binding::RFont;
+use crate::client::color::{Colors, WorldColor};
+use crate::enums::Enum;
+use crate::script::{PluginId, PluginMetadata};
+use crate::Version;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
 pub enum ProxyType {
@@ -47,12 +49,13 @@ fn default_foreground() -> RColor {
 }
 
 mod keypad_serde {
+    use std::mem;
+    use std::os::raw::c_int;
+
     use hashbrown::HashMap;
     use qt_core::Key;
     use serde::de::{Deserialize, Deserializer};
     use serde::ser::{Serialize, Serializer};
-    use std::mem;
-    use std::os::raw::c_int;
 
     type Shim<V> = HashMap<c_int, V>;
 

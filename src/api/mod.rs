@@ -1,3 +1,15 @@
+use std::borrow::Borrow;
+use std::cell::RefCell;
+use std::io::{self, Write};
+use std::rc::Rc;
+
+use hashbrown::HashMap;
+use iter_chunks::IterChunks;
+use mlua::{FromLua, MultiValue, UserData, UserDataMethods};
+use qt_core::{AlignmentFlag, QPtr};
+use qt_network::QTcpSocket;
+use qt_widgets::QTextBrowser;
+
 use crate::binding::color::{Colored, RColor, RColorPair};
 use crate::binding::text::Cursor;
 use crate::binding::{Printable, RIODevice, RWidget};
@@ -5,16 +17,6 @@ use crate::client::color::Colors;
 use crate::tr::TrContext;
 use crate::ui::{Notepad, Pad};
 use crate::world::World;
-use hashbrown::HashMap;
-use iter_chunks::IterChunks;
-use mlua::{FromLua, MultiValue, UserData, UserDataMethods};
-use qt_core::{AlignmentFlag, QPtr};
-use qt_network::QTcpSocket;
-use qt_widgets::QTextBrowser;
-use std::borrow::Borrow;
-use std::cell::RefCell;
-use std::io::{self, Write};
-use std::rc::Rc;
 
 #[derive(RWidget, TrContext)]
 pub struct Api {

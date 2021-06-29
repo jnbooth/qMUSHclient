@@ -1,6 +1,8 @@
-use crate::enums::Enum;
 use std::str;
+
 use uuid::Uuid;
+
+use crate::enums::Enum;
 
 pub type PluginId = Uuid;
 

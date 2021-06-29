@@ -1,11 +1,13 @@
-use super::variant::{self, RVariant};
-use super::{Binding, QList};
-use cpp_core::CppBox;
-use qt_core::q_meta_type::Type;
-use qt_core::{QBox, QSettings, QString, QStringList};
 use std::convert::TryFrom;
 use std::fmt::{self, Display, Formatter};
 use std::ops::Deref;
+
+use cpp_core::CppBox;
+use qt_core::q_meta_type::Type;
+use qt_core::{QBox, QSettings, QString, QStringList};
+
+use super::variant::{self, RVariant};
+use super::{Binding, QList};
 
 pub trait StoreAsQ {
     type Store;

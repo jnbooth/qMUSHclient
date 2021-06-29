@@ -1,9 +1,11 @@
+use std::fmt::{self, Display, Formatter};
+use std::{error, str};
+
+use mlua::{self, Lua, Value};
+
 use crate::client::state::Phase;
 use crate::enums::Enum;
 use crate::script::ScriptArg;
-use mlua::{self, Lua, Value};
-use std::fmt::{self, Display, Formatter};
-use std::{error, str};
 
 pub fn is_valid(target: &str) -> bool {
     let s: &[u8] = target.as_ref();

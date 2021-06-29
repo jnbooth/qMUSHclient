@@ -1,11 +1,12 @@
+use std::fmt::{self, Debug, Formatter};
+use std::rc::Rc;
+
 use crate::binding::color::Colored;
 use crate::binding::text::CharFormat;
 use crate::client::color::WorldColor;
 use crate::enums::{Enum, EnumSet};
 use crate::mxp::Span;
 use crate::world::World;
-use std::fmt::{self, Debug, Formatter};
-use std::rc::Rc;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum TextStyle {
