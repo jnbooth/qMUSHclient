@@ -1,8 +1,9 @@
 use hashbrown::hash_map::{DefaultHashBuilder, Entry, HashMap, OccupiedError};
 use std::borrow::{Borrow, ToOwned};
 use std::cmp::Ordering;
-use std::fmt::{self, Debug, Formatter};
+use std::fmt::{self, Debug, Display, Formatter};
 use std::hash::{BuildHasher, Hash, Hasher};
+use std::iter::FromIterator;
 use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
 
@@ -153,6 +154,17 @@ impl<R: ?Sized, K, V, S> DerefMut for AsRefHashMap<R, K, V, S> {
     }
 }
 
+impl<R, K, V, S> FromIterator<(K, V)> for AsRefHashMap<R, K, V, S>
+where
+    R: ?Sized,
+    K: Eq + Hash,
+    S: BuildHasher + Default,
+{
+    fn from_iter<T: IntoIterator<Item = (K, V)>>(iter: T) -> Self {
+        Self(HashMap::from_iter(iter), PhantomData)
+    }
+}
+
 pub trait ToCaseFold<Target> {
     fn to_case_fold(self) -> Target;
 }
@@ -199,15 +211,8 @@ impl<'a, S: ToOwned + AsRef<str> + ?Sized> CaseFold<'a, S> {
 }
 
 impl<'a, S: ?Sized + ToOwned + AsRef<str>> CaseFold<'a, S> {
-    // to_case_fold is a simple cast here (see below). Should be a no-op as long as everything is
-    // inlined.
-    // Because as_ref is called here, as_ref calls in ascii::CaseFold and unicode::CaseFold will be
-    // no-ops as well.
-    // Therefore, this approach wins out over holding actual ascii::CaseFolds or unicode::CaseFolds
-    // in the enum fields.
-
     #[inline]
-    fn as_unicode(&self) -> &unicode::CaseFold<str> {
+    fn as_str(&self) -> &str {
         match self {
             Self::Ascii(s) => s.borrow(),
             Self::BorrowedAscii(s) => s,
@@ -215,7 +220,15 @@ impl<'a, S: ?Sized + ToOwned + AsRef<str>> CaseFold<'a, S> {
             Self::BorrowedUnicode(s) => s,
         }
         .as_ref()
-        .to_case_fold()
+    }
+
+    // to_case_fold is a simple cast here (see below). Should be a no-op as long as everything is
+    // inlined. Because as_str calls as_ref, as_ref calls in ascii::CaseFold and unicode::CaseFold
+    // will be no-ops as well. Therefore, this approach wins out over holding actual
+    // ascii::CaseFolds or unicode::CaseFolds in the enum fields.
+    #[inline]
+    fn as_unicode(&self) -> &unicode::CaseFold<str> {
+        self.as_str().to_case_fold()
     }
 
     #[inline]
@@ -295,6 +308,20 @@ impl<'a, S: ?Sized + AsRef<str> + ToOwned> Ord for CaseFold<'a, S> {
     }
 }
 
+impl<'a, S: ?Sized + AsRef<str> + ToOwned> Debug for CaseFold<'a, S> {
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        Debug::fmt(self.as_str(), f)
+    }
+}
+
+impl<'a, S: ?Sized + AsRef<str> + ToOwned> Display for CaseFold<'a, S> {
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        Display::fmt(self.as_str(), f)
+    }
+}
+
 impl<'a, S: AsRef<str> + ToOwned> Borrow<unicode::CaseFold<str>> for CaseFold<'a, S> {
     fn borrow(&self) -> &unicode::CaseFold<str> {
         self.as_unicode()
@@ -331,12 +358,23 @@ macro_rules! impl_ci {
                 Self(s)
             }
         }
+        impl<S: ?Sized + AsRef<str>> CaseFold<S> {
+            pub fn as_str(&self) -> &str {
+                self.0.as_ref()
+            }
+        }
 
-        impl<'a, S: ?Sized> super::ToCaseFold<&'a CaseFold<S>> for &'a S {
+        impl<'a, S: ?Sized> ToCaseFold<&'a CaseFold<S>> for &'a S {
             #[inline]
             fn to_case_fold(self) -> &'a CaseFold<S> {
                 // SAFETY: Basic pointer stuff. This is the exact same trick used by Path and OsStr.
                 unsafe { &*(self as *const S as *const CaseFold<S>) }
+            }
+        }
+        impl<'a, S: ?Sized> From<&'a S> for &'a CaseFold<S> {
+            #[inline]
+            fn from(value: &'a S) -> Self {
+                value.to_case_fold()
             }
         }
 
@@ -350,7 +388,7 @@ macro_rules! impl_ci {
         impl<S> From<S> for CaseFold<S> {
             #[inline]
             fn from(value: S) -> Self {
-                Self(value)
+                value.to_case_fold()
             }
         }
 
@@ -375,17 +413,28 @@ macro_rules! impl_ci {
             }
         }
 
-        pub type CaseFoldMap<K, V, S = hashbrown::hash_map::DefaultHashBuilder> =
+        impl<'a, S: ?Sized + AsRef<str>> Display for CaseFold<S> {
+            #[inline]
+            fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                self.as_str().fmt(f)
+            }
+        }
+
+        pub type CaseFoldMap<K, V, S = DefaultHashBuilder> =
             super::AsRefHashMap<CaseFold<$t>, CaseFold<K>, V, S>;
     };
 }
 
 pub mod ascii {
-    use super::ToCaseFold;
+    use std::fmt::{self, Display, Formatter};
     use std::hash::{Hash, Hasher};
     use std::{iter, slice};
 
-    #[derive(Clone, Debug, Default)]
+    use hashbrown::hash_map::DefaultHashBuilder;
+
+    use super::ToCaseFold;
+
+    #[derive(Copy, Clone, Debug, Default)]
     pub struct CaseFold<S: ?Sized>(S);
 
     impl<S: ?Sized + AsRef<[u8]>> CaseFold<S> {
@@ -422,17 +471,28 @@ pub mod ascii {
         }
     }
 
+    impl AsRef<CaseFold<[u8]>> for String {
+        #[inline]
+        fn as_ref(&self) -> &CaseFold<[u8]> {
+            self.as_bytes().to_case_fold()
+        }
+    }
+
     impl_ci!([u8]);
 }
 
 pub mod unicode {
-    use super::ToCaseFold;
     use std::char::ToLowercase;
+    use std::fmt::{self, Display, Formatter};
     use std::hash::{Hash, Hasher};
     use std::iter;
     use std::str::Chars;
 
-    #[derive(Clone, Debug, Default)]
+    use hashbrown::hash_map::DefaultHashBuilder;
+
+    use super::ToCaseFold;
+
+    #[derive(Copy, Clone, Debug, Default)]
     pub struct CaseFold<S: ?Sized>(S);
 
     impl<S: ?Sized + AsRef<str>> CaseFold<S> {
@@ -466,6 +526,13 @@ pub mod unicode {
         #[inline]
         fn as_ref(&self) -> &CaseFold<str> {
             self.to_case_fold()
+        }
+    }
+
+    impl AsRef<CaseFold<str>> for String {
+        #[inline]
+        fn as_ref(&self) -> &CaseFold<str> {
+            self.as_str().to_case_fold()
         }
     }
 

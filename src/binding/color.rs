@@ -136,6 +136,20 @@ impl RColor {
             }
         }
     }
+
+    pub fn reshade(&self, adjust: c_int) -> Self {
+        unsafe {
+            let mut h = 0;
+            let mut s = 0;
+            let mut l = 0;
+            let mut a = 0;
+            self.color()
+                .to_hsl()
+                .get_hsl_4a(&mut h, &mut s, &mut l, &mut a);
+            QColor::from_hsl_4a(h, s, (l + adjust).clamp(0, 359), a).into()
+        }
+    }
+
     pub fn pick<P: CastInto<Ptr<QWidget>>>(&self, parent: P) -> Option<Self> {
         unsafe {
             let dlg = QColorDialog::from_q_color_q_widget(self.color(), parent);

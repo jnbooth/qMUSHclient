@@ -1,5 +1,12 @@
-use crate::enums::{Enum, EnumSet};
+use std::fmt::Write;
 use std::str;
+
+use once_cell::sync::Lazy;
+
+use super::Arguments;
+use crate::caseinsensitive::ascii::{CaseFold, CaseFoldMap};
+use crate::caseinsensitive::ToCaseFold;
+use crate::enums::{Enum, EnumSet};
 
 /// Outstanding (unclosed) tags.
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -10,16 +17,23 @@ pub struct Tag {
     pub secure: bool,
     /// Protected from reset?
     pub no_reset: bool,
+    /// Index in a style's span list.
+    pub span_index: usize,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum TagFlag {
     /// Tag is an open one (otherwise secure)
     Open,
+    /// Tag is a command (doesn't have closing tag)
     Command,
+    /// Tag is Pueblo-only
     Pueblo,
+    /// Tag is MXP-only
     Mxp,
+    /// Not closed by reset (eg. body)
     NoReset,
+    /// Not really implemented (for <supports> tag)
     NotImp,
 }
 
@@ -117,6 +131,7 @@ pub enum Action {
     Mxp,
     /// what commands we support
     Support,
+
     /// client options set
     SetOption,
     /// server sets option
@@ -144,112 +159,170 @@ pub struct Atom {
     /// Its action.
     pub action: Action,
     /// Supported arguments, e.g. href, hint
-    pub args: &'static [&'static str],
+    pub args: &'static [&'static CaseFold<str>],
 }
 
 impl Atom {
-    pub const fn exists(name: &str) -> bool {
-        Self::get(name).is_some()
-    }
-
-    // Atoms, true to their name, are very small. An Atom is slightly more than twice the size of an
-    // &Atom. Furthermore, creating an Atom involves no heap allocations. So there is no good
-    // reason to use a repository of &'static Atoms instead of simply creating new ones as needed.
-    pub const fn get(name: &str) -> Option<Self> {
-        const fn atom(
-            name: &'static str,
-            flags: EnumSet<TagFlag>,
-            action: Action,
-            args: &'static [&'static str],
-        ) -> Option<Atom> {
-            Some(Atom {
+    const ALL: Lazy<CaseFoldMap<String, Self>> = Lazy::new(|| {
+        let mut all = CaseFoldMap::new();
+        let mut add = |name: &'static str, flags, action, args| {
+            all.insert(name.to_owned(), Atom {
                 name,
                 flags,
                 action,
                 args,
             })
-        }
+        };
+        // FIXME(#51911) give CaseFold<str> its own const fn conversion from str once const derefs
+        // are possible, or just come up with a different way to do this
+        use std::mem::transmute as case;
+
         use Action::*;
         use TagFlag::*;
-        match name.as_bytes() {
-            b"bold" => atom("bold", enums![Open], Bold, &[]),
-            b"b" => atom("b", enums![Open], Bold, &[]),
-            b"high" => atom("high", enums![Open], High, &[]),
-            b"h" => atom("h", enums![Open], High, &[]),
-            b"underline" => atom("underline", enums![Open], Underline, &[]),
-            b"u" => atom("u", enums![Open], Underline, &[]),
-            b"italic" => atom("italic", enums![Open], Italic, &[]),
-            b"i" => atom("i", enums![Open], Italic, &[]),
-            b"em" => atom("em", enums![Open], Italic, &[]),
-            b"color" => atom("color", enums![Open], Color, &["fore", "back"]),
-            b"c" => atom("c", enums![Open], Color, &["fore", "back"]),
-            b"s" => atom("s", enums![Open, NotImp], Strike, &[]),
-            b"strike" => atom("strike", enums![Open, NotImp], Strike, &[]),
-            b"strong" => atom("strong", enums![Open], Bold, &[]),
-            b"small" => atom("small", enums![Open, NotImp], Small, &[]),
-            b"tt" => atom("tt", enums![Open, NotImp], Tt, &[]),
-            b"frame" => atom("frame", enums![NotImp], Frame, &[]),
-            b"dest" => atom("dest", enums![NotImp], Dest, &[]),
-            b"image" => atom("image", enums![Command, NotImp], Image, &["url", "fname"]),
-            b"filter" => atom("filter", enums![NotImp], Filter, &[]),
-            b"a" => atom("a", enums![], Hyperlink, &["href", "xch_cmd", "xch_hint"]),
-            b"h1" => atom("h1", enums![NotImp], H1, &[]),
-            b"h2" => atom("h2", enums![NotImp], H2, &[]),
-            b"h3" => atom("h3", enums![NotImp], H3, &[]),
-            b"h4" => atom("h4", enums![NotImp], H4, &[]),
-            b"h5" => atom("h5", enums![NotImp], H5, &[]),
-            b"h6" => atom("h6", enums![NotImp], H6, &[]),
-            b"hr" => atom("hr", enums![Command], Hr, &[]),
-            b"nobr" => atom("nobr", enums![NotImp], NoBr, &[]),
-            b"p" => atom("p", enums![], P, &[]),
-            b"script" => atom("script", enums![NotImp], Script, &[]),
-            b"ul" => atom("ul", enums![], Ul, &[]),
-            b"ol" => atom("ol", enums![], Ol, &[]),
-            b"samp" => atom("samp", enums![], Samp, &[]),
-            b"center" => atom("center", enums![NotImp], Center, &[]),
-            b"var" => atom("var", enums![], Var, &[]),
-            b"v" => atom("v", enums![], Var, &[]),
-            b"gauge" => atom("gauge", enums![NotImp], Gauge, &[]),
-            b"stat" => atom("stat", enums![NotImp], Stat, &[]),
-            b"expire" => atom("expire", enums![NotImp], Expire, &[]),
-            // strictly speaking <LI> isn't a command, but few people bother with </li>
-            b"li" => atom("li", enums![Command], Li, &[]),
-            b"sound" => atom("sound", enums![Command, NotImp], Sound, &[]),
-            b"music" => atom("music", enums![Command, NotImp], Sound, &[]),
-            b"br" => atom("br", enums![Command], Br, &[]),
-            b"username" => atom("username", enums![Command], User, &[]),
-            b"user" => atom("user", enums![Command], User, &[]),
-            b"password" => atom("password", enums![Command], Password, &[]),
-            b"pass" => atom("pass", enums![Command], Password, &[]),
-            b"relocate" => atom("relocate", enums![Command, NotImp], Relocate, &[]),
-            b"version" => atom("version", enums![Command], Version, &[]),
-            b"reset" => atom("reset", enums![Command], Reset, &[]),
-            b"mxp" => atom("mxp", enums![Command], Reset, &["off"]),
-            b"support" => atom("support", enums![Command], Support, &[]),
-            b"option" => atom("option", enums![Command], SetOption, &[]),
-            b"afk" => atom("afk", enums![Command], Afk, &[]),
-            b"recommend_option" => atom("recommend_option", enums![Command], RecommendOption, &[]),
-            b"pre" => atom("pre", enums![Pueblo], Pre, &[]),
-            b"body" => atom("body", enums![Pueblo, NoReset], Body, &[]),
-            b"head" => atom("head", enums![Pueblo, NoReset], Head, &[]),
-            b"html" => atom("html", enums![Pueblo, NoReset], Html, &[]),
-            b"title" => atom("title", enums![Pueblo], Title, &[]),
-            b"img" => atom("img", enums![Pueblo, Command], Img, &["src", "xch_mode"]),
-            b"xch_page" => atom("xch_page", enums![Pueblo, Command], XchPage, &[]),
-            b"xch_pane" => atom("xch_pane", enums![Pueblo, Command, NotImp], XchPane, &[]),
-            b"font" => atom(
-                "font",
-                enums![Open],
-                Font,
-                &["color", "back", "fgcolor", "bgcolor"],
-            ),
-            b"send" => atom(
-                "send",
-                enums![],
-                Send,
-                &["href", "hint", "xch_cmd", "xch_hint", "prompt"],
-            ),
-            _ => None,
+        add("bold", enums![Open], Bold, &[]);
+        add("b", enums![Open], Bold, &[]);
+        add("high", enums![Open], High, &[]);
+        add("h", enums![Open], High, &[]);
+        add("underline", enums![Open], Underline, &[]);
+        add("u", enums![Open], Underline, &[]);
+        add("italic", enums![Open], Italic, &[]);
+        add("i", enums![Open], Italic, &[]);
+        add("em", enums![Open], Italic, &[]);
+        const COLOR_ARGS: &[&CaseFold<str>] = unsafe { &[case("fore"), case("back")] };
+        add("color", enums![Open], Color, COLOR_ARGS);
+        add("c", enums![Open], Color, COLOR_ARGS);
+        add("s", enums![Open, NotImp], Strike, &[]);
+        add("strike", enums![Open, NotImp], Strike, &[]);
+        add("strong", enums![Open], Bold, &[]);
+        add("small", enums![Open, NotImp], Small, &[]);
+        add("tt", enums![Open, NotImp], Tt, &[]);
+        add("frame", enums![NotImp], Frame, &[]);
+        add("dest", enums![NotImp], Dest, &[]);
+        const IMAGE_ARGS: &[&CaseFold<str>] = unsafe { &[case("url"), case("fname")] };
+        add("image", enums![Command, NotImp], Image, IMAGE_ARGS);
+        add("filter", enums![NotImp], Filter, &[]);
+        const A_ARGS: &[&CaseFold<str>] =
+            unsafe { &[case("href"), case("xch_cmd"), case("xch_hint")] };
+        add("a", enums![], Hyperlink, A_ARGS);
+        add("h1", enums![NotImp], H1, &[]);
+        add("h2", enums![NotImp], H2, &[]);
+        add("h3", enums![NotImp], H3, &[]);
+        add("h4", enums![NotImp], H4, &[]);
+        add("h5", enums![NotImp], H5, &[]);
+        add("h6", enums![NotImp], H6, &[]);
+        add("hr", enums![Command], Hr, &[]);
+        add("nobr", enums![NotImp], NoBr, &[]);
+        add("p", enums![], P, &[]);
+        add("script", enums![NotImp], Script, &[]);
+        add("ul", enums![], Ul, &[]);
+        add("ol", enums![], Ol, &[]);
+        add("samp", enums![], Samp, &[]);
+        add("center", enums![NotImp], Center, &[]);
+        add("var", enums![], Var, &[]);
+        add("v", enums![], Var, &[]);
+        add("gauge", enums![NotImp], Gauge, &[]);
+        add("stat", enums![NotImp], Stat, &[]);
+        add("expire", enums![NotImp], Expire, &[]);
+        // strictly speaking <LI> isn't a command, but few people bother with </li>
+        add("li", enums![Command], Li, &[]);
+        add("sound", enums![Command, NotImp], Sound, &[]);
+        add("music", enums![Command, NotImp], Sound, &[]);
+        add("br", enums![Command], Br, &[]);
+        add("username", enums![Command], User, &[]);
+        add("user", enums![Command], User, &[]);
+        add("password", enums![Command], Password, &[]);
+        add("pass", enums![Command], Password, &[]);
+        add("relocate", enums![Command, NotImp], Relocate, &[]);
+        add("version", enums![Command], Version, &[]);
+        add("reset", enums![Command], Reset, &[]);
+        const MXP_ARGS: &[&CaseFold<str>] = unsafe { &[case("off")] };
+        add("mxp", enums![Command], Reset, MXP_ARGS);
+        add("support", enums![Command], Support, &[]);
+        add("option", enums![Command], SetOption, &[]);
+        add("afk", enums![Command], Afk, &[]);
+        add("recommend_option", enums![Command], RecommendOption, &[]);
+        add("pre", enums![Pueblo], Pre, &[]);
+        add("body", enums![Pueblo, NoReset], Body, &[]);
+        add("head", enums![Pueblo, NoReset], Head, &[]);
+        add("html", enums![Pueblo, NoReset], Html, &[]);
+        add("title", enums![Pueblo], Title, &[]);
+        const IMG_ARGS: &[&CaseFold<str>] = unsafe { &[case("src"), case("xch_mode")] };
+        add("img", enums![Pueblo, Command], Img, IMG_ARGS);
+        add("xch_page", enums![Pueblo, Command], XchPage, &[]);
+        add("xch_pane", enums![Pueblo, Command, NotImp], XchPane, &[]);
+        const FONT_ARGS: &[&CaseFold<str>] = unsafe {
+            &[
+                case("color"),
+                case("back"),
+                case("fgcolor"),
+                case("bgcolor"),
+            ]
+        };
+        add("font", enums![Open], Font, FONT_ARGS);
+        const ADD_ARGS: &[&CaseFold<str>] = unsafe {
+            &[
+                case("href"),
+                case("hint"),
+                case("xch_cmd"),
+                case("xch_hint"),
+                case("prompt"),
+            ]
+        };
+        add("send", enums![], Send, ADD_ARGS);
+
+        all
+    });
+
+    pub fn exists(name: &str) -> bool {
+        Self::ALL.contains_key(name)
+    }
+
+    pub fn get(name: &str) -> Option<Self> {
+        Self::ALL.get(name).map(Clone::clone)
+    }
+
+    pub fn supported(args: Arguments) -> String {
+        const ERR: &'static str = "unexpected format error in Atom::supported";
+        let mut supported = String::from("\x1B[1z<SUPPORTS ");
+        if args.is_empty() {
+            for atom in Self::ALL.values() {
+                write!(supported, "+{} ", atom.name).expect(ERR);
+                for atom_arg in atom.args {
+                    write!(supported, "+{}.{} ", atom.name, atom_arg).expect(ERR);
+                }
+            }
+        } else {
+            for arg in args.values() {
+                let mut questions = arg.split(".");
+                let tag = questions.next().unwrap();
+                match Atom::get(tag) {
+                    None => write!(supported, "-{} ", tag).expect(ERR),
+                    Some(atom) if atom.flags.contains(TagFlag::NotImp) =>
+                        write!(supported, "-{} ", tag).expect(ERR),
+                    Some(atom) => {
+                        match questions.next() {
+                            None => write!(supported, "+{} ", tag).expect(ERR),
+                            Some("*") => {
+                                // they want list of options for this tag
+                                // now list the sub-items it supports
+                                for atom_arg in atom.args {
+                                    write!(supported, "+{}.{} ", atom.name, atom_arg).expect(ERR);
+                                }
+                            }
+                            Some(subtag) => {
+                                let can = if atom.args.contains(&subtag.to_case_fold()) {
+                                    '+'
+                                } else {
+                                    '-'
+                                };
+                                write!(supported, "{}{}", can, subtag).expect(ERR);
+                            }
+                        }
+                    }
+                }
+            }
         }
+        supported.push_str(">\n");
+        supported
     }
 }

@@ -3,7 +3,7 @@ use crate::binding::RFont;
 use super::color::{Colored, RColor};
 use super::{Binding, Printable, RImage};
 use cpp_core::{CppBox, Ptr, StaticUpcast};
-use qt_core::{LayoutDirection, QObject, QPtr};
+use qt_core::{LayoutDirection, QObject, QPtr, QString};
 use qt_gui::q_font::Weight;
 use qt_gui::q_text_cursor::{MoveMode, MoveOperation, SelectionType};
 use qt_gui::*;
@@ -406,6 +406,11 @@ impl Block {
     pub fn len(&self) -> c_int {
         unsafe { self.0.length() }
     }
+
+    /// Returns true if the block has no contents.
+    pub fn is_empty(&self) -> bool {
+        unsafe { self.0.length() == 0 }
+    }
     /// Returns the line count. Not all document layouts support this feature.
     pub fn line_count(&self) -> c_int {
         unsafe { self.0.line_count() }
@@ -501,6 +506,49 @@ impl CharFormat {
     pub fn set_underline(&self, enable: bool) {
         unsafe {
             self.0.set_font_underline(enable);
+        }
+    }
+
+    pub fn set_anchor(&self, enable: bool) {
+        unsafe {
+            self.0.set_anchor(enable);
+        }
+    }
+
+    pub fn set_anchor_href(&self, href: &str) {
+        unsafe {
+            self.0.set_anchor_href(&QString::from_std_str(href));
+        }
+    }
+
+    pub fn clear_anchor_href(&self) {
+        unsafe {
+            self.0.set_anchor_href(&QString::new());
+        }
+    }
+
+    pub fn set_anchor_name(&self, name: &str) {
+        unsafe {
+            self.0.set_anchor_name(&QString::from_std_str(name));
+        }
+    }
+
+    pub fn clear_anchor_name(&self) {
+        unsafe {
+            self.0.set_anchor_name(&QString::new());
+        }
+    }
+
+    pub fn set_tooltip(&self, tooltip: &str) {
+        unsafe {
+            self.0.set_tool_tip(&QString::from_std_str(tooltip));
+        }
+    }
+
+    pub fn clear_tooltip(&self) {
+        unsafe {
+            self.0.set_tool_tip(&QString::new()); // TODO does this actually
+                                                  // work?
         }
     }
 }

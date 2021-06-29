@@ -1,30 +1,18 @@
 use crate::enums::{Enum, EnumSet};
-use hashbrown::hash_map::{self, HashMap};
-use std::iter::{Chain, Enumerate, Map};
+use hashbrown::hash_map;
+use mlua::{Lua, Value};
+use std::iter::{self, Chain, Enumerate, Map};
 use std::ops::{Deref, DerefMut};
 use std::{slice, str};
 
 use super::{validate, Error, ParseError, Words};
+use crate::caseinsensitive::ascii::{CaseFold, CaseFoldMap};
+use crate::script::ScriptArg;
 
 pub type Argument = String;
-/*
-#[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
-/// Arguments to an MXP tag.
-pub struct Argument {
-    /// Value of argument, e.g. red
-    pub value: String,
-    /// Whether the argument is used
-    pub used: bool,
-}
+pub type Arg = str;
 
-impl Argument {
-    pub const fn new(value: String) -> Self {
-        Self { value, used: false }
-    }
-}
-*/
-
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum ArgumentIndex<'a> {
     Positional(usize),
     Named(&'a str),
@@ -37,6 +25,21 @@ impl<'a> From<usize> for ArgumentIndex<'a> {
 impl<'a> From<&'a str> for ArgumentIndex<'a> {
     fn from(value: &'a str) -> Self {
         Self::Named(value)
+    }
+}
+impl<'a> ArgumentIndex<'a> {
+    pub fn is_positional(self) -> bool {
+        match self {
+            Self::Positional(_) => true,
+            Self::Named(_) => false,
+        }
+    }
+
+    pub fn is_named(self) -> bool {
+        match self {
+            Self::Positional(_) => false,
+            Self::Named(_) => true,
+        }
     }
 }
 
@@ -87,18 +90,23 @@ impl SizeGuess {
 
 #[derive(Clone, Debug)]
 pub struct Scan<'a> {
-    inner: slice::Iter<'a, Argument>,
-    named: &'a HashMap<String, Argument>,
+    inner: iter::Map<slice::Iter<'a, Argument>, fn(&Argument) -> &Arg>,
+    named: &'a CaseFoldMap<String, Argument>,
 }
 
 impl<'a> Scan<'a> {
-    pub fn next_or(&mut self, name: &str) -> Option<&Argument> {
-        self.inner.next().or_else(|| self.named.get(name))
+    pub fn next_or(&mut self, names: &[&str]) -> Option<&Arg> {
+        self.inner.next().or_else(|| {
+            names
+                .iter()
+                .find_map(|&name| self.named.get(name))
+                .map(String::as_str)
+        })
     }
 }
 
 impl<'a> Deref for Scan<'a> {
-    type Target = slice::Iter<'a, Argument>;
+    type Target = iter::Map<slice::Iter<'a, Argument>, fn(&Argument) -> &Arg>;
 
     fn deref(&self) -> &Self::Target {
         &self.inner
@@ -114,11 +122,15 @@ impl<'a> DerefMut for Scan<'a> {
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct Arguments {
     positional: Vec<Argument>,
-    named: HashMap<String, Argument>,
+    named: CaseFoldMap<String, Argument>,
     keywords: EnumSet<Keyword>,
 }
 
 impl Arguments {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
     pub fn len(&self) -> usize {
         self.positional.len() + self.named.len()
     }
@@ -127,11 +139,12 @@ impl Arguments {
         self.positional.is_empty() && self.named.is_empty()
     }
 
-    pub fn get<'a, Idx: Into<ArgumentIndex<'a>>>(&self, idx: Idx) -> Option<&Argument> {
+    pub fn get<'a, Idx: Into<ArgumentIndex<'a>>>(&self, idx: Idx) -> Option<&Arg> {
         match idx.into() {
             ArgumentIndex::Positional(i) => self.positional.get(i),
             ArgumentIndex::Named(name) => self.named.get(name),
         }
+        .map(String::as_str)
     }
 
     pub fn get_mut<'a, Idx: Into<ArgumentIndex<'a>>>(&mut self, idx: Idx) -> Option<&mut Argument> {
@@ -145,7 +158,15 @@ impl Arguments {
         self.keywords.contains(k)
     }
 
-    pub fn iter(&self) -> impl Iterator<Item = (ArgumentIndex<'_>, &Argument)> {
+    pub fn push(&mut self, arg: Argument) {
+        self.positional.push(arg);
+    }
+
+    pub fn set(&mut self, key: &str, arg: Argument) {
+        self.named.insert(key.to_owned(), arg);
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item = (ArgumentIndex<'_>, &Arg)> {
         self.into_iter()
     }
 
@@ -153,9 +174,20 @@ impl Arguments {
         self.into_iter()
     }
 
+    pub fn values(&self) -> impl Iterator<Item = &Arg> {
+        self.positional
+            .iter()
+            .chain(self.named.values())
+            .map(String::as_str)
+    }
+
+    pub fn values_mut(&mut self) -> impl Iterator<Item = &mut Argument> {
+        self.positional.iter_mut().chain(self.named.values_mut())
+    }
+
     pub fn scan(&self) -> Scan {
         Scan {
-            inner: self.positional.iter(),
+            inner: self.positional.iter().map(String::as_str),
             named: &self.named,
         }
     }
@@ -168,7 +200,7 @@ impl Arguments {
         let guess = SizeGuess::guess(iter.as_str().as_bytes());
         let mut this = Self {
             positional: Vec::with_capacity(guess.positional),
-            named: HashMap::with_capacity(guess.named),
+            named: CaseFoldMap::with_capacity(guess.named),
             keywords: EnumSet::new(),
         };
         this.build(iter)?;
@@ -210,9 +242,100 @@ impl Arguments {
     }
 }
 
+impl ScriptArg for &Arguments {
+    fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+        let pos_iter = self
+            .positional
+            .iter()
+            .enumerate()
+            .map(|(i, v)| (Value::Integer(i as i64), v.as_str()));
+        let named_iter: mlua::Result<Vec<_>> = self
+            .named
+            .iter()
+            .map(|(k, v)| Ok((Value::String(lua.create_string(k.as_str())?), v.as_str())))
+            .collect();
+        lua.create_table_from(named_iter?.into_iter().chain(pos_iter))
+            .map(Value::Table)
+    }
+}
+impl ScriptArg for Arguments {
+    fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+        (&self).to_arg(lua)
+    }
+}
+
+// Just some nicknames for internal use
+type Idx<'a> = ArgumentIndex<'a>;
+type Iter<'a, A, B, SliceIter, MapIter> = Chain<
+    Map<Enumerate<SliceIter>, fn((usize, A)) -> (Idx<'a>, B)>,
+    Map<MapIter, fn((&'a CaseFold<String>, A)) -> (Idx<'a>, B)>,
+>;
+
+impl<'a> IntoIterator for &'a Arguments {
+    type IntoIter = Iter<
+        'a,
+        &'a Argument,
+        &'a Arg,
+        slice::Iter<'a, Argument>,
+        hash_map::Iter<'a, CaseFold<String>, Argument>,
+    >;
+    type Item = (Idx<'a>, &'a Arg);
+
+    fn into_iter(self) -> Self::IntoIter {
+        fn index_positional<'a>((i, x): (usize, &'a Argument)) -> (Idx<'a>, &'a Arg) {
+            (Idx::Positional(i), x.as_str())
+        }
+        fn index_named<'a>((k, v): (&'a CaseFold<String>, &'a Argument)) -> (Idx<'a>, &'a Arg) {
+            (Idx::Named(k.as_str()), v.as_str())
+        }
+        let positional = self
+            .positional
+            .iter()
+            .enumerate()
+            .map(index_positional as fn((usize, &'a Argument)) -> (Idx<'a>, &'a Arg));
+        let named = self
+            .named
+            .iter()
+            .map(index_named as fn((&'a CaseFold<String>, &'a Argument)) -> (Idx<'a>, &'a Arg));
+        positional.chain(named)
+    }
+}
+
+impl<'a> IntoIterator for &'a mut Arguments {
+    type IntoIter = Iter<
+        'a,
+        &'a mut Argument,
+        &'a mut Argument,
+        slice::IterMut<'a, Argument>,
+        hash_map::IterMut<'a, CaseFold<String>, Argument>,
+    >;
+    type Item = (Idx<'a>, &'a mut Argument);
+
+    fn into_iter(self) -> Self::IntoIter {
+        fn index_positional<'a>((i, x): (usize, &'a mut Argument)) -> (Idx<'a>, &'a mut Argument) {
+            (Idx::Positional(i), x)
+        }
+        fn index_named<'a>(
+            (k, v): (&'a CaseFold<String>, &'a mut Argument),
+        ) -> (Idx<'a>, &'a mut Argument) {
+            (Idx::Named(k.as_str()), v)
+        }
+        let positional =
+            self.positional.iter_mut().enumerate().map(
+                index_positional as fn((usize, &'a mut Argument)) -> (Idx<'a>, &'a mut Argument),
+            );
+        let named = self.named.iter_mut().map(
+            index_named
+                as fn((&'a CaseFold<String>, &'a mut Argument)) -> (Idx<'a>, &'a mut Argument),
+        );
+        positional.chain(named)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::caseinsensitive::ToCaseFold;
 
     #[test]
     fn arguments() {
@@ -224,69 +347,10 @@ mod tests {
                 .collect(),
             named: [("flag", "RoomName")]
                 .iter()
-                .map(|(k, v)| (k.to_string(), v.to_string()))
+                .map(|(k, v)| (k.to_string().to_case_fold(), v.to_string()))
                 .collect(),
             keywords: Default::default(),
         };
         assert_eq!(args, should_be);
-    }
-}
-
-// Just some nicknames for internal use
-type Idx<'a> = ArgumentIndex<'a>;
-type Arg = Argument;
-type Iter2<'a, A, SliceIter, MapIter> = Chain<
-    Map<Enumerate<SliceIter>, fn((usize, A)) -> (Idx<'a>, A)>,
-    Map<MapIter, fn((&'a String, A)) -> (Idx<'a>, A)>,
->;
-
-impl<'a> IntoIterator for &'a Arguments {
-    type Item = (Idx<'a>, &'a Arg);
-
-    type IntoIter = Iter2<'a, &'a Arg, slice::Iter<'a, Arg>, hash_map::Iter<'a, String, Arg>>;
-
-    fn into_iter(self) -> Self::IntoIter {
-        fn index_positional<'a>((i, x): (usize, &'a Arg)) -> (Idx<'a>, &'a Arg) {
-            (Idx::Positional(i), x)
-        }
-        fn index_named<'a>((k, v): (&'a String, &'a Arg)) -> (Idx<'a>, &'a Arg) {
-            (Idx::Named(k.as_str()), v)
-        }
-        let positional = self
-            .positional
-            .iter()
-            .enumerate()
-            .map(index_positional as fn((usize, &'a Arg)) -> (Idx<'a>, &'a Arg));
-        let named = self
-            .named
-            .iter()
-            .map(index_named as fn((&'a String, &'a Arg)) -> (Idx<'a>, &'a Arg));
-        positional.chain(named)
-    }
-}
-
-impl<'a> IntoIterator for &'a mut Arguments {
-    type Item = (Idx<'a>, &'a mut Arg);
-
-    type IntoIter =
-        Iter2<'a, &'a mut Arg, slice::IterMut<'a, Arg>, hash_map::IterMut<'a, String, Arg>>;
-
-    fn into_iter(self) -> Self::IntoIter {
-        fn index_positional<'a>((i, x): (usize, &'a mut Arg)) -> (Idx<'a>, &'a mut Arg) {
-            (Idx::Positional(i), x)
-        }
-        fn index_named<'a>((k, v): (&'a String, &'a mut Arg)) -> (Idx<'a>, &'a mut Arg) {
-            (Idx::Named(k.as_str()), v)
-        }
-        let positional = self
-            .positional
-            .iter_mut()
-            .enumerate()
-            .map(index_positional as fn((usize, &'a mut Arg)) -> (Idx<'a>, &'a mut Arg));
-        let named = self
-            .named
-            .iter_mut()
-            .map(index_named as fn((&'a String, &'a mut Arg)) -> (Idx<'a>, &'a mut Arg));
-        positional.chain(named)
     }
 }

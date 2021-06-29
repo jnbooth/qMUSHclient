@@ -1,7 +1,9 @@
 use crate::api::Api;
 use crate::binding::text::Cursor;
 use crate::binding::{Printable, RColor, RIODevice, RWidget};
-use crate::constants::config;
+use crate::client::color::Colors;
+use crate::client::state::Latest;
+use crate::constants::{branding, config};
 use crate::enums::EnumSet;
 use crate::escape::{ansi, telnet};
 use crate::mxp;
@@ -9,8 +11,9 @@ use crate::prependbufreader::prepend_buf_reader;
 use crate::script::{Callback, PluginHandler, PluginId};
 use crate::tr::TrContext;
 use crate::ui::{Notepad, Pad};
-use crate::world::{UseMxp, World};
-use qt_core::{AlignmentFlag, QBox, QPtr};
+use crate::world::{AutoConnect, UseMxp, World};
+use cpp_core::CppBox;
+use qt_core::{AlignmentFlag, QBox, QPtr, QString};
 use qt_network::QTcpSocket;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::QTextBrowser;
@@ -25,7 +28,7 @@ use std::{mem, str};
 
 pub mod color;
 pub mod state;
-mod style;
+pub mod style;
 
 use color::WorldColor;
 use state::{ClientState, ConnectPhase, Iac, Mccp, MessageFlag, Phase, Source};
@@ -39,6 +42,23 @@ fn left<T>(xs: &[T], amt: usize) -> &[T] {
         &xs[..amt]
     } else {
         xs
+    }
+}
+
+#[derive(Debug)]
+pub enum Fragment {
+    Html(CppBox<QString>),
+    Text(CppBox<QString>),
+    Break,
+}
+
+impl Fragment {
+    pub fn html<S: Printable>(s: S) -> Self {
+        Self::Html(s.to_print())
+    }
+
+    pub fn text<S: Printable>(s: S) -> Self {
+        Self::Text(s.to_print())
     }
 }
 
@@ -186,14 +206,22 @@ impl Client {
         }
     }
 
-    fn print<S: Printable>(&self, s: S) {
+    fn insert_html<S: Printable>(&self, s: S) {
+        self.cursor.insert_html(s);
+    }
+
+    fn insert_text<S: Printable>(&self, s: S) {
         self.cursor.insert_text_formatted(s, self.style.format());
+    }
+
+    pub fn print<S: Printable>(&self, s: S) {
+        self.insert_text(s);
         self.scroll_to_bottom();
     }
 
     pub fn println<S: Printable>(&self, s: S) {
         self.cursor.insert_block();
-        self.cursor.insert_text_formatted(s, self.style.format());
+        self.insert_text(s);
         self.scroll_to_bottom();
     }
 
@@ -371,7 +399,7 @@ impl Client {
             None => 0,
             Some(i) => i + 1,
         };
-        self.mxp_closetags_from(closed);
+        self.mxp_close_tags_from(closed);
         self.state.in_paragraph = false;
         self.state.mxp_script = false; // cancel scripts
         self.state.pre_mode = false; // no more preformatted text
@@ -454,7 +482,7 @@ impl Client {
         }
 
         let closed = self.mxp_findtag(was_secure, name)?;
-        self.mxp_closetags_from(closed);
+        self.mxp_close_tags_from(closed);
         Ok(())
     }
 
@@ -534,29 +562,356 @@ impl Client {
         match tag {
             b'!' => self.mxp_definition(&text[1..]),
             b'/' => self.mxp_endtag(&text[1..]),
-            _ => self.mxp_starttag(&text),
+            _ => self.mxp_start_tag(&text),
         }
     }
 
-    fn mxp_starttag(&mut self, _tag: &str) -> Result<(), mxp::ParseError> {
-        /* TODO
-        let was_secure = self.state.mxp_mode.is_secure();
-        let mut no_reset = false;
+    fn mxp_start_tag(&mut self, tag: &str) -> Result<(), mxp::ParseError> {
+        self.flush(); // probably going to change style or insert HTML
+        let secure = self.state.mxp_mode.is_secure();
         self.mxp_restore_mode();
         let mut words = mxp::Words::new(tag);
         let name = words.validate_next_or(mxp::Error::InvalidElementName)?;
-        */
+        let component = self.state.mxp_elements.get_component(&name)?;
+        let flags = component.flags();
+        self.state.mxp_active_tags.push(mxp::Tag {
+            name: name.to_owned(),
+            secure,
+            no_reset: flags.contains(mxp::TagFlag::NoReset),
+            span_index: self.style.len(),
+        });
+        if !flags.contains(mxp::TagFlag::Open) && !secure {
+            return Err(mxp::ParseError::new(
+                &name,
+                mxp::Error::ElementWhenNotSecure,
+            ));
+        }
+        let argstring = words.as_str();
+        let mut args = mxp::Arguments::parse_words(words)?;
+
+        // call script if required for user-defined elements
+        if name != "afk"
+            && self.plugins.send_to_all_until(
+                Callback::MxpOpenTag,
+                (format!("{},{}", name, argstring), &args),
+                enums![true],
+            )
+        {
+            return Ok(());
+        }
+
+        if !flags.contains(mxp::TagFlag::Command) {
+            // TODO do nothing?
+        }
+
+        let mut span = self.style.span().child();
+        span.variable = component.variable();
+        let mut fragments = Vec::new();
+        let unchanged = span.clone();
+
+        match component {
+            mxp::ElementComponent::Atom(atom) => {
+                for value in args.values_mut() {
+                    *value = self.state.mxp_entities.decode(value)?;
+                }
+                self.mxp_open_atom(&mut span, &mut fragments, atom.action, args);
+            }
+            mxp::ElementComponent::Custom(el) => {
+                // create a temporary vector to avoid borrow conflict
+                // could clone the element instead, but that seems like a waste
+                let actions: Result<Vec<_>, _> = el
+                    .items
+                    .iter()
+                    .map(|item| {
+                        let mut newargs = mxp::Arguments::new();
+                        for (i, arg) in &item.arguments {
+                            let val = self.state.mxp_entities.decode_el(el, arg, &args)?;
+                            match i {
+                                mxp::ArgumentIndex::Positional(_) => newargs.push(val),
+                                mxp::ArgumentIndex::Named(key) => newargs.set(key, val),
+                            }
+                        }
+                        Ok((item.atom.action, newargs))
+                    })
+                    .collect();
+                for (action, newargs) in actions? {
+                    self.mxp_open_atom(&mut span, &mut fragments, action, newargs);
+                }
+            }
+        }
+
+        if span != unchanged {
+            self.style.push(span);
+        }
+
+        for fragment in fragments {
+            match fragment {
+                Fragment::Html(s) => self.insert_html(s),
+                Fragment::Text(s) => self.insert_text(s),
+                Fragment::Break => self.cursor.insert_block(),
+            }
+        }
+        self.scroll_to_bottom();
+
         Ok(())
     }
 
-    fn mxp_closetags_from(&mut self, pos: usize) {
-        for tag in &self.state.mxp_active_tags[pos..] {
-            self.mxp_closetag(&tag.name);
+    pub fn mxp_open_atom(
+        &mut self,
+        span: &mut mxp::Span,
+        fragments: &mut Vec<Fragment>,
+        mut action: mxp::Action,
+        args: mxp::Arguments,
+    ) {
+        use mxp::{Action, Atom, InList, Keyword, Link, SendTo};
+        let world = self.world.deref();
+        let get_color = |name: &str| {
+            if world.ignore_mxp_color_changes {
+                None
+            } else {
+                Colors::named(name)
+            }
+        };
+        // special processing for Pueblo
+        // a tag like this: <A XCH_CMD="examine #1">
+        // will convert to a SEND tag
+        if action == Action::Hyperlink {
+            if args.get("xch_cmd").is_some() {
+                self.state.pueblo_active = true; // for correct newline processing
+                action = Action::Send;
+            }
         }
-        self.state.mxp_active_tags.truncate(pos);
+        match action {
+            // temporarily make headlines the same as bold
+            Action::H1 | Action::H2 | Action::H3 | Action::H4 | Action::H5 | Action::H6 => {
+                span.flags.insert(TextStyle::Bold);
+            }
+            Action::Bold => {
+                span.flags.insert(TextStyle::Bold);
+            }
+            Action::Underline => {
+                span.flags.insert(TextStyle::Underline);
+            }
+            Action::Italic => {
+                span.flags.insert(TextStyle::Italic);
+            }
+            Action::Color => {
+                let mut scanner = args.scan();
+                if let Some(fg) = scanner.next_or(&["fore"]) {
+                    if let Some(fg) = get_color(fg) {
+                        span.foreground = Some(fg.into_owned());
+                    }
+                }
+                if let Some(bg) = scanner.next_or(&["back"]) {
+                    if let Some(bg) = get_color(bg) {
+                        span.background = Some(bg.into_owned());
+                    }
+                }
+            }
+            Action::High => {
+                span.foreground = Some(world.color(self.style.foreground()).reshade(54));
+            }
+            Action::Send => {
+                let mut scanner = args.scan();
+                span.action = scanner
+                    .next_or(&["href", "xch_cmd"])
+                    .map(ToOwned::to_owned)
+                    .map(|action| {
+                        if world.underline_hyperlinks {
+                            span.flags.insert(TextStyle::Underline);
+                        }
+                        if world.use_custom_link_color {
+                            span.foreground = Some(world.hyperlink_color.clone());
+                        }
+                        let hint = scanner
+                            .next_or(&["hint", "xch_hint"])
+                            .map(ToOwned::to_owned);
+                        let sendto = if args.has_keyword(Keyword::Prompt) {
+                            SendTo::Input
+                        } else {
+                            SendTo::World
+                        };
+                        Link {
+                            action: action.to_owned(),
+                            hint,
+                            prompts: Vec::new(),
+                            sendto,
+                        }
+                    });
+            }
+            Action::Hyperlink => {
+                let mut scanner = args.scan();
+                span.action = scanner.next_or(&["href"]).map(|action| {
+                    span.flags.insert(TextStyle::Underline);
+                    if world.use_custom_link_color {
+                        span.foreground = Some(world.hyperlink_color.clone());
+                    }
+                    Link {
+                        action: action.to_owned(),
+                        hint: None,
+                        prompts: Vec::new(),
+                        sendto: SendTo::Internet,
+                    }
+                });
+            }
+            Action::Font => {
+                let mut scanner = args.scan();
+                for fg in scanner
+                    .next_or(&["color", "fgcolor"])
+                    .unwrap_or("")
+                    .split(",")
+                {
+                    match fg.to_lowercase().as_str() {
+                        "blink" | "italic" => span.flags.insert(TextStyle::Italic),
+                        "underline" => span.flags.insert(TextStyle::Underline),
+                        "bold" => span.flags.insert(TextStyle::Bold),
+                        "inverse" => span.flags.insert(TextStyle::Inverse),
+                        color =>
+                            if let Some(fg) = get_color(color) {
+                                span.foreground = Some(fg.into_owned());
+                            },
+                    }
+                }
+                if let Some(bg) = scanner.next_or(&["back", "bgcolor"]) {
+                    if let Some(bg) = get_color(bg) {
+                        span.background = Some(bg.into_owned());
+                    }
+                }
+            }
+            Action::Version => {
+                self.send(format!(
+                    "\x1B[1zVERSION MXP=\"{}\" CLIENT={} VERSION=\"{}\" REGISTERED=YES>\n",
+                    mxp::VERSION,
+                    branding::APPNAME,
+                    branding::VERSION
+                ))
+                .ok();
+            }
+            Action::Afk => {
+                let mut scanner = args.scan();
+                if world.send_mxp_afk_response {
+                    let challenge = scanner.next_or(&["challenge"]).unwrap_or("");
+                    self.send(format!(
+                        "\x1B[1z<AFK {} {}>\n",
+                        self.latest.input.elapsed().as_secs(),
+                        challenge
+                    ))
+                    .ok();
+                }
+            }
+            Action::Support => {
+                self.send(Atom::supported(args)).ok();
+            }
+            Action::User => {
+                if !world.player.is_empty() && world.connect_method == Some(AutoConnect::MXP) {
+                    self.send(format!("{}\n", world.player)).ok();
+                }
+            }
+            Action::Password => {
+                if !world.password.is_empty() && world.connect_method == Some(AutoConnect::MXP) {
+                    self.send(format!("{}\n", world.password)).ok();
+                }
+            }
+            Action::P => {
+                fragments.push(Fragment::Break);
+                self.state.in_paragraph = true;
+            }
+            Action::Br => {
+                self.cursor.insert_html("<br>");
+                fragments.push(Fragment::html("<br>"));
+                span.foreground = Some(world.color(&WorldColor::WHITE).to_owned());
+                span.background = Some(world.color(&WorldColor::BLACK).to_owned());
+            }
+            Action::Reset => {
+                self.mxp_off(false);
+            }
+            // MXP options  (MXP OFF, MXP DEFAULT_OPEN, MXP DEFAULT_SECURE etc.
+            Action::Mxp => {
+                if args.has_keyword(Keyword::Off) {
+                    self.mxp_off(true);
+                }
+
+                // TODO MUSHclient comments out everything below—why?
+                if args.has_keyword(Keyword::DefaultLocked) {
+                    self.state.mxp_mode_default = mxp::Mode::LOCKED;
+                } else if args.has_keyword(Keyword::DefaultSecure) {
+                    self.state.mxp_mode_default = mxp::Mode::SECURE;
+                } else if args.has_keyword(Keyword::DefaultOpen) {
+                    self.state.mxp_mode_default = mxp::Mode::OPEN;
+                }
+
+                if args.has_keyword(Keyword::IgnoreNewlines) {
+                    self.state.in_paragraph = true;
+                } else if args.has_keyword(Keyword::UseNewlines) {
+                    self.state.in_paragraph = false;
+                }
+            }
+            Action::Script => {
+                self.state.mxp_script = true;
+            }
+            Action::Hr => {
+                fragments.push(Fragment::html("<hr>"));
+            }
+            Action::Pre => {
+                self.state.pre_mode = true;
+            }
+            Action::Ul => {
+                span.list = Some(InList::Unordered);
+            }
+            Action::Ol => {
+                span.list = Some(InList::Ordered(0));
+            }
+            Action::Li =>
+                if let Some(list) = span.list.as_mut() {
+                    fragments.push(Fragment::Break);
+                    fragments.push(match list {
+                        InList::Unordered => Fragment::text(" • "),
+                        InList::Ordered(i) => {
+                            *i += 1;
+                            Fragment::text(format!(" {}. ", *i))
+                        }
+                    });
+                },
+            Action::Img | Action::Image => {
+                if let Some(xch_mode) = args.get("xch_mode") {
+                    self.state.pueblo_active = true;
+                    if xch_mode.eq_ignore_ascii_case("purehtml") {
+                        self.state.suppress_newline = true;
+                    } else if xch_mode.eq_ignore_ascii_case("html") {
+                        self.state.suppress_newline = false;
+                    }
+                }
+                if let Some(url) = args.get("url").or_else(|| args.get("src")) {
+                    // TODO setting on MXP page to enable or disable images
+                    fragments.push(Fragment::html(format!(
+                        "<img src={}{}>",
+                        url,
+                        args.get("fname").unwrap_or(""),
+                    )));
+                }
+            }
+            Action::XchPage => {
+                self.state.pueblo_active = true; // for correct newline processing
+                self.mxp_off(false);
+            }
+            Action::Var => {
+                let variable = args.get(0).unwrap_or("");
+                if mxp::is_valid(variable) && !mxp::EntityMap::global(variable).is_some() {
+                    span.variable = Some(variable.to_owned());
+                }
+            }
+            _ => (),
+        }
     }
 
-    fn mxp_closetag(&self, _tag: &str) {
+    fn mxp_close_tags_from(&mut self, pos: usize) {
+        if let Some(tag) = self.state.mxp_active_tags.get(pos) {
+            self.style.truncate(tag.span_index);
+            self.state.mxp_active_tags.truncate(pos);
+        }
+    }
+
+    fn mxp_close_tag(&self, _tag: &str) {
         // TODO
     }
 
@@ -587,16 +942,14 @@ impl Client {
                 None => 0,
                 Some(i) => i + 1,
             };
-            self.mxp_closetags_from(closed);
+            self.mxp_close_tags_from(closed);
         }
         match newmode {
-            mxp::Mode::OPEN | mxp::Mode::SECURE | mxp::Mode::LOCKED => {
-                self.state.mxp_mode_default = mxp::Mode::OPEN
-            }
+            mxp::Mode::OPEN | mxp::Mode::SECURE | mxp::Mode::LOCKED =>
+                self.state.mxp_mode_default = mxp::Mode::OPEN,
             mxp::Mode::SECURE_ONCE => self.state.mxp_mode_previous = self.state.mxp_mode,
-            mxp::Mode::PERM_OPEN | mxp::Mode::PERM_SECURE | mxp::Mode::PERM_LOCKED => {
-                self.state.mxp_mode_default = newmode
-            }
+            mxp::Mode::PERM_OPEN | mxp::Mode::PERM_SECURE | mxp::Mode::PERM_LOCKED =>
+                self.state.mxp_mode_default = newmode,
             _ => (),
         }
         self.state.mxp_mode = newmode;

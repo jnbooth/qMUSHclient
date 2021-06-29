@@ -1,17 +1,24 @@
+use crate::binding::RColor;
 use crate::caseinsensitive::ascii::CaseFoldMap;
+use crate::enums::{Enum, EnumSet};
+use crate::client::style::TextStyle;
 use crate::tr::TrContext;
 use std::ops::{Deref, DerefMut};
 use std::str;
 
 mod argument;
 mod atom;
+mod element;
 mod error;
 mod words;
 
-pub use argument::{Argument, ArgumentIndex, Arguments, Keyword};
+pub use argument::{Arg, Argument, ArgumentIndex, Arguments, Keyword};
 pub use atom::{Action, Atom, Tag, TagFlag};
-pub use error::{validate, Error, Info, ParseError, Warning};
+pub use element::{Element, ElementComponent, ElementItem, ElementMap};
+pub use error::{is_valid, validate, Error, Info, ParseError, Warning};
 pub use words::Words;
+
+pub const VERSION: &str = "0.5";
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash, TrContext)]
 pub struct Mode(pub u8);
@@ -87,127 +94,83 @@ impl Mode {
     }
 }
 
-/// List of arguments to an MXP tag.
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub struct ElementItem {
-    pub atom: Atom,
-    pub arguments: Arguments,
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
+pub enum SendTo {
+    World,
+    Input,
+    Internet,
 }
 
-impl ElementItem {
-    pub fn parse(tag: &str) -> Result<Self, ParseError> {
-        let mut words = Words::new(tag);
-        let atom_name = words
-            .next()
-            .ok_or_else(|| ParseError::new(tag, Error::NoDefinitionTag))?;
-        let invalid_name = match atom_name {
-            "/" => Some(Error::DefinitionCannotCloseElement),
-            "!" => Some(Error::DefinitionCannotDefineElement),
-            _ => None,
-        };
-        if let Some(invalid) = invalid_name {
-            return Err(ParseError::new(words.next().unwrap_or(""), invalid));
+impl Default for SendTo {
+    fn default() -> Self {
+        Self::World
+    }
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Link {
+    /// Text to send to the server when clicked, separated by |.
+    pub action: String,
+    /// Flyover hint.
+    pub hint: Option<String>,
+    /// Right-click prompts for actions.
+    pub prompts: Vec<String>,
+    /// Where to send the result of clicking on the link.
+    pub sendto: SendTo,
+}
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum InList {
+    Ordered(u32),
+    Unordered,
+}
+
+// eg. <send "command1|command2|command3" hint="click to see menu|Item 1|Item
+// 2|Item 2">this is a menu link</SEND>
+#[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Span {
+    pub flags: EnumSet<TextStyle>,
+    pub foreground: Option<RColor>,
+    pub background: Option<RColor>,
+    pub action: Option<Link>,
+    /// Which variable to set (FLAG in MXP).
+    pub variable: Option<String>,
+    pub list: Option<InList>,
+}
+
+impl Span {
+    pub fn child(&self) -> Self {
+        Self {
+            flags: self.flags,
+            foreground: None,
+            background: None,
+            action: None,
+            variable: None,
+            list: self.list,
         }
-        let atom = Atom::get(&atom_name.to_lowercase())
-            .ok_or_else(|| ParseError::new(atom_name, Error::NoInbuiltDefinitionTag))?;
-        Ok(Self {
-            atom,
-            arguments: Arguments::parse_words(words)?,
-        })
     }
 }
 
-/// User-defined MXP tags that we recognise, e.g. <boldcolor>.
-/// For example: <!ELEMENT boldtext '<COLOR &col;><B>' ATT='col=red'>
-#[derive(Clone, Debug, Default, PartialEq, Eq)]
-pub struct Element {
-    /// Tag name
-    pub name: String,
-    /// What atomic elements it defines (arg 1)
-    pub items: Vec<ElementItem>,
-    /// List of attributes to this element (ATT="xx")
-    pub attributes: Arguments,
-    /// Line tag number (20 - 99) (TAG=n)
-    pub tag: Option<u8>,
-    /// Which variable to set (SET x)
-    pub flag: Option<String>,
-    /// Whether the element is open (OPEN)
-    pub open: bool,
-    /// Whether the element has no closing tag (EMPTY)
-    pub command: bool,
-}
-
-impl Element {
-    fn parse_items(argument: Option<&Argument>) -> Result<Vec<ElementItem>, ParseError> {
-        let definitions = match argument {
-            Some(definitions) => definitions,
-            None => return Ok(Vec::new()),
-        };
-
-        let size_guess = definitions
-            .as_bytes()
-            .iter()
-            .filter(|&&c| c == b'<')
-            .count();
-        let mut items = Vec::with_capacity(size_guess);
-        let mut iter = definitions.char_indices();
-        while let Some((start, startc)) = iter.next() {
-            if startc != '<' {
-                println!("It's {} from {} in {}", startc, start, definitions);
-                return Err(ParseError::new(&definitions, Error::NoTagInDefinition));
-            }
-            loop {
-                let (end, endc) = iter
-                    .next()
-                    .ok_or_else(|| ParseError::new(&definitions, Error::NoClosingDefinitionQuote))?;
-                if endc == '>' {
-                    let definition = &definitions[start + 1..end];
-                    items.push(ElementItem::parse(definition)?);
-                    break;
-                }
-                if (endc == '\'' || endc == '"') && iter.find(|&(_, c)| c == endc).is_none() {
-                    return Err(ParseError::new(
-                        &definitions,
-                        Error::NoClosingDefinitionQuote,
-                    ));
-                }
-            }
+fn decode_amps<'a, F>(mut s: &str, mut f: F) -> Result<String, ParseError>
+where
+    F: FnMut(&str) -> Result<Option<&'a str>, ParseError>,
+{
+    let mut res = String::with_capacity(s.len());
+    while let Some(start) = s.find('&') {
+        if start > 0 {
+            res.push_str(&s[..start]);
         }
-
-        Ok(items)
+        s = &s[start..];
+        let end = s
+            .find(';')
+            .ok_or_else(|| ParseError::new(s, Error::NoClosingSemicolon))?;
+        res.push_str(f(&s[1..end])?.unwrap_or(&s[0..=end]));
+        s = &s[end + 1..];
     }
-
-    pub fn parse(name: String, arguments: Arguments) -> Result<Self, ParseError> {
-        let mut scanner = arguments.scan();
-        let items = Self::parse_items(scanner.next())?;
-
-        let attributes = match scanner.next_or("att") {
-            Some(atts) => Arguments::parse(atts)?,
-            None => Arguments::default(),
-        };
-
-        let tag = match scanner.next_or("tag").and_then(|s| s.parse().ok()) {
-            Some(i) if i < 20 || i > 99 => None,
-            tag => tag,
-        };
-
-        let flag = scanner.next_or("flag").map(|flag| {
-            flag.strip_prefix("set ")
-                .unwrap_or(flag)
-                .trim()
-                .replace(' ', "_")
-        });
-
-        Ok(Self {
-            name,
-            open: arguments.has_keyword(Keyword::Open),
-            command: arguments.has_keyword(Keyword::Empty),
-            items,
-            attributes,
-            tag,
-            flag,
-        })
+    if !s.is_empty() {
+        res.push_str(s);
     }
+    Ok(res)
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
@@ -257,21 +220,26 @@ impl EntityMap {
     }
 
     pub fn decode(&self, s: &str) -> Result<String, ParseError> {
-        let mut res = String::with_capacity(s.len());
-        let mut iter = s.char_indices();
-        while let Some((start, startc)) = iter.next() {
-            if startc == '&' {
-                let end = iter
-                    .find(|&(_, x)| x == ';')
-                    .ok_or_else(|| ParseError::new(s, Error::NoClosingSemicolon))?
-                    .0;
-                let key = &s[start..end];
-                res.push_str(self.get(key)?.unwrap_or(key));
-            } else {
-                res.push(startc);
+        decode_amps(s, |entity| self.get(entity))
+    }
+
+    pub fn decode_el(&self, el: &Element, s: &str, args: &Arguments) -> Result<String, ParseError> {
+        decode_amps(s, |entity| {
+            if entity == "text" {
+                return Ok(None);
             }
-        }
-        Ok(res)
+            match el.attributes.iter().find(|&(i, attr)| match i {
+                ArgumentIndex::Positional(_) => attr.eq_ignore_ascii_case(entity),
+                ArgumentIndex::Named(name) => name.eq_ignore_ascii_case(entity),
+            }) {
+                None => self.get(entity),
+                Some((i, attr)) => Ok(match args.get(i) {
+                    Some(arg) => Some(arg),
+                    None if i.is_named() => Some(attr), // default replacement
+                    None => Some(""),                   // TODO is this right?
+                }),
+            }
+        })
     }
 
     pub const fn global(key: &str) -> Option<&'static str> {

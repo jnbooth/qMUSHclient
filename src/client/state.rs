@@ -1,5 +1,4 @@
 use super::mxp;
-use crate::caseinsensitive::ascii::CaseFoldMap;
 use crate::enums::Enum;
 use crate::escape::telnet;
 use std::time::{Duration, Instant};
