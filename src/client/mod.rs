@@ -294,21 +294,19 @@ impl Client {
         }
         match self.phase {
             // ESC[ 38: (foreground)
-            Phase::Foreground256Start => {
-                match code {
-                    5 => {
-                        // 8-bit color
-                        self.state.ansi_code = 0;
-                        self.phase = Phase::Foreground256Finish;
-                    }
-                    2 => {
-                        // 24-bit RGB
-                        self.state.ansi_code = 0;
-                        self.phase = Phase::Foreground24bFinish;
-                    }
-                    _ => self.phase = Phase::Normal,
+            Phase::Foreground256Start => match code {
+                5 => {
+                    // 8-bit color
+                    self.state.ansi_code = 0;
+                    self.phase = Phase::Foreground256Finish;
                 }
-            }
+                2 => {
+                    // 24-bit RGB
+                    self.state.ansi_code = 0;
+                    self.phase = Phase::Foreground24bFinish;
+                }
+                _ => self.phase = Phase::Normal,
+            },
             // ESC[ 48: (background)
             Phase::Background256Start => {
                 match code {
@@ -768,10 +766,11 @@ impl Client {
                         "underline" => span.flags.insert(TextStyle::Underline),
                         "bold" => span.flags.insert(TextStyle::Bold),
                         "inverse" => span.flags.insert(TextStyle::Inverse),
-                        color =>
+                        color => {
                             if let Some(fg) = get_color(color) {
                                 span.foreground = Some(fg.into_owned());
-                            },
+                            }
+                        }
                     }
                 }
                 if let Some(bg) = scanner.next_or(&["back", "bgcolor"]) {
@@ -863,7 +862,7 @@ impl Client {
             Action::Ol => {
                 span.list = Some(InList::Ordered(0));
             }
-            Action::Li =>
+            Action::Li => {
                 if let Some(list) = span.list.as_mut() {
                     fragments.push(Fragment::Break);
                     fragments.push(match list {
@@ -873,7 +872,8 @@ impl Client {
                             Fragment::text(format!(" {}. ", *i))
                         }
                     });
-                },
+                }
+            }
             Action::Img | Action::Image => {
                 if let Some(xch_mode) = args.get("xch_mode") {
                     self.state.pueblo_active = true;
@@ -947,11 +947,13 @@ impl Client {
             self.mxp_close_tags_from(closed);
         }
         match newmode {
-            mxp::Mode::OPEN | mxp::Mode::SECURE | mxp::Mode::LOCKED =>
-                self.state.mxp_mode_default = mxp::Mode::OPEN,
+            mxp::Mode::OPEN | mxp::Mode::SECURE | mxp::Mode::LOCKED => {
+                self.state.mxp_mode_default = mxp::Mode::OPEN
+            }
             mxp::Mode::SECURE_ONCE => self.state.mxp_mode_previous = self.state.mxp_mode,
-            mxp::Mode::PERM_OPEN | mxp::Mode::PERM_SECURE | mxp::Mode::PERM_LOCKED =>
-                self.state.mxp_mode_default = newmode,
+            mxp::Mode::PERM_OPEN | mxp::Mode::PERM_SECURE | mxp::Mode::PERM_LOCKED => {
+                self.state.mxp_mode_default = newmode
+            }
             _ => (),
         }
         self.state.mxp_mode = newmode;

@@ -166,12 +166,15 @@ impl Atom {
     const ALL: Lazy<CaseFoldMap<String, Self>> = Lazy::new(|| {
         let mut all = CaseFoldMap::new();
         let mut add = |name: &'static str, flags, action, args| {
-            all.insert(name.to_owned(), Atom {
-                name,
-                flags,
-                action,
-                args,
-            })
+            all.insert(
+                name.to_owned(),
+                Atom {
+                    name,
+                    flags,
+                    action,
+                    args,
+                },
+            )
         };
         // FIXME(#51911) give CaseFold<str> its own const fn conversion from str once const derefs
         // are possible, or just come up with a different way to do this
@@ -297,8 +300,9 @@ impl Atom {
                 let tag = questions.next().unwrap();
                 match Atom::get(tag) {
                     None => write!(supported, "-{} ", tag).expect(ERR),
-                    Some(atom) if atom.flags.contains(TagFlag::NotImp) =>
-                        write!(supported, "-{} ", tag).expect(ERR),
+                    Some(atom) if atom.flags.contains(TagFlag::NotImp) => {
+                        write!(supported, "-{} ", tag).expect(ERR)
+                    }
                     Some(atom) => {
                         match questions.next() {
                             None => write!(supported, "+{} ", tag).expect(ERR),
