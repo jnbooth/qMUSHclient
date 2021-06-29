@@ -19,76 +19,91 @@ pub trait QForm<T>: StaticUpcast<QObject> {
 
 impl QForm<String> for QLineEdit {
     unsafe fn get_rust(this: QPtr<Self>) -> String {
-        this.text().trimmed().to_std_string()
+        unsafe { this.text().trimmed() }.to_std_string()
     }
+
     unsafe fn connect_rust(this: QPtr<Self>, t: &String, receiver: QBox<SlotNoArgs>) {
-        this.set_text(&QString::from_std_str(t));
-        this.editing_finished().connect(&receiver);
+        unsafe {
+            this.set_text(&QString::from_std_str(t));
+            this.editing_finished().connect(&receiver);
+        }
     }
 }
 
 impl QForm<String> for QPlainTextEdit {
     unsafe fn get_rust(this: QPtr<Self>) -> String {
-        this.to_plain_text().trimmed().to_std_string()
+        unsafe { this.to_plain_text().trimmed() }.to_std_string()
     }
+
     unsafe fn connect_rust(this: QPtr<Self>, t: &String, receiver: QBox<SlotNoArgs>) {
-        this.set_plain_text(&QString::from_std_str(t));
-        this.text_changed().connect(&receiver);
+        unsafe {
+            this.set_plain_text(&QString::from_std_str(t));
+            this.text_changed().connect(&receiver);
+        }
     }
 }
 
 impl QForm<bool> for QCheckBox {
     unsafe fn get_rust(this: QPtr<Self>) -> bool {
-        this.check_state() == CheckState::Checked
+        unsafe { this.check_state() == CheckState::Checked }
     }
+
     unsafe fn connect_rust(this: QPtr<Self>, t: &bool, receiver: QBox<SlotNoArgs>) {
-        this.set_check_state(if *t {
-            CheckState::Checked
-        } else {
-            CheckState::Unchecked
-        });
-        this.state_changed().connect(&receiver);
+        unsafe {
+            this.set_check_state(if *t {
+                CheckState::Checked
+            } else {
+                CheckState::Unchecked
+            });
+            this.state_changed().connect(&receiver);
+        }
     }
 }
 
 impl<E: Enum> QForm<Option<E>> for QComboBox {
     unsafe fn get_rust(this: QPtr<Self>) -> Option<E> {
-        usize::try_from(this.current_index() - 1)
+        usize::try_from(unsafe { this.current_index() } - 1)
             .ok()
             .and_then(enum_from_index)
     }
 
     unsafe fn connect_rust(this: QPtr<Self>, e: &Option<E>, receiver: QBox<SlotNoArgs>) {
-        this.set_current_index(match e {
-            None => 0,
-            Some(i) => i.index() as c_int + 1,
-        });
-        this.current_index_changed().connect(&receiver);
+        unsafe {
+            this.set_current_index(match e {
+                None => 0,
+                Some(i) => i.index() as c_int + 1,
+            });
+            this.current_index_changed().connect(&receiver);
+        }
     }
 }
 
 impl<E: Enum> QForm<E> for QComboBox {
     unsafe fn get_rust(this: QPtr<Self>) -> E {
-        usize::try_from(this.current_index())
+        usize::try_from(unsafe { this.current_index() })
             .ok()
             .and_then(enum_from_index)
             .expect("Enum out of range")
     }
 
     unsafe fn connect_rust(this: QPtr<Self>, e: &E, receiver: QBox<SlotNoArgs>) {
-        this.set_current_index(e.index() as c_int);
-        this.current_index_changed().connect(&receiver);
+        unsafe {
+            this.set_current_index(e.index() as c_int);
+            this.current_index_changed().connect(&receiver);
+        }
     }
 }
 
 impl QForm<RFont> for QFontComboBox {
     unsafe fn get_rust(this: QPtr<Self>) -> RFont {
-        this.current_font().into()
+        unsafe { this.current_font() }.into()
     }
 
     unsafe fn connect_rust(this: QPtr<Self>, t: &RFont, receiver: QBox<SlotNoArgs>) {
-        this.set_current_font(t);
-        this.current_font_changed().connect(&receiver);
+        unsafe {
+            this.set_current_font(t);
+            this.current_font_changed().connect(&receiver);
+        }
     }
 }
 
@@ -98,15 +113,17 @@ impl QForm<RColor> for QPushButton {
     }
 
     unsafe fn connect_rust(this: QPtr<Self>, t: &RColor, receiver: QBox<SlotNoArgs>) {
-        this.set_maximum_width(this.height());
-        this.set_palette_color(ColorRole::Button, t);
-        this.clicked()
-            .connect(&SlotNoArgs::new(this.clone(), move || {
-                if let Some(color) = this.palette_color(ColorRole::Button).pick(this.clone()) {
-                    this.set_palette_color(ColorRole::Button, &color);
-                    receiver.slot();
-                }
-            }));
+        unsafe {
+            this.set_maximum_width(this.height());
+            this.set_palette_color(ColorRole::Button, t);
+            this.clicked()
+                .connect(&SlotNoArgs::new(this.clone(), move || {
+                    if let Some(color) = this.palette_color(ColorRole::Button).pick(this.clone()) {
+                        this.set_palette_color(ColorRole::Button, &color);
+                        receiver.slot();
+                    }
+                }));
+        }
     }
 }
 
@@ -114,20 +131,26 @@ macro_rules! impl_int {
     ($t: ty) => {
         impl QForm<$t> for QSpinBox {
             unsafe fn get_rust(this: QPtr<Self>) -> $t {
-                <$t>::try_from(this.value()).unwrap_or(<$t>::MAX)
+                <$t>::try_from(unsafe { this.value() }).unwrap_or(<$t>::MAX)
             }
+
             unsafe fn connect_rust(this: QPtr<Self>, t: &$t, receiver: QBox<SlotNoArgs>) {
-                this.set_value(*t as c_int);
-                this.editing_finished().connect(&receiver);
+                unsafe {
+                    this.set_value(*t as c_int);
+                    this.editing_finished().connect(&receiver);
+                }
             }
         }
         impl QForm<$t> for QDoubleSpinBox {
             unsafe fn get_rust(this: QPtr<Self>) -> $t {
-                (this.value() * 1000.0) as $t // milli-
+                (unsafe { this.value() } * 1000.0) as $t // milli-
             }
+
             unsafe fn connect_rust(this: QPtr<Self>, t: &$t, receiver: QBox<SlotNoArgs>) {
-                this.set_value(*t as c_double / 1000.0);
-                this.editing_finished().connect(&receiver);
+                unsafe {
+                    this.set_value(*t as c_double / 1000.0);
+                    this.editing_finished().connect(&receiver);
+                }
             }
         }
     };
@@ -136,11 +159,14 @@ macro_rules! impl_float {
     ($t: ty) => {
         impl QForm<$t> for QDoubleSpinBox {
             unsafe fn get_rust(this: QPtr<Self>) -> $t {
-                this.value() as $t
+                unsafe { this.value() as $t }
             }
+
             unsafe fn connect_rust(this: QPtr<Self>, t: &$t, receiver: QBox<SlotNoArgs>) {
-                this.set_value(*t as c_double);
-                this.editing_finished().connect(&receiver);
+                unsafe {
+                    this.set_value(*t as c_double);
+                    this.editing_finished().connect(&receiver);
+                }
             }
         }
     };

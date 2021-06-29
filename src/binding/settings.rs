@@ -107,11 +107,13 @@ impl RSettings {
         <I::Item as Deref>::Target: StoreAsQ,
         CppBox<<<I::Item as Deref>::Target as StoreAsQ>::ListStore>: Into<RVariant>,
     {
-        self.set(
-            key,
-            <<<I::Item as Deref>::Target as StoreAsQ>::ListStore>::from_iter(
-                iter.map(|x| x.to_store()),
-            ),
-        );
+        unsafe {
+            self.set(
+                key,
+                <<<I::Item as Deref>::Target as StoreAsQ>::ListStore>::from_iter(
+                    iter.map(|x| x.to_store()),
+                ),
+            );
+        }
     }
 }

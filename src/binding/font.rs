@@ -31,7 +31,7 @@ impl Display for RFont {
 impl CastFrom<&RFont> for cpp_core::Ref<QFont> {
     #[inline]
     unsafe fn cast_from(value: &RFont) -> Self {
-        value.0.as_ref()
+        unsafe { value.0.as_ref() }
     }
 }
 

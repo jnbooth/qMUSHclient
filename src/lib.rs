@@ -1,4 +1,5 @@
 #![allow(dead_code)] // TODO
+#![warn(unsafe_op_in_unsafe_fn)]
 
 #[macro_use]
 extern crate qmushclient_derive;

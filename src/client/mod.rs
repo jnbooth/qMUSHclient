@@ -81,12 +81,15 @@ impl Client {
 
         let mut this = Self {
             notepad,
-            cursor: Cursor::get(&widget),
+            cursor: unsafe { Cursor::get(&widget) },
             socket,
             bufinput: [0; config::SOCKET_BUFFER],
             bufoutput: Vec::new(),
             stream: None,
-            style: Style::new(widget.current_char_format().into(), world.clone()),
+            style: Style::new(
+                unsafe { widget.current_char_format() }.into(),
+                world.clone(),
+            ),
             widget,
             world,
             phase: Phase::Normal,

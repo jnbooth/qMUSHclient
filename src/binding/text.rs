@@ -19,7 +19,7 @@ pub type Position = c_int;
 ///
 /// `ptr` must be valid.
 unsafe fn from_nullable<Q: StaticUpcast<QObject>, To: From<QPtr<Q>>>(ptr: QPtr<Q>) -> Option<To> {
-    if ptr.is_null() {
+    if unsafe { ptr.is_null() } {
         None
     } else {
         Some(ptr.into())
@@ -73,8 +73,10 @@ impl Cursor {
     ///
     /// `widget` must be valid.
     pub unsafe fn get<T: StaticUpcast<QTextEdit> + StaticUpcast<QObject>>(widget: &QPtr<T>) -> Self {
-        let widget: QPtr<QTextEdit> = widget.static_upcast();
-        widget.text_cursor().into()
+        unsafe {
+            let widget: QPtr<QTextEdit> = widget.static_upcast();
+            widget.text_cursor().into()
+        }
     }
     /// Sets the visible cursor.
     ///
@@ -82,8 +84,10 @@ impl Cursor {
     ///
     /// `widget` must be valid.
     pub unsafe fn set<T: StaticUpcast<QTextEdit> + StaticUpcast<QObject>>(&self, widget: &QPtr<T>) {
-        let widget: QPtr<QTextEdit> = widget.static_upcast();
-        widget.set_text_cursor(&self.inner);
+        unsafe {
+            let widget: QPtr<QTextEdit> = widget.static_upcast();
+            widget.set_text_cursor(&self.inner);
+        }
     }
     /// Returns the anchor position; this is the same as position() unless there is a selection in which case position() marks one end of the selection and anchor() marks the other end. Just like the cursor position, the anchor position is between characters.
     pub fn anchor(&self) -> Position {

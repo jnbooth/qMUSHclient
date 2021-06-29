@@ -266,13 +266,16 @@ macro_rules! impl_qio {
     ($t:ty, $me:ident) => {
         impl QIO for $t {
             unsafe fn get_error(this: &QPtr<Self>) -> io::Error {
-                io::Error::new(
-                    QIOError::to_io_error(this.$me()),
-                    this.error_string().to_std_string(),
-                )
+                unsafe {
+                    io::Error::new(
+                        QIOError::to_io_error(this.$me()),
+                        this.error_string().to_std_string(),
+                    )
+                }
             }
+
             unsafe fn flush(this: &QPtr<Self>) -> bool {
-                this.flush()
+                unsafe { this.flush() }
             }
         }
     };
@@ -295,8 +298,12 @@ impl_qio!(QProcess, error2);
 
 impl QIO for QBuffer {
     unsafe fn get_error(this: &QPtr<Self>) -> io::Error {
-        io::Error::new(io::ErrorKind::Other, this.error_string().to_std_string())
+        io::Error::new(
+            io::ErrorKind::Other,
+            unsafe { this.error_string() }.to_std_string(),
+        )
     }
+
     unsafe fn flush(_: &QPtr<Self>) -> bool {
         true
     }

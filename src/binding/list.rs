@@ -28,8 +28,10 @@ pub trait QList: CppDeletable {
     {
         let this = Self::new();
         this.reserve(size);
-        for _ in 0..size {
-            this.push(item);
+        unsafe {
+            for _ in 0..size {
+                this.push(item);
+            }
         }
         this
     }
@@ -42,8 +44,10 @@ pub trait QList: CppDeletable {
     {
         let this = Self::new();
         this.reserve(N as c_int);
-        for item in &items {
-            this.push(*item);
+        unsafe {
+            for item in &items {
+                this.push(*item);
+            }
         }
         this
     }
@@ -53,8 +57,10 @@ pub trait QList: CppDeletable {
     unsafe fn from_iter<I: Iterator<Item = Self::Item>>(iter: I) -> CppBox<Self> {
         let this = Self::new();
         this.reserve(iter.size_hint().0 as c_int);
-        for item in iter {
-            this.push(item);
+        unsafe {
+            for item in iter {
+                this.push(item);
+            }
         }
         this
     }
@@ -78,13 +84,17 @@ impl QList for QStringList {
         }
     }
     unsafe fn cpp_iter(&self) -> Self::Iter {
-        cpp_iter(self.const_begin(), self.const_end()).map(|x| unsafe { QString::new_copy(x) })
+        unsafe { cpp_iter(self.const_begin(), self.const_end()).map(|x| QString::new_copy(x)) }
     }
     unsafe fn push(&self, item: Self::Item) {
-        self.append_q_string(&item);
+        unsafe {
+            self.append_q_string(&item);
+        }
     }
     unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        self.append_q_list_of_q_string(other.cast_into());
+        unsafe {
+            self.append_q_list_of_q_string(other.cast_into());
+        }
     }
 }
 
@@ -101,13 +111,18 @@ impl QList for QListOfQString {
         }
     }
     unsafe fn cpp_iter(&self) -> Self::Iter {
-        cpp_iter(self.const_begin(), self.const_end()).map(|x| unsafe { QString::new_copy(x) })
+        unsafe { cpp_iter(self.const_begin(), self.const_end()).map(|x| QString::new_copy(x)) }
     }
     unsafe fn push(&self, item: Self::Item) {
-        self.append_q_string(&item);
+        unsafe {
+            self.append_q_string(&item);
+        }
     }
+
     unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        self.append_q_list_of_q_string(other.cast_into());
+        unsafe {
+            self.append_q_list_of_q_string(other.cast_into());
+        }
     }
 }
 
@@ -124,13 +139,18 @@ impl QList for QListOfInt {
         }
     }
     unsafe fn cpp_iter(&self) -> Self::Iter {
-        cpp_iter(self.const_begin(), self.const_end()).map(|x| unsafe { *x })
+        unsafe { cpp_iter(self.const_begin(), self.const_end()).map(|x| *x) }
     }
     unsafe fn push(&self, item: Self::Item) {
-        self.append_int(&item);
+        unsafe {
+            self.append_int(&item);
+        }
     }
+
     unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        self.append_q_list_of_int(other);
+        unsafe {
+            self.append_q_list_of_int(other);
+        }
     }
 }
 
@@ -147,13 +167,18 @@ impl QList for QListOfQVariant {
         }
     }
     unsafe fn cpp_iter(&self) -> Self::Iter {
-        cpp_iter(self.const_begin(), self.const_end()).map(|x| unsafe { QVariant::new_copy(x) })
+        unsafe { cpp_iter(self.const_begin(), self.const_end()).map(|x| QVariant::new_copy(x)) }
     }
     unsafe fn push(&self, item: Self::Item) {
-        self.append_q_variant(&item);
+        unsafe {
+            self.append_q_variant(&item);
+        }
     }
+
     unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        self.append_q_list_of_q_variant(other);
+        unsafe {
+            self.append_q_list_of_q_variant(other);
+        }
     }
 }
 
@@ -173,12 +198,17 @@ impl QList for QListOfQTreeWidgetItem {
         }
     }
     unsafe fn cpp_iter(&self) -> Self::Iter {
-        cpp_iter(self.const_begin(), self.const_end())
+        unsafe { cpp_iter(self.const_begin(), self.const_end()) }
     }
     unsafe fn push(&self, item: Self::Item) {
-        self.append_q_tree_widget_item(item.as_ref().unwrap());
+        unsafe {
+            self.append_q_tree_widget_item(item.as_ref().unwrap());
+        }
     }
+
     unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        self.append_q_list_of_q_tree_widget_item(other);
+        unsafe {
+            self.append_q_list_of_q_tree_widget_item(other);
+        }
     }
 }
