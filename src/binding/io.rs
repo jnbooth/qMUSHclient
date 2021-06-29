@@ -1,4 +1,5 @@
 use cpp_core::{CppDeletable, StaticUpcast};
+use qt_core::QString;
 use qt_core::q_process::ProcessError;
 use qt_core::{
     q_file_device::FileError, QBox, QBuffer, QFile, QFileDevice, QIODevice, QObject, QProcess, QPtr,
@@ -12,11 +13,23 @@ use std::fmt::{self, Debug, Formatter};
 use std::io::{self, Read, Write};
 use std::ops::Drop;
 use std::os::raw::c_char;
+use std::rc::Rc;
 
 pub struct RIODevice<Q: QIO> {
-    dropper: Option<QBox<Q>>,
+    dropper: Rc<QBox<Q>>,
     inner: QPtr<Q>,
     device: QPtr<QIODevice>,
+}
+
+// Manually implemented in order to avoid a Q: Clone bound.
+impl<Q: QIO> Clone for RIODevice<Q> {
+    fn clone(&self) -> Self {
+        Self {
+            dropper: self.dropper.clone(),
+            inner: self.inner.clone(),
+            device: self.device.clone(),
+        }
+    }
 }
 
 impl<Q: QIO> Debug for RIODevice<Q> {
@@ -31,8 +44,8 @@ impl<Q: QIO> Debug for RIODevice<Q> {
 
 impl<Q: QIO> Drop for RIODevice<Q> {
     fn drop(&mut self) {
-        if self.dropper.is_some() {
-            self.close();
+        if Rc::strong_count(&self.dropper) == 1 {
+            self.close(); // this is the last one
         }
     }
 }
@@ -43,18 +56,8 @@ impl<Q: QIO> RIODevice<Q> {
             Self {
                 device: inner.static_upcast(),
                 inner: inner.static_upcast(),
-                dropper: Some(inner),
+                dropper: Rc::new(inner),
             }
-        }
-    }
-    /// # Safety
-    ///
-    /// `inner` must be valid.
-    pub unsafe fn from_ptr(inner: QPtr<Q>) -> Self {
-        Self {
-            dropper: None,
-            device: inner.static_upcast(),
-            inner,
         }
     }
     pub fn as_ptr(&self) -> &QPtr<Q> {
@@ -146,6 +149,16 @@ impl<Q: QIO> Write for RIODeviceMut<'_, Q> {
 
     fn flush(&mut self) -> io::Result<()> {
         self.0.flush()
+    }
+}
+
+impl<Q: QIO + StaticUpcast<QAbstractSocket>> RIODevice<Q> {
+    pub fn connect(&self, address: &str, port: u16) {
+        unsafe {
+            self.inner
+                .static_upcast::<QAbstractSocket>()
+                .connect_to_host_q_string_u16(&QString::from_std_str(address), port);
+        }
     }
 }
 

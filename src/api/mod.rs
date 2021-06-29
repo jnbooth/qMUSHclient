@@ -8,7 +8,7 @@ use crate::world::World;
 use hashbrown::HashMap;
 use iter_chunks::IterChunks;
 use mlua::{FromLua, MultiValue, UserData, UserDataMethods};
-use qt_core::{AlignmentFlag, QBox, QPtr};
+use qt_core::{AlignmentFlag, QPtr};
 use qt_network::QTcpSocket;
 use qt_widgets::QTextBrowser;
 use std::borrow::Borrow;
@@ -33,7 +33,7 @@ impl Clone for Api {
             Self {
                 cursor: Cursor::get(&widget),
                 widget,
-                socket: RIODevice::from_ptr(self.socket.as_ptr().clone()),
+                socket: self.socket.clone(),
                 world: self.world.clone(),
                 notepad: self.notepad.clone(),
                 custom_colors: self.custom_colors.clone(),
@@ -66,11 +66,11 @@ impl Api {
     /// `socket` must be valid.
     pub unsafe fn new(
         widget: QPtr<QTextBrowser>,
-        socket: &QBox<QTcpSocket>,
+        socket: RIODevice<QTcpSocket>,
         world: Rc<World>,
         notepad: Rc<RefCell<Notepad>>,
     ) -> Self {
-        let cursor = Cursor::get(&widget);
+        let cursor = unsafe { Cursor::get(&widget) };
         cursor
             .format
             .text
@@ -78,7 +78,7 @@ impl Api {
         Self {
             cursor,
             widget,
-            socket: RIODevice::from_ptr(socket.static_upcast()),
+            socket,
             notepad,
             custom_colors: world.custom_color_map(),
             world,

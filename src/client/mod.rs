@@ -18,7 +18,9 @@ use std::cell::RefCell;
 use std::convert::{TryFrom, TryInto};
 use std::io::{self, BufReader, Read, Write};
 use std::iter::Iterator;
+use std::ops::Deref;
 use std::rc::Rc;
+use std::time::Instant;
 use std::{mem, str};
 
 pub mod color;
@@ -54,6 +56,7 @@ pub struct Client {
     phase: Phase,
     style: Style,
     state: ClientState,
+    latest: Latest,
 }
 
 impl Client {
@@ -66,12 +69,20 @@ impl Client {
         world: Rc<World>,
     ) -> Self {
         let notepad = Rc::new(RefCell::new(Notepad::new(&world.name)));
-        let api = Api::new(widget.clone(), &socket, world.clone(), notepad.clone());
+        let socket = RIODevice::new(socket);
+        let api = unsafe {
+            Api::new(
+                widget.clone(),
+                socket.clone(),
+                world.clone(),
+                notepad.clone(),
+            )
+        };
 
         let mut this = Self {
             notepad,
             cursor: Cursor::get(&widget),
-            socket: RIODevice::new(socket),
+            socket,
             bufinput: [0; config::SOCKET_BUFFER],
             bufoutput: Vec::new(),
             stream: None,
@@ -81,6 +92,7 @@ impl Client {
             phase: Phase::Normal,
             state: ClientState::new(),
             plugins: PluginHandler::new(api),
+            latest: Latest::new(),
         };
         this.load_worldscript();
         this
@@ -110,11 +122,17 @@ impl Client {
         self.load_worldscript();
     }
 
+    pub fn connect(&mut self) {
+        let world = self.world.deref();
+        self.socket.connect(&world.site, world.port);
+        self.latest.connected = Instant::now();
+    }
+
     pub fn disconnect(&mut self) {
         // don't want reconnect on manual disconnect
         self.state.disconnect_ok = true;
         // work out how long they were connected
-        self.state.total_connect_duration = self.state.connected_at.elapsed();
+        self.state.total_connect_duration += self.latest.connected.elapsed();
         self.state.connect_phase = ConnectPhase::NotConnected;
         self.mxp_off(true);
         self.socket.close();
@@ -126,12 +144,14 @@ impl Client {
         Ok(())
     }
 
-    pub fn send_command(&self, mut command: String) -> io::Result<()> {
-        if self.world.display_my_input {
-            if !self.world.keep_commands_on_same_line {
+    pub fn send_command(&mut self, mut command: String) -> io::Result<()> {
+        self.latest.input = Instant::now();
+        let world = self.world.deref();
+        if world.display_my_input {
+            if !world.keep_commands_on_same_line && !self.cursor.current_block().is_empty() {
                 self.cursor.insert_block();
             }
-            let echo_colors = &self.world.echo_colors;
+            let echo_colors = &world.echo_colors;
             self.cursor.insert_text_colored(
                 &command,
                 Some(&echo_colors.foreground),
@@ -150,8 +170,8 @@ impl Client {
             None => self.socket.read(&mut self.bufinput),
         };
         match res {
-            Ok(res) if res > 0 => self.display_msg(self.bufinput[0..res].to_vec(), enums![]),
-            Ok(_) => (),
+            Ok(0) => (),
+            Ok(res) => self.display_msg(self.bufinput[0..res].to_vec(), enums![]),
             Err(e) => eprintln!("Stream error: {}", e),
         }
     }
@@ -190,11 +210,7 @@ impl Client {
     }
 
     fn init_zlib(&mut self, prepend: &[u8]) {
-        let buf = prepend_buf_reader(
-            config::COMPRESS_BUFFER,
-            unsafe { RIODevice::from_ptr(self.socket.as_ptr().clone()) },
-            prepend,
-        );
+        let buf = prepend_buf_reader(config::COMPRESS_BUFFER, self.socket.clone(), prepend);
         self.stream = Some(Decompress::new(buf));
     }
 
@@ -611,9 +627,7 @@ impl Client {
             AlignmentFlag::AlignRight,
             telnet::escape(data),
         );
-        if !self.socket.writable() {
-            eprintln!("Tried to send over a closed connection: {:?}", data);
-        } else if let Err(e) = self.send(data) {
+        if let Err(e) = self.send(data) {
             eprintln!("Error sending packet {:?}: {}", data, e);
         }
     }

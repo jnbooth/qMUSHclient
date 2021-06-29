@@ -191,7 +191,7 @@ impl App {
                 .input
                 .set_focus_1a(FocusReason::ActiveWindowFocusReason);
             if should_open {
-                worldtab.open_connection();
+                worldtab.client.borrow_mut().connect();
             }
         }
         let this = Rc::downgrade(self);
@@ -245,9 +245,11 @@ impl App {
     }
 
     unsafe fn with_input<O: Default>(&self, f: unsafe fn(&QLineEdit) -> O) -> O {
-        match self.current_input.borrow().as_raw_ref() {
-            Some(input) => f(input),
-            None => O::default(),
+        unsafe {
+            match self.current_input.borrow().as_raw_ref() {
+                Some(input) => f(input),
+                None => O::default(),
+            }
         }
     }
 

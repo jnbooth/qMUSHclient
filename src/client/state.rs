@@ -136,6 +136,12 @@ pub enum ConnectPhase {
     Disconnecting,
 }
 
+impl Default for ConnectPhase {
+    fn default() -> Self {
+        Self::NotConnected
+    }
+}
+
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Source {
     /// no particular reason, could be plugin saving
@@ -162,6 +168,12 @@ pub enum Source {
     Sandbox,
     /// miniwindow hotspot callback
     Hotspot,
+}
+
+impl Default for Source {
+    fn default() -> Self {
+        Self::Unknown
+    }
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
@@ -196,7 +208,7 @@ pub enum Mccp {
     V2,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Capabilities {
     sent: [[bool; 256]; Iac::SIZE],
     got: [[bool; 256]; Iac::SIZE],
@@ -244,14 +256,35 @@ pub enum ListMode {
     Unordered,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Latest {
+    pub connected: Instant,
+    pub input: Instant,
+}
+
+impl Latest {
+    pub fn new() -> Self {
+        let now = Instant::now();
+        Self {
+            connected: now,
+            input: now,
+        }
+    }
+}
+
+impl Default for Latest {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct ClientState {
     pub linecount: u64,
     pub current_action_source: Source,
 
     pub disconnect_ok: bool,
     pub connect_phase: ConnectPhase,
-    pub connected_at: Instant,
     pub total_connect_duration: Duration,
 
     pub mxp_active: bool,
@@ -259,13 +292,14 @@ pub struct ClientState {
     pub mxp_script: bool,
     pub pre_mode: bool,
     pub in_paragraph: bool,
+    pub suppress_newline: bool,
     pub mxp_mode_default: mxp::Mode,
     pub mxp_mode: mxp::Mode,
     pub mxp_mode_previous: mxp::Mode,
     pub mxp_quote_terminator: Option<u8>,
     pub mxp_string: Vec<u8>,
     pub mxp_active_tags: Vec<mxp::Tag>,
-    pub mxp_elements: CaseFoldMap<String, mxp::Element>,
+    pub mxp_elements: mxp::ElementMap,
     pub mxp_entities: mxp::EntityMap,
     pub last_outstanding_tag_count: u64,
     pub list_mode: Option<ListMode>,
@@ -283,7 +317,6 @@ pub struct ClientState {
     pub ansi_green: u8,
     pub ansi_blue: u8,
 
-    pub got_will: [bool; 256],
     pub supports_mccp_2: bool,
     pub no_echo: bool,
 
@@ -293,54 +326,8 @@ pub struct ClientState {
 impl ClientState {
     pub fn new() -> Self {
         Self {
-            linecount: 0,
-            current_action_source: Source::Unknown,
-
-            disconnect_ok: false,
-            connect_phase: ConnectPhase::NotConnected,
-            connected_at: Instant::now(),
-            total_connect_duration: Duration::default(),
-
-            mxp_active: false,
-            pueblo_active: false,
-            mxp_script: false,
-            pre_mode: false,
-            in_paragraph: false,
-            mxp_mode_default: mxp::Mode::OPEN,
-            mxp_mode: mxp::Mode::OPEN,
-            mxp_mode_previous: mxp::Mode::OPEN,
-            mxp_quote_terminator: None,
-            mxp_string: Vec::new(),
-            mxp_elements: CaseFoldMap::new(),
-            mxp_entities: mxp::EntityMap::new(),
-            mxp_active_tags: Vec::new(),
-            last_outstanding_tag_count: 0,
-            list_mode: None,
-            list_index: 0,
-
-            iac: Capabilities::new(),
-            last_line_with_iac_ga: 0,
-            subnegotiation_type: 0,
-            subnegotiation_data: Vec::new(),
-            ttype_sequence: 0,
-            naws_wanted: false,
-            mccp_ver: None,
-            ansi_code: 0,
-            ansi_red: 0,
-            ansi_green: 0,
-            ansi_blue: 0,
-
-            got_will: [false; 256],
-            supports_mccp_2: false,
-            no_echo: false,
-
             utf8_sequence: Vec::with_capacity(4),
+            ..Default::default()
         }
-    }
-}
-
-impl Default for ClientState {
-    fn default() -> Self {
-        Self::new()
     }
 }

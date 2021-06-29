@@ -67,7 +67,6 @@ pub struct WorldTab {
     pub ui: uic::WorldTab,
     pub client: RefCell<Client>,
     pub saved: RefCell<Option<String>>,
-    socket: QPtr<QTcpSocket>,
     world: RefCell<Rc<World>>,
 }
 
@@ -88,20 +87,19 @@ impl WorldTab {
         let this = Rc::new(Self {
             client: RefCell::new(client),
             saved: RefCell::new(saved),
-            socket,
             ui,
             world: RefCell::new(world),
         });
-        this.init();
+        this.init(socket);
         this
     }
 
     #[rustfmt::skip]
-    fn init(self: &Rc<Self>) {
+    fn init(self: &Rc<Self>, socket: QPtr<QTcpSocket>) {
         unsafe {
+            socket.error_occurred().connect(&self.slot_socket_error());
+            socket.ready_read().connect(&self.slot_receive());
             self.ui.output.set_read_only(true);
-            self.socket.error_occurred().connect(&self.slot_socket_error());
-            self.socket.ready_read().connect(&self.slot_receive());
             self.ui.input.return_pressed().connect(&self.slot_send());
             self.ui.input.editing_finished().connect(&self.slot_deselect());
             self.ui.input.selection_changed().connect(&self.slot_input_selected());
@@ -146,15 +144,6 @@ impl WorldTab {
     }
     pub fn borrow_world(&self) -> cell::Ref<Rc<World>> {
         self.world.borrow()
-    }
-
-    pub fn open_connection(&self) {
-        let world = self.borrow_world();
-        let address = QString::from_std_str(&world.site);
-        unsafe {
-            self.socket
-                .connect_to_host_q_string_u16(&address, world.port);
-        }
     }
 
     #[slot(SlotOfSocketError)]
