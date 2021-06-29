@@ -110,7 +110,6 @@ impl Default for SendTo {
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Link {
-    /// Text to send to the server when clicked, separated by |.
     pub action: String,
     /// Flyover hint.
     pub hint: Option<String>,
@@ -118,6 +117,35 @@ pub struct Link {
     pub prompts: Vec<String>,
     /// Where to send the result of clicking on the link.
     pub sendto: SendTo,
+}
+
+impl Link {
+    pub fn new(action: &str, hint: Option<&str>, sendto: SendTo) -> Self {
+        let mut actions = action.split('|').map(ToOwned::to_owned);
+        let first_action = actions.next().unwrap();
+        match hint {
+            None => Self {
+                action: first_action,
+                hint: None,
+                prompts: actions.collect(),
+                sendto,
+            },
+            Some(hint) => {
+                let mut hints = hint.split('|').map(ToOwned::to_owned);
+                let first_hint = hints.next().unwrap();
+                let mut prompts: Vec<_> = hints.collect();
+                if prompts.is_empty() {
+                    prompts = actions.collect();
+                }
+                Self {
+                    action: first_action,
+                    hint: Some(first_hint),
+                    prompts,
+                    sendto,
+                }
+            }
+        }
+    }
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]

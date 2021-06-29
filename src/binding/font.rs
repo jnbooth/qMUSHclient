@@ -5,7 +5,7 @@ use cpp_core::{CastFrom, CppBox};
 use qt_core::QString;
 use qt_gui::q_font::{Capitalization, Style, StyleHint};
 use qt_gui::q_font_database::SystemFont;
-use qt_gui::{QFont, QFontDatabase, QGuiApplication};
+use qt_gui::{QFont, QFontDatabase};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::Binding;
@@ -56,8 +56,13 @@ impl From<SystemFont> for RFont {
 }
 
 impl RFont {
-    pub fn global() -> Self {
-        unsafe { QGuiApplication::font() }.into()
+    pub fn global(hint: StyleHint) -> Self {
+        unsafe {
+            let font = QFont::new();
+            font.set_style_hint_1a(hint);
+            font.set_family(&font.default_family());
+            font.into()
+        }
     }
 
     pub fn family(&self) -> String {

@@ -441,7 +441,7 @@ pub mod ascii {
     impl<S: ?Sized + AsRef<[u8]>> CaseFold<S> {
         #[inline]
         fn caseless_iter(&self) -> iter::Map<slice::Iter<'_, u8>, fn(&u8) -> u8> {
-            self.0.as_ref().iter().map(|c| c.to_ascii_lowercase())
+            self.0.as_ref().iter().map(u8::to_ascii_lowercase)
         }
     }
 
@@ -499,7 +499,7 @@ pub mod unicode {
     impl<S: ?Sized + AsRef<str>> CaseFold<S> {
         #[inline]
         fn caseless_iter(&self) -> iter::FlatMap<Chars<'_>, ToLowercase, fn(char) -> ToLowercase> {
-            self.0.as_ref().chars().flat_map(|c| c.to_lowercase())
+            self.0.as_ref().chars().flat_map(char::to_lowercase)
         }
     }
 

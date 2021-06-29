@@ -1,8 +1,8 @@
 use std::cell::{self, RefCell};
 use std::rc::Rc;
 
-use cpp_core::{CastInto, Ptr};
-use qt_core::{slot, FocusReason, QListOfInt, QPtr, QString, QUrl, SlotNoArgs};
+use cpp_core::{CastInto, CppBox, Ptr, Ref};
+use qt_core::{slot, FocusReason, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
 use qt_gui::q_text_cursor::MoveOperation;
 use qt_gui::QDesktopServices;
@@ -102,6 +102,7 @@ impl WorldTab {
             socket.error_occurred().connect(&self.slot_socket_error());
             socket.ready_read().connect(&self.slot_receive());
             self.ui.output.set_read_only(true);
+            self.ui.output.custom_context_menu_requested().connect(&self.slot_menu_open());
             self.ui.input.return_pressed().connect(&self.slot_send());
             self.ui.input.editing_finished().connect(&self.slot_deselect());
             self.ui.input.selection_changed().connect(&self.slot_input_selected());
@@ -207,12 +208,10 @@ impl WorldTab {
 
     #[slot(SlotNoArgs)]
     fn report_bug(&self) {
-        unsafe {
-            QDesktopServices::open_url(&QUrl::new_1a(&QString::from_std_str(&format!(
-                "{}/issues",
-                branding::REPO
-            ))));
-        }
+        open_link(&QString::from_std_str(&format!(
+            "{}/issues",
+            branding::REPO
+        )));
     }
 
     #[slot(SlotNoArgs)]
@@ -256,5 +255,40 @@ impl WorldTab {
         if let Err(e) = self.client.borrow_mut().send_command(input) {
             eprintln!("Failed to send data: {}", e); // will be handled in GUI by socket_error()
         }
+    }
+
+    #[slot(SlotOfQPoint)]
+    fn menu_open(&self, point: Ref<QPoint>) {
+        unsafe {
+            let format = self
+                .ui
+                .output
+                .cursor_for_position(point.clone())
+                .char_format();
+            let anchor_names = format.anchor_names();
+            if anchor_names.is_empty() {
+                self.ui.output.create_standard_context_menu_1a(point);
+                return;
+            }
+            let menu = QMenu::from_q_widget(&self.ui.output);
+            for anchor_name in anchor_names.cpp_iter() {
+                menu.add_action_q_string(&anchor_name);
+            }
+            let chosen = menu.exec_1a_mut(point);
+            if chosen.is_null() {
+                return;
+            }
+            if format.is_anchor() {
+                open_link(&chosen.text())
+            } else {
+                self.ui.input.set_text(&chosen.text())
+            };
+        }
+    }
+}
+
+fn open_link(link: &CppBox<QString>) {
+    unsafe {
+        QDesktopServices::open_url(&QUrl::new_1a(link));
     }
 }

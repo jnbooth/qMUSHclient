@@ -96,7 +96,7 @@ pub struct Scan<'a> {
 }
 
 impl<'a> Scan<'a> {
-    pub fn next_or(&mut self, names: &[&str]) -> Option<&Arg> {
+    pub fn next_or(&mut self, names: &[&str]) -> Option<&'a Arg> {
         self.inner.next().or_else(|| {
             names
                 .iter()

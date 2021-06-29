@@ -5,7 +5,7 @@ use crate::binding::color::Colored;
 use crate::binding::text::CharFormat;
 use crate::client::color::WorldColor;
 use crate::enums::{Enum, EnumSet};
-use crate::mxp::Span;
+use crate::mxp::{SendTo, Span};
 use crate::world::World;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
@@ -284,8 +284,9 @@ impl Style {
 
     pub fn push(&mut self, span: Span) {
         if let Some(link) = &span.action {
-            self.format.set_anchor(true);
+            self.format.set_anchor(link.sendto == SendTo::Internet);
             self.format.set_anchor_href(&link.action);
+            self.format.set_anchor_names(&link.prompts);
             match &link.hint {
                 Some(hint) => self.format.set_tooltip(hint),
                 None => self.format.clear_tooltip(),
@@ -313,11 +314,13 @@ impl Style {
             None => {
                 self.format.set_anchor(false);
                 self.format.clear_anchor_href();
+                self.format.clear_anchor_names();
                 self.format.clear_tooltip();
             }
             Some(link) => {
-                self.format.set_anchor(true);
+                self.format.set_anchor(link.sendto == SendTo::Internet);
                 self.format.set_anchor_href(&link.action);
+                self.format.set_anchor_names(&link.prompts);
                 match &link.hint {
                     Some(hint) => self.format.set_tooltip(hint),
                     None => self.format.clear_tooltip(),

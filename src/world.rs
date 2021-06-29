@@ -5,7 +5,8 @@ use std::path::PathBuf;
 
 use chrono::{DateTime, Local};
 use hashbrown::HashMap;
-use qt_core::{GlobalColor, Key};
+use qt_core::GlobalColor;
+use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;
 use qt_gui::q_palette::ColorRole;
 use serde::{Deserialize, Serialize};
@@ -46,36 +47,6 @@ pub enum ScriptRecompile {
 }
 fn default_foreground() -> RColor {
     RColor::from(ColorRole::Text)
-}
-
-mod keypad_serde {
-    use std::mem;
-    use std::os::raw::c_int;
-
-    use hashbrown::HashMap;
-    use qt_core::Key;
-    use serde::de::{Deserialize, Deserializer};
-    use serde::ser::{Serialize, Serializer};
-
-    type Shim<V> = HashMap<c_int, V>;
-
-    pub fn serialize<S, V>(map: &HashMap<Key, V>, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-        V: Serialize,
-    {
-        // SAFETY: Key is repr(transparent) as c_int
-        unsafe { mem::transmute::<_, &Shim<V>>(map) }.serialize(serializer)
-    }
-
-    pub fn deserialize<'de, D, V>(deserializer: D) -> Result<HashMap<Key, V>, D::Error>
-    where
-        D: Deserializer<'de>,
-        V: Deserialize<'de>,
-    {
-        // SAFETY: Key is repr(transparent) as c_int
-        Shim::<V>::deserialize(deserializer).map(|shim| unsafe { mem::transmute(shim) })
-    }
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -239,8 +210,7 @@ pub struct World {
 
     // Keypad
     pub keypad_enable: bool,
-    #[serde(with = "keypad_serde")]
-    pub keypad_shortcuts: HashMap<Key, String>,
+    pub keypad_shortcuts: HashMap<u32, String>,
 
     // Auto Say
     pub enable_auto_say: bool,
@@ -405,7 +375,7 @@ impl World {
             beep_sound: String::new(),
             pixel_offset: 0,
             line_spacing: 0.0,
-            output_font: RFont::global(),
+            output_font: RFont::global(StyleHint::Monospace),
             use_default_output_font: true,
             show_bold: true,
             show_italic: true,

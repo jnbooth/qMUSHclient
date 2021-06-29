@@ -173,7 +173,7 @@ impl Client {
         self.latest.input = Instant::now();
         let world = self.world.deref();
         if world.display_my_input {
-            if !world.keep_commands_on_same_line && !self.cursor.current_block().is_empty() {
+            if !world.keep_commands_on_same_line && !self.cursor.at_block_start() {
                 self.cursor.insert_block();
             }
             let echo_colors = &world.echo_colors;
@@ -238,8 +238,8 @@ impl Client {
         }
     }
 
-    fn output_bad_utf8(&self) {
-        self.print(&self.state.utf8_sequence);
+    fn output_bad_utf8(&mut self) {
+        self.bufoutput.append(&mut self.state.utf8_sequence);
     }
 
     fn init_zlib(&mut self, prepend: &[u8]) {
@@ -713,31 +713,20 @@ impl Client {
             }
             Action::Send => {
                 let mut scanner = args.scan();
-                span.action = scanner
-                    .next_or(&["href", "xch_cmd"])
-                    .map(ToOwned::to_owned)
-                    .map(|action| {
-                        if world.underline_hyperlinks {
-                            span.flags.insert(TextStyle::Underline);
-                        }
-                        if world.use_custom_link_color {
-                            span.foreground = Some(world.hyperlink_color.clone());
-                        }
-                        let hint = scanner
-                            .next_or(&["hint", "xch_hint"])
-                            .map(ToOwned::to_owned);
-                        let sendto = if args.has_keyword(Keyword::Prompt) {
-                            SendTo::Input
-                        } else {
-                            SendTo::World
-                        };
-                        Link {
-                            action: action.to_owned(),
-                            hint,
-                            prompts: Vec::new(),
-                            sendto,
-                        }
-                    });
+                span.action = scanner.next_or(&["href", "xch_cmd"]).map(|action| {
+                    if world.underline_hyperlinks {
+                        span.flags.insert(TextStyle::Underline);
+                    }
+                    if world.use_custom_link_color {
+                        span.foreground = Some(world.hyperlink_color.clone());
+                    }
+                    let sendto = if args.has_keyword(Keyword::Prompt) {
+                        SendTo::Input
+                    } else {
+                        SendTo::World
+                    };
+                    Link::new(action, scanner.next_or(&["hint", "xch_hint"]), sendto)
+                });
             }
             Action::Hyperlink => {
                 let mut scanner = args.scan();
@@ -746,12 +735,7 @@ impl Client {
                     if world.use_custom_link_color {
                         span.foreground = Some(world.hyperlink_color.clone());
                     }
-                    Link {
-                        action: action.to_owned(),
-                        hint: None,
-                        prompts: Vec::new(),
-                        sendto: SendTo::Internet,
-                    }
+                    Link::new(action, None, SendTo::Internet)
                 });
             }
             Action::Font => {
@@ -818,7 +802,6 @@ impl Client {
                 self.state.in_paragraph = true;
             }
             Action::Br => {
-                self.cursor.insert_html("<br>");
                 fragments.push(Fragment::html("<br>"));
                 span.foreground = Some(world.color(&WorldColor::WHITE).to_owned());
                 span.background = Some(world.color(&WorldColor::BLACK).to_owned());

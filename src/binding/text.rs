@@ -2,7 +2,7 @@ use std::borrow::Borrow;
 use std::os::raw::c_int;
 
 use cpp_core::{CppBox, Ptr, StaticUpcast};
-use qt_core::{LayoutDirection, QObject, QPtr, QString};
+use qt_core::{LayoutDirection, QObject, QPtr, QString, QStringList};
 use qt_gui::q_font::Weight;
 use qt_gui::q_text_cursor::{MoveMode, MoveOperation, SelectionType};
 pub use qt_gui::q_text_frame_format::Position as FramePosition;
@@ -11,7 +11,7 @@ use qt_gui::*;
 use qt_widgets::QTextEdit;
 
 use super::color::{Colored, RColor};
-use super::{Binding, Printable, RImage};
+use super::{Binding, Printable, QList, RImage};
 use crate::binding::RFont;
 pub type Position = c_int;
 
@@ -23,6 +23,14 @@ unsafe fn from_nullable<Q: StaticUpcast<QObject>, To: From<QPtr<Q>>>(ptr: QPtr<Q
         None
     } else {
         Some(ptr.into())
+    }
+}
+
+fn optional_string(s: CppBox<QString>) -> Option<String> {
+    if unsafe { s.is_empty() } {
+        None
+    } else {
+        Some(s.to_std_string())
     }
 }
 
@@ -509,10 +517,18 @@ impl CharFormat {
         }
     }
 
+    pub fn is_anchor(&self) -> bool {
+        unsafe { self.0.is_anchor() }
+    }
+
     pub fn set_anchor(&self, enable: bool) {
         unsafe {
             self.0.set_anchor(enable);
         }
+    }
+
+    pub fn anchor_href(&self) -> Option<String> {
+        optional_string(unsafe { self.0.anchor_href() })
     }
 
     pub fn set_anchor_href(&self, href: &str) {
@@ -527,16 +543,31 @@ impl CharFormat {
         }
     }
 
-    pub fn set_anchor_name(&self, name: &str) {
+    pub fn anchor_names(&self) -> Vec<String> {
         unsafe {
-            self.0.set_anchor_name(&QString::from_std_str(name));
+            self.0
+                .anchor_names()
+                .cpp_iter()
+                .map(|x| x.to_std_string())
+                .collect()
         }
     }
 
-    pub fn clear_anchor_name(&self) {
+    pub fn set_anchor_names<T: AsRef<str>>(&self, names: &[T]) {
         unsafe {
-            self.0.set_anchor_name(&QString::new());
+            let list = QStringList::from_iter(names.iter().map(QString::from_std_str));
+            self.0.set_anchor_names(&list);
         }
+    }
+
+    pub fn clear_anchor_names(&self) {
+        unsafe {
+            self.0.set_anchor_names(&QStringList::new());
+        }
+    }
+
+    pub fn tooltip(&self) -> Option<String> {
+        optional_string(unsafe { self.0.tool_tip() })
     }
 
     pub fn set_tooltip(&self, tooltip: &str) {
