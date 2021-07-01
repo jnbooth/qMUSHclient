@@ -19,9 +19,7 @@ features = ["ritual_rustdoc", "ritual_rustdoc_nightly"]
 
 [dependencies]
 cpp_core = "0.6.0"
-qt_core = "0.5.0"
-serde = { version = "=1.0.118", features = ["derive"] }
-syn = "=1.0.57"
+qt_core = { path = "../qt_core" }
 
 [build-dependencies]
-qt_ritual_build = { path = "../ritual/qt_ritual_build" } #"0.5.0"
+qt_ritual_build = { path = "../ritual/qt_ritual_build" }

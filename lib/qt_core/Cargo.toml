@@ -1,0 +1,26 @@
+[features]
+ritual_rustdoc = []
+ritual_rustdoc_nightly = []
+
+[package]
+authors = ["Pavel Strakhov <ri@idzaaus.org>"]
+build = "build.rs"
+categories = ["external-ffi-bindings", "gui"]
+description = "Bindings for QtCore C++ library"
+documentation = "https://docs.rs/qt_core"
+edition = "2018"
+keywords = ["gui", "ffi", "qt", "ritual"]
+license = "MIT OR Apache-2.0"
+name = "qt_core"
+repository = "https://github.com/rust-qt/ritual"
+version = "0.5.0"
+[package.metadata.docs.rs]
+features = ["ritual_rustdoc", "ritual_rustdoc_nightly"]
+
+[dependencies]
+cpp_core = "0.6.0"
+qt_macros = "0.1.1"
+proc-macro-hack = "0.5.11"
+
+[build-dependencies]
+qt_ritual_build = { path = "../ritual/qt_ritual_build" }
