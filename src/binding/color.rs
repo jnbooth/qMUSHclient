@@ -86,7 +86,7 @@ impl From<GlobalColor> for RColor {
 }
 impl Default for RColor {
     fn default() -> Self {
-        unsafe { QBrush::new() }.into()
+        Self::from(unsafe { QBrush::new() })
     }
 }
 
@@ -119,19 +119,19 @@ impl RColor {
     }
 
     pub fn rgb(r: u8, g: u8, b: u8) -> Self {
-        unsafe { QColor::from_rgb_3a(r as c_int, g as c_int, b as c_int) }.into()
+        Self::from(unsafe { QColor::from_rgb_3a(r as c_int, g as c_int, b as c_int) })
     }
     pub fn rgba(r: u8, g: u8, b: u8, a: u8) -> Self {
-        unsafe { QColor::from_rgb_4a(r as c_int, g as c_int, b as c_int, a as c_int) }.into()
+        Self::from(unsafe { QColor::from_rgb_4a(r as c_int, g as c_int, b as c_int, a as c_int) })
     }
     pub fn from_code(code: c_uint) -> Self {
-        unsafe { QColor::from_rgba(code) }.into()
+        Self::from(unsafe { QColor::from_rgba(code) })
     }
     pub fn named(name: &str) -> Option<Self> {
         unsafe {
             let color = QColor::from_q_string(&QString::from_std_str(name));
             if color.is_valid() {
-                Some(color.into())
+                Some(Self::from(color))
             } else {
                 None
             }
@@ -147,7 +147,7 @@ impl RColor {
             self.color()
                 .to_hsl()
                 .get_hsl_4a(&mut h, &mut s, &mut l, &mut a);
-            QColor::from_hsl_4a(h, s, (l + adjust).clamp(0, 359), a).into()
+            Self::from(QColor::from_hsl_4a(h, s, (l + adjust).clamp(0, 359), a))
         }
     }
 
@@ -156,7 +156,7 @@ impl RColor {
             let dlg = QColorDialog::from_q_color_q_widget(self.color(), parent);
             dlg.set_option_2a(ColorDialogOption::ShowAlphaChannel, true);
             if dlg.exec() == DialogCode::Accepted.to_int() {
-                Some(dlg.selected_color().into())
+                Some(Self::from(dlg.selected_color()))
             } else {
                 None
             }
@@ -229,10 +229,10 @@ pub trait Colored {
 
 impl Colored for QTextFormat {
     fn foreground_color(&self) -> RColor {
-        unsafe { self.foreground() }.into()
+        RColor::from(unsafe { self.foreground() })
     }
     fn background_color(&self) -> RColor {
-        unsafe { self.background() }.into()
+        RColor::from(unsafe { self.background() })
     }
     fn set_foreground_color(&self, color: &RColor) {
         unsafe {
@@ -248,7 +248,7 @@ impl Colored for QTextFormat {
 
 impl Colored for QTextEdit {
     fn foreground_color(&self) -> RColor {
-        unsafe { self.text_color().into() }
+        unsafe { RColor::from(self.text_color()) }
     }
     fn background_color(&self) -> RColor {
         self.palette_color(ColorRole::Base)

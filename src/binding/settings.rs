@@ -68,7 +68,7 @@ impl RSettings {
         })
     }
     fn qget(&self, key: &str) -> RVariant {
-        unsafe { self.0.value_1a(&QString::from_std_str(key)) }.into()
+        RVariant::from(unsafe { self.0.value_1a(&QString::from_std_str(key)) })
     }
     pub fn get<T>(&self, key: &str) -> Result<T, Error>
     where

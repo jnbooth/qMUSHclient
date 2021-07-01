@@ -1,6 +1,6 @@
 use cpp_core::CppBox;
 use hashbrown::HashMap;
-use qt_core::{AlignmentFlag, QBox, QString};
+use qt_core::{AlignmentFlag, QBox, QFlags, QString};
 use qt_widgets::QTextEdit;
 
 use crate::binding::{Printable, RWidget};
@@ -81,7 +81,7 @@ impl Notepad {
                 let cursor = pad.text_cursor();
                 let oldfmt = cursor.block_format();
                 let fmt = cursor.block_format();
-                fmt.set_alignment(align.into());
+                fmt.set_alignment(QFlags::from(align));
                 cursor.insert_block_1a(&fmt);
                 cursor.insert_text_1a(&text.to_print());
                 cursor.insert_block_1a(&oldfmt);

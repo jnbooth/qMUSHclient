@@ -14,7 +14,7 @@ use qt_widgets::q_message_box::Icon;
 use qt_widgets::QTextBrowser;
 
 use crate::api::Api;
-use crate::binding::text::Cursor;
+use crate::binding::text::{CharFormat, Cursor};
 use crate::binding::{Printable, RColor, RIODevice, RWidget};
 use crate::client::color::Colors;
 use crate::client::state::Latest;
@@ -109,7 +109,7 @@ impl Client {
             bufoutput: Vec::new(),
             stream: None,
             style: Style::new(
-                unsafe { widget.current_char_format() }.into(),
+                CharFormat::from(unsafe { widget.current_char_format() }),
                 world.clone(),
             ),
             widget,

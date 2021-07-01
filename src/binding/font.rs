@@ -39,19 +39,19 @@ impl CastFrom<&RFont> for cpp_core::Ref<QFont> {
 
 impl Clone for RFont {
     fn clone(&self) -> Self {
-        unsafe { QFont::new_copy(&self.0) }.into()
+        Self::from(unsafe { QFont::new_copy(&self.0) })
     }
 }
 
 impl Default for RFont {
     fn default() -> Self {
-        unsafe { QFont::new() }.into()
+        Self::from(unsafe { QFont::new() })
     }
 }
 
 impl From<SystemFont> for RFont {
     fn from(value: SystemFont) -> Self {
-        unsafe { QFontDatabase::system_font(value) }.into()
+        Self::from(unsafe { QFontDatabase::system_font(value) })
     }
 }
 
@@ -61,7 +61,7 @@ impl RFont {
             let font = QFont::new();
             font.set_style_hint_1a(hint);
             font.set_family(&font.default_family());
-            font.into()
+            Self::from(font)
         }
     }
 
@@ -113,7 +113,7 @@ impl<'de> Deserialize<'de> for RFont {
         String::deserialize(deserializer).map(|desc| unsafe {
             let font = QFont::new();
             font.from_string(&QString::from_std_str(&desc));
-            font.into()
+            Self::from(font)
         })
     }
 }

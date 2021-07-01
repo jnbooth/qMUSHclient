@@ -116,7 +116,7 @@ pub struct RVariant(CppBox<QVariant>);
 
 impl RVariant {
     pub fn qtype(&self) -> Type {
-        unsafe { self.0.type_() }.to_int().into()
+        Type::from(unsafe { self.0.type_() }.to_int())
     }
 }
 

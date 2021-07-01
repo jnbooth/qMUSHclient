@@ -163,7 +163,7 @@ impl RDialog<DialogCode> for WorldPrefs {
             self.ui
                 .settings_tree
                 .set_current_item_1a(self.ui.settings_tree.top_level_item(0).child(0));
-            self.ui.widget.exec().into()
+            DialogCode::from(self.ui.widget.exec())
         }
     }
 }

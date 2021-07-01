@@ -98,7 +98,7 @@ impl<E: Enum> QForm<E> for QComboBox {
 
 impl QForm<RFont> for QFontComboBox {
     unsafe fn get_rust(this: QPtr<Self>) -> RFont {
-        unsafe { this.current_font() }.into()
+        RFont::from(unsafe { this.current_font() })
     }
 
     unsafe fn connect_rust(this: QPtr<Self>, t: &RFont, receiver: QBox<SlotNoArgs>) {

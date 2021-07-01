@@ -5,7 +5,7 @@ use std::path::PathBuf;
 
 use chrono::{DateTime, Local};
 use hashbrown::HashMap;
-use qt_core::GlobalColor;
+use qt_core::{GlobalColor, Key};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;
 use qt_gui::q_palette::ColorRole;
@@ -47,6 +47,29 @@ pub enum ScriptRecompile {
 }
 fn default_foreground() -> RColor {
     RColor::from(ColorRole::Text)
+}
+
+mod keypad_serde {
+    use super::*;
+
+    pub fn serialize<S, V>(map: &HashMap<Key, V>, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+        V: serde::Serialize,
+    {
+        serializer.collect_map(map.iter().map(|(k, v)| (k.to_int() as u32, v)))
+    }
+
+    pub fn deserialize<'de, D, V>(deserializer: D) -> Result<HashMap<Key, V>, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+        V: serde::Deserialize<'de>,
+    {
+        Ok(HashMap::<u32, V>::deserialize(deserializer)?
+            .into_iter()
+            .map(|(k, v)| (Key::from(k as std::os::raw::c_int), v))
+            .collect())
+    }
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -210,7 +233,8 @@ pub struct World {
 
     // Keypad
     pub keypad_enable: bool,
-    pub keypad_shortcuts: HashMap<u32, String>,
+    #[serde(with = "keypad_serde")]
+    pub keypad_shortcuts: HashMap<Key, String>,
 
     // Auto Say
     pub enable_auto_say: bool,
