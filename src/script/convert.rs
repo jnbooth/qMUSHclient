@@ -1,6 +1,5 @@
 use std::collections::BTreeMap;
 use std::hash::{BuildHasher, Hash};
-use std::ops::Deref;
 use std::rc::Rc;
 use std::str;
 
@@ -71,7 +70,7 @@ macro_rules! impl_arg_deref {
             $(T: $bounds),*
         {
             fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
-                self.deref().to_arg(lua)
+                (*self).to_arg(lua)
             }
         }
         impl<T> ScriptArg for &$t<T>
@@ -80,7 +79,7 @@ macro_rules! impl_arg_deref {
             $(T: $bounds),*
         {
             fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
-                self.deref().to_arg(lua)
+                (**self).to_arg(lua)
             }
         }
     }

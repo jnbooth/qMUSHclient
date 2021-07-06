@@ -2,7 +2,6 @@ use std::cell::RefCell;
 use std::convert::{TryFrom, TryInto};
 use std::io::{self, BufReader, Read, Write};
 use std::iter::Iterator;
-use std::ops::Deref;
 use std::rc::Rc;
 use std::time::Instant;
 use std::{mem, str};
@@ -148,7 +147,7 @@ impl Client {
     }
 
     pub fn connect(&mut self) {
-        let world = self.world.deref();
+        let world = &*self.world;
         self.socket.connect(&world.site, world.port);
         self.latest.connected = Instant::now();
     }
@@ -171,7 +170,7 @@ impl Client {
 
     pub fn send_command(&mut self, mut command: String) -> io::Result<()> {
         self.latest.input = Instant::now();
-        let world = self.world.deref();
+        let world = &*self.world;
         if world.display_my_input {
             if !world.keep_commands_on_same_line && !self.cursor.at_block_start() {
                 self.cursor.insert_block();
@@ -664,7 +663,7 @@ impl Client {
         args: mxp::Arguments,
     ) {
         use mxp::{Action, Atom, InList, Keyword, Link, SendTo};
-        let world = self.world.deref();
+        let world = &*self.world;
         let get_color = |name: &str| {
             if world.ignore_mxp_color_changes {
                 None

@@ -129,10 +129,7 @@ impl App {
 
     fn save_recents(self: &Rc<Self>) {
         self.recent.borrow_mut().truncate(MAX_RECENT);
-        unsafe {
-            self.settings
-                .set_list(KEY_RECENT, self.recent.borrow().iter());
-        }
+        self.settings.set_list(KEY_RECENT, &*self.recent.borrow());
         self.setup_recents();
     }
 

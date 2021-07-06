@@ -163,132 +163,19 @@ pub struct Atom {
 }
 
 impl Atom {
-    const ALL: Lazy<CaseFoldMap<String, Self>> = Lazy::new(|| {
-        let mut all = CaseFoldMap::new();
-        let mut add = |name: &'static str, flags, action, args| {
-            all.insert(
-                name.to_owned(),
-                Atom {
-                    name,
-                    flags,
-                    action,
-                    args,
-                },
-            )
-        };
-        // FIXME(#51911) give CaseFold<str> its own const fn conversion from str once const derefs
-        // are possible, or just come up with a different way to do this
-        use std::mem::transmute as case;
-
-        use Action::*;
-        use TagFlag::*;
-        add("bold", enums![Open], Bold, &[]);
-        add("b", enums![Open], Bold, &[]);
-        add("high", enums![Open], High, &[]);
-        add("h", enums![Open], High, &[]);
-        add("underline", enums![Open], Underline, &[]);
-        add("u", enums![Open], Underline, &[]);
-        add("italic", enums![Open], Italic, &[]);
-        add("i", enums![Open], Italic, &[]);
-        add("em", enums![Open], Italic, &[]);
-        const COLOR_ARGS: &[&CaseFold<str>] = unsafe { &[case("fore"), case("back")] };
-        add("color", enums![Open], Color, COLOR_ARGS);
-        add("c", enums![Open], Color, COLOR_ARGS);
-        add("s", enums![Open, NotImp], Strike, &[]);
-        add("strike", enums![Open, NotImp], Strike, &[]);
-        add("strong", enums![Open], Bold, &[]);
-        add("small", enums![Open, NotImp], Small, &[]);
-        add("tt", enums![Open, NotImp], Tt, &[]);
-        add("frame", enums![NotImp], Frame, &[]);
-        add("dest", enums![NotImp], Dest, &[]);
-        const IMAGE_ARGS: &[&CaseFold<str>] = unsafe { &[case("url"), case("fname")] };
-        add("image", enums![Command, NotImp], Image, IMAGE_ARGS);
-        add("filter", enums![NotImp], Filter, &[]);
-        const A_ARGS: &[&CaseFold<str>] =
-            unsafe { &[case("href"), case("xch_cmd"), case("xch_hint")] };
-        add("a", enums![], Hyperlink, A_ARGS);
-        add("h1", enums![NotImp], H1, &[]);
-        add("h2", enums![NotImp], H2, &[]);
-        add("h3", enums![NotImp], H3, &[]);
-        add("h4", enums![NotImp], H4, &[]);
-        add("h5", enums![NotImp], H5, &[]);
-        add("h6", enums![NotImp], H6, &[]);
-        add("hr", enums![Command], Hr, &[]);
-        add("nobr", enums![NotImp], NoBr, &[]);
-        add("p", enums![], P, &[]);
-        add("script", enums![NotImp], Script, &[]);
-        add("ul", enums![], Ul, &[]);
-        add("ol", enums![], Ol, &[]);
-        add("samp", enums![], Samp, &[]);
-        add("center", enums![NotImp], Center, &[]);
-        add("var", enums![], Var, &[]);
-        add("v", enums![], Var, &[]);
-        add("gauge", enums![NotImp], Gauge, &[]);
-        add("stat", enums![NotImp], Stat, &[]);
-        add("expire", enums![NotImp], Expire, &[]);
-        // strictly speaking <LI> isn't a command, but few people bother with </li>
-        add("li", enums![Command], Li, &[]);
-        add("sound", enums![Command, NotImp], Sound, &[]);
-        add("music", enums![Command, NotImp], Sound, &[]);
-        add("br", enums![Command], Br, &[]);
-        add("username", enums![Command], User, &[]);
-        add("user", enums![Command], User, &[]);
-        add("password", enums![Command], Password, &[]);
-        add("pass", enums![Command], Password, &[]);
-        add("relocate", enums![Command, NotImp], Relocate, &[]);
-        add("version", enums![Command], Version, &[]);
-        add("reset", enums![Command], Reset, &[]);
-        const MXP_ARGS: &[&CaseFold<str>] = unsafe { &[case("off")] };
-        add("mxp", enums![Command], Reset, MXP_ARGS);
-        add("support", enums![Command], Support, &[]);
-        add("option", enums![Command], SetOption, &[]);
-        add("afk", enums![Command], Afk, &[]);
-        add("recommend_option", enums![Command], RecommendOption, &[]);
-        add("pre", enums![Pueblo], Pre, &[]);
-        add("body", enums![Pueblo, NoReset], Body, &[]);
-        add("head", enums![Pueblo, NoReset], Head, &[]);
-        add("html", enums![Pueblo, NoReset], Html, &[]);
-        add("title", enums![Pueblo], Title, &[]);
-        const IMG_ARGS: &[&CaseFold<str>] = unsafe { &[case("src"), case("xch_mode")] };
-        add("img", enums![Pueblo, Command], Img, IMG_ARGS);
-        add("xch_page", enums![Pueblo, Command], XchPage, &[]);
-        add("xch_pane", enums![Pueblo, Command, NotImp], XchPane, &[]);
-        const FONT_ARGS: &[&CaseFold<str>] = unsafe {
-            &[
-                case("color"),
-                case("back"),
-                case("fgcolor"),
-                case("bgcolor"),
-            ]
-        };
-        add("font", enums![Open], Font, FONT_ARGS);
-        const ADD_ARGS: &[&CaseFold<str>] = unsafe {
-            &[
-                case("href"),
-                case("hint"),
-                case("xch_cmd"),
-                case("xch_hint"),
-                case("prompt"),
-            ]
-        };
-        add("send", enums![], Send, ADD_ARGS);
-
-        all
-    });
-
     pub fn exists(name: &str) -> bool {
-        Self::ALL.contains_key(name)
+        ALL_ATOMS.contains_key(name)
     }
 
     pub fn get(name: &str) -> Option<Self> {
-        Self::ALL.get(name).map(Clone::clone)
+        ALL_ATOMS.get(name).map(Clone::clone)
     }
 
     pub fn supported(args: Arguments) -> String {
         const ERR: &'static str = "unexpected format error in Atom::supported";
         let mut supported = String::from("\x1B[1z<SUPPORTS ");
         if args.is_empty() {
-            for atom in Self::ALL.values() {
+            for atom in ALL_ATOMS.values() {
                 write!(supported, "+{} ", atom.name).expect(ERR);
                 for atom_arg in atom.args {
                     write!(supported, "+{}.{} ", atom.name, atom_arg).expect(ERR);
@@ -330,3 +217,115 @@ impl Atom {
         supported
     }
 }
+
+static ALL_ATOMS: Lazy<CaseFoldMap<String, Atom>> = Lazy::new(|| {
+    let mut all = CaseFoldMap::new();
+    let mut add = |name: &'static str, flags, action, args| {
+        all.insert(
+            name.to_owned(),
+            Atom {
+                name,
+                flags,
+                action,
+                args,
+            },
+        )
+    };
+    // FIXME(#51911) give CaseFold<str> its own const fn conversion from str once const derefs
+    // are possible, or just come up with a different way to do this
+    use std::mem::transmute as case;
+
+    use Action::*;
+    use TagFlag::*;
+    add("bold", enums![Open], Bold, &[]);
+    add("b", enums![Open], Bold, &[]);
+    add("high", enums![Open], High, &[]);
+    add("h", enums![Open], High, &[]);
+    add("underline", enums![Open], Underline, &[]);
+    add("u", enums![Open], Underline, &[]);
+    add("italic", enums![Open], Italic, &[]);
+    add("i", enums![Open], Italic, &[]);
+    add("em", enums![Open], Italic, &[]);
+    const COLOR_ARGS: &[&CaseFold<str>] = unsafe { &[case("fore"), case("back")] };
+    add("color", enums![Open], Color, COLOR_ARGS);
+    add("c", enums![Open], Color, COLOR_ARGS);
+    add("s", enums![Open, NotImp], Strike, &[]);
+    add("strike", enums![Open, NotImp], Strike, &[]);
+    add("strong", enums![Open], Bold, &[]);
+    add("small", enums![Open, NotImp], Small, &[]);
+    add("tt", enums![Open, NotImp], Tt, &[]);
+    add("frame", enums![NotImp], Frame, &[]);
+    add("dest", enums![NotImp], Dest, &[]);
+    const IMAGE_ARGS: &[&CaseFold<str>] = unsafe { &[case("url"), case("fname")] };
+    add("image", enums![Command, NotImp], Image, IMAGE_ARGS);
+    add("filter", enums![NotImp], Filter, &[]);
+    const A_ARGS: &[&CaseFold<str>] = unsafe { &[case("href"), case("xch_cmd"), case("xch_hint")] };
+    add("a", enums![], Hyperlink, A_ARGS);
+    add("h1", enums![NotImp], H1, &[]);
+    add("h2", enums![NotImp], H2, &[]);
+    add("h3", enums![NotImp], H3, &[]);
+    add("h4", enums![NotImp], H4, &[]);
+    add("h5", enums![NotImp], H5, &[]);
+    add("h6", enums![NotImp], H6, &[]);
+    add("hr", enums![Command], Hr, &[]);
+    add("nobr", enums![NotImp], NoBr, &[]);
+    add("p", enums![], P, &[]);
+    add("script", enums![NotImp], Script, &[]);
+    add("ul", enums![], Ul, &[]);
+    add("ol", enums![], Ol, &[]);
+    add("samp", enums![], Samp, &[]);
+    add("center", enums![NotImp], Center, &[]);
+    add("var", enums![], Var, &[]);
+    add("v", enums![], Var, &[]);
+    add("gauge", enums![NotImp], Gauge, &[]);
+    add("stat", enums![NotImp], Stat, &[]);
+    add("expire", enums![NotImp], Expire, &[]);
+    // strictly speaking <LI> isn't a command, but few people bother with </li>
+    add("li", enums![Command], Li, &[]);
+    add("sound", enums![Command, NotImp], Sound, &[]);
+    add("music", enums![Command, NotImp], Sound, &[]);
+    add("br", enums![Command], Br, &[]);
+    add("username", enums![Command], User, &[]);
+    add("user", enums![Command], User, &[]);
+    add("password", enums![Command], Password, &[]);
+    add("pass", enums![Command], Password, &[]);
+    add("relocate", enums![Command, NotImp], Relocate, &[]);
+    add("version", enums![Command], Version, &[]);
+    add("reset", enums![Command], Reset, &[]);
+    const MXP_ARGS: &[&CaseFold<str>] = unsafe { &[case("off")] };
+    add("mxp", enums![Command], Reset, MXP_ARGS);
+    add("support", enums![Command], Support, &[]);
+    add("option", enums![Command], SetOption, &[]);
+    add("afk", enums![Command], Afk, &[]);
+    add("recommend_option", enums![Command], RecommendOption, &[]);
+    add("pre", enums![Pueblo], Pre, &[]);
+    add("body", enums![Pueblo, NoReset], Body, &[]);
+    add("head", enums![Pueblo, NoReset], Head, &[]);
+    add("html", enums![Pueblo, NoReset], Html, &[]);
+    add("title", enums![Pueblo], Title, &[]);
+    const IMG_ARGS: &[&CaseFold<str>] = unsafe { &[case("src"), case("xch_mode")] };
+    add("img", enums![Pueblo, Command], Img, IMG_ARGS);
+    add("xch_page", enums![Pueblo, Command], XchPage, &[]);
+    add("xch_pane", enums![Pueblo, Command, NotImp], XchPane, &[]);
+    const FONT_ARGS: &[&CaseFold<str>] = unsafe {
+        &[
+            case("color"),
+            case("back"),
+            case("fgcolor"),
+            case("bgcolor"),
+        ]
+    };
+    add("font", enums![Open], Font, FONT_ARGS);
+    const ADD_ARGS: &[&CaseFold<str>] = unsafe {
+        &[
+            case("href"),
+            case("hint"),
+            case("xch_cmd"),
+            case("xch_hint"),
+            case("prompt"),
+        ]
+    };
+    add("send", enums![], Send, ADD_ARGS);
+
+    all
+});
