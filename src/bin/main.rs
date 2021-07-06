@@ -1,9 +1,7 @@
 #![windows_subsystem = "windows"]
 
 use qmushclient::{App, RWidget};
-use qt_core::{
-    q_init_resource, ApplicationAttribute, QCoreApplication, QLocale, QString, QTranslator,
-};
+use qt_core::{ApplicationAttribute, QCoreApplication, QLocale, QString, QTranslator};
 use qt_widgets::QApplication;
 
 fn load_translator() {
@@ -26,12 +24,19 @@ fn load_translator() {
 fn main() {
     unsafe {
         QCoreApplication::set_attribute_2a(ApplicationAttribute::AAShareOpenGLContexts, true);
+        QCoreApplication::set_organization_name(&QString::from_std_str("qMUSHclient"));
+        QCoreApplication::set_organization_domain(&QString::from_std_str("qMUSHclient"));
     }
     QApplication::init(|_| {
-        q_init_resource!("resources");
+        extern "C" {
+            fn ritual_init_resource_resources();
+        }
+        unsafe {
+            ritual_init_resource_resources();
+        }
         load_translator();
 
-        let app = App::new("qMUSHclient", "qMUSHclient");
+        let app = App::new();
         unsafe {
             app.widget().show();
             QApplication::exec()

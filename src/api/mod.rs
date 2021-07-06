@@ -12,8 +12,9 @@ use qt_widgets::QTextBrowser;
 
 use crate::binding::color::{Colored, RColor, RColorPair};
 use crate::binding::text::Cursor;
-use crate::binding::{Printable, RIODevice, RWidget};
+use crate::binding::{Printable, RIODevice, RSettings, RWidget};
 use crate::client::color::Colors;
+use crate::script::{CloneWith, PluginMetadata};
 use crate::tr::TrContext;
 use crate::ui::{Notepad, Pad};
 use crate::world::World;
@@ -26,10 +27,17 @@ pub struct Api {
     world: Rc<World>,
     notepad: Rc<RefCell<Notepad>>,
     custom_colors: HashMap<String, RColorPair>,
+    variables: RefCell<HashMap<String, String>>,
+    variables_key: String,
 }
 
-impl Clone for Api {
-    fn clone(&self) -> Self {
+impl<'a> CloneWith<&'a PluginMetadata> for Api {
+    fn clone_with(&self, metadata: &'a PluginMetadata) -> Self {
+        let variables_key = format!(
+            "vars-{:?}-{:?}",
+            self.world.name,
+            metadata.source.file_name()
+        );
         let widget = self.widget.clone();
         unsafe {
             Self {
@@ -39,6 +47,12 @@ impl Clone for Api {
                 world: self.world.clone(),
                 notepad: self.notepad.clone(),
                 custom_colors: self.custom_colors.clone(),
+                variables: RefCell::new(
+                    RSettings::default()
+                        .get(&variables_key)
+                        .unwrap_or_else(|_| HashMap::new()),
+                ),
+                variables_key,
             }
         }
     }
@@ -84,6 +98,8 @@ impl Api {
             notepad,
             custom_colors: world.custom_color_map(),
             world,
+            variables: RefCell::new(HashMap::new()),
+            variables_key: String::new(),
         }
     }
 

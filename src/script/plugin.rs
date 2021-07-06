@@ -246,7 +246,17 @@ impl Plugin {
     }
 }
 
-pub struct PluginHandler<U: 'static + UserData + Clone> {
+pub trait CloneWith<T> {
+    fn clone_with(&self, with: T) -> Self;
+}
+
+impl<T: Clone, C> CloneWith<C> for T {
+    fn clone_with(&self, _: C) -> Self {
+        self.clone()
+    }
+}
+
+pub struct PluginHandler<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> {
     userdata: U,
     initialize: String,
     methods: Vec<String>,
@@ -263,7 +273,7 @@ const fn truthy(value: &Value) -> bool {
     }
 }
 
-impl<U: 'static + UserData + Clone> PluginHandler<U> {
+impl<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> PluginHandler<U> {
     pub fn new(userdata: U) -> Self {
         let mut gatherer = MethodGatherer::new();
         U::add_methods(&mut gatherer);
@@ -305,7 +315,7 @@ impl<U: 'static + UserData + Clone> PluginHandler<U> {
 
         engine
             .globals()
-            .set(USERDATA_KEY, self.userdata.clone())?;
+            .set(USERDATA_KEY, self.userdata.clone_with(&metadata))?;
         engine.load(&self.initialize).exec()?;
         self.plugins.push(Plugin::load(engine, metadata)?);
         Ok(())

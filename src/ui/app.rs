@@ -43,12 +43,11 @@ pub struct App {
 }
 
 impl App {
-    pub fn new(organization: &str, name: &str) -> Rc<Self> {
-        let settings = RSettings::new(organization, name);
-        let recent = match settings.get_list(KEY_RECENT) {
-            Ok(list) => list.collect(),
-            Err(_) => VecDeque::new(),
-        };
+    pub fn new() -> Rc<Self> {
+        let settings = RSettings::default();
+        let recent = settings
+            .get_list(KEY_RECENT)
+            .unwrap_or_else(|_| VecDeque::new());
 
         let this = Rc::new(App {
             ui: uic::App::load(NullPtr),
@@ -342,7 +341,7 @@ impl App {
 
     #[slot(SlotNoArgs)]
     fn open_world_list(self: &Rc<Self>) {
-        if let Ok(list) = self.settings.get_list("startuplist") {
+        if let Ok(list) = self.settings.get_list::<Vec<_>>("startuplist") {
             for filename in list {
                 self.open_world_file(&filename);
             }

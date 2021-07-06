@@ -271,8 +271,8 @@ impl WorldTab {
                 return;
             }
             let menu = QMenu::from_q_widget(&self.ui.output);
-            for anchor_name in anchor_names.cpp_iter() {
-                menu.add_action_q_string(&anchor_name);
+            for anchor_name in anchor_names.iter() {
+                menu.add_action_q_string(anchor_name);
             }
             let chosen = menu.exec_1a_mut(point);
             if chosen.is_null() {
