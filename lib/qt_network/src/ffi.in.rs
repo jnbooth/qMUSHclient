@@ -36153,588 +36153,657 @@ extern "C" {
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::QUdpSocket;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_metaObject(
-        this_ptr: *const crate::SlotOfQSslPreSharedKeyAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_metaObject(
+        this_ptr: *const crate::SlotOfQHostAddress,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_qt_metacast(
-        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_qt_metacast(
+        this_ptr: *mut crate::SlotOfQHostAddress,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_qt_metacall(
-        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_qt_metacall(
+        this_ptr: *mut crate::SlotOfQHostAddress,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref(
         parent: *mut ::qt_core::QObject,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *mut crate::QSslPreSharedKeyAuthenticator),
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QHostAddress),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQSslPreSharedKeyAuthenticator;
+    ) -> *mut crate::SlotOfQHostAddress;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_set(
-        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_set(
+        this_ptr: *mut crate::SlotOfQHostAddress,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *mut crate::QSslPreSharedKeyAuthenticator),
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QHostAddress),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_slot_(
-        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
-        arg0: *mut crate::QSslPreSharedKeyAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_slot_(
+        this_ptr: *mut crate::SlotOfQHostAddress,
+        arg0: *const crate::QHostAddress,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_metaObject(
-        this_ptr: *const crate::SignalOfQSslPreSharedKeyAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_metaObject(
+        this_ptr: *const crate::SignalOfQHostAddress,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_qt_metacast(
-        this_ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_qt_metacast(
+        this_ptr: *mut crate::SignalOfQHostAddress,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_qt_metacall(
-        this_ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_qt_metacall(
+        this_ptr: *mut crate::SignalOfQHostAddress,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr(
-    ) -> *mut crate::SignalOfQSslPreSharedKeyAuthenticator;
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref(
+    ) -> *mut crate::SignalOfQHostAddress;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_emit_(
-        this_ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
-        arg0: *mut crate::QSslPreSharedKeyAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_emit_(
+        this_ptr: *mut crate::SignalOfQHostAddress,
+        arg0: *const crate::QHostAddress,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_metaObject(
-        this_ptr: *const crate::SlotOfQNetworkProxyQAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_metaObject(
+        this_ptr: *const crate::SlotOfSocketError,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_qt_metacast(
-        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_qt_metacast(
+        this_ptr: *mut crate::SlotOfSocketError,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_qt_metacall(
-        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_qt_metacall(
+        this_ptr: *mut crate::SlotOfSocketError,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError(
         parent: *mut ::qt_core::QObject,
         callback: ::std::option::Option<
-            extern "C" fn(
-                *mut ::std::ffi::c_void,
-                *const crate::QNetworkProxy,
-                *mut crate::QAuthenticator,
-            ),
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_abstract_socket::SocketError),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQNetworkProxyQAuthenticator;
+    ) -> *mut crate::SlotOfSocketError;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_set(
-        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_set(
+        this_ptr: *mut crate::SlotOfSocketError,
         callback: ::std::option::Option<
-            extern "C" fn(
-                *mut ::std::ffi::c_void,
-                *const crate::QNetworkProxy,
-                *mut crate::QAuthenticator,
-            ),
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_abstract_socket::SocketError),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_slot_(
-        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_slot_(
+        this_ptr: *mut crate::SlotOfSocketError,
+        arg0: crate::q_abstract_socket::SocketError,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_metaObject(
+        this_ptr: *const crate::SignalOfSocketError,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_qt_metacast(
+        this_ptr: *mut crate::SignalOfSocketError,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_qt_metacall(
+        this_ptr: *mut crate::SignalOfSocketError,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError(
+    ) -> *mut crate::SignalOfSocketError;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_emit_(
+        this_ptr: *mut crate::SignalOfSocketError,
+        arg0: crate::q_abstract_socket::SocketError,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_metaObject(
+        this_ptr: *const crate::SlotOfQListOfQSslError,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_qt_metacast(
+        this_ptr: *mut crate::SlotOfQListOfQSslError,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_qt_metacall(
+        this_ptr: *mut crate::SlotOfQListOfQSslError,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QListOfQSslError),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfQListOfQSslError;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_set(
+        this_ptr: *mut crate::SlotOfQListOfQSslError,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QListOfQSslError),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_slot_(
+        this_ptr: *mut crate::SlotOfQListOfQSslError,
+        arg0: *const crate::QListOfQSslError,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_metaObject(
+        this_ptr: *const crate::SignalOfQListOfQSslError,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_qt_metacast(
+        this_ptr: *mut crate::SignalOfQListOfQSslError,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_qt_metacall(
+        this_ptr: *mut crate::SignalOfQListOfQSslError,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref(
+    ) -> *mut crate::SignalOfQListOfQSslError;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_emit_(
+        this_ptr: *mut crate::SignalOfQListOfQSslError,
+        arg0: *const crate::QListOfQSslError,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_metaObject(
+        this_ptr: *const crate::SlotOfState,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_qt_metacast(
+        this_ptr: *mut crate::SlotOfState,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_qt_metacall(
+        this_ptr: *mut crate::SlotOfState,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_network_session::State),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfState;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_set(
+        this_ptr: *mut crate::SlotOfState,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_network_session::State),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_slot_(
+        this_ptr: *mut crate::SlotOfState,
+        arg0: crate::q_network_session::State,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_metaObject(
+        this_ptr: *const crate::SignalOfState,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_qt_metacast(
+        this_ptr: *mut crate::SignalOfState,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_qt_metacall(
+        this_ptr: *mut crate::SignalOfState,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State(
+    ) -> *mut crate::SignalOfState;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_emit_(
+        this_ptr: *mut crate::SignalOfState,
+        arg0: crate::q_network_session::State,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_metaObject(
+        this_ptr: *const crate::SlotOfType,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_qt_metacast(
+        this_ptr: *mut crate::SlotOfType,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_qt_metacall(
+        this_ptr: *mut crate::SlotOfType,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_dns_lookup::Type),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfType;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_set(
+        this_ptr: *mut crate::SlotOfType,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_dns_lookup::Type),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_slot_(
+        this_ptr: *mut crate::SlotOfType,
+        arg0: crate::q_dns_lookup::Type,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_metaObject(
+        this_ptr: *const crate::SignalOfType,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_qt_metacast(
+        this_ptr: *mut crate::SignalOfType,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_qt_metacall(
+        this_ptr: *mut crate::SignalOfType,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type(
+    ) -> *mut crate::SignalOfType;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_emit_(
+        this_ptr: *mut crate::SignalOfType,
+        arg0: crate::q_dns_lookup::Type,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_metaObject(
+        this_ptr: *const crate::SlotOfQNetworkConfigurationBool,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_qt_metacast(
+        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_qt_metacall(
+        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkConfiguration, bool),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfQNetworkConfigurationBool;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_set(
+        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkConfiguration, bool),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_slot_(
+        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
+        arg0: *const crate::QNetworkConfiguration,
+        arg1: bool,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_metaObject(
+        this_ptr: *const crate::SignalOfQNetworkConfigurationBool,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_qt_metacast(
+        this_ptr: *mut crate::SignalOfQNetworkConfigurationBool,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_qt_metacall(
+        this_ptr: *mut crate::SignalOfQNetworkConfigurationBool,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool(
+    ) -> *mut crate::SignalOfQNetworkConfigurationBool;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_emit_(
+        this_ptr: *mut crate::SignalOfQNetworkConfigurationBool,
+        arg0: *const crate::QNetworkConfiguration,
+        arg1: bool,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_metaObject(
+        this_ptr: *const crate::SlotOfQNetworkProxy,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_qt_metacast(
+        this_ptr: *mut crate::SlotOfQNetworkProxy,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_qt_metacall(
+        this_ptr: *mut crate::SlotOfQNetworkProxy,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkProxy),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfQNetworkProxy;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_set(
+        this_ptr: *mut crate::SlotOfQNetworkProxy,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkProxy),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_slot_(
+        this_ptr: *mut crate::SlotOfQNetworkProxy,
         arg0: *const crate::QNetworkProxy,
-        arg1: *mut crate::QAuthenticator,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_metaObject(
-        this_ptr: *const crate::SignalOfQNetworkProxyQAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_metaObject(
+        this_ptr: *const crate::SignalOfQNetworkProxy,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_qt_metacast(
-        this_ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_qt_metacast(
+        this_ptr: *mut crate::SignalOfQNetworkProxy,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_qt_metacall(
-        this_ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_qt_metacall(
+        this_ptr: *mut crate::SignalOfQNetworkProxy,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr(
-    ) -> *mut crate::SignalOfQNetworkProxyQAuthenticator;
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref(
+    ) -> *mut crate::SignalOfQNetworkProxy;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_emit_(
-        this_ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_emit_(
+        this_ptr: *mut crate::SignalOfQNetworkProxy,
         arg0: *const crate::QNetworkProxy,
-        arg1: *mut crate::QAuthenticator,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_metaObject(
-        this_ptr: *const crate::SlotOfQFlagsUsagePolicy,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_qt_metacast(
-        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_qt_metacall(
-        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, ::std::os::raw::c_int),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQFlagsUsagePolicy;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_set(
-        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, ::std::os::raw::c_int),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_slot_(
-        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
-        arg0: ::std::os::raw::c_int,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_metaObject(
-        this_ptr: *const crate::SignalOfQFlagsUsagePolicy,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_qt_metacast(
-        this_ptr: *mut crate::SignalOfQFlagsUsagePolicy,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_qt_metacall(
-        this_ptr: *mut crate::SignalOfQFlagsUsagePolicy,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy(
-    ) -> *mut crate::SignalOfQFlagsUsagePolicy;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_emit_(
-        this_ptr: *mut crate::SignalOfQFlagsUsagePolicy,
-        arg0: ::std::os::raw::c_int,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_metaObject(
-        this_ptr: *const crate::SlotOfQNetworkReplyQAuthenticator,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_qt_metacast(
-        this_ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_qt_metacall(
-        this_ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(
-                *mut ::std::ffi::c_void,
-                *mut crate::QNetworkReply,
-                *mut crate::QAuthenticator,
-            ),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQNetworkReplyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_set(
-        this_ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
-        callback: ::std::option::Option<
-            extern "C" fn(
-                *mut ::std::ffi::c_void,
-                *mut crate::QNetworkReply,
-                *mut crate::QAuthenticator,
-            ),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_slot_(
-        this_ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
-        arg0: *mut crate::QNetworkReply,
-        arg1: *mut crate::QAuthenticator,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_metaObject(
-        this_ptr: *const crate::SignalOfQNetworkReplyQAuthenticator,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_qt_metacast(
-        this_ptr: *mut crate::SignalOfQNetworkReplyQAuthenticator,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_qt_metacall(
-        this_ptr: *mut crate::SignalOfQNetworkReplyQAuthenticator,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr(
-    ) -> *mut crate::SignalOfQNetworkReplyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_emit_(
-        this_ptr: *mut crate::SignalOfQNetworkReplyQAuthenticator,
-        arg0: *mut crate::QNetworkReply,
-        arg1: *mut crate::QAuthenticator,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_metaObject(
-        this_ptr: *const crate::SlotOfNetworkAccessibility,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_qt_metacast(
-        this_ptr: *mut crate::SlotOfNetworkAccessibility,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_qt_metacall(
-        this_ptr: *mut crate::SlotOfNetworkAccessibility,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(
-                *mut ::std::ffi::c_void,
-                crate::q_network_access_manager::NetworkAccessibility,
-            ),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfNetworkAccessibility;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_set(
-        this_ptr: *mut crate::SlotOfNetworkAccessibility,
-        callback: ::std::option::Option<
-            extern "C" fn(
-                *mut ::std::ffi::c_void,
-                crate::q_network_access_manager::NetworkAccessibility,
-            ),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_slot_(
-        this_ptr: *mut crate::SlotOfNetworkAccessibility,
-        arg0: crate::q_network_access_manager::NetworkAccessibility,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_metaObject(
-        this_ptr: *const crate::SignalOfNetworkAccessibility,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_qt_metacast(
-        this_ptr: *mut crate::SignalOfNetworkAccessibility,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_qt_metacall(
-        this_ptr: *mut crate::SignalOfNetworkAccessibility,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility(
-    ) -> *mut crate::SignalOfNetworkAccessibility;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_emit_(
-        this_ptr: *mut crate::SignalOfNetworkAccessibility,
-        arg0: crate::q_network_access_manager::NetworkAccessibility,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_metaObject(
-        this_ptr: *const crate::SlotOfNetworkError,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_qt_metacast(
-        this_ptr: *mut crate::SlotOfNetworkError,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_qt_metacall(
-        this_ptr: *mut crate::SlotOfNetworkError,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_network_reply::NetworkError),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfNetworkError;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_set(
-        this_ptr: *mut crate::SlotOfNetworkError,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_network_reply::NetworkError),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_slot_(
-        this_ptr: *mut crate::SlotOfNetworkError,
-        arg0: crate::q_network_reply::NetworkError,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_metaObject(
-        this_ptr: *const crate::SignalOfNetworkError,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_qt_metacast(
-        this_ptr: *mut crate::SignalOfNetworkError,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_qt_metacall(
-        this_ptr: *mut crate::SignalOfNetworkError,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError(
-    ) -> *mut crate::SignalOfNetworkError;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_emit_(
-        this_ptr: *mut crate::SignalOfNetworkError,
-        arg0: crate::q_network_reply::NetworkError,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_staticMetaObject(
@@ -36840,283 +36909,200 @@ extern "C" {
         arg1: *mut crate::QSslPreSharedKeyAuthenticator,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_metaObject(
-        this_ptr: *const crate::SlotOfQUrl,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_metaObject(
+        this_ptr: *const crate::SlotOfQNetworkConfiguration,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_qt_metacast(
-        this_ptr: *mut crate::SlotOfQUrl,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_qt_metacast(
+        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_qt_metacall(
-        this_ptr: *mut crate::SlotOfQUrl,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_qt_metacall(
+        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref(
         parent: *mut ::qt_core::QObject,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const ::qt_core::QUrl),
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkConfiguration),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQUrl;
+    ) -> *mut crate::SlotOfQNetworkConfiguration;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_set(
-        this_ptr: *mut crate::SlotOfQUrl,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_set(
+        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const ::qt_core::QUrl),
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkConfiguration),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_slot_(
-        this_ptr: *mut crate::SlotOfQUrl,
-        arg0: *const ::qt_core::QUrl,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_slot_(
+        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
+        arg0: *const crate::QNetworkConfiguration,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_metaObject(
-        this_ptr: *const crate::SignalOfQUrl,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_metaObject(
+        this_ptr: *const crate::SignalOfQNetworkConfiguration,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_qt_metacast(
-        this_ptr: *mut crate::SignalOfQUrl,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_qt_metacast(
+        this_ptr: *mut crate::SignalOfQNetworkConfiguration,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_qt_metacall(
-        this_ptr: *mut crate::SignalOfQUrl,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_qt_metacall(
+        this_ptr: *mut crate::SignalOfQNetworkConfiguration,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref(
-    ) -> *mut crate::SignalOfQUrl;
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref(
+    ) -> *mut crate::SignalOfQNetworkConfiguration;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_emit_(
-        this_ptr: *mut crate::SignalOfQUrl,
-        arg0: *const ::qt_core::QUrl,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_emit_(
+        this_ptr: *mut crate::SignalOfQNetworkConfiguration,
+        arg0: *const crate::QNetworkConfiguration,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_metaObject(
-        this_ptr: *const crate::SlotOfLocalSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_metaObject(
+        this_ptr: *const crate::SlotOfQNetworkProxyQAuthenticator,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_qt_metacast(
-        this_ptr: *mut crate::SlotOfLocalSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_qt_metacast(
+        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_qt_metacall(
-        this_ptr: *mut crate::SlotOfLocalSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_qt_metacall(
+        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr(
         parent: *mut ::qt_core::QObject,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_local_socket::LocalSocketError),
+            extern "C" fn(
+                *mut ::std::ffi::c_void,
+                *const crate::QNetworkProxy,
+                *mut crate::QAuthenticator,
+            ),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfLocalSocketError;
+    ) -> *mut crate::SlotOfQNetworkProxyQAuthenticator;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_set(
-        this_ptr: *mut crate::SlotOfLocalSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_set(
+        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_local_socket::LocalSocketError),
+            extern "C" fn(
+                *mut ::std::ffi::c_void,
+                *const crate::QNetworkProxy,
+                *mut crate::QAuthenticator,
+            ),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_slot_(
-        this_ptr: *mut crate::SlotOfLocalSocketError,
-        arg0: crate::q_local_socket::LocalSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_slot_(
+        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
+        arg0: *const crate::QNetworkProxy,
+        arg1: *mut crate::QAuthenticator,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_metaObject(
-        this_ptr: *const crate::SignalOfLocalSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_metaObject(
+        this_ptr: *const crate::SignalOfQNetworkProxyQAuthenticator,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_qt_metacast(
-        this_ptr: *mut crate::SignalOfLocalSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_qt_metacast(
+        this_ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_qt_metacall(
-        this_ptr: *mut crate::SignalOfLocalSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_qt_metacall(
+        this_ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError(
-    ) -> *mut crate::SignalOfLocalSocketError;
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr(
+    ) -> *mut crate::SignalOfQNetworkProxyQAuthenticator;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_emit_(
-        this_ptr: *mut crate::SignalOfLocalSocketError,
-        arg0: crate::q_local_socket::LocalSocketError,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_metaObject(
-        this_ptr: *const crate::SlotOfQHostAddress,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_qt_metacast(
-        this_ptr: *mut crate::SlotOfQHostAddress,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_qt_metacall(
-        this_ptr: *mut crate::SlotOfQHostAddress,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QHostAddress),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQHostAddress;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_set(
-        this_ptr: *mut crate::SlotOfQHostAddress,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QHostAddress),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_slot_(
-        this_ptr: *mut crate::SlotOfQHostAddress,
-        arg0: *const crate::QHostAddress,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_metaObject(
-        this_ptr: *const crate::SignalOfQHostAddress,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_qt_metacast(
-        this_ptr: *mut crate::SignalOfQHostAddress,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_qt_metacall(
-        this_ptr: *mut crate::SignalOfQHostAddress,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref(
-    ) -> *mut crate::SignalOfQHostAddress;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_emit_(
-        this_ptr: *mut crate::SignalOfQHostAddress,
-        arg0: *const crate::QHostAddress,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_emit_(
+        this_ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
+        arg0: *const crate::QNetworkProxy,
+        arg1: *mut crate::QAuthenticator,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_SessionError_staticMetaObject(
@@ -37212,97 +37198,95 @@ extern "C" {
         arg0: crate::q_network_session::SessionError,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_metaObject(
-        this_ptr: *const crate::SlotOfLocalSocketState,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_metaObject(
+        this_ptr: *const crate::SlotOfI64I64,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_qt_metacast(
-        this_ptr: *mut crate::SlotOfLocalSocketState,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_qt_metacast(
+        this_ptr: *mut crate::SlotOfI64I64,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_qt_metacall(
-        this_ptr: *mut crate::SlotOfLocalSocketState,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_qt_metacall(
+        this_ptr: *mut crate::SlotOfI64I64,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_ctr_qt_network_ffi_slot_wrapper_qint64_qint64(
         parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_local_socket::LocalSocketState),
-        >,
+        callback: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void, i64, i64)>,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfLocalSocketState;
+    ) -> *mut crate::SlotOfI64I64;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_set(
-        this_ptr: *mut crate::SlotOfLocalSocketState,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_local_socket::LocalSocketState),
-        >,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_set(
+        this_ptr: *mut crate::SlotOfI64I64,
+        callback: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void, i64, i64)>,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_slot_(
-        this_ptr: *mut crate::SlotOfLocalSocketState,
-        arg0: crate::q_local_socket::LocalSocketState,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_slot_(
+        this_ptr: *mut crate::SlotOfI64I64,
+        arg0: i64,
+        arg1: i64,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_metaObject(
-        this_ptr: *const crate::SignalOfLocalSocketState,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_metaObject(
+        this_ptr: *const crate::SignalOfI64I64,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_qt_metacast(
-        this_ptr: *mut crate::SignalOfLocalSocketState,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_qt_metacast(
+        this_ptr: *mut crate::SignalOfI64I64,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_qt_metacall(
-        this_ptr: *mut crate::SignalOfLocalSocketState,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_qt_metacall(
+        this_ptr: *mut crate::SignalOfI64I64,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState(
-    ) -> *mut crate::SignalOfLocalSocketState;
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_ctr_qt_network_ffi_signal_wrapper_qint64_qint64(
+    ) -> *mut crate::SignalOfI64I64;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_emit_(
-        this_ptr: *mut crate::SignalOfLocalSocketState,
-        arg0: crate::q_local_socket::LocalSocketState,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_emit_(
+        this_ptr: *mut crate::SignalOfI64I64,
+        arg0: i64,
+        arg1: i64,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketState_staticMetaObject(
@@ -37398,190 +37382,568 @@ extern "C" {
         arg0: crate::q_abstract_socket::SocketState,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_metaObject(
-        this_ptr: *const crate::SlotOfQListOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_metaObject(
+        this_ptr: *const crate::SlotOfLocalSocketState,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_qt_metacast(
-        this_ptr: *mut crate::SlotOfQListOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_qt_metacast(
+        this_ptr: *mut crate::SlotOfLocalSocketState,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_qt_metacall(
-        this_ptr: *mut crate::SlotOfQListOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_qt_metacall(
+        this_ptr: *mut crate::SlotOfLocalSocketState,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState(
         parent: *mut ::qt_core::QObject,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QListOfQSslError),
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_local_socket::LocalSocketState),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQListOfQSslError;
+    ) -> *mut crate::SlotOfLocalSocketState;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_set(
-        this_ptr: *mut crate::SlotOfQListOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_set(
+        this_ptr: *mut crate::SlotOfLocalSocketState,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QListOfQSslError),
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_local_socket::LocalSocketState),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_slot_(
-        this_ptr: *mut crate::SlotOfQListOfQSslError,
-        arg0: *const crate::QListOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_slot_(
+        this_ptr: *mut crate::SlotOfLocalSocketState,
+        arg0: crate::q_local_socket::LocalSocketState,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_metaObject(
-        this_ptr: *const crate::SignalOfQListOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_metaObject(
+        this_ptr: *const crate::SignalOfLocalSocketState,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_qt_metacast(
-        this_ptr: *mut crate::SignalOfQListOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_qt_metacast(
+        this_ptr: *mut crate::SignalOfLocalSocketState,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_qt_metacall(
-        this_ptr: *mut crate::SignalOfQListOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_qt_metacall(
+        this_ptr: *mut crate::SignalOfLocalSocketState,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref(
-    ) -> *mut crate::SignalOfQListOfQSslError;
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState(
+    ) -> *mut crate::SignalOfLocalSocketState;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_emit_(
-        this_ptr: *mut crate::SignalOfQListOfQSslError,
-        arg0: *const crate::QListOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_emit_(
+        this_ptr: *mut crate::SignalOfLocalSocketState,
+        arg0: crate::q_local_socket::LocalSocketState,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_metaObject(
-        this_ptr: *const crate::SlotOfQNetworkProxy,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_metaObject(
+        this_ptr: *const crate::SlotOfQFlagsUsagePolicy,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_qt_metacast(
-        this_ptr: *mut crate::SlotOfQNetworkProxy,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_qt_metacast(
+        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_qt_metacall(
-        this_ptr: *mut crate::SlotOfQNetworkProxy,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_qt_metacall(
+        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy(
         parent: *mut ::qt_core::QObject,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkProxy),
+            extern "C" fn(*mut ::std::ffi::c_void, ::std::os::raw::c_int),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQNetworkProxy;
+    ) -> *mut crate::SlotOfQFlagsUsagePolicy;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_set(
-        this_ptr: *mut crate::SlotOfQNetworkProxy,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_set(
+        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkProxy),
+            extern "C" fn(*mut ::std::ffi::c_void, ::std::os::raw::c_int),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_slot_(
-        this_ptr: *mut crate::SlotOfQNetworkProxy,
-        arg0: *const crate::QNetworkProxy,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_slot_(
+        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
+        arg0: ::std::os::raw::c_int,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_metaObject(
-        this_ptr: *const crate::SignalOfQNetworkProxy,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_metaObject(
+        this_ptr: *const crate::SignalOfQFlagsUsagePolicy,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_qt_metacast(
-        this_ptr: *mut crate::SignalOfQNetworkProxy,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_qt_metacast(
+        this_ptr: *mut crate::SignalOfQFlagsUsagePolicy,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_qt_metacall(
-        this_ptr: *mut crate::SignalOfQNetworkProxy,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_qt_metacall(
+        this_ptr: *mut crate::SignalOfQFlagsUsagePolicy,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref(
-    ) -> *mut crate::SignalOfQNetworkProxy;
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy(
+    ) -> *mut crate::SignalOfQFlagsUsagePolicy;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_emit_(
-        this_ptr: *mut crate::SignalOfQNetworkProxy,
-        arg0: *const crate::QNetworkProxy,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_emit_(
+        this_ptr: *mut crate::SignalOfQFlagsUsagePolicy,
+        arg0: ::std::os::raw::c_int,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_metaObject(
+        this_ptr: *const crate::SlotOfQUrl,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_qt_metacast(
+        this_ptr: *mut crate::SlotOfQUrl,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_qt_metacall(
+        this_ptr: *mut crate::SlotOfQUrl,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const ::qt_core::QUrl),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfQUrl;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_set(
+        this_ptr: *mut crate::SlotOfQUrl,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const ::qt_core::QUrl),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_slot_(
+        this_ptr: *mut crate::SlotOfQUrl,
+        arg0: *const ::qt_core::QUrl,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_metaObject(
+        this_ptr: *const crate::SignalOfQUrl,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_qt_metacast(
+        this_ptr: *mut crate::SignalOfQUrl,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_qt_metacall(
+        this_ptr: *mut crate::SignalOfQUrl,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref(
+    ) -> *mut crate::SignalOfQUrl;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_emit_(
+        this_ptr: *mut crate::SignalOfQUrl,
+        arg0: *const ::qt_core::QUrl,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_metaObject(
+        this_ptr: *const crate::SlotOfQSslPreSharedKeyAuthenticator,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_qt_metacast(
+        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_qt_metacall(
+        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *mut crate::QSslPreSharedKeyAuthenticator),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfQSslPreSharedKeyAuthenticator;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_set(
+        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *mut crate::QSslPreSharedKeyAuthenticator),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_slot_(
+        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
+        arg0: *mut crate::QSslPreSharedKeyAuthenticator,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_metaObject(
+        this_ptr: *const crate::SignalOfQSslPreSharedKeyAuthenticator,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_qt_metacast(
+        this_ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_qt_metacall(
+        this_ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr(
+    ) -> *mut crate::SignalOfQSslPreSharedKeyAuthenticator;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_emit_(
+        this_ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
+        arg0: *mut crate::QSslPreSharedKeyAuthenticator,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_metaObject(
+        this_ptr: *const crate::SlotOfNetworkAccessibility,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_qt_metacast(
+        this_ptr: *mut crate::SlotOfNetworkAccessibility,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_qt_metacall(
+        this_ptr: *mut crate::SlotOfNetworkAccessibility,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(
+                *mut ::std::ffi::c_void,
+                crate::q_network_access_manager::NetworkAccessibility,
+            ),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfNetworkAccessibility;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_set(
+        this_ptr: *mut crate::SlotOfNetworkAccessibility,
+        callback: ::std::option::Option<
+            extern "C" fn(
+                *mut ::std::ffi::c_void,
+                crate::q_network_access_manager::NetworkAccessibility,
+            ),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_slot_(
+        this_ptr: *mut crate::SlotOfNetworkAccessibility,
+        arg0: crate::q_network_access_manager::NetworkAccessibility,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_metaObject(
+        this_ptr: *const crate::SignalOfNetworkAccessibility,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_qt_metacast(
+        this_ptr: *mut crate::SignalOfNetworkAccessibility,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_qt_metacall(
+        this_ptr: *mut crate::SignalOfNetworkAccessibility,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility(
+    ) -> *mut crate::SignalOfNetworkAccessibility;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_emit_(
+        this_ptr: *mut crate::SignalOfNetworkAccessibility,
+        arg0: crate::q_network_access_manager::NetworkAccessibility,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_metaObject(
+        this_ptr: *const crate::SlotOfQSslError,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_qt_metacast(
+        this_ptr: *mut crate::SlotOfQSslError,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_qt_metacall(
+        this_ptr: *mut crate::SlotOfQSslError,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QSslError),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfQSslError;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_set(
+        this_ptr: *mut crate::SlotOfQSslError,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QSslError),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_slot_(
+        this_ptr: *mut crate::SlotOfQSslError,
+        arg0: *const crate::QSslError,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_metaObject(
+        this_ptr: *const crate::SignalOfQSslError,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_qt_metacast(
+        this_ptr: *mut crate::SignalOfQSslError,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_qt_metacall(
+        this_ptr: *mut crate::SignalOfQSslError,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref(
+    ) -> *mut crate::SignalOfQSslError;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_emit_(
+        this_ptr: *mut crate::SignalOfQSslError,
+        arg0: *const crate::QSslError,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_staticMetaObject(
@@ -37780,469 +38142,97 @@ extern "C" {
         arg0: crate::q_ssl_socket::SslMode,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_metaObject(
-        this_ptr: *const crate::SlotOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_metaObject(
+        this_ptr: *const crate::SlotOfNetworkError,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_qt_metacast(
-        this_ptr: *mut crate::SlotOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_qt_metacast(
+        this_ptr: *mut crate::SlotOfNetworkError,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_qt_metacall(
-        this_ptr: *mut crate::SlotOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_qt_metacall(
+        this_ptr: *mut crate::SlotOfNetworkError,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError(
         parent: *mut ::qt_core::QObject,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QSslError),
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_network_reply::NetworkError),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQSslError;
+    ) -> *mut crate::SlotOfNetworkError;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_set(
-        this_ptr: *mut crate::SlotOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_set(
+        this_ptr: *mut crate::SlotOfNetworkError,
         callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QSslError),
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_network_reply::NetworkError),
         >,
         deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
         data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_slot_(
-        this_ptr: *mut crate::SlotOfQSslError,
-        arg0: *const crate::QSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_slot_(
+        this_ptr: *mut crate::SlotOfNetworkError,
+        arg0: crate::q_network_reply::NetworkError,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_metaObject(
-        this_ptr: *const crate::SignalOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_metaObject(
+        this_ptr: *const crate::SignalOfNetworkError,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_qt_metacast(
-        this_ptr: *mut crate::SignalOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_qt_metacast(
+        this_ptr: *mut crate::SignalOfNetworkError,
         arg1: *const ::std::os::raw::c_char,
     ) -> *mut ::std::ffi::c_void;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_qt_metacall(
-        this_ptr: *mut crate::SignalOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_qt_metacall(
+        this_ptr: *mut crate::SignalOfNetworkError,
         arg1: ::qt_core::q_meta_object::Call,
         arg2: ::std::os::raw::c_int,
         arg3: *mut *mut ::std::ffi::c_void,
     ) -> ::std::os::raw::c_int;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_tr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_tr(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_trUtf8(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_trUtf8(
         s: *const ::std::os::raw::c_char,
         c: *const ::std::os::raw::c_char,
         n: ::std::os::raw::c_int,
     ) -> *mut ::qt_core::QString;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref(
-    ) -> *mut crate::SignalOfQSslError;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_emit_(
-        this_ptr: *mut crate::SignalOfQSslError,
-        arg0: *const crate::QSslError,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_metaObject(
-        this_ptr: *const crate::SlotOfState,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_qt_metacast(
-        this_ptr: *mut crate::SlotOfState,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_qt_metacall(
-        this_ptr: *mut crate::SlotOfState,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_network_session::State),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfState;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_set(
-        this_ptr: *mut crate::SlotOfState,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_network_session::State),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_slot_(
-        this_ptr: *mut crate::SlotOfState,
-        arg0: crate::q_network_session::State,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_metaObject(
-        this_ptr: *const crate::SignalOfState,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_qt_metacast(
-        this_ptr: *mut crate::SignalOfState,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_qt_metacall(
-        this_ptr: *mut crate::SignalOfState,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State(
-    ) -> *mut crate::SignalOfState;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_emit_(
-        this_ptr: *mut crate::SignalOfState,
-        arg0: crate::q_network_session::State,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_metaObject(
-        this_ptr: *const crate::SlotOfI64I64,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_qt_metacast(
-        this_ptr: *mut crate::SlotOfI64I64,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_qt_metacall(
-        this_ptr: *mut crate::SlotOfI64I64,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_ctr_qt_network_ffi_slot_wrapper_qint64_qint64(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void, i64, i64)>,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfI64I64;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_set(
-        this_ptr: *mut crate::SlotOfI64I64,
-        callback: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void, i64, i64)>,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_slot_(
-        this_ptr: *mut crate::SlotOfI64I64,
-        arg0: i64,
-        arg1: i64,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_metaObject(
-        this_ptr: *const crate::SignalOfI64I64,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_qt_metacast(
-        this_ptr: *mut crate::SignalOfI64I64,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_qt_metacall(
-        this_ptr: *mut crate::SignalOfI64I64,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_ctr_qt_network_ffi_signal_wrapper_qint64_qint64(
-    ) -> *mut crate::SignalOfI64I64;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_emit_(
-        this_ptr: *mut crate::SignalOfI64I64,
-        arg0: i64,
-        arg1: i64,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_metaObject(
-        this_ptr: *const crate::SlotOfQNetworkConfiguration,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_qt_metacast(
-        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_qt_metacall(
-        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkConfiguration),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQNetworkConfiguration;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_set(
-        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkConfiguration),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_slot_(
-        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
-        arg0: *const crate::QNetworkConfiguration,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_metaObject(
-        this_ptr: *const crate::SignalOfQNetworkConfiguration,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_qt_metacast(
-        this_ptr: *mut crate::SignalOfQNetworkConfiguration,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_qt_metacall(
-        this_ptr: *mut crate::SignalOfQNetworkConfiguration,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref(
-    ) -> *mut crate::SignalOfQNetworkConfiguration;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_emit_(
-        this_ptr: *mut crate::SignalOfQNetworkConfiguration,
-        arg0: *const crate::QNetworkConfiguration,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_metaObject(
-        this_ptr: *const crate::SlotOfQNetworkConfigurationBool,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_qt_metacast(
-        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_qt_metacall(
-        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkConfiguration, bool),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfQNetworkConfigurationBool;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_set(
-        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, *const crate::QNetworkConfiguration, bool),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_slot_(
-        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
-        arg0: *const crate::QNetworkConfiguration,
-        arg1: bool,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_metaObject(
-        this_ptr: *const crate::SignalOfQNetworkConfigurationBool,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_qt_metacast(
-        this_ptr: *mut crate::SignalOfQNetworkConfigurationBool,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_qt_metacall(
-        this_ptr: *mut crate::SignalOfQNetworkConfigurationBool,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool(
-    ) -> *mut crate::SignalOfQNetworkConfigurationBool;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_emit_(
-        this_ptr: *mut crate::SignalOfQNetworkConfigurationBool,
-        arg0: *const crate::QNetworkConfiguration,
-        arg1: bool,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError(
+    ) -> *mut crate::SignalOfNetworkError;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_emit_(
+        this_ptr: *mut crate::SignalOfNetworkError,
+        arg0: crate::q_network_reply::NetworkError,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_staticMetaObject(
@@ -38338,262 +38328,200 @@ extern "C" {
         arg0: *mut crate::QNetworkReply,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_staticMetaObject(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_staticMetaObject(
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_metaObject(
-        this_ptr: *const crate::SlotOfType,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_metaObject(
+        this_ptr: *const crate::SlotOfQNetworkReplyQAuthenticator,
     ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_qt_metacast(
-        this_ptr: *mut crate::SlotOfType,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_qt_metacall(
-        this_ptr: *mut crate::SlotOfType,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_dns_lookup::Type),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfType;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_set(
-        this_ptr: *mut crate::SlotOfType,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_dns_lookup::Type),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_slot_(
-        this_ptr: *mut crate::SlotOfType,
-        arg0: crate::q_dns_lookup::Type,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_metaObject(
-        this_ptr: *const crate::SignalOfType,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_qt_metacast(
-        this_ptr: *mut crate::SignalOfType,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_qt_metacall(
-        this_ptr: *mut crate::SignalOfType,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type(
-    ) -> *mut crate::SignalOfType;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_emit_(
-        this_ptr: *mut crate::SignalOfType,
-        arg0: crate::q_dns_lookup::Type,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_metaObject(
-        this_ptr: *const crate::SlotOfSocketError,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_qt_metacast(
-        this_ptr: *mut crate::SlotOfSocketError,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_qt_metacall(
-        this_ptr: *mut crate::SlotOfSocketError,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError(
-        parent: *mut ::qt_core::QObject,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_abstract_socket::SocketError),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    ) -> *mut crate::SlotOfSocketError;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_set(
-        this_ptr: *mut crate::SlotOfSocketError,
-        callback: ::std::option::Option<
-            extern "C" fn(*mut ::std::ffi::c_void, crate::q_abstract_socket::SocketError),
-        >,
-        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
-        data: *mut ::std::ffi::c_void,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_slot_(
-        this_ptr: *mut crate::SlotOfSocketError,
-        arg0: crate::q_abstract_socket::SocketError,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_staticMetaObject(
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_metaObject(
-        this_ptr: *const crate::SignalOfSocketError,
-    ) -> *const ::qt_core::QMetaObject;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_qt_metacast(
-        this_ptr: *mut crate::SignalOfSocketError,
-        arg1: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::ffi::c_void;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_qt_metacall(
-        this_ptr: *mut crate::SignalOfSocketError,
-        arg1: ::qt_core::q_meta_object::Call,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut *mut ::std::ffi::c_void,
-    ) -> ::std::os::raw::c_int;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_tr(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_trUtf8(
-        s: *const ::std::os::raw::c_char,
-        c: *const ::std::os::raw::c_char,
-        n: ::std::os::raw::c_int,
-    ) -> *mut ::qt_core::QString;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError(
-    ) -> *mut crate::SignalOfSocketError;
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_emit_(
-        this_ptr: *mut crate::SignalOfSocketError,
-        arg0: crate::q_abstract_socket::SocketError,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_dctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr(
-        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_dctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr(
-        this_ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_dctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr(
-        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_dctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr(
-        this_ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_dctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy(
-        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_dctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy(
-        this_ptr: *mut crate::SignalOfQFlagsUsagePolicy,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_dctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_qt_metacast(
         this_ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_qt_metacall(
+        this_ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(
+                *mut ::std::ffi::c_void,
+                *mut crate::QNetworkReply,
+                *mut crate::QAuthenticator,
+            ),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfQNetworkReplyQAuthenticator;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_set(
+        this_ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
+        callback: ::std::option::Option<
+            extern "C" fn(
+                *mut ::std::ffi::c_void,
+                *mut crate::QNetworkReply,
+                *mut crate::QAuthenticator,
+            ),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_dctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_slot_(
+        this_ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
+        arg0: *mut crate::QNetworkReply,
+        arg1: *mut crate::QAuthenticator,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_metaObject(
+        this_ptr: *const crate::SignalOfQNetworkReplyQAuthenticator,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_qt_metacast(
         this_ptr: *mut crate::SignalOfQNetworkReplyQAuthenticator,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_qt_metacall(
+        this_ptr: *mut crate::SignalOfQNetworkReplyQAuthenticator,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr(
+    ) -> *mut crate::SignalOfQNetworkReplyQAuthenticator;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_emit_(
+        this_ptr: *mut crate::SignalOfQNetworkReplyQAuthenticator,
+        arg0: *mut crate::QNetworkReply,
+        arg1: *mut crate::QAuthenticator,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_dctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility(
-        this_ptr: *mut crate::SlotOfNetworkAccessibility,
-    );
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_dctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility(
-        this_ptr: *mut crate::SignalOfNetworkAccessibility,
-    );
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_metaObject(
+        this_ptr: *const crate::SlotOfLocalSocketError,
+    ) -> *const ::qt_core::QMetaObject;
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_dctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError(
-        this_ptr: *mut crate::SlotOfNetworkError,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_dctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError(
-        this_ptr: *mut crate::SignalOfNetworkError,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_dctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr(
-        this_ptr: *mut crate::SlotOfQNetworkReplyQSslPreSharedKeyAuthenticator,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_dctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr(
-        this_ptr: *mut crate::SignalOfQNetworkReplyQSslPreSharedKeyAuthenticator,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_dctr_qt_network_ffi_slot_wrapper_QUrl_const_ref(
-        this_ptr: *mut crate::SlotOfQUrl,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_dctr_qt_network_ffi_signal_wrapper_QUrl_const_ref(
-        this_ptr: *mut crate::SignalOfQUrl,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_dctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_qt_metacast(
         this_ptr: *mut crate::SlotOfLocalSocketError,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_qt_metacall(
+        this_ptr: *mut crate::SlotOfLocalSocketError,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError(
+        parent: *mut ::qt_core::QObject,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_local_socket::LocalSocketError),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
+    ) -> *mut crate::SlotOfLocalSocketError;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_set(
+        this_ptr: *mut crate::SlotOfLocalSocketError,
+        callback: ::std::option::Option<
+            extern "C" fn(*mut ::std::ffi::c_void, crate::q_local_socket::LocalSocketError),
+        >,
+        deleter: ::std::option::Option<extern "C" fn(*mut ::std::ffi::c_void)>,
+        data: *mut ::std::ffi::c_void,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_dctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError(
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_slot_(
+        this_ptr: *mut crate::SlotOfLocalSocketError,
+        arg0: crate::q_local_socket::LocalSocketError,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_staticMetaObject(
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_metaObject(
+        this_ptr: *const crate::SignalOfLocalSocketError,
+    ) -> *const ::qt_core::QMetaObject;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_qt_metacast(
         this_ptr: *mut crate::SignalOfLocalSocketError,
+        arg1: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::ffi::c_void;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_qt_metacall(
+        this_ptr: *mut crate::SignalOfLocalSocketError,
+        arg1: ::qt_core::q_meta_object::Call,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut *mut ::std::ffi::c_void,
+    ) -> ::std::os::raw::c_int;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_tr(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_trUtf8(
+        s: *const ::std::os::raw::c_char,
+        c: *const ::std::os::raw::c_char,
+        n: ::std::os::raw::c_int,
+    ) -> *mut ::qt_core::QString;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError(
+    ) -> *mut crate::SignalOfLocalSocketError;
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_emit_(
+        this_ptr: *mut crate::SignalOfLocalSocketError,
+        arg0: crate::q_local_socket::LocalSocketError,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_dctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref(
@@ -38604,28 +38532,12 @@ extern "C" {
         this_ptr: *mut crate::SignalOfQHostAddress,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_SessionError_dctr_qt_network_ffi_slot_wrapper_QNetworkSession_SessionError(
-        this_ptr: *mut crate::SlotOfSessionError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_dctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError(
+        this_ptr: *mut crate::SlotOfSocketError,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_SessionError_dctr_qt_network_ffi_signal_wrapper_QNetworkSession_SessionError(
-        this_ptr: *mut crate::SignalOfSessionError,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_dctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState(
-        this_ptr: *mut crate::SlotOfLocalSocketState,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_dctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState(
-        this_ptr: *mut crate::SignalOfLocalSocketState,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketState_dctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketState(
-        this_ptr: *mut crate::SlotOfSocketState,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketState_dctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketState(
-        this_ptr: *mut crate::SignalOfSocketState,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_dctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError(
+        this_ptr: *mut crate::SignalOfSocketError,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_dctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref(
@@ -38636,12 +38548,132 @@ extern "C" {
         this_ptr: *mut crate::SignalOfQListOfQSslError,
     );
 
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_dctr_qt_network_ffi_slot_wrapper_QNetworkSession_State(
+        this_ptr: *mut crate::SlotOfState,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_dctr_qt_network_ffi_signal_wrapper_QNetworkSession_State(
+        this_ptr: *mut crate::SignalOfState,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_dctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type(
+        this_ptr: *mut crate::SlotOfType,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_dctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type(
+        this_ptr: *mut crate::SignalOfType,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_dctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool(
+        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_dctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool(
+        this_ptr: *mut crate::SignalOfQNetworkConfigurationBool,
+    );
+
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_dctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref(
         this_ptr: *mut crate::SlotOfQNetworkProxy,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_dctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref(
         this_ptr: *mut crate::SignalOfQNetworkProxy,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_dctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr(
+        this_ptr: *mut crate::SlotOfQNetworkReplyQSslPreSharedKeyAuthenticator,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_dctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr(
+        this_ptr: *mut crate::SignalOfQNetworkReplyQSslPreSharedKeyAuthenticator,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_dctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref(
+        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_dctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref(
+        this_ptr: *mut crate::SignalOfQNetworkConfiguration,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_dctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr(
+        this_ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_dctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr(
+        this_ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_SessionError_dctr_qt_network_ffi_slot_wrapper_QNetworkSession_SessionError(
+        this_ptr: *mut crate::SlotOfSessionError,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_SessionError_dctr_qt_network_ffi_signal_wrapper_QNetworkSession_SessionError(
+        this_ptr: *mut crate::SignalOfSessionError,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_dctr_qt_network_ffi_slot_wrapper_qint64_qint64(
+        this_ptr: *mut crate::SlotOfI64I64,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_dctr_qt_network_ffi_signal_wrapper_qint64_qint64(
+        this_ptr: *mut crate::SignalOfI64I64,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketState_dctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketState(
+        this_ptr: *mut crate::SlotOfSocketState,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketState_dctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketState(
+        this_ptr: *mut crate::SignalOfSocketState,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_dctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState(
+        this_ptr: *mut crate::SlotOfLocalSocketState,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_dctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState(
+        this_ptr: *mut crate::SignalOfLocalSocketState,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_dctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy(
+        this_ptr: *mut crate::SlotOfQFlagsUsagePolicy,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_dctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy(
+        this_ptr: *mut crate::SignalOfQFlagsUsagePolicy,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_dctr_qt_network_ffi_slot_wrapper_QUrl_const_ref(
+        this_ptr: *mut crate::SlotOfQUrl,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_dctr_qt_network_ffi_signal_wrapper_QUrl_const_ref(
+        this_ptr: *mut crate::SignalOfQUrl,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_dctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr(
+        this_ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_dctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr(
+        this_ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_dctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility(
+        this_ptr: *mut crate::SlotOfNetworkAccessibility,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_dctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility(
+        this_ptr: *mut crate::SignalOfNetworkAccessibility,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_dctr_qt_network_ffi_slot_wrapper_QSslError_const_ref(
+        this_ptr: *mut crate::SlotOfQSslError,
+    );
+
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_dctr_qt_network_ffi_signal_wrapper_QSslError_const_ref(
+        this_ptr: *mut crate::SignalOfQSslError,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_dctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref(
@@ -38660,44 +38692,12 @@ extern "C" {
         this_ptr: *mut crate::SignalOfSslMode,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_dctr_qt_network_ffi_slot_wrapper_QSslError_const_ref(
-        this_ptr: *mut crate::SlotOfQSslError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_dctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError(
+        this_ptr: *mut crate::SlotOfNetworkError,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QSslError_const_ref_dctr_qt_network_ffi_signal_wrapper_QSslError_const_ref(
-        this_ptr: *mut crate::SignalOfQSslError,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_dctr_qt_network_ffi_slot_wrapper_QNetworkSession_State(
-        this_ptr: *mut crate::SlotOfState,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_dctr_qt_network_ffi_signal_wrapper_QNetworkSession_State(
-        this_ptr: *mut crate::SignalOfState,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_dctr_qt_network_ffi_slot_wrapper_qint64_qint64(
-        this_ptr: *mut crate::SlotOfI64I64,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_dctr_qt_network_ffi_signal_wrapper_qint64_qint64(
-        this_ptr: *mut crate::SignalOfI64I64,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_dctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref(
-        this_ptr: *mut crate::SlotOfQNetworkConfiguration,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_dctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref(
-        this_ptr: *mut crate::SignalOfQNetworkConfiguration,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_dctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool(
-        this_ptr: *mut crate::SlotOfQNetworkConfigurationBool,
-    );
-
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_dctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool(
-        this_ptr: *mut crate::SignalOfQNetworkConfigurationBool,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_dctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError(
+        this_ptr: *mut crate::SignalOfNetworkError,
     );
 
     pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_dctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr(
@@ -38708,243 +38708,27 @@ extern "C" {
         this_ptr: *mut crate::SignalOfQNetworkReply,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_dctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type(
-        this_ptr: *mut crate::SlotOfType,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_dctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr(
+        this_ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_dctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type(
-        this_ptr: *mut crate::SignalOfType,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_dctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr(
+        this_ptr: *mut crate::SignalOfQNetworkReplyQAuthenticator,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_dctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError(
-        this_ptr: *mut crate::SlotOfSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_dctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError(
+        this_ptr: *mut crate::SlotOfLocalSocketError,
     );
 
-    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_dctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError(
-        this_ptr: *mut crate::SignalOfSocketError,
+    pub fn ctr_qt_network_ffi_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_dctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError(
+        this_ptr: *mut crate::SignalOfLocalSocketError,
     );
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQSslPreSharedKeyAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr36(
-        ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQSslPreSharedKeyAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQSslPreSharedKeyAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr37(
-        ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQSslPreSharedKeyAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkProxyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr38(
-        ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkProxyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkProxyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr39(
-        ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkProxyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQFlagsUsagePolicy;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr40(
-        ptr: *mut crate::SlotOfQFlagsUsagePolicy,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQFlagsUsagePolicy;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQFlagsUsagePolicy;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr41(
-        ptr: *mut crate::SignalOfQFlagsUsagePolicy,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQFlagsUsagePolicy;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkReplyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr42(
-        ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkReplyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkReplyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr43(
-        ptr: *mut crate::SignalOfQNetworkReplyQAuthenticator,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkReplyQAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfNetworkAccessibility;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr44(
-        ptr: *mut crate::SlotOfNetworkAccessibility,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfNetworkAccessibility;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfNetworkAccessibility;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr45(
-        ptr: *mut crate::SignalOfNetworkAccessibility,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfNetworkAccessibility;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfNetworkError;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr46(
-        ptr: *mut crate::SlotOfNetworkError,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfNetworkError;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfNetworkError;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr47(
-        ptr: *mut crate::SignalOfNetworkError,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfNetworkError;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkReplyQSslPreSharedKeyAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr48(
-        ptr: *mut crate::SlotOfQNetworkReplyQSslPreSharedKeyAuthenticator,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkReplyQSslPreSharedKeyAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkReplyQSslPreSharedKeyAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr49(
-        ptr: *mut crate::SignalOfQNetworkReplyQSslPreSharedKeyAuthenticator,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkReplyQSslPreSharedKeyAuthenticator;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQUrl;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr50(
-        ptr: *mut crate::SlotOfQUrl,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQUrl;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQUrl;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr51(
-        ptr: *mut crate::SignalOfQUrl,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQUrl;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfLocalSocketError;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr52(
-        ptr: *mut crate::SlotOfLocalSocketError,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfLocalSocketError;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfLocalSocketError;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr53(
-        ptr: *mut crate::SignalOfLocalSocketError,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfLocalSocketError;
 
     pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QHostAddress_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::SlotOfQHostAddress;
 
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr54(
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr36(
         ptr: *mut crate::SlotOfQHostAddress,
     ) -> *mut ::qt_core::QObject;
 
@@ -38956,13 +38740,229 @@ extern "C" {
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::SignalOfQHostAddress;
 
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr55(
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr37(
         ptr: *mut crate::SignalOfQHostAddress,
     ) -> *mut ::qt_core::QObject;
 
     pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QHostAddress_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::SignalOfQHostAddress;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfSocketError;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr38(
+        ptr: *mut crate::SlotOfSocketError,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfSocketError;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfSocketError;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr39(
+        ptr: *mut crate::SignalOfSocketError,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfSocketError;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQListOfQSslError;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr40(
+        ptr: *mut crate::SlotOfQListOfQSslError,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQListOfQSslError;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQListOfQSslError;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr41(
+        ptr: *mut crate::SignalOfQListOfQSslError,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQListOfQSslError;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfState;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr42(
+        ptr: *mut crate::SlotOfState,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfState;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfState;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr43(
+        ptr: *mut crate::SignalOfState,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfState;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfType;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr44(
+        ptr: *mut crate::SlotOfType,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfType;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfType;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr45(
+        ptr: *mut crate::SignalOfType,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfType;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkConfigurationBool;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr46(
+        ptr: *mut crate::SlotOfQNetworkConfigurationBool,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkConfigurationBool;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkConfigurationBool;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr47(
+        ptr: *mut crate::SignalOfQNetworkConfigurationBool,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkConfigurationBool;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkProxy;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr48(
+        ptr: *mut crate::SlotOfQNetworkProxy,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkProxy;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkProxy;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr49(
+        ptr: *mut crate::SignalOfQNetworkProxy,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkProxy;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkReplyQSslPreSharedKeyAuthenticator;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr50(
+        ptr: *mut crate::SlotOfQNetworkReplyQSslPreSharedKeyAuthenticator,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkReplyQSslPreSharedKeyAuthenticator;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkReplyQSslPreSharedKeyAuthenticator;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr51(
+        ptr: *mut crate::SignalOfQNetworkReplyQSslPreSharedKeyAuthenticator,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QSslPreSharedKeyAuthenticator_ptr_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkReplyQSslPreSharedKeyAuthenticator;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkConfiguration;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr52(
+        ptr: *mut crate::SlotOfQNetworkConfiguration,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkConfiguration;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkConfiguration;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr53(
+        ptr: *mut crate::SignalOfQNetworkConfiguration,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkConfiguration;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkProxyQAuthenticator;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr54(
+        ptr: *mut crate::SlotOfQNetworkProxyQAuthenticator,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfQNetworkProxyQAuthenticator;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkProxyQAuthenticator;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr55(
+        ptr: *mut crate::SignalOfQNetworkProxyQAuthenticator,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_QAuthenticator_ptr_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfQNetworkProxyQAuthenticator;
 
     pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_SessionError_ptr(
         ptr: *mut ::qt_core::QObject,
@@ -38988,29 +38988,29 @@ extern "C" {
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::SignalOfSessionError;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfLocalSocketState;
+    ) -> *mut crate::SlotOfI64I64;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr58(
-        ptr: *mut crate::SlotOfLocalSocketState,
+        ptr: *mut crate::SlotOfI64I64,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfLocalSocketState;
+    ) -> *mut crate::SlotOfI64I64;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfLocalSocketState;
+    ) -> *mut crate::SignalOfI64I64;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr59(
-        ptr: *mut crate::SignalOfLocalSocketState,
+        ptr: *mut crate::SignalOfI64I64,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfLocalSocketState;
+    ) -> *mut crate::SignalOfI64I64;
 
     pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketState_ptr(
         ptr: *mut ::qt_core::QObject,
@@ -39036,107 +39036,131 @@ extern "C" {
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::SignalOfSocketState;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQListOfQSslError;
+    ) -> *mut crate::SlotOfLocalSocketState;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr62(
-        ptr: *mut crate::SlotOfQListOfQSslError,
+        ptr: *mut crate::SlotOfLocalSocketState,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QList_QSslError_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketState_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQListOfQSslError;
+    ) -> *mut crate::SlotOfLocalSocketState;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQListOfQSslError;
+    ) -> *mut crate::SignalOfLocalSocketState;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr63(
-        ptr: *mut crate::SignalOfQListOfQSslError,
+        ptr: *mut crate::SignalOfLocalSocketState,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QList_QSslError_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketState_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQListOfQSslError;
+    ) -> *mut crate::SignalOfLocalSocketState;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkProxy;
+    ) -> *mut crate::SlotOfQFlagsUsagePolicy;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr64(
-        ptr: *mut crate::SlotOfQNetworkProxy,
+        ptr: *mut crate::SlotOfQFlagsUsagePolicy,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkProxy_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QFlags_QNetworkSession_UsagePolicy_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkProxy;
+    ) -> *mut crate::SlotOfQFlagsUsagePolicy;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkProxy;
+    ) -> *mut crate::SignalOfQFlagsUsagePolicy;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr65(
-        ptr: *mut crate::SignalOfQNetworkProxy,
+        ptr: *mut crate::SignalOfQFlagsUsagePolicy,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkProxy_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QFlags_QNetworkSession_UsagePolicy_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkProxy;
+    ) -> *mut crate::SignalOfQFlagsUsagePolicy;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkReplyQListOfQSslError;
+    ) -> *mut crate::SlotOfQUrl;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr66(
-        ptr: *mut crate::SlotOfQNetworkReplyQListOfQSslError,
+        ptr: *mut crate::SlotOfQUrl,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QUrl_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkReplyQListOfQSslError;
+    ) -> *mut crate::SlotOfQUrl;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkReplyQListOfQSslError;
+    ) -> *mut crate::SignalOfQUrl;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr67(
-        ptr: *mut crate::SignalOfQNetworkReplyQListOfQSslError,
+        ptr: *mut crate::SignalOfQUrl,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QUrl_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkReplyQListOfQSslError;
+    ) -> *mut crate::SignalOfQUrl;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QSslSocket_SslMode_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfSslMode;
+    ) -> *mut crate::SlotOfQSslPreSharedKeyAuthenticator;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr68(
-        ptr: *mut crate::SlotOfSslMode,
+        ptr: *mut crate::SlotOfQSslPreSharedKeyAuthenticator,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QSslSocket_SslMode_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QSslPreSharedKeyAuthenticator_ptr_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfSslMode;
+    ) -> *mut crate::SlotOfQSslPreSharedKeyAuthenticator;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QSslSocket_SslMode_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfSslMode;
+    ) -> *mut crate::SignalOfQSslPreSharedKeyAuthenticator;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr69(
-        ptr: *mut crate::SignalOfSslMode,
+        ptr: *mut crate::SignalOfQSslPreSharedKeyAuthenticator,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QSslSocket_SslMode_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QSslPreSharedKeyAuthenticator_ptr_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfSslMode;
+    ) -> *mut crate::SignalOfQSslPreSharedKeyAuthenticator;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfNetworkAccessibility;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr70(
+        ptr: *mut crate::SlotOfNetworkAccessibility,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkAccessManager_NetworkAccessibility_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SlotOfNetworkAccessibility;
+
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfNetworkAccessibility;
+
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr71(
+        ptr: *mut crate::SignalOfNetworkAccessibility,
+    ) -> *mut ::qt_core::QObject;
+
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkAccessManager_NetworkAccessibility_ptr(
+        ptr: *mut ::qt_core::QObject,
+    ) -> *mut crate::SignalOfNetworkAccessibility;
 
     pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QSslError_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::SlotOfQSslError;
 
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr70(
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr72(
         ptr: *mut crate::SlotOfQSslError,
     ) -> *mut ::qt_core::QObject;
 
@@ -39148,7 +39172,7 @@ extern "C" {
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::SignalOfQSslError;
 
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr71(
+    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr73(
         ptr: *mut crate::SignalOfQSslError,
     ) -> *mut ::qt_core::QObject;
 
@@ -39156,101 +39180,77 @@ extern "C" {
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::SignalOfQSslError;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfState;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr72(
-        ptr: *mut crate::SlotOfState,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkSession_State_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfState;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfState;
-
-    pub fn ctr_qt_network_ffi_static_cast_QObject_ptr73(
-        ptr: *mut crate::SignalOfState,
-    ) -> *mut ::qt_core::QObject;
-
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkSession_State_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfState;
-
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_ptr(
-        ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfI64I64;
+    ) -> *mut crate::SlotOfQNetworkReplyQListOfQSslError;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr74(
-        ptr: *mut crate::SlotOfI64I64,
+        ptr: *mut crate::SlotOfQNetworkReplyQListOfQSslError,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_qint64_qint64_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfI64I64;
+    ) -> *mut crate::SlotOfQNetworkReplyQListOfQSslError;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfI64I64;
+    ) -> *mut crate::SignalOfQNetworkReplyQListOfQSslError;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr75(
-        ptr: *mut crate::SignalOfI64I64,
+        ptr: *mut crate::SignalOfQNetworkReplyQListOfQSslError,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_qint64_qint64_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QList_QSslError_const_ref_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfI64I64;
+    ) -> *mut crate::SignalOfQNetworkReplyQListOfQSslError;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QSslSocket_SslMode_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkConfiguration;
+    ) -> *mut crate::SlotOfSslMode;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr76(
-        ptr: *mut crate::SlotOfQNetworkConfiguration,
+        ptr: *mut crate::SlotOfSslMode,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QSslSocket_SslMode_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkConfiguration;
+    ) -> *mut crate::SlotOfSslMode;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QSslSocket_SslMode_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkConfiguration;
+    ) -> *mut crate::SignalOfSslMode;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr77(
-        ptr: *mut crate::SignalOfQNetworkConfiguration,
+        ptr: *mut crate::SignalOfSslMode,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QSslSocket_SslMode_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkConfiguration;
+    ) -> *mut crate::SignalOfSslMode;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkConfigurationBool;
+    ) -> *mut crate::SlotOfNetworkError;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr78(
-        ptr: *mut crate::SlotOfQNetworkConfigurationBool,
+        ptr: *mut crate::SlotOfNetworkError,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkConfiguration_const_ref_bool_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_NetworkError_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfQNetworkConfigurationBool;
+    ) -> *mut crate::SlotOfNetworkError;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkConfigurationBool;
+    ) -> *mut crate::SignalOfNetworkError;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr79(
-        ptr: *mut crate::SignalOfQNetworkConfigurationBool,
+        ptr: *mut crate::SignalOfNetworkError,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkConfiguration_const_ref_bool_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_NetworkError_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfQNetworkConfigurationBool;
+    ) -> *mut crate::SignalOfNetworkError;
 
     pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_ptr(
         ptr: *mut ::qt_core::QObject,
@@ -39276,52 +39276,52 @@ extern "C" {
         ptr: *mut ::qt_core::QObject,
     ) -> *mut crate::SignalOfQNetworkReply;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfType;
+    ) -> *mut crate::SlotOfQNetworkReplyQAuthenticator;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr82(
-        ptr: *mut crate::SlotOfType,
+        ptr: *mut crate::SlotOfQNetworkReplyQAuthenticator,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QDnsLookup_Type_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfType;
+    ) -> *mut crate::SlotOfQNetworkReplyQAuthenticator;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfType;
+    ) -> *mut crate::SignalOfQNetworkReplyQAuthenticator;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr83(
-        ptr: *mut crate::SignalOfType,
+        ptr: *mut crate::SignalOfQNetworkReplyQAuthenticator,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QDnsLookup_Type_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QNetworkReply_ptr_QAuthenticator_ptr_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfType;
+    ) -> *mut crate::SignalOfQNetworkReplyQAuthenticator;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfSocketError;
+    ) -> *mut crate::SlotOfLocalSocketError;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr84(
-        ptr: *mut crate::SlotOfSocketError,
+        ptr: *mut crate::SlotOfLocalSocketError,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QAbstractSocket_SocketError_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_slot_wrapper_QLocalSocket_LocalSocketError_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SlotOfSocketError;
+    ) -> *mut crate::SlotOfLocalSocketError;
 
-    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_ptr(
+    pub fn ctr_qt_network_ffi_static_cast_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfSocketError;
+    ) -> *mut crate::SignalOfLocalSocketError;
 
     pub fn ctr_qt_network_ffi_static_cast_QObject_ptr85(
-        ptr: *mut crate::SignalOfSocketError,
+        ptr: *mut crate::SignalOfLocalSocketError,
     ) -> *mut ::qt_core::QObject;
 
-    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QAbstractSocket_SocketError_ptr(
+    pub fn ctr_qt_network_ffi_dynamic_cast_ctr_qt_network_ffi_signal_wrapper_QLocalSocket_LocalSocketError_ptr(
         ptr: *mut ::qt_core::QObject,
-    ) -> *mut crate::SignalOfSocketError;
+    ) -> *mut crate::SignalOfLocalSocketError;
 
 }

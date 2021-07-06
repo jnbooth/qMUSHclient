@@ -2,7 +2,7 @@
 //! C++ namespace: <span style='color: green;'>```QDrawBorderPixmap```</span>
 
 /// C++ enum: <span style='color: green;'>```QDrawBorderPixmap::DrawingHint```</span>.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct DrawingHint(::std::os::raw::c_int);
 
@@ -19,7 +19,11 @@ impl From<DrawingHint> for ::std::os::raw::c_int {
 }
 
 impl DrawingHint {
-    pub fn to_int(&self) -> ::std::os::raw::c_int {
+    pub const fn from_int(value: ::std::os::raw::c_int) -> Self {
+        DrawingHint(value)
+    }
+
+    pub const fn to_int(self) -> ::std::os::raw::c_int {
         self.0
     }
 }

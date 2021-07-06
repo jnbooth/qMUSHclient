@@ -6,7 +6,7 @@
 /// C++ enum: <span style='color: green;'>```QSsl::KeyType```</span>.
 ///
 /// <a href="http://doc.qt.io/qt-5/qssl.html#KeyType-enum">C++ documentation</a>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Describes the two types of keys <a href="http://doc.qt.io/qt-5/qsslkey.html">QSslKey</a> supports.</p></div>
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct KeyType(::std::os::raw::c_int);
 
@@ -23,7 +23,11 @@ impl From<KeyType> for ::std::os::raw::c_int {
 }
 
 impl KeyType {
-    pub fn to_int(&self) -> ::std::os::raw::c_int {
+    pub const fn from_int(value: ::std::os::raw::c_int) -> Self {
+        KeyType(value)
+    }
+
+    pub const fn to_int(self) -> ::std::os::raw::c_int {
         self.0
     }
 }
@@ -42,7 +46,7 @@ impl KeyType {
 /// C++ enum: <span style='color: green;'>```QSsl::EncodingFormat```</span>.
 ///
 /// <a href="http://doc.qt.io/qt-5/qssl.html#EncodingFormat-enum">C++ documentation</a>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Describes supported encoding formats for certificates and keys.</p></div>
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct EncodingFormat(::std::os::raw::c_int);
 
@@ -59,7 +63,11 @@ impl From<EncodingFormat> for ::std::os::raw::c_int {
 }
 
 impl EncodingFormat {
-    pub fn to_int(&self) -> ::std::os::raw::c_int {
+    pub const fn from_int(value: ::std::os::raw::c_int) -> Self {
+        EncodingFormat(value)
+    }
+
+    pub const fn to_int(self) -> ::std::os::raw::c_int {
         self.0
     }
 }
@@ -80,7 +88,7 @@ impl EncodingFormat {
 /// <a href="http://doc.qt.io/qt-5/qssl.html#KeyAlgorithm-enum">C++ documentation</a>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Describes the different key algorithms supported by <a href="http://doc.qt.io/qt-5/qsslkey.html">QSslKey</a>.</p>
 ///
 /// <p>The opaque key facility allows applications to add support for facilities such as PKCS#11 that Qt does not currently offer natively.</p></div>
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct KeyAlgorithm(::std::os::raw::c_int);
 
@@ -97,7 +105,11 @@ impl From<KeyAlgorithm> for ::std::os::raw::c_int {
 }
 
 impl KeyAlgorithm {
-    pub fn to_int(&self) -> ::std::os::raw::c_int {
+    pub const fn from_int(value: ::std::os::raw::c_int) -> Self {
+        KeyAlgorithm(value)
+    }
+
+    pub const fn to_int(self) -> ::std::os::raw::c_int {
         self.0
     }
 }
@@ -128,7 +140,7 @@ impl KeyAlgorithm {
 ///
 /// <p><b>Note: </b>In Qt 4, this enum was called <code>AlternateNameEntryType</code>. That name is deprecated in Qt 5.</p>
 /// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qsslcertificate.html#subjectAlternativeNames">QSslCertificate::subjectAlternativeNames</a>().</p></div>
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct AlternativeNameEntryType(::std::os::raw::c_int);
 
@@ -145,7 +157,11 @@ impl From<AlternativeNameEntryType> for ::std::os::raw::c_int {
 }
 
 impl AlternativeNameEntryType {
-    pub fn to_int(&self) -> ::std::os::raw::c_int {
+    pub const fn from_int(value: ::std::os::raw::c_int) -> Self {
+        AlternativeNameEntryType(value)
+    }
+
+    pub const fn to_int(self) -> ::std::os::raw::c_int {
         self.0
     }
 }
@@ -170,7 +186,7 @@ impl AlternativeNameEntryType {
 /// C++ enum: <span style='color: green;'>```QSsl::SslProtocol```</span>.
 ///
 /// <a href="http://doc.qt.io/qt-5/qssl.html#SslProtocol-enum">C++ documentation</a>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Describes the protocol of the cipher.</p></div>
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SslProtocol(::std::os::raw::c_int);
 
@@ -187,7 +203,11 @@ impl From<SslProtocol> for ::std::os::raw::c_int {
 }
 
 impl SslProtocol {
-    pub fn to_int(&self) -> ::std::os::raw::c_int {
+    pub const fn from_int(value: ::std::os::raw::c_int) -> Self {
+        SslProtocol(value)
+    }
+
+    pub const fn to_int(self) -> ::std::os::raw::c_int {
         self.0
     }
 }
@@ -258,7 +278,7 @@ impl SslProtocol {
 /// <p>By default, SslOptionDisableEmptyFragments is turned on since this causes problems with a large number of servers. SslOptionDisableLegacyRenegotiation is also turned on, since it introduces a security risk. SslOptionDisableCompression is turned on to prevent the attack publicised by CRIME. SslOptionDisableSessionPersistence is turned on to optimize memory usage. The other options are turned off.</p>
 /// <p><b>Note: </b>Availability of above options depends on the version of the SSL backend in use.</p>
 /// <p>The SslOptions type is a typedef for <a href="http://doc.qt.io/qt-5/qflags.html">QFlags</a>&lt;SslOption&gt;. It stores an OR combination of SslOption values.</p></div>
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SslOption(::std::os::raw::c_int);
 
@@ -275,7 +295,11 @@ impl From<SslOption> for ::std::os::raw::c_int {
 }
 
 impl SslOption {
-    pub fn to_int(&self) -> ::std::os::raw::c_int {
+    pub const fn from_int(value: ::std::os::raw::c_int) -> Self {
+        SslOption(value)
+    }
+
+    pub const fn to_int(self) -> ::std::os::raw::c_int {
         self.0
     }
 }

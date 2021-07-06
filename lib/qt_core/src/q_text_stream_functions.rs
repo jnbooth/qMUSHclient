@@ -3,11 +3,6 @@
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::bin(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn bin(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -22,11 +17,6 @@ pub unsafe fn bin(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::bom(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn bom(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -41,11 +31,6 @@ pub unsafe fn bom(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::center(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn center(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -60,11 +45,6 @@ pub unsafe fn center(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::dec(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn dec(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -79,11 +59,6 @@ pub unsafe fn dec(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::endl(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn endl(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -98,11 +73,6 @@ pub unsafe fn endl(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::fixed(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn fixed(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -117,11 +87,6 @@ pub unsafe fn fixed(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::flush(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn flush(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -136,11 +101,6 @@ pub unsafe fn flush(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::forcepoint(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn forcepoint(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -155,11 +115,6 @@ pub unsafe fn forcepoint(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::forcesign(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn forcesign(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -174,11 +129,6 @@ pub unsafe fn forcesign(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::hex(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn hex(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -193,11 +143,6 @@ pub unsafe fn hex(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::left(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn left(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -212,11 +157,6 @@ pub unsafe fn left(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::lowercasebase(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn lowercasebase(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -231,11 +171,6 @@ pub unsafe fn lowercasebase(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::lowercasedigits(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn lowercasedigits(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -250,11 +185,6 @@ pub unsafe fn lowercasedigits(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::noforcepoint(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn noforcepoint(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -269,11 +199,6 @@ pub unsafe fn noforcepoint(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::noforcesign(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn noforcesign(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -288,11 +213,6 @@ pub unsafe fn noforcesign(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::noshowbase(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn noshowbase(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -307,11 +227,6 @@ pub unsafe fn noshowbase(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::oct(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn oct(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -326,11 +241,6 @@ pub unsafe fn oct(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::reset(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn reset(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -345,11 +255,6 @@ pub unsafe fn reset(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::right(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn right(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -364,11 +269,6 @@ pub unsafe fn right(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::scientific(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn scientific(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -383,11 +283,6 @@ pub unsafe fn scientific(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::showbase(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn showbase(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -402,11 +297,6 @@ pub unsafe fn showbase(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::uppercasebase(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn uppercasebase(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -421,11 +311,6 @@ pub unsafe fn uppercasebase(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::uppercasedigits(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn uppercasedigits(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {
@@ -440,11 +325,6 @@ pub unsafe fn uppercasedigits(
 
 /// Calls C++ function: <span style='color: green;'>```QTextStream& QTextStreamFunctions::ws(QTextStream& s)```</span>.
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn ws(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextStream>>,
 ) -> ::cpp_core::Ref<crate::QTextStream> {

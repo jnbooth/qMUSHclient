@@ -1,13 +1,11 @@
 #![cfg_attr(feature = "ritual_rustdoc_nightly", feature(doc_cfg))]
 //! Functions that provide access to C++ operators
 
-/// <p>Returns <code>true</code> if page layout <i>lhs</i> is equal to page layout <i>rhs</i>, i.e. if all the attributes are exactly equal.</p>
+/// <p>Returns <code>true</code> if <i>v1</i> is equal to <i>v2</i>; otherwise returns <code>false</code>. This operator uses an exact floating-point comparison.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```bool operator==(QKeySequence::StandardKey key, QKeyEvent* e)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qpagelayout.html#operator-eq-eq">C++ documentation</a> for <span style='color: green;'>```bool operator==(const QPageLayout &lhs, const QPageLayout &rhs)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Returns <code>true</code> if page layout <i>lhs</i> is equal to page layout <i>rhs</i>, i.e. if all the attributes are exactly equal.</p>
-/// <p>Note that this is a strict equality, especially for page size where the <a href="http://doc.qt.io/qt-5/qpagesize.html">QPageSize</a> ID, name and size must exactly match, and the margins where the units must match.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qpagelayout.html#isEquivalentTo">QPageLayout::isEquivalentTo</a>().</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qvector2d.html#operator-eq-eq">C++ documentation</a> for <span style='color: green;'>```bool operator==(const QVector2D &v1, const QVector2D &v2)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Returns <code>true</code> if <i>v1</i> is equal to <i>v2</i>; otherwise returns <code>false</code>. This operator uses an exact floating-point comparison.</p></div>
 #[inline(always)]
 pub unsafe fn eq(
     key: crate::q_key_sequence::StandardKey,
@@ -43,7 +41,7 @@ pub unsafe fn mul_q_point_q_matrix(
     m: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix>>,
 ) -> ::cpp_core::CppBox<::qt_core::QPoint> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_14(
+        crate::__ffi::ctr_qt_gui_ffi_operator_10(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QPoint>>::cast_into(p).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix>>::cast_into(m).as_raw_ptr(),
         )
@@ -58,7 +56,7 @@ pub unsafe fn mul_q_point_f_q_matrix(
     m: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix>>,
 ) -> ::cpp_core::CppBox<::qt_core::QPointF> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_15(
+        crate::__ffi::ctr_qt_gui_ffi_operator_11(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QPointF>>::cast_into(p).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix>>::cast_into(m).as_raw_ptr(),
         )
@@ -73,7 +71,7 @@ pub unsafe fn mul_q_line_f_q_matrix(
     m: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix>>,
 ) -> ::cpp_core::CppBox<::qt_core::QLineF> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_16(
+        crate::__ffi::ctr_qt_gui_ffi_operator_12(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QLineF>>::cast_into(l).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix>>::cast_into(m).as_raw_ptr(),
         )
@@ -88,7 +86,7 @@ pub unsafe fn mul_q_line_q_matrix(
     m: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix>>,
 ) -> ::cpp_core::CppBox<::qt_core::QLine> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_17(
+        crate::__ffi::ctr_qt_gui_ffi_operator_13(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QLine>>::cast_into(l).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix>>::cast_into(m).as_raw_ptr(),
         )
@@ -103,7 +101,7 @@ pub unsafe fn mul_q_point_q_transform(
     m: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTransform>>,
 ) -> ::cpp_core::CppBox<::qt_core::QPoint> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_22(
+        crate::__ffi::ctr_qt_gui_ffi_operator_18(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QPoint>>::cast_into(p).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(m).as_raw_ptr(),
         )
@@ -118,7 +116,7 @@ pub unsafe fn mul_q_point_f_q_transform(
     m: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTransform>>,
 ) -> ::cpp_core::CppBox<::qt_core::QPointF> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_23(
+        crate::__ffi::ctr_qt_gui_ffi_operator_19(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QPointF>>::cast_into(p).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(m).as_raw_ptr(),
         )
@@ -133,7 +131,7 @@ pub unsafe fn mul_q_line_f_q_transform(
     m: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTransform>>,
 ) -> ::cpp_core::CppBox<::qt_core::QLineF> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_24(
+        crate::__ffi::ctr_qt_gui_ffi_operator_20(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QLineF>>::cast_into(l).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(m).as_raw_ptr(),
         )
@@ -148,7 +146,7 @@ pub unsafe fn mul_q_line_q_transform(
     m: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTransform>>,
 ) -> ::cpp_core::CppBox<::qt_core::QLine> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_25(
+        crate::__ffi::ctr_qt_gui_ffi_operator_21(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QLine>>::cast_into(l).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(m).as_raw_ptr(),
         )
@@ -163,7 +161,7 @@ pub unsafe fn mul_float_q_vector_3d(
     vector: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVector3D>>,
 ) -> ::cpp_core::CppBox<crate::QVector3D> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_57(
+        crate::__ffi::ctr_qt_gui_ffi_operator_38(
             factor,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVector3D>>::cast_into(vector)
                 .as_raw_ptr(),
@@ -179,7 +177,7 @@ pub unsafe fn mul_float_q_vector_4d(
     vector: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVector4D>>,
 ) -> ::cpp_core::CppBox<crate::QVector4D> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_65(
+        crate::__ffi::ctr_qt_gui_ffi_operator_46(
             factor,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVector4D>>::cast_into(vector)
                 .as_raw_ptr(),
@@ -195,7 +193,7 @@ pub unsafe fn mul_float_q_quaternion(
     quaternion: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QQuaternion>>,
 ) -> ::cpp_core::CppBox<crate::QQuaternion> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_74(
+        crate::__ffi::ctr_qt_gui_ffi_operator_55(
             factor,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QQuaternion>>::cast_into(quaternion)
                 .as_raw_ptr(),
@@ -211,7 +209,7 @@ pub unsafe fn mul_q_point_q_matrix4_x4(
     matrix: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix4X4>>,
 ) -> ::cpp_core::CppBox<::qt_core::QPoint> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_87(
+        crate::__ffi::ctr_qt_gui_ffi_operator_68(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QPoint>>::cast_into(point)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix4X4>>::cast_into(matrix)
@@ -228,7 +226,7 @@ pub unsafe fn mul_q_point_f_q_matrix4_x4(
     matrix: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix4X4>>,
 ) -> ::cpp_core::CppBox<::qt_core::QPointF> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_88(
+        crate::__ffi::ctr_qt_gui_ffi_operator_69(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QPointF>>::cast_into(point)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix4X4>>::cast_into(matrix)
@@ -245,7 +243,7 @@ pub unsafe fn mul_float_q_matrix4_x4(
     matrix: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix4X4>>,
 ) -> ::cpp_core::CppBox<crate::QMatrix4X4> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator_92(
+        crate::__ffi::ctr_qt_gui_ffi_operator_73(
             factor,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix4X4>>::cast_into(matrix)
                 .as_raw_ptr(),
@@ -254,12 +252,12 @@ pub unsafe fn mul_float_q_matrix4_x4(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QColor& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_color(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -275,12 +273,12 @@ pub unsafe fn shl_q_debug_q_color(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QColor& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_color(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
@@ -296,12 +294,12 @@ pub unsafe fn shl_q_data_stream_q_color(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QRegion& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_region(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
@@ -317,12 +315,12 @@ pub unsafe fn shl_q_data_stream_q_region(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QRegion& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_region(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -338,12 +336,12 @@ pub unsafe fn shl_q_debug_q_region(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& in, const QKeySequence& ks)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_key_sequence(
     in_: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
@@ -360,12 +358,12 @@ pub unsafe fn shl_q_data_stream_q_key_sequence(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QKeySequence& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_key_sequence(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -382,12 +380,12 @@ pub unsafe fn shl_q_debug_q_key_sequence(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug dbg, const QVector2D& vector)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_vector_2d(
     dbg: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -403,12 +401,12 @@ pub unsafe fn shl_q_debug_q_vector_2d(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QVector2D& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_vector_2d(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
@@ -424,12 +422,12 @@ pub unsafe fn shl_q_data_stream_q_vector_2d(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QTouchDevice* arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_touch_device(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -446,12 +444,12 @@ pub unsafe fn shl_q_debug_q_touch_device(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QEvent* arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_event(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -468,12 +466,12 @@ pub unsafe fn shl_q_debug_q_event(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QTouchEvent::TouchPoint& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_touch_point(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -492,12 +490,12 @@ pub unsafe fn shl_q_debug_touch_point(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QFont& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_font(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
@@ -513,12 +511,12 @@ pub unsafe fn shl_q_data_stream_q_font(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QFont& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_font(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -534,12 +532,12 @@ pub unsafe fn shl_q_debug_q_font(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QPolygon& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_polygon(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -555,12 +553,12 @@ pub unsafe fn shl_q_debug_q_polygon(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& stream, const QPolygon& polygon)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_polygon(
     stream: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
@@ -577,12 +575,12 @@ pub unsafe fn shl_q_data_stream_q_polygon(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QPolygonF& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_polygon_f(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -598,12 +596,12 @@ pub unsafe fn shl_q_debug_q_polygon_f(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& stream, const QPolygonF& array)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_polygon_f(
     stream: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
@@ -620,12 +618,12 @@ pub unsafe fn shl_q_data_stream_q_polygon_f(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QMatrix& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_matrix(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
@@ -641,12 +639,12 @@ pub unsafe fn shl_q_data_stream_q_matrix(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QMatrix& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_matrix(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
@@ -662,63 +660,19 @@ pub unsafe fn shl_q_debug_q_matrix(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QPainterPath& arg2)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_painter_path(
-    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPainterPath>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__33(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPainterPath>>::cast_into(arg2)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QPainterPath& arg2)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_debug_q_painter_path(
-    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
-    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPainterPath>>,
-) -> ::cpp_core::CppBox<::qt_core::QDebug> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__35(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPainterPath>>::cast_into(arg2)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
-}
-
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QTransform& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_transform(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTransform>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__36(
+        crate::__ffi::ctr_qt_gui_ffi_operator__33(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(arg2)
@@ -728,19 +682,19 @@ pub unsafe fn shl_q_data_stream_q_transform(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QTransform& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_transform(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTransform>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__38(
+        crate::__ffi::ctr_qt_gui_ffi_operator__35(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(arg2)
@@ -750,19 +704,19 @@ pub unsafe fn shl_q_debug_q_transform(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QImage& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_image(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QImage>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__39(
+        crate::__ffi::ctr_qt_gui_ffi_operator__36(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QImage>>::cast_into(arg2).as_raw_ptr(),
@@ -771,19 +725,19 @@ pub unsafe fn shl_q_data_stream_q_image(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QImage& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_image(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QImage>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__41(
+        crate::__ffi::ctr_qt_gui_ffi_operator__38(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QImage>>::cast_into(arg2).as_raw_ptr(),
@@ -792,19 +746,19 @@ pub unsafe fn shl_q_debug_q_image(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QPixmap& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_pixmap(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPixmap>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__42(
+        crate::__ffi::ctr_qt_gui_ffi_operator__39(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPixmap>>::cast_into(arg2).as_raw_ptr(),
@@ -813,19 +767,19 @@ pub unsafe fn shl_q_data_stream_q_pixmap(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QPixmap& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_pixmap(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPixmap>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__44(
+        crate::__ffi::ctr_qt_gui_ffi_operator__41(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPixmap>>::cast_into(arg2).as_raw_ptr(),
@@ -834,19 +788,19 @@ pub unsafe fn shl_q_debug_q_pixmap(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QBrush& arg2)```</span>.
 ///
-/// <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_brush(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QBrush>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__45(
+        crate::__ffi::ctr_qt_gui_ffi_operator__42(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QBrush>>::cast_into(arg2).as_raw_ptr(),
@@ -855,19 +809,19 @@ pub unsafe fn shl_q_data_stream_q_brush(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QBrush& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_brush(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QBrush>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__47(
+        crate::__ffi::ctr_qt_gui_ffi_operator__44(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QBrush>>::cast_into(arg2).as_raw_ptr(),
@@ -876,19 +830,19 @@ pub unsafe fn shl_q_debug_q_brush(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QPen& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_pen(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPen>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__48(
+        crate::__ffi::ctr_qt_gui_ffi_operator__45(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPen>>::cast_into(arg2).as_raw_ptr(),
@@ -897,19 +851,19 @@ pub unsafe fn shl_q_data_stream_q_pen(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QPen& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_pen(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPen>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__50(
+        crate::__ffi::ctr_qt_gui_ffi_operator__47(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPen>>::cast_into(arg2).as_raw_ptr(),
@@ -918,19 +872,19 @@ pub unsafe fn shl_q_debug_q_pen(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QTextLength& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_text_length(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextLength>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__51(
+        crate::__ffi::ctr_qt_gui_ffi_operator__48(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextLength>>::cast_into(arg2)
@@ -940,19 +894,19 @@ pub unsafe fn shl_q_data_stream_q_text_length(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QTextLength& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_text_length(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextLength>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__53(
+        crate::__ffi::ctr_qt_gui_ffi_operator__50(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextLength>>::cast_into(arg2)
@@ -962,19 +916,19 @@ pub unsafe fn shl_q_debug_q_text_length(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QTextFormat& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_text_format(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextFormat>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__54(
+        crate::__ffi::ctr_qt_gui_ffi_operator__51(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextFormat>>::cast_into(arg2)
@@ -984,19 +938,19 @@ pub unsafe fn shl_q_data_stream_q_text_format(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QTextFormat& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_text_format(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextFormat>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__56(
+        crate::__ffi::ctr_qt_gui_ffi_operator__53(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextFormat>>::cast_into(arg2)
@@ -1006,19 +960,19 @@ pub unsafe fn shl_q_debug_q_text_format(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& ds, const QPalette& p)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_palette(
     ds: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPalette>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__57(
+        crate::__ffi::ctr_qt_gui_ffi_operator__54(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(ds)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPalette>>::cast_into(p).as_raw_ptr(),
@@ -1027,19 +981,19 @@ pub unsafe fn shl_q_data_stream_q_palette(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QPalette& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_palette(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPalette>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__59(
+        crate::__ffi::ctr_qt_gui_ffi_operator__56(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPalette>>::cast_into(arg2).as_raw_ptr(),
@@ -1048,19 +1002,19 @@ pub unsafe fn shl_q_debug_q_palette(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug d, const QAccessibleInterface* iface)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_accessible_interface(
     d: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     iface: impl ::cpp_core::CastInto<::cpp_core::Ptr<crate::QAccessibleInterface>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__61(
+        crate::__ffi::ctr_qt_gui_ffi_operator__58(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(d).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QAccessibleInterface>>::cast_into(iface)
                 .as_raw_ptr(),
@@ -1069,19 +1023,19 @@ pub unsafe fn shl_q_debug_q_accessible_interface(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug d, const QAccessibleEvent& ev)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_accessible_event(
     d: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     ev: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QAccessibleEvent>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__62(
+        crate::__ffi::ctr_qt_gui_ffi_operator__59(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(d).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QAccessibleEvent>>::cast_into(ev)
                 .as_raw_ptr(),
@@ -1090,19 +1044,19 @@ pub unsafe fn shl_q_debug_q_accessible_event(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QSurfaceFormat& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_surface_format(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QSurfaceFormat>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__65(
+        crate::__ffi::ctr_qt_gui_ffi_operator__62(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSurfaceFormat>>::cast_into(arg2)
@@ -1112,19 +1066,19 @@ pub unsafe fn shl_q_debug_q_surface_format(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QIcon& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_icon(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QIcon>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__66(
+        crate::__ffi::ctr_qt_gui_ffi_operator__63(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QIcon>>::cast_into(arg2).as_raw_ptr(),
@@ -1133,19 +1087,19 @@ pub unsafe fn shl_q_data_stream_q_icon(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug dbg, const QIcon& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_icon(
     dbg: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QIcon>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__68(
+        crate::__ffi::ctr_qt_gui_ffi_operator__65(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(dbg).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QIcon>>::cast_into(arg2).as_raw_ptr(),
         )
@@ -1153,19 +1107,19 @@ pub unsafe fn shl_q_debug_q_icon(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& outS, const QCursor& cursor)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_cursor(
     out_s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     cursor: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QCursor>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__69(
+        crate::__ffi::ctr_qt_gui_ffi_operator__68(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(out_s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QCursor>>::cast_into(cursor).as_raw_ptr(),
@@ -1174,19 +1128,19 @@ pub unsafe fn shl_q_data_stream_q_cursor(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QCursor& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_cursor(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QCursor>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__71(
+        crate::__ffi::ctr_qt_gui_ffi_operator__70(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QCursor>>::cast_into(arg2).as_raw_ptr(),
@@ -1195,19 +1149,19 @@ pub unsafe fn shl_q_debug_q_cursor(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QWindow* arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_window(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ptr<crate::QWindow>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__72(
+        crate::__ffi::ctr_qt_gui_ffi_operator__71(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QWindow>>::cast_into(arg2).as_raw_ptr(),
@@ -1216,19 +1170,63 @@ pub unsafe fn shl_q_debug_q_window(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QColorSpace& arg2)```</span>.
+///
+/// <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_color_space(
+    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QColorSpace>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__74(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColorSpace>>::cast_into(arg2)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QColorSpace& arg2)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_color_space(
+    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QColorSpace>>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__76(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
+                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColorSpace>>::cast_into(arg2)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug dbg, const QVector3D& vector)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_vector_3d(
     dbg: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     vector: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVector3D>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__75(
+        crate::__ffi::ctr_qt_gui_ffi_operator__79(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(dbg).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVector3D>>::cast_into(vector)
                 .as_raw_ptr(),
@@ -1237,19 +1235,19 @@ pub unsafe fn shl_q_debug_q_vector_3d(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QVector3D& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_vector_3d(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVector3D>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__76(
+        crate::__ffi::ctr_qt_gui_ffi_operator__80(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVector3D>>::cast_into(arg2).as_raw_ptr(),
@@ -1258,19 +1256,19 @@ pub unsafe fn shl_q_data_stream_q_vector_3d(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug dbg, const QVector4D& vector)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_vector_4d(
     dbg: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     vector: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVector4D>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__80(
+        crate::__ffi::ctr_qt_gui_ffi_operator__84(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(dbg).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVector4D>>::cast_into(vector)
                 .as_raw_ptr(),
@@ -1279,19 +1277,19 @@ pub unsafe fn shl_q_debug_q_vector_4d(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QVector4D& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_vector_4d(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVector4D>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__81(
+        crate::__ffi::ctr_qt_gui_ffi_operator__85(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVector4D>>::cast_into(arg2).as_raw_ptr(),
@@ -1300,19 +1298,19 @@ pub unsafe fn shl_q_data_stream_q_vector_4d(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug dbg, const QQuaternion& q)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_quaternion(
     dbg: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     q: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QQuaternion>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__85(
+        crate::__ffi::ctr_qt_gui_ffi_operator__89(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(dbg).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QQuaternion>>::cast_into(q).as_raw_ptr(),
         )
@@ -1320,19 +1318,19 @@ pub unsafe fn shl_q_debug_q_quaternion(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QQuaternion& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_quaternion(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QQuaternion>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__86(
+        crate::__ffi::ctr_qt_gui_ffi_operator__90(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QQuaternion>>::cast_into(arg2)
@@ -1342,19 +1340,19 @@ pub unsafe fn shl_q_data_stream_q_quaternion(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug dbg, const QMatrix4x4& m)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_matrix4_x4(
     dbg: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     m: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix4X4>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__88(
+        crate::__ffi::ctr_qt_gui_ffi_operator__92(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(dbg).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix4X4>>::cast_into(m).as_raw_ptr(),
         )
@@ -1362,19 +1360,19 @@ pub unsafe fn shl_q_debug_q_matrix4_x4(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QMatrix4x4& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_matrix4_x4(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix4X4>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__89(
+        crate::__ffi::ctr_qt_gui_ffi_operator__93(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix4X4>>::cast_into(arg2)
@@ -1384,19 +1382,85 @@ pub unsafe fn shl_q_data_stream_q_matrix4_x4(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QOpenGLVersionProfile& vp)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_opengl_version_profile(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    vp: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QOpenGLVersionProfile>>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__97(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QOpenGLVersionProfile>>::cast_into(vp)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QOpenGLContext* ctx)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_opengl_context(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    ctx: impl ::cpp_core::CastInto<::cpp_core::Ptr<crate::QOpenGLContext>>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__98(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QOpenGLContext>>::cast_into(ctx)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QOpenGLContextGroup* cg)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_opengl_context_group(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    cg: impl ::cpp_core::CastInto<::cpp_core::Ptr<crate::QOpenGLContextGroup>>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__99(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QOpenGLContextGroup>>::cast_into(cg)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QOpenGLDebugMessage& message)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_opengl_debug_message(
     debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     message: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QOpenGLDebugMessage>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__93(
+        crate::__ffi::ctr_qt_gui_ffi_operator__100(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QOpenGLDebugMessage>>::cast_into(message)
@@ -1406,19 +1470,19 @@ pub unsafe fn shl_q_debug_q_opengl_debug_message(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, QOpenGLDebugMessage::Source source)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_source(
     debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     source: crate::q_opengl_debug_message::Source,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__94(
+        crate::__ffi::ctr_qt_gui_ffi_operator__101(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             source,
@@ -1427,19 +1491,19 @@ pub unsafe fn shl_q_debug_source(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, QOpenGLDebugMessage::Type type)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_type(
     debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     type_: crate::q_opengl_debug_message::Type,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__95(
+        crate::__ffi::ctr_qt_gui_ffi_operator__102(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             type_,
@@ -1448,19 +1512,19 @@ pub unsafe fn shl_q_debug_type(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, QOpenGLDebugMessage::Severity severity)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_severity(
     debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     severity: crate::q_opengl_debug_message::Severity,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__96(
+        crate::__ffi::ctr_qt_gui_ffi_operator__103(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             severity,
@@ -1469,19 +1533,41 @@ pub unsafe fn shl_q_debug_severity(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QOpenGLTexture* t)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_opengl_texture(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    t: impl ::cpp_core::CastInto<::cpp_core::Ptr<crate::QOpenGLTexture>>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__104(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QOpenGLTexture>>::cast_into(t)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug dbg, const QPageSize& pageSize)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_page_size(
     dbg: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     page_size: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPageSize>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__99(
+        crate::__ffi::ctr_qt_gui_ffi_operator__107(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(dbg).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPageSize>>::cast_into(page_size)
                 .as_raw_ptr(),
@@ -1490,19 +1576,19 @@ pub unsafe fn shl_q_debug_q_page_size(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug dbg, const QPageLayout& pageLayout)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_page_layout(
     dbg: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     page_layout: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPageLayout>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__102(
+        crate::__ffi::ctr_qt_gui_ffi_operator__110(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(dbg).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPageLayout>>::cast_into(page_layout)
                 .as_raw_ptr(),
@@ -1511,19 +1597,63 @@ pub unsafe fn shl_q_debug_q_page_layout(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QPainterPath& arg2)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_painter_path(
+    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPainterPath>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__111(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPainterPath>>::cast_into(arg2)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QPainterPath& arg2)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_painter_path(
+    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPainterPath>>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__113(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
+                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPainterPath>>::cast_into(arg2)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QPicture& arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_picture(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPicture>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__103(
+        crate::__ffi::ctr_qt_gui_ffi_operator__114(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPicture>>::cast_into(arg2).as_raw_ptr(),
@@ -1532,19 +1662,19 @@ pub unsafe fn shl_q_data_stream_q_picture(
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QScreen* arg2)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_debug_q_screen(
     arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ptr<crate::QScreen>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__105(
+        crate::__ffi::ctr_qt_gui_ffi_operator__116(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QScreen>>::cast_into(arg2).as_raw_ptr(),
@@ -1553,1210 +1683,22 @@ pub unsafe fn shl_q_debug_q_screen(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
 ///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& out, const QStandardItem& item)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
 #[inline(always)]
 pub unsafe fn shl_q_data_stream_q_standard_item(
     out: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     item: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QStandardItem>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__107(
+        crate::__ffi::ctr_qt_gui_ffi_operator__118(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(out)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QStandardItem>>::cast_into(item)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QPaintEngine::PaintEngineFeature> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_paint_engine_feature(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_paint_engine::PaintEngineFeature>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__200(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QPaintEngine::DirtyFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_dirty_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_paint_engine::DirtyFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__201(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTouchDevice::CapabilityFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_capability_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_touch_device::CapabilityFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__202(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTouchEvent::TouchPoint::InfoFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_info_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_touch_event::touch_point::InfoFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__203(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextOption::Flag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_text_option::Flag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__204(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextFormat::PageBreakFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_page_break_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_text_format::PageBreakFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__205(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QRawFont::LayoutFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_layout_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_raw_font::LayoutFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__206(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QGlyphRun::GlyphRunFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_glyph_run_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_glyph_run::GlyphRunFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__207(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextDocument::FindFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_find_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_text_document::FindFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__208(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QAccessible::RelationFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_relation_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_accessible::RelationFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__209(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QSurfaceFormat::FormatOption> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_format_option(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_surface_format::FormatOption>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__210(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QImageIOPlugin::Capability> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_capability(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_image_io_plugin::Capability>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__211(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QImageIOHandler::Transformation> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_transformation(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_image_io_handler::Transformation>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__212(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLBuffer::RangeAccessFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_range_access_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_opengl_buffer::RangeAccessFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__213(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLDebugMessage::Source> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_source(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_opengl_debug_message::Source>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__214(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLDebugMessage::Type> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_type(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_opengl_debug_message::Type>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__215(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLDebugMessage::Severity> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_severity(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_opengl_debug_message::Severity>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__216(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLFunctions::OpenGLFeature> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_opengl_feature(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_opengl_functions::OpenGLFeature>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__217(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLShader::ShaderTypeBit> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_shader_type_bit(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_opengl_shader::ShaderTypeBit>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__218(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLTexture::Feature> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_feature(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_opengl_texture::Feature>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__219(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QPainter::PixmapFragmentHint> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_pixmap_fragment_hint(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_painter::PixmapFragmentHint>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__220(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QPainter::RenderHint> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_render_hint(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_painter::RenderHint>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__221(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextItem::RenderFlag> e)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_flags_render_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_text_item::RenderFlag>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__222(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            e.to_int(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QSize>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_size(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQSize>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__268(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQSize>>::cast_into(l).as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QKeySequence>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_key_sequence(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQKeySequence>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__269(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQKeySequence>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<const QTouchDevice*>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_touch_device(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQTouchDevice>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__270(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQTouchDevice>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QPolygonF>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_polygon_f(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQPolygonF>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__271(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPolygonF>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<double>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_double(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfDouble>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__272(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfDouble>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QFontDatabase::WritingSystem>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_writing_system(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfWritingSystem>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__274(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfWritingSystem>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QAccessibleInterface*>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_accessible_interface(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQAccessibleInterface>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__277(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQAccessibleInterface>>::cast_into(
-                l,
-            )
-            .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QWindow*>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_window(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQWindow>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__278(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQWindow>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QScreen*>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_screen(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQScreen>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__279(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQScreen>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QOpenGLContext*>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_opengl_context(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQOpenglContext>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__280(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQOpenglContext>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QOpenGLShader*>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_opengl_shader(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQOpenglShader>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__282(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQOpenglShader>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QStandardItem*>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_standard_item(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQStandardItem>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__283(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQStandardItem>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QTextFrame*>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_list_of_q_text_frame(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQTextFrame>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__285(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQTextFrame>>::cast_into(l)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QPoint>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_point(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPoint>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__302(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPoint>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QPair<double, QColor>>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_pair_of_double_q_color(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__303(::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s).as_raw_ptr() as *mut ::qt_core::QDataStream, ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>::cast_into(v).as_raw_ptr())
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QRect>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_rect(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQRect>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__305(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRect>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<double>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_double(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfDouble>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__306(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfDouble>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QTextLength>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_text_length(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQTextLength>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__307(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQTextLength>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<quint32>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_u32(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfU32>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__308(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfU32>>::cast_into(v).as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QTextFormat>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_text_format(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQTextFormat>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__310(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQTextFormat>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QPair<QAccessibleInterface*, QFlags<QAccessible::RelationFlag>>>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_pair_of_q_accessible_interface_q_flags_relation_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<
-        ::cpp_core::Ref<crate::QVectorOfQPairOfQAccessibleInterfaceQFlagsRelationFlag>,
-    >,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__311(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<
-                ::cpp_core::Ref<crate::QVectorOfQPairOfQAccessibleInterfaceQFlagsRelationFlag>,
-            >::cast_into(v)
-            .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QSize>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_size(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQSize>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__312(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQSize>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<float>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_float(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfFloat>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__313(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfFloat>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QLineF>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_line_f(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQLineF>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__315(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLineF>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QLine>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_line(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQLine>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__316(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLine>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QRectF>& v)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_vector_of_q_rect_f(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQRectF>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__317(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRectF>>::cast_into(v)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QSet<QByteArray>& set)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_set_of_q_byte_array(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    set: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QSetOfQByteArray>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__319(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSetOfQByteArray>>::cast_into(set)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<double, QColor>& p)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_pair_of_double_q_color(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfDoubleQColor>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__325(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfDoubleQColor>>::cast_into(p)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<int, int>& p)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_pair_of_int_int(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfIntInt>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__326(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfIntInt>>::cast_into(p)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<QAccessibleInterface*, QFlags<QAccessible::RelationFlag>>& p)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_pair_of_q_accessible_interface_q_flags_relation_flag(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfQAccessibleInterfaceQFlagsRelationFlag>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__327(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<
-                ::cpp_core::Ref<crate::QPairOfQAccessibleInterfaceQFlagsRelationFlag>,
-            >::cast_into(p)
-            .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<QOpenGLTexture::Filter, QOpenGLTexture::Filter>& p)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_pair_of_filter_filter(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfFilterFilter>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__328(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfFilterFilter>>::cast_into(p)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<float, float>& p)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_data_stream_q_pair_of_float_float(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfFloatFloat>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__329(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfFloatFloat>>::cast_into(p)
                 .as_raw_ptr(),
         )
     };
@@ -2775,7 +1717,7 @@ pub unsafe fn shl_q_debug_q_list_of_touch_point(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfTouchPoint>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__331(
+        crate::__ffi::ctr_qt_gui_ffi_operator__212(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfTouchPoint>>::cast_into(list)
@@ -2797,7 +1739,7 @@ pub unsafe fn shl_q_debug_q_list_of_q_size(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQSize>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__332(
+        crate::__ffi::ctr_qt_gui_ffi_operator__213(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQSize>>::cast_into(list)
@@ -2819,7 +1761,7 @@ pub unsafe fn shl_q_debug_q_list_of_q_key_sequence(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQKeySequence>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__333(
+        crate::__ffi::ctr_qt_gui_ffi_operator__214(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQKeySequence>>::cast_into(list)
@@ -2841,32 +1783,10 @@ pub unsafe fn shl_q_debug_q_list_of_q_touch_device(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQTouchDevice>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__334(
+        crate::__ffi::ctr_qt_gui_ffi_operator__215(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQTouchDevice>>::cast_into(list)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QList<QPolygonF>& list)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_debug_q_list_of_q_polygon_f(
-    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
-    list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQPolygonF>>,
-) -> ::cpp_core::CppBox<::qt_core::QDebug> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__335(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
-                .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPolygonF>>::cast_into(list)
                 .as_raw_ptr(),
         )
     };
@@ -2885,7 +1805,7 @@ pub unsafe fn shl_q_debug_q_list_of_double(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfDouble>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__336(
+        crate::__ffi::ctr_qt_gui_ffi_operator__216(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfDouble>>::cast_into(list)
@@ -2907,7 +1827,7 @@ pub unsafe fn shl_q_debug_q_list_of_writing_system(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfWritingSystem>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__338(
+        crate::__ffi::ctr_qt_gui_ffi_operator__218(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfWritingSystem>>::cast_into(list)
@@ -2929,7 +1849,7 @@ pub unsafe fn shl_q_debug_q_list_of_q_accessible_interface(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQAccessibleInterface>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__341(
+        crate::__ffi::ctr_qt_gui_ffi_operator__221(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQAccessibleInterface>>::cast_into(
@@ -2953,7 +1873,7 @@ pub unsafe fn shl_q_debug_q_list_of_q_window(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQWindow>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__342(
+        crate::__ffi::ctr_qt_gui_ffi_operator__222(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQWindow>>::cast_into(list)
@@ -2975,7 +1895,7 @@ pub unsafe fn shl_q_debug_q_list_of_q_screen(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQScreen>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__343(
+        crate::__ffi::ctr_qt_gui_ffi_operator__223(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQScreen>>::cast_into(list)
@@ -2997,7 +1917,7 @@ pub unsafe fn shl_q_debug_q_list_of_q_opengl_context(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQOpenglContext>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__344(
+        crate::__ffi::ctr_qt_gui_ffi_operator__224(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQOpenglContext>>::cast_into(list)
@@ -3019,7 +1939,7 @@ pub unsafe fn shl_q_debug_q_list_of_q_opengl_debug_message(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQOpenglDebugMessage>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__345(
+        crate::__ffi::ctr_qt_gui_ffi_operator__225(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQOpenglDebugMessage>>::cast_into(
@@ -3043,10 +1963,32 @@ pub unsafe fn shl_q_debug_q_list_of_q_opengl_shader(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQOpenglShader>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__346(
+        crate::__ffi::ctr_qt_gui_ffi_operator__226(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQOpenglShader>>::cast_into(list)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QList<QPolygonF>& list)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_list_of_q_polygon_f(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQPolygonF>>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__227(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPolygonF>>::cast_into(list)
                 .as_raw_ptr(),
         )
     };
@@ -3065,7 +2007,7 @@ pub unsafe fn shl_q_debug_q_list_of_q_standard_item(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQStandardItem>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__347(
+        crate::__ffi::ctr_qt_gui_ffi_operator__228(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQStandardItem>>::cast_into(list)
@@ -3087,7 +2029,7 @@ pub unsafe fn shl_q_debug_q_list_of_q_text_frame(
     list: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQTextFrame>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__349(
+        crate::__ffi::ctr_qt_gui_ffi_operator__230(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQTextFrame>>::cast_into(list)
@@ -3109,7 +2051,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_point(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPoint>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__350(
+        crate::__ffi::ctr_qt_gui_ffi_operator__231(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPoint>>::cast_into(vec)
@@ -3131,7 +2073,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_pair_of_double_q_color(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__351(::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug).as_raw_ptr(), ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>::cast_into(vec).as_raw_ptr())
+        crate::__ffi::ctr_qt_gui_ffi_operator__232(::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug).as_raw_ptr(), ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>::cast_into(vec).as_raw_ptr())
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
@@ -3148,7 +2090,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_rect(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQRect>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__353(
+        crate::__ffi::ctr_qt_gui_ffi_operator__234(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRect>>::cast_into(vec)
@@ -3170,7 +2112,7 @@ pub unsafe fn shl_q_debug_q_vector_of_double(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfDouble>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__354(
+        crate::__ffi::ctr_qt_gui_ffi_operator__235(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfDouble>>::cast_into(vec)
@@ -3192,7 +2134,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_text_length(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQTextLength>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__355(
+        crate::__ffi::ctr_qt_gui_ffi_operator__236(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQTextLength>>::cast_into(vec)
@@ -3214,7 +2156,7 @@ pub unsafe fn shl_q_debug_q_vector_of_u32(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfU32>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__356(
+        crate::__ffi::ctr_qt_gui_ffi_operator__237(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfU32>>::cast_into(vec)
@@ -3236,7 +2178,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_text_format(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQTextFormat>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__358(
+        crate::__ffi::ctr_qt_gui_ffi_operator__239(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQTextFormat>>::cast_into(vec)
@@ -3260,7 +2202,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_pair_of_q_accessible_interface_q_flags_r
     >,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__359(
+        crate::__ffi::ctr_qt_gui_ffi_operator__240(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<
@@ -3284,7 +2226,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_size(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQSize>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__360(
+        crate::__ffi::ctr_qt_gui_ffi_operator__241(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQSize>>::cast_into(vec)
@@ -3306,7 +2248,7 @@ pub unsafe fn shl_q_debug_q_vector_of_float(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfFloat>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__361(
+        crate::__ffi::ctr_qt_gui_ffi_operator__242(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfFloat>>::cast_into(vec)
@@ -3328,7 +2270,7 @@ pub unsafe fn shl_q_debug_q_vector_of_u64(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfU64>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__362(
+        crate::__ffi::ctr_qt_gui_ffi_operator__243(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfU64>>::cast_into(vec)
@@ -3350,7 +2292,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_line_f(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQLineF>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__363(
+        crate::__ffi::ctr_qt_gui_ffi_operator__244(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLineF>>::cast_into(vec)
@@ -3372,7 +2314,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_line(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQLine>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__364(
+        crate::__ffi::ctr_qt_gui_ffi_operator__245(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLine>>::cast_into(vec)
@@ -3394,7 +2336,7 @@ pub unsafe fn shl_q_debug_q_vector_of_q_rect_f(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQRectF>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__365(
+        crate::__ffi::ctr_qt_gui_ffi_operator__246(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRectF>>::cast_into(vec)
@@ -3416,7 +2358,7 @@ pub unsafe fn shl_q_debug_q_pair_of_double_q_color(
     pair: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfDoubleQColor>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__366(
+        crate::__ffi::ctr_qt_gui_ffi_operator__247(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfDoubleQColor>>::cast_into(pair)
@@ -3438,7 +2380,7 @@ pub unsafe fn shl_q_debug_q_pair_of_int_int(
     pair: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfIntInt>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__367(
+        crate::__ffi::ctr_qt_gui_ffi_operator__248(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfIntInt>>::cast_into(pair)
@@ -3462,7 +2404,7 @@ pub unsafe fn shl_q_debug_q_pair_of_q_accessible_interface_q_flags_relation_flag
     >,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__368(
+        crate::__ffi::ctr_qt_gui_ffi_operator__249(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<
@@ -3486,7 +2428,7 @@ pub unsafe fn shl_q_debug_q_pair_of_filter_filter(
     pair: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfFilterFilter>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__369(
+        crate::__ffi::ctr_qt_gui_ffi_operator__250(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfFilterFilter>>::cast_into(pair)
@@ -3508,7 +2450,7 @@ pub unsafe fn shl_q_debug_q_pair_of_float_float(
     pair: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfFloatFloat>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__370(
+        crate::__ffi::ctr_qt_gui_ffi_operator__251(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfFloatFloat>>::cast_into(pair)
@@ -3530,11 +2472,116 @@ pub unsafe fn shl_q_debug_q_set_of_q_byte_array(
     set: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QSetOfQByteArray>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__371(
+        crate::__ffi::ctr_qt_gui_ffi_operator__252(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSetOfQByteArray>>::cast_into(set)
                 .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::KeyboardModifier>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_keyboard_modifier(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::KeyboardModifier>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__253(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::MouseButton>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_mouse_button(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::MouseButton>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__254(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::InputMethodQuery>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_input_method_query(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::InputMethodQuery>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__255(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::WindowState>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_window_state(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::WindowState>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__256(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::TouchPointState>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_touch_point_state(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::TouchPointState>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__257(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
         )
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
@@ -3552,7 +2599,7 @@ pub unsafe fn shl_q_debug_q_flags_paint_engine_feature(
     flags: ::qt_core::QFlags<crate::q_paint_engine::PaintEngineFeature>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__372(
+        crate::__ffi::ctr_qt_gui_ffi_operator__258(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3573,7 +2620,7 @@ pub unsafe fn shl_q_debug_q_flags_dirty_flag(
     flags: ::qt_core::QFlags<crate::q_paint_engine::DirtyFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__373(
+        crate::__ffi::ctr_qt_gui_ffi_operator__259(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3594,7 +2641,28 @@ pub unsafe fn shl_q_debug_q_flags_capability_flag(
     flags: ::qt_core::QFlags<crate::q_touch_device::CapabilityFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__374(
+        crate::__ffi::ctr_qt_gui_ffi_operator__260(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::MouseEventFlag>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_mouse_event_flag(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::MouseEventFlag>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__261(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3615,7 +2683,49 @@ pub unsafe fn shl_q_debug_q_flags_info_flag(
     flags: ::qt_core::QFlags<crate::q_touch_event::touch_point::InfoFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__375(
+        crate::__ffi::ctr_qt_gui_ffi_operator__262(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::ImageConversionFlag>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_image_conversion_flag(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::ImageConversionFlag>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__263(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::AlignmentFlag>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_alignment_flag(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::AlignmentFlag>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__264(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3636,7 +2746,7 @@ pub unsafe fn shl_q_debug_q_flags_flag(
     flags: ::qt_core::QFlags<crate::q_text_option::Flag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__376(
+        crate::__ffi::ctr_qt_gui_ffi_operator__265(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3657,7 +2767,7 @@ pub unsafe fn shl_q_debug_q_flags_page_break_flag(
     flags: ::qt_core::QFlags<crate::q_text_format::PageBreakFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__377(
+        crate::__ffi::ctr_qt_gui_ffi_operator__266(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3678,7 +2788,7 @@ pub unsafe fn shl_q_debug_q_flags_layout_flag(
     flags: ::qt_core::QFlags<crate::q_raw_font::LayoutFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__378(
+        crate::__ffi::ctr_qt_gui_ffi_operator__267(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3699,7 +2809,28 @@ pub unsafe fn shl_q_debug_q_flags_glyph_run_flag(
     flags: ::qt_core::QFlags<crate::q_glyph_run::GlyphRunFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__379(
+        crate::__ffi::ctr_qt_gui_ffi_operator__268(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<QTextDocument::MarkdownFeature>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_markdown_feature(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<crate::q_text_document::MarkdownFeature>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__269(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3720,7 +2851,7 @@ pub unsafe fn shl_q_debug_q_flags_find_flag(
     flags: ::qt_core::QFlags<crate::q_text_document::FindFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__380(
+        crate::__ffi::ctr_qt_gui_ffi_operator__270(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3741,7 +2872,7 @@ pub unsafe fn shl_q_debug_q_flags_relation_flag(
     flags: ::qt_core::QFlags<crate::q_accessible::RelationFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__381(
+        crate::__ffi::ctr_qt_gui_ffi_operator__271(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3762,7 +2893,49 @@ pub unsafe fn shl_q_debug_q_flags_format_option(
     flags: ::qt_core::QFlags<crate::q_surface_format::FormatOption>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__382(
+        crate::__ffi::ctr_qt_gui_ffi_operator__272(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::WindowType>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_window_type(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::WindowType>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__273(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            flags.to_int(),
+        )
+    };
+    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::Edge>& flags)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_debug_q_flags_edge(
+    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
+    flags: ::qt_core::QFlags<::qt_core::Edge>,
+) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__274(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3783,7 +2956,7 @@ pub unsafe fn shl_q_debug_q_flags_capability(
     flags: ::qt_core::QFlags<crate::q_image_io_plugin::Capability>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__383(
+        crate::__ffi::ctr_qt_gui_ffi_operator__275(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3804,7 +2977,7 @@ pub unsafe fn shl_q_debug_q_flags_transformation(
     flags: ::qt_core::QFlags<crate::q_image_io_handler::Transformation>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__384(
+        crate::__ffi::ctr_qt_gui_ffi_operator__276(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3825,7 +2998,7 @@ pub unsafe fn shl_q_debug_q_flags_range_access_flag(
     flags: ::qt_core::QFlags<crate::q_opengl_buffer::RangeAccessFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__385(
+        crate::__ffi::ctr_qt_gui_ffi_operator__277(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3846,7 +3019,7 @@ pub unsafe fn shl_q_debug_q_flags_source(
     flags: ::qt_core::QFlags<crate::q_opengl_debug_message::Source>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__386(
+        crate::__ffi::ctr_qt_gui_ffi_operator__278(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3867,7 +3040,7 @@ pub unsafe fn shl_q_debug_q_flags_type(
     flags: ::qt_core::QFlags<crate::q_opengl_debug_message::Type>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__387(
+        crate::__ffi::ctr_qt_gui_ffi_operator__279(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3888,7 +3061,7 @@ pub unsafe fn shl_q_debug_q_flags_severity(
     flags: ::qt_core::QFlags<crate::q_opengl_debug_message::Severity>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__388(
+        crate::__ffi::ctr_qt_gui_ffi_operator__280(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3909,7 +3082,7 @@ pub unsafe fn shl_q_debug_q_flags_opengl_feature(
     flags: ::qt_core::QFlags<crate::q_opengl_functions::OpenGLFeature>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__389(
+        crate::__ffi::ctr_qt_gui_ffi_operator__281(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3930,28 +3103,7 @@ pub unsafe fn shl_q_debug_q_flags_shader_type_bit(
     flags: ::qt_core::QFlags<crate::q_opengl_shader::ShaderTypeBit>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__390(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
-                .as_raw_ptr(),
-            flags.to_int(),
-        )
-    };
-    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
-}
-
-/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<QOpenGLTexture::Feature>& flags)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_debug_q_flags_feature(
-    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
-    flags: ::qt_core::QFlags<crate::q_opengl_texture::Feature>,
-) -> ::cpp_core::CppBox<::qt_core::QDebug> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__391(
+        crate::__ffi::ctr_qt_gui_ffi_operator__282(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3972,7 +3124,7 @@ pub unsafe fn shl_q_debug_q_flags_pixmap_fragment_hint(
     flags: ::qt_core::QFlags<crate::q_painter::PixmapFragmentHint>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__392(
+        crate::__ffi::ctr_qt_gui_ffi_operator__283(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -3993,7 +3145,7 @@ pub unsafe fn shl_q_debug_q_flags_render_hint(
     flags: ::qt_core::QFlags<crate::q_painter::RenderHint>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__393(
+        crate::__ffi::ctr_qt_gui_ffi_operator__284(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -4014,7 +3166,7 @@ pub unsafe fn shl_q_debug_q_flags_render_flag(
     flags: ::qt_core::QFlags<crate::q_text_item::RenderFlag>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__394(
+        crate::__ffi::ctr_qt_gui_ffi_operator__285(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
             flags.to_int(),
@@ -4023,179 +3175,22 @@ pub unsafe fn shl_q_debug_q_flags_render_flag(
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
 
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
 ///
-/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QOpenGLVersionProfile& vp)```</span>.
+/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<Qt::ScreenOrientation>& flags)```</span>.
 ///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(any(
-        cpp_lib_version = "5.11.3",
-        cpp_lib_version = "5.12.2",
-        cpp_lib_version = "5.13.0",
-        cpp_lib_version = "5.14.0"
-    )))
-)]
-#[cfg(any(
-    any(
-        cpp_lib_version = "5.11.3",
-        cpp_lib_version = "5.12.2",
-        cpp_lib_version = "5.13.0",
-        cpp_lib_version = "5.14.0"
-    ),
-    feature = "ritual_rustdoc"
-))]
-pub unsafe fn shl_q_debug_q_opengl_version_profile(
+pub unsafe fn shl_q_debug_q_flags_screen_orientation(
     debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
-    vp: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QOpenGLVersionProfile>>,
+    flags: ::qt_core::QFlags<::qt_core::ScreenOrientation>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__792(
+        crate::__ffi::ctr_qt_gui_ffi_operator__286(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QOpenGLVersionProfile>>::cast_into(vp)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
-}
-
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QOpenGLContext* ctx)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_debug_q_opengl_context(
-    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
-    ctx: impl ::cpp_core::CastInto<::cpp_core::Ptr<crate::QOpenGLContext>>,
-) -> ::cpp_core::CppBox<::qt_core::QDebug> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__793(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
-                .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QOpenGLContext>>::cast_into(ctx)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
-}
-
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QOpenGLContextGroup* cg)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shl_q_debug_q_opengl_context_group(
-    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
-    cg: impl ::cpp_core::CastInto<::cpp_core::Ptr<crate::QOpenGLContextGroup>>,
-) -> ::cpp_core::CppBox<::qt_core::QDebug> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__794(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
-                .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QOpenGLContextGroup>>::cast_into(cg)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
-}
-
-/// <p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QOpenGLTexture* t)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>brush</i> to the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
-#[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(any(
-        cpp_lib_version = "5.11.3",
-        cpp_lib_version = "5.12.2",
-        cpp_lib_version = "5.13.0",
-        cpp_lib_version = "5.14.0"
-    )))
-)]
-#[cfg(any(
-    any(
-        cpp_lib_version = "5.11.3",
-        cpp_lib_version = "5.12.2",
-        cpp_lib_version = "5.13.0",
-        cpp_lib_version = "5.14.0"
-    ),
-    feature = "ritual_rustdoc"
-))]
-pub unsafe fn shl_q_debug_q_opengl_texture(
-    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
-    t: impl ::cpp_core::CastInto<::cpp_core::Ptr<crate::QOpenGLTexture>>,
-) -> ::cpp_core::CppBox<::qt_core::QDebug> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__795(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
-                .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QOpenGLTexture>>::cast_into(t)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
-}
-
-/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& arg1, const QColorSpace& arg2)```</span>.
-///
-/// <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
-#[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
-pub unsafe fn shl_q_data_stream_q_color_space(
-    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QColorSpace>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__804(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColorSpace>>::cast_into(arg2)
-                .as_raw_ptr(),
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug arg1, const QColorSpace& arg2)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qcolorspace.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &stream, const QColorSpace &colorSpace)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes the given <i>colorSpace</i> to the given <i>stream</i> as an ICC profile.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/qcolorspace.html#iccProfile">QColorSpace::iccProfile</a>() and <a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
-#[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
-pub unsafe fn shl_q_debug_q_color_space(
-    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
-    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QColorSpace>>,
-) -> ::cpp_core::CppBox<::qt_core::QDebug> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__806(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColorSpace>>::cast_into(arg2)
-                .as_raw_ptr(),
+            flags.to_int(),
         )
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
@@ -4203,22 +3198,17 @@ pub unsafe fn shl_q_debug_q_color_space(
 
 /// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
 ///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextDocument::MarkdownFeature> e)```</span>.
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::KeyboardModifier> e)```</span>.
 ///
 /// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
 /// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
-pub unsafe fn shl_q_data_stream_q_flags_markdown_feature(
+pub unsafe fn shl_q_data_stream_q_flags_keyboard_modifier(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    e: ::qt_core::QFlags<crate::q_text_document::MarkdownFeature>,
+    e: ::qt_core::QFlags<::qt_core::KeyboardModifier>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__807(
+        crate::__ffi::ctr_qt_gui_ffi_operator__287(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             e.to_int(),
@@ -4229,28 +3219,1400 @@ pub unsafe fn shl_q_data_stream_q_flags_markdown_feature(
 
 /// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
 ///
-/// Calls C++ function: <span style='color: green;'>```QDebug operator<<(QDebug debug, const QFlags<QTextDocument::MarkdownFeature>& flags)```</span>.
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::MouseButton> e)```</span>.
 ///
 /// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
 /// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
-pub unsafe fn shl_q_debug_q_flags_markdown_feature(
-    debug: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDebug>>,
-    flags: ::qt_core::QFlags<crate::q_text_document::MarkdownFeature>,
-) -> ::cpp_core::CppBox<::qt_core::QDebug> {
+pub unsafe fn shl_q_data_stream_q_flags_mouse_button(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::MouseButton>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__809(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
-                .as_raw_ptr(),
-            flags.to_int(),
+        crate::__ffi::ctr_qt_gui_ffi_operator__288(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
         )
     };
-    ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::InputMethodQuery> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_input_method_query(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::InputMethodQuery>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__289(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::WindowState> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_window_state(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::WindowState>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__290(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::TouchPointState> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_touch_point_state(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::TouchPointState>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__291(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QPaintEngine::PaintEngineFeature> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_paint_engine_feature(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_paint_engine::PaintEngineFeature>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__292(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QPaintEngine::DirtyFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_dirty_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_paint_engine::DirtyFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__293(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTouchDevice::CapabilityFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_capability_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_touch_device::CapabilityFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__294(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::MouseEventFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_mouse_event_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::MouseEventFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__295(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTouchEvent::TouchPoint::InfoFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_info_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_touch_event::touch_point::InfoFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__296(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::ImageConversionFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_image_conversion_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::ImageConversionFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__297(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::AlignmentFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_alignment_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::AlignmentFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__298(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextOption::Flag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_text_option::Flag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__299(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextFormat::PageBreakFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_page_break_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_text_format::PageBreakFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__300(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QRawFont::LayoutFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_layout_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_raw_font::LayoutFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__301(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QGlyphRun::GlyphRunFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_glyph_run_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_glyph_run::GlyphRunFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__302(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextDocument::MarkdownFeature> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_markdown_feature(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_text_document::MarkdownFeature>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__303(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextDocument::FindFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_find_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_text_document::FindFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__304(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QAccessible::RelationFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_relation_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_accessible::RelationFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__305(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QSurfaceFormat::FormatOption> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_format_option(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_surface_format::FormatOption>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__306(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::WindowType> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_window_type(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::WindowType>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__307(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::Edge> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_edge(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::Edge>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__308(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QImageIOPlugin::Capability> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_capability(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_image_io_plugin::Capability>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__309(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QImageIOHandler::Transformation> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_transformation(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_image_io_handler::Transformation>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__310(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLBuffer::RangeAccessFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_range_access_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_opengl_buffer::RangeAccessFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__311(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLDebugMessage::Source> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_source(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_opengl_debug_message::Source>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__312(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLDebugMessage::Type> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_type(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_opengl_debug_message::Type>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__313(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLDebugMessage::Severity> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_severity(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_opengl_debug_message::Severity>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__314(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLFunctions::OpenGLFeature> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_opengl_feature(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_opengl_functions::OpenGLFeature>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__315(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QOpenGLShader::ShaderTypeBit> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_shader_type_bit(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_opengl_shader::ShaderTypeBit>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__316(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QPainter::PixmapFragmentHint> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_pixmap_fragment_hint(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_painter::PixmapFragmentHint>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__317(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QPainter::RenderHint> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_render_hint(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_painter::RenderHint>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__318(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<QTextItem::RenderFlag> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_render_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<crate::q_text_item::RenderFlag>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__319(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, QFlags<Qt::ScreenOrientation> e)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_flags_screen_orientation(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    e: ::qt_core::QFlags<::qt_core::ScreenOrientation>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__320(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            e.to_int(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QSize>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_size(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQSize>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__377(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQSize>>::cast_into(l).as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QKeySequence>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_key_sequence(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQKeySequence>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__378(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQKeySequence>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<const QTouchDevice*>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_touch_device(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQTouchDevice>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__379(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQTouchDevice>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<double>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_double(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfDouble>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__380(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfDouble>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QFontDatabase::WritingSystem>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_writing_system(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfWritingSystem>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__382(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfWritingSystem>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QAccessibleInterface*>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_accessible_interface(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQAccessibleInterface>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__385(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQAccessibleInterface>>::cast_into(
+                l,
+            )
+            .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QWindow*>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_window(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQWindow>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__386(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQWindow>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QScreen*>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_screen(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQScreen>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__387(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQScreen>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QOpenGLContext*>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_opengl_context(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQOpenglContext>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__388(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQOpenglContext>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QOpenGLShader*>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_opengl_shader(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQOpenglShader>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__390(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQOpenglShader>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QPolygonF>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_polygon_f(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQPolygonF>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__391(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPolygonF>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QStandardItem*>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_standard_item(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQStandardItem>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__392(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQStandardItem>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QList<QTextFrame*>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_list_of_q_text_frame(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQTextFrame>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__394(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQTextFrame>>::cast_into(l)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QPoint>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_point(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPoint>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__411(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPoint>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QPair<double, QColor>>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_pair_of_double_q_color(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__412(::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s).as_raw_ptr() as *mut ::qt_core::QDataStream, ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>::cast_into(v).as_raw_ptr())
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QRect>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_rect(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQRect>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__414(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRect>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<double>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_double(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfDouble>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__415(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfDouble>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QTextLength>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_text_length(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQTextLength>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__416(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQTextLength>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<quint32>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_u32(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfU32>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__417(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfU32>>::cast_into(v).as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QTextFormat>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_text_format(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQTextFormat>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__419(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQTextFormat>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QPair<QAccessibleInterface*, QFlags<QAccessible::RelationFlag>>>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_pair_of_q_accessible_interface_q_flags_relation_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<
+        ::cpp_core::Ref<crate::QVectorOfQPairOfQAccessibleInterfaceQFlagsRelationFlag>,
+    >,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__420(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<
+                ::cpp_core::Ref<crate::QVectorOfQPairOfQAccessibleInterfaceQFlagsRelationFlag>,
+            >::cast_into(v)
+            .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QSize>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_size(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQSize>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__421(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQSize>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<float>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_float(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfFloat>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__422(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfFloat>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QLineF>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_line_f(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQLineF>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__424(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLineF>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QLine>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_line(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQLine>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__425(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLine>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QVector<QRectF>& v)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_vector_of_q_rect_f(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQRectF>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__426(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRectF>>::cast_into(v)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QSet<QByteArray>& set)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_set_of_q_byte_array(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    set: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QSetOfQByteArray>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__428(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSetOfQByteArray>>::cast_into(set)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<double, QColor>& p)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_pair_of_double_q_color(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfDoubleQColor>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__434(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfDoubleQColor>>::cast_into(p)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<int, int>& p)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_pair_of_int_int(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfIntInt>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__435(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfIntInt>>::cast_into(p)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<QAccessibleInterface*, QFlags<QAccessible::RelationFlag>>& p)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_pair_of_q_accessible_interface_q_flags_relation_flag(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfQAccessibleInterfaceQFlagsRelationFlag>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__436(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<
+                ::cpp_core::Ref<crate::QPairOfQAccessibleInterfaceQFlagsRelationFlag>,
+            >::cast_into(p)
+            .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<QOpenGLTexture::Filter, QOpenGLTexture::Filter>& p)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_pair_of_filter_filter(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfFilterFilter>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__437(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfFilterFilter>>::cast_into(p)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator<<(QDataStream& s, const QPair<float, float>& p)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-lt-lt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator<<(QDataStream &out, const QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Writes bit array <i>ba</i> to stream <i>out</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shl_q_data_stream_q_pair_of_float_float(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfFloatFloat>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__438(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfFloatFloat>>::cast_into(p)
+                .as_raw_ptr(),
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
 
 /// <p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
@@ -4431,28 +4793,6 @@ pub unsafe fn shr_q_data_stream_q_matrix(
 
 /// <p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
 ///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator>>(QDataStream& arg1, QPainterPath& arg2)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-gt-gt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator>>(QDataStream &stream, QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shr_q_data_stream_q_painter_path(
-    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPainterPath>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__34(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPainterPath>>::cast_into(arg2)
-                .as_raw_ptr() as *mut crate::QPainterPath,
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-///
 /// Calls C++ function: <span style='color: green;'>```QDataStream& operator>>(QDataStream& arg1, QTransform& arg2)```</span>.
 ///
 /// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-gt-gt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator>>(QDataStream &stream, QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
@@ -4463,7 +4803,7 @@ pub unsafe fn shr_q_data_stream_q_transform(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTransform>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__37(
+        crate::__ffi::ctr_qt_gui_ffi_operator__34(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(arg2).as_raw_ptr()
@@ -4485,7 +4825,7 @@ pub unsafe fn shr_q_data_stream_q_image(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QImage>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__40(
+        crate::__ffi::ctr_qt_gui_ffi_operator__37(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QImage>>::cast_into(arg2).as_raw_ptr()
@@ -4507,7 +4847,7 @@ pub unsafe fn shr_q_data_stream_q_pixmap(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPixmap>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__43(
+        crate::__ffi::ctr_qt_gui_ffi_operator__40(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPixmap>>::cast_into(arg2).as_raw_ptr()
@@ -4529,7 +4869,7 @@ pub unsafe fn shr_q_data_stream_q_brush(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QBrush>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__46(
+        crate::__ffi::ctr_qt_gui_ffi_operator__43(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QBrush>>::cast_into(arg2).as_raw_ptr()
@@ -4551,7 +4891,7 @@ pub unsafe fn shr_q_data_stream_q_pen(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPen>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__49(
+        crate::__ffi::ctr_qt_gui_ffi_operator__46(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPen>>::cast_into(arg2).as_raw_ptr()
@@ -4573,7 +4913,7 @@ pub unsafe fn shr_q_data_stream_q_text_length(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextLength>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__52(
+        crate::__ffi::ctr_qt_gui_ffi_operator__49(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextLength>>::cast_into(arg2)
@@ -4595,7 +4935,7 @@ pub unsafe fn shr_q_data_stream_q_text_format(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QTextFormat>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__55(
+        crate::__ffi::ctr_qt_gui_ffi_operator__52(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextFormat>>::cast_into(arg2)
@@ -4617,7 +4957,7 @@ pub unsafe fn shr_q_data_stream_q_palette(
     p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPalette>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__58(
+        crate::__ffi::ctr_qt_gui_ffi_operator__55(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(ds)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPalette>>::cast_into(p).as_raw_ptr()
@@ -4639,7 +4979,7 @@ pub unsafe fn shr_q_data_stream_q_icon(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QIcon>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__67(
+        crate::__ffi::ctr_qt_gui_ffi_operator__64(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QIcon>>::cast_into(arg2).as_raw_ptr()
@@ -4661,11 +5001,33 @@ pub unsafe fn shr_q_data_stream_q_cursor(
     cursor: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QCursor>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__70(
+        crate::__ffi::ctr_qt_gui_ffi_operator__69(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(in_s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QCursor>>::cast_into(cursor).as_raw_ptr()
                 as *mut crate::QCursor,
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator>>(QDataStream& arg1, QColorSpace& arg2)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-gt-gt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator>>(QDataStream &stream, QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shr_q_data_stream_q_color_space(
+    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QColorSpace>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__75(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColorSpace>>::cast_into(arg2)
+                .as_raw_ptr() as *mut crate::QColorSpace,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -4683,7 +5045,7 @@ pub unsafe fn shr_q_data_stream_q_vector_3d(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVector3D>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__77(
+        crate::__ffi::ctr_qt_gui_ffi_operator__81(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVector3D>>::cast_into(arg2).as_raw_ptr()
@@ -4705,7 +5067,7 @@ pub unsafe fn shr_q_data_stream_q_vector_4d(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVector4D>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__82(
+        crate::__ffi::ctr_qt_gui_ffi_operator__86(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVector4D>>::cast_into(arg2).as_raw_ptr()
@@ -4727,7 +5089,7 @@ pub unsafe fn shr_q_data_stream_q_quaternion(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QQuaternion>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__87(
+        crate::__ffi::ctr_qt_gui_ffi_operator__91(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QQuaternion>>::cast_into(arg2)
@@ -4749,11 +5111,33 @@ pub unsafe fn shr_q_data_stream_q_matrix4_x4(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QMatrix4X4>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__90(
+        crate::__ffi::ctr_qt_gui_ffi_operator__94(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix4X4>>::cast_into(arg2).as_raw_ptr()
                 as *mut crate::QMatrix4X4,
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator>>(QDataStream& arg1, QPainterPath& arg2)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-gt-gt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator>>(QDataStream &stream, QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shr_q_data_stream_q_painter_path(
+    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPainterPath>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__112(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPainterPath>>::cast_into(arg2)
+                .as_raw_ptr() as *mut crate::QPainterPath,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -4771,7 +5155,7 @@ pub unsafe fn shr_q_data_stream_q_picture(
     arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPicture>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__104(
+        crate::__ffi::ctr_qt_gui_ffi_operator__115(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPicture>>::cast_into(arg2).as_raw_ptr()
@@ -4793,7 +5177,7 @@ pub unsafe fn shr_q_data_stream_q_standard_item(
     item: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QStandardItem>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__106(
+        crate::__ffi::ctr_qt_gui_ffi_operator__117(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(in_)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QStandardItem>>::cast_into(item)
@@ -4815,7 +5199,7 @@ pub unsafe fn shr_q_data_stream_q_list_of_q_size(
     l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQSize>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__248(
+        crate::__ffi::ctr_qt_gui_ffi_operator__357(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQSize>>::cast_into(l).as_raw_ptr()
@@ -4837,33 +5221,11 @@ pub unsafe fn shr_q_data_stream_q_list_of_q_key_sequence(
     l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQKeySequence>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__249(
+        crate::__ffi::ctr_qt_gui_ffi_operator__358(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQKeySequence>>::cast_into(l)
                 .as_raw_ptr() as *mut crate::QListOfQKeySequence,
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Reads a bit array into <i>ba</i> from stream <i>in</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator>>(QDataStream& s, QList<QPolygonF>& l)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-gt-gt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator>>(QDataStream &in, QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Reads a bit array into <i>ba</i> from stream <i>in</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
-#[inline(always)]
-pub unsafe fn shr_q_data_stream_q_list_of_q_polygon_f(
-    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQPolygonF>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__251(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPolygonF>>::cast_into(l)
-                .as_raw_ptr() as *mut crate::QListOfQPolygonF,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -4881,7 +5243,7 @@ pub unsafe fn shr_q_data_stream_q_list_of_double(
     l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfDouble>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__252(
+        crate::__ffi::ctr_qt_gui_ffi_operator__360(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfDouble>>::cast_into(l).as_raw_ptr()
@@ -4898,21 +5260,38 @@ pub unsafe fn shr_q_data_stream_q_list_of_double(
 /// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-gt-gt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator>>(QDataStream &in, QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Reads a bit array into <i>ba</i> from stream <i>in</i>.</p>
 /// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn shr_q_data_stream_q_list_of_writing_system(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfWritingSystem>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__254(
+        crate::__ffi::ctr_qt_gui_ffi_operator__362(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfWritingSystem>>::cast_into(l)
                 .as_raw_ptr() as *mut crate::QListOfWritingSystem,
+        )
+    };
+    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
+}
+
+/// <p>Reads a bit array into <i>ba</i> from stream <i>in</i>.</p>
+///
+/// Calls C++ function: <span style='color: green;'>```QDataStream& operator>>(QDataStream& s, QList<QPolygonF>& l)```</span>.
+///
+/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-gt-gt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator>>(QDataStream &in, QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Reads a bit array into <i>ba</i> from stream <i>in</i>.</p>
+/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
+#[inline(always)]
+pub unsafe fn shr_q_data_stream_q_list_of_q_polygon_f(
+    s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
+    l: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QListOfQPolygonF>>,
+) -> ::cpp_core::Ref<::qt_core::QDataStream> {
+    let ffi_result = {
+        crate::__ffi::ctr_qt_gui_ffi_operator__371(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPolygonF>>::cast_into(l)
+                .as_raw_ptr() as *mut crate::QListOfQPolygonF,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -4930,7 +5309,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_point(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPoint>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__286(
+        crate::__ffi::ctr_qt_gui_ffi_operator__395(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPoint>>::cast_into(v)
@@ -4952,7 +5331,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_pair_of_double_q_color(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__287(
+        crate::__ffi::ctr_qt_gui_ffi_operator__396(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>::cast_into(
@@ -4976,7 +5355,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_rect(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQRect>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__289(
+        crate::__ffi::ctr_qt_gui_ffi_operator__398(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRect>>::cast_into(v)
@@ -4998,7 +5377,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_double(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfDouble>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__290(
+        crate::__ffi::ctr_qt_gui_ffi_operator__399(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfDouble>>::cast_into(v)
@@ -5020,7 +5399,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_text_length(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQTextLength>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__291(
+        crate::__ffi::ctr_qt_gui_ffi_operator__400(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQTextLength>>::cast_into(v)
@@ -5042,7 +5421,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_u32(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfU32>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__292(
+        crate::__ffi::ctr_qt_gui_ffi_operator__401(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfU32>>::cast_into(v).as_raw_ptr()
@@ -5064,7 +5443,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_text_format(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQTextFormat>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__294(
+        crate::__ffi::ctr_qt_gui_ffi_operator__403(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQTextFormat>>::cast_into(v)
@@ -5086,7 +5465,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_size(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQSize>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__296(
+        crate::__ffi::ctr_qt_gui_ffi_operator__405(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQSize>>::cast_into(v)
@@ -5108,7 +5487,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_float(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfFloat>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__297(
+        crate::__ffi::ctr_qt_gui_ffi_operator__406(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfFloat>>::cast_into(v)
@@ -5130,7 +5509,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_line_f(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQLineF>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__299(
+        crate::__ffi::ctr_qt_gui_ffi_operator__408(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLineF>>::cast_into(v)
@@ -5152,7 +5531,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_line(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQLine>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__300(
+        crate::__ffi::ctr_qt_gui_ffi_operator__409(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLine>>::cast_into(v)
@@ -5174,7 +5553,7 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_rect_f(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQRectF>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__301(
+        crate::__ffi::ctr_qt_gui_ffi_operator__410(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRectF>>::cast_into(v)
@@ -5196,7 +5575,7 @@ pub unsafe fn shr_q_data_stream_q_set_of_q_byte_array(
     set: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QSetOfQByteArray>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__318(
+        crate::__ffi::ctr_qt_gui_ffi_operator__427(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSetOfQByteArray>>::cast_into(set)
@@ -5218,7 +5597,7 @@ pub unsafe fn shr_q_data_stream_q_pair_of_double_q_color(
     p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfDoubleQColor>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__320(
+        crate::__ffi::ctr_qt_gui_ffi_operator__429(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfDoubleQColor>>::cast_into(p)
@@ -5240,7 +5619,7 @@ pub unsafe fn shr_q_data_stream_q_pair_of_int_int(
     p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfIntInt>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__321(
+        crate::__ffi::ctr_qt_gui_ffi_operator__430(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfIntInt>>::cast_into(p).as_raw_ptr()
@@ -5257,17 +5636,12 @@ pub unsafe fn shr_q_data_stream_q_pair_of_int_int(
 /// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbitarray.html#operator-gt-gt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator>>(QDataStream &in, QBitArray &ba)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Reads a bit array into <i>ba</i> from stream <i>in</i>.</p>
 /// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Format of the QDataStream operators</a>.</p></div>
 #[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
 pub unsafe fn shr_q_data_stream_q_pair_of_filter_filter(
     s: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
     p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfFilterFilter>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__323(
+        crate::__ffi::ctr_qt_gui_ffi_operator__432(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfFilterFilter>>::cast_into(p)
@@ -5289,38 +5663,11 @@ pub unsafe fn shr_q_data_stream_q_pair_of_float_float(
     p: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QPairOfFloatFloat>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__324(
+        crate::__ffi::ctr_qt_gui_ffi_operator__433(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfFloatFloat>>::cast_into(p)
                 .as_raw_ptr() as *mut crate::QPairOfFloatFloat,
-        )
-    };
-    ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
-}
-
-/// <p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-///
-/// Calls C++ function: <span style='color: green;'>```QDataStream& operator>>(QDataStream& arg1, QColorSpace& arg2)```</span>.
-///
-/// Warning: no exact match found in C++ documentation. Below is the <a href="http://doc.qt.io/qt-5/qbrush.html#operator-gt-gt">C++ documentation</a> for <span style='color: green;'>```QDataStream &operator>>(QDataStream &stream, QBrush &brush)```</span>:<div style='border: 1px solid #5CFF95; background: #D6FFE4; padding: 16px;'><p>Reads the given <i>brush</i> from the given <i>stream</i> and returns a reference to the <i>stream</i>.</p>
-/// <p><b>See also </b><a href="http://doc.qt.io/qt-5/datastreamformat.html">Serializing Qt Data Types</a>.</p></div>
-#[inline(always)]
-#[cfg_attr(
-    feature = "ritual_rustdoc_nightly",
-    doc(cfg(cpp_lib_version = "5.14.0"))
-)]
-#[cfg(any(cpp_lib_version = "5.14.0", feature = "ritual_rustdoc"))]
-pub unsafe fn shr_q_data_stream_q_color_space(
-    arg1: impl ::cpp_core::CastInto<::cpp_core::Ref<::qt_core::QDataStream>>,
-    arg2: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QColorSpace>>,
-) -> ::cpp_core::Ref<::qt_core::QDataStream> {
-    let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__805(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
-                .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColorSpace>>::cast_into(arg2)
-                .as_raw_ptr() as *mut crate::QColorSpace,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")

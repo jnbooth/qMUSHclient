@@ -12,6 +12,19 @@ pub struct QFlags<E> {
     _phantom_data: PhantomData<E>,
 }
 
+impl<E> QFlags<E> {
+    pub const fn from_int(value: c_int) -> Self {
+        Self {
+            value,
+            _phantom_data: PhantomData,
+        }
+    }
+
+    pub const fn to_int(self) -> c_int {
+        self.value
+    }
+}
+
 impl<E> From<c_int> for QFlags<E> {
     fn from(value: c_int) -> Self {
         Self {
@@ -22,14 +35,8 @@ impl<E> From<c_int> for QFlags<E> {
 }
 
 impl<E> From<QFlags<E>> for c_int {
-    fn from(flags: QFlags<E>) -> Self {
-        flags.value
-    }
-}
-
-impl<E> QFlags<E> {
-    pub fn to_int(self) -> c_int {
-        self.value
+    fn from(value: QFlags<E>) -> Self {
+        value.value
     }
 }
 
