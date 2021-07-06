@@ -1,12 +1,12 @@
 use std::fmt::Write;
 use std::hash::Hash;
-use std::ops::DerefMut;
 use std::path::PathBuf;
 use std::str::{self, FromStr};
 
 use chrono::{Date, Local};
 use mlua::{
-    self, AnyUserData, FromLuaMulti, Function, Lua, ToLuaMulti, UserData, UserDataMethods, Value,
+    self, AnyUserData, FromLuaMulti, Function, Lua, MetaMethod, ToLuaMulti, UserData,
+    UserDataMethods, Value,
 };
 use qt_core::QString;
 use qt_widgets::q_message_box::Icon;
@@ -82,118 +82,42 @@ impl<'lua, T: UserData> UserDataMethods<'lua, T> for MethodGatherer {
     {
     }
 
-    fn add_meta_method<A, R, M>(&mut self, _: mlua::MetaMethod, _: M)
+    fn add_meta_method<S, A, R, M>(&mut self, _: S, _: M)
     where
+        S: Into<MetaMethod>,
         A: FromLuaMulti<'lua>,
         R: ToLuaMulti<'lua>,
         M: 'static + Fn(&'lua Lua, &T, A) -> mlua::Result<R>,
     {
     }
 
-    fn add_meta_method_mut<A, R, M>(&mut self, _: mlua::MetaMethod, _: M)
+    fn add_meta_method_mut<S, A, R, M>(&mut self, _: S, _: M)
     where
+        S: Into<MetaMethod>,
         A: FromLuaMulti<'lua>,
         R: ToLuaMulti<'lua>,
         M: 'static + FnMut(&'lua Lua, &mut T, A) -> mlua::Result<R>,
     {
     }
 
-    fn add_meta_function<A, R, F>(&mut self, _: mlua::MetaMethod, _: F)
+    fn add_meta_function<S, A, R, F>(&mut self, _: S, _: F)
     where
+        S: Into<MetaMethod>,
         A: FromLuaMulti<'lua>,
         R: ToLuaMulti<'lua>,
         F: 'static + Fn(&'lua Lua, A) -> mlua::Result<R>,
     {
     }
 
-    fn add_meta_function_mut<A, R, F>(&mut self, _: mlua::MetaMethod, _: F)
+    fn add_meta_function_mut<S, A, R, F>(&mut self, _: S, _: F)
     where
+        S: Into<MetaMethod>,
         A: FromLuaMulti<'lua>,
         R: ToLuaMulti<'lua>,
         F: 'static + FnMut(&'lua Lua, A) -> mlua::Result<R>,
     {
     }
 }
-/*
-pub struct MethodSetter<'lua> {
-    lua: &'lua Lua,
-    globals: Table<'lua>,
-}
-
-impl<'lua, U: UserData> UserDataMethods<'lua, U> for MethodSetter<'lua> {
-    fn add_method<S, A, R, M>(&mut self, name: &S, f: M)
-    where
-        S: ?Sized + AsRef<[u8]>,
-        A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        M: 'static + Fn(&'lua Lua, &U, A) -> mlua::Result<R>,
-    {
-        self.lua.create_function(f).and_then(|f| )
-        self.globals.set()
-            .push(str::from_utf8(name.as_ref()).unwrap().to_owned());
-    }
-
-    fn add_method_mut<S, A, R, M>(&mut self, name: &S, _: M)
-    where
-        S: ?Sized + AsRef<[u8]>,
-        A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        M: 'static + FnMut(&'lua Lua, &mut U, A) -> mlua::Result<R>,
-    {
-        self.0
-            .push(str::from_utf8(name.as_ref()).unwrap().to_owned());
-    }
-
-    fn add_function<S, A, R, F>(&mut self, _: &S, _: F)
-    where
-        S: ?Sized + AsRef<[u8]>,
-        A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        F: 'static + Fn(&'lua Lua, A) -> mlua::Result<R>,
-    {MethodGatherer
-    }
-
-    fn add_function_mut<S, A, R, F>(&mut self, _: &S, _: F)
-    where
-        S: ?Sized + AsRef<[u8]>,
-        A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        F: 'static + FnMut(&'lua Lua, A) -> mlua::Result<R>,
-    {
-    }
-
-    fn add_meta_method<A, R, M>(&mut self, _: mlua::MetaMethod, _: M)
-    where
-        A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        M: 'static + Fn(&'lua Lua, &U, A) -> mlua::Result<R>,
-    {
-    }
-
-    fn add_meta_method_mut<A, R, M>(&mut self, _: mlua::MetaMethod, _: M)
-    where
-        A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        M: 'static + FnMut(&'lua Lua, &mut U, A) -> mlua::Result<R>,
-    {
-    }
-
-    fn add_meta_function<A, R, F>(&mut self, _: mlua::MetaMethod, _: F)
-    where
-        A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        F: 'static + Fn(&'lua Lua, A) -> mlua::Result<R>,
-    {
-    }
-
-    fn add_meta_function_mut<A, R, F>(&mut self, _: mlua::MetaMethod, _: F)
-    where
-        A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        F: 'static + FnMut(&'lua Lua, A) -> mlua::Result<R>,
-    {
-    }
-}*/
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 /// World plugins
@@ -227,6 +151,7 @@ pub struct PluginMetadata {
     pub sequence: i16,
 }
 
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ParseErrorTODO;
 
 impl FromStr for PluginMetadata {
@@ -347,8 +272,8 @@ impl<U: 'static + UserData + Clone> PluginHandler<U> {
         for me in gatherer.into_vec() {
             write!(
                 initialize,
-                "_G[{:?}] = function(...) __ud[{:?}](__ud,...) end\n",
-                me, me
+                "_G[{:?}] = function(...) __{}[{:?}](__{},...) end\n",
+                me, USERDATA_KEY, me, USERDATA_KEY,
             )
             .ok();
         }
@@ -376,6 +301,11 @@ impl<U: 'static + UserData + Clone> PluginHandler<U> {
             self.plugins.remove(old);
         }
         let engine = Lua::new();
+        crate::ffi::lua::load_libs(&engine)?;
+
+        engine
+            .globals()
+            .set(USERDATA_KEY, self.userdata.clone())?;
         engine.load(&self.initialize).exec()?;
         self.plugins.push(Plugin::load(engine, metadata)?);
         Ok(())
@@ -400,7 +330,7 @@ impl<U: 'static + UserData + Clone> PluginHandler<U> {
                 .raw_get::<_, AnyUserData>(USERDATA_KEY)
             {
                 if let Ok(mut ud) = udref.borrow_mut::<U>() {
-                    f(ud.deref_mut());
+                    f(&mut ud);
                 }
             }
         }

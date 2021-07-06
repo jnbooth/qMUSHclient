@@ -4,6 +4,10 @@
 #[macro_use]
 extern crate qmushclient_derive;
 
+extern crate libsqlite3_sys;
+extern crate luajit_src;
+extern crate pcre2_sys;
+
 #[macro_use]
 mod enums;
 #[macro_use]
@@ -15,6 +19,7 @@ mod caseinsensitive;
 mod client;
 mod constants;
 mod escape;
+mod ffi;
 mod mxp;
 mod persist;
 mod prependbufreader;
