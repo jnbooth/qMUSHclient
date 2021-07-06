@@ -8,10 +8,13 @@ use qt_gui::q_font_database::SystemFont;
 use qt_gui::{QFont, QFontDatabase};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-use super::Binding;
+pub struct RFont(pub(super) CppBox<QFont>);
 
-#[derive(Binding)]
-pub struct RFont(CppBox<QFont>);
+impl From<CppBox<QFont>> for RFont {
+    fn from(value: CppBox<QFont>) -> Self {
+        Self(value)
+    }
+}
 
 impl Debug for RFont {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -110,11 +113,12 @@ impl RFont {
 
 impl<'de> Deserialize<'de> for RFont {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        String::deserialize(deserializer).map(|desc| unsafe {
+        let s = String::deserialize(deserializer)?;
+        unsafe {
             let font = QFont::new();
-            font.from_string(&QString::from_std_str(&desc));
-            Self::from(font)
-        })
+            font.from_string(&QString::from_std_str(s));
+            Ok(Self::from(font))
+        }
     }
 }
 

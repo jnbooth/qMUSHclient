@@ -1,7 +1,11 @@
 use cpp_core::CppBox;
 use qt_gui::QImage;
 
-use super::Binding;
+#[derive(Debug)]
+pub struct RImage(pub(super) CppBox<QImage>);
 
-#[derive(Debug, Binding)]
-pub struct RImage(CppBox<QImage>);
+impl From<CppBox<QImage>> for RImage {
+    fn from(value: CppBox<QImage>) -> Self {
+        Self(value)
+    }
+}

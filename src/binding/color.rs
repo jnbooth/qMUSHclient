@@ -14,9 +14,10 @@ use qt_widgets::{QColorDialog, QTextEdit, QWidget};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 pub struct RColor {
-    inner: CppBox<QBrush>,
+    pub(super) inner: CppBox<QBrush>,
     code: c_uint,
 }
+
 // SAFETY: RColor is immutable.
 unsafe impl Send for RColor {}
 unsafe impl Sync for RColor {}
@@ -288,7 +289,7 @@ impl Colored for QWidget {
 
 impl<'de> Deserialize<'de> for RColor {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        c_uint::deserialize(deserializer).map(Self::from_code)
+        Ok(Self::from_code(c_uint::deserialize(deserializer)?))
     }
 }
 

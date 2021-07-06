@@ -1,8 +1,3 @@
-pub trait Binding {
-    type Bind;
-    fn into_raw(self) -> Self::Bind;
-}
-
 macro_rules! qt_field {
     ($get:ident, $set:ident, $t:ty) => {
         pub fn $get(&self) -> $t {

@@ -11,18 +11,18 @@ use qt_gui::*;
 use qt_widgets::QTextEdit;
 
 use super::color::{Colored, RColor};
-use super::{Binding, Printable, QList, RImage};
+use super::{Printable, QList, RImage};
 use crate::binding::RFont;
 pub type Position = c_int;
 
 /// # Safety
 ///
 /// `ptr` must be valid.
-unsafe fn from_nullable<Q: StaticUpcast<QObject>, To: From<QPtr<Q>>>(ptr: QPtr<Q>) -> Option<To> {
+unsafe fn nonnull<Q: StaticUpcast<QObject>>(ptr: QPtr<Q>) -> Option<QPtr<Q>> {
     if unsafe { ptr.is_null() } {
         None
     } else {
-        Some(ptr.into())
+        Some(ptr)
     }
 }
 
@@ -46,7 +46,7 @@ pub struct Formats {
 
 #[derive(Debug)]
 pub struct Cursor {
-    inner: CppBox<QTextCursor>,
+    pub(super) inner: CppBox<QTextCursor>,
     pub format: Formats,
 }
 
@@ -63,14 +63,6 @@ impl From<CppBox<QTextCursor>> for Cursor {
             };
             Self { inner, format }
         }
-    }
-}
-
-impl Binding for Cursor {
-    type Bind = CppBox<QTextCursor>;
-
-    fn into_raw(self) -> Self::Bind {
-        self.inner
     }
 }
 
@@ -147,27 +139,26 @@ impl Cursor {
     }
     /// Creates and returns a new list with the given style, making the cursor's current paragraph the first list item.
     pub fn convert_to_list_style(&self, style: ListStyle) -> List {
-        unsafe { self.inner.create_list_style(style) }.into()
+        List(unsafe { self.inner.create_list_style(style) })
     }
     /// Creates and returns a new list with the given format, and makes the current paragraph the cursor is in the first list item.
     pub fn convert_to_list(&self) -> List {
-        unsafe {
+        List(unsafe {
             self.inner
                 .create_list_q_text_list_format(&self.format.list.0)
-        }
-        .into()
+        })
     }
     /// Returns a pointer to the current frame. Returns None if the cursor is invalid.
     pub fn current_frame(&self) -> Option<Frame> {
-        unsafe { from_nullable(self.inner.current_frame()) }
+        unsafe { nonnull(self.inner.current_frame()) }.map(Frame)
     }
     /// Returns the current list if the cursor position() is inside a block that is part of a list; otherwise returns None.
     pub fn current_list(&self) -> Option<List> {
-        unsafe { from_nullable(self.inner.current_list()) }
+        unsafe { nonnull(self.inner.current_list()) }.map(List)
     }
     /// Returns a pointer to the current table if the cursor position() is inside a block that is part of a table; otherwise returns None.
     pub fn current_table(&self) -> Option<Table> {
-        unsafe { from_nullable(self.inner.current_table()) }
+        unsafe { nonnull(self.inner.current_table()) }.map(Table)
     }
     /// If there is no selected text, deletes the character at the current cursor position; otherwise deletes the selected text.
     pub fn delete_char(&self) {
@@ -183,7 +174,7 @@ impl Cursor {
     }
     /// Returns the document this cursor is associated with.
     pub fn document(&self) -> Document {
-        unsafe { self.inner.document() }.into()
+        Document(unsafe { self.inner.document() })
     }
     /// Returns true if the cursor contains a selection; otherwise returns false.
     pub fn has_selection(&self) -> bool {
@@ -198,12 +189,12 @@ impl Cursor {
     }
     /// Inserts the text fragment at the current position().
     pub fn insert_fragment(&self, fragment: Fragment) {
-        unsafe { self.inner.insert_fragment(&fragment.into_raw()) }
+        unsafe { self.inner.insert_fragment(&fragment.0) }
     }
     /// Inserts a frame with the given format at the current cursor position(), moves the cursor position() inside the frame, and returns the frame.
     /// If the cursor holds a selection, the whole selection is moved inside the frame.
     pub fn insert_frame(&self) -> Frame {
-        unsafe { self.inner.insert_frame(&self.format.frame.0) }.into()
+        Frame(unsafe { self.inner.insert_frame(&self.format.frame.0) })
     }
     /// Inserts the text html at the current position(). The text is interpreted as HTML.
     /// Note: When using this function with a style sheet, the style sheet will only apply to the current block in the document. In order to apply a style sheet throughout a document, use Document::set_default_style_sheet() instead.
@@ -226,33 +217,31 @@ impl Cursor {
     pub fn insert_image_named<P: Printable>(&self, image: RImage, name: P) {
         unsafe {
             self.inner
-                .insert_image_q_image_q_string(&image.into_raw(), &name.to_print())
+                .insert_image_q_image_q_string(&image.0, &name.to_print())
         }
     }
     /// Convenience function for inserting the given image with an optional name at the current position().
     pub fn insert_image(&self, image: RImage) {
-        unsafe { self.inner.insert_image_q_image(&image.into_raw()) }
+        unsafe { self.inner.insert_image_q_image(&image.0) }
     }
     /// Inserts a new block at the current position and makes it the first list item of a newly created list with the given format. Returns the created list.
     pub fn insert_list_styled(&self, style: ListStyle) -> List {
-        unsafe { self.inner.insert_list_style(style) }.into()
+        List(unsafe { self.inner.insert_list_style(style) })
     }
     /// Inserts a new block at the current position and makes it the first list item of a newly created list with the given format. Returns the created list.
     pub fn insert_list(&self) -> List {
-        unsafe {
+        List(unsafe {
             self.inner
                 .insert_list_q_text_list_format(&self.format.list.0)
-        }
-        .into()
+        })
     }
     /// Creates a new table with the given number of rows and columns, inserts it at the current cursor position() in the document, and returns the table object. The cursor is moved to the beginning of the first cell.
     /// There must be at least one row and one column in the table.
     pub fn insert_table(&self, rows: c_int, columns: c_int) -> Table {
-        unsafe {
+        Table(unsafe {
             self.inner
                 .insert_table_3a(rows, columns, &self.format.table.0)
-        }
-        .into()
+        })
     }
     /// Inserts text at the current position, using the current character format.
     /// If there is a selection, the selection is deleted and replaced.
@@ -322,7 +311,7 @@ impl Cursor {
     /// Returns the current selection (which may be empty) with all its formatting information. If you just want the selected text (i.e. plain text) use get_selection() instead.
     /// Note: May include special unicode characters such as QChar::ParagraphSeparator.
     pub fn selection(&self) -> Fragment {
-        unsafe { self.inner.selection() }.into()
+        Fragment(unsafe { self.inner.selection() })
     }
     /// Returns the end of the selection or position() if the cursor doesn't have a selection.
     pub fn selection_end(&self) -> Position {
@@ -365,8 +354,14 @@ impl Cursor {
     }
 }
 
-#[derive(Debug, Binding)]
+#[derive(Debug)]
 pub struct Block(CppBox<QTextBlock>);
+
+impl From<CppBox<QTextBlock>> for Block {
+    fn from(value: CppBox<QTextBlock>) -> Self {
+        Self(value)
+    }
+}
 
 impl Block {
     /// Returns the BlockFormat that describes block-specific properties.
@@ -391,7 +386,7 @@ impl Block {
     }
     /// Returns the text document this text block belongs to, or None if the text block does not belong to any document.
     pub fn document(&self) -> Option<Document> {
-        unsafe { from_nullable(self.0.document()) }
+        unsafe { nonnull(self.0.document()) }.map(Document)
     }
     /// Returns the first line number of this block, or -1 if the block is invalid. Unless the layout supports it, the line number is identical to the block number.
     pub fn first_line_number(&self) -> c_int {
@@ -407,7 +402,7 @@ impl Block {
     }
     /// Returns the Layout that is used to lay out and display the block's contents.
     pub fn layout(&self) -> Layout {
-        unsafe { self.0.layout() }.into()
+        Layout(unsafe { self.0.layout() })
     }
     /// Returns the length of the block in characters.
     /// Note: The length returned includes all formatting characters, for example, newline.
@@ -454,7 +449,7 @@ impl Block {
     }
     /// If the block represents a list item, returns the list that the item belongs to; otherwise returns None.
     pub fn text_list(&self) -> Option<List> {
-        unsafe { from_nullable(self.0.text_list()) }
+        unsafe { nonnull(self.0.text_list()) }.map(List)
     }
     /// Returns the integer value previously set with setUserState() or -1.
     pub fn user_state(&self) -> c_int {
@@ -463,7 +458,13 @@ impl Block {
 }
 
 macro_rules! impl_fmt {
-    ($t:ty) => {
+    ($t:ty, $from:ty) => {
+        impl From<CppBox<$from>> for $t {
+            fn from(value: CppBox<$from>) -> Self {
+                Self(value)
+            }
+        }
+
         impl Colored for $t {
             fn foreground_color(&self) -> RColor {
                 self.0.foreground_color()
@@ -481,13 +482,13 @@ macro_rules! impl_fmt {
     };
 }
 
-#[derive(Debug, Binding)]
-pub struct BlockFormat(CppBox<QTextBlockFormat>);
-impl_fmt!(BlockFormat);
+#[derive(Debug)]
+pub struct BlockFormat(pub(super) CppBox<QTextBlockFormat>);
+impl_fmt!(BlockFormat, QTextBlockFormat);
 
-#[derive(Debug, Binding)]
-pub struct CharFormat(CppBox<QTextCharFormat>);
-impl_fmt!(CharFormat);
+#[derive(Debug)]
+pub struct CharFormat(pub(super) CppBox<QTextCharFormat>);
+impl_fmt!(CharFormat, QTextCharFormat);
 
 impl CharFormat {
     pub fn set_font(&self, font: &RFont) {
@@ -547,7 +548,7 @@ impl CharFormat {
         unsafe {
             self.0
                 .anchor_names()
-                .cpp_iter()
+                .iter()
                 .map(|x| x.to_std_string())
                 .collect()
         }
@@ -584,36 +585,36 @@ impl CharFormat {
     }
 }
 
-#[derive(Debug, Binding)]
+#[derive(Debug)]
 pub struct Layout(Ptr<QTextLayout>);
 
-#[derive(Debug, Binding)]
+#[derive(Debug)]
 pub struct List(QPtr<QTextList>);
 
-#[derive(Debug, Binding)]
-pub struct ListFormat(CppBox<QTextListFormat>);
-impl_fmt!(ListFormat);
+#[derive(Debug)]
+pub struct ListFormat(pub(super) CppBox<QTextListFormat>);
+impl_fmt!(ListFormat, QTextListFormat);
 
-#[derive(Debug, Binding)]
+#[derive(Debug)]
 pub struct Frame(QPtr<QTextFrame>);
 
-#[derive(Debug, Binding)]
-pub struct FrameFormat(CppBox<QTextFrameFormat>);
-impl_fmt!(FrameFormat);
+#[derive(Debug)]
+pub struct FrameFormat(pub(super) CppBox<QTextFrameFormat>);
+impl_fmt!(FrameFormat, QTextFrameFormat);
 
-#[derive(Debug, Binding)]
+#[derive(Debug)]
 pub struct Table(QPtr<QTextTable>);
 
-#[derive(Debug, Binding)]
-pub struct TableFormat(CppBox<QTextTableFormat>);
-impl_fmt!(TableFormat);
+#[derive(Debug)]
+pub struct TableFormat(pub(super) CppBox<QTextTableFormat>);
+impl_fmt!(TableFormat, QTextTableFormat);
 
-#[derive(Debug, Binding)]
+#[derive(Debug)]
 pub struct Document(QPtr<QTextDocument>);
 
-#[derive(Debug, Binding)]
-pub struct Fragment(CppBox<QTextDocumentFragment>);
+#[derive(Debug)]
+pub struct Fragment(pub(super) CppBox<QTextDocumentFragment>);
 
-#[derive(Debug, Binding)]
-pub struct ImageFormat(CppBox<QTextImageFormat>);
-impl_fmt!(ImageFormat);
+#[derive(Debug)]
+pub struct ImageFormat(pub(super) CppBox<QTextImageFormat>);
+impl_fmt!(ImageFormat, QTextImageFormat);
