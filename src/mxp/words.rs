@@ -67,7 +67,7 @@ impl<'a> Iterator for Words<'a> {
             // word e.g. foo
             _ if first.is_ascii_alphabetic() => self
                 .iter
-                .find(|&(_, c)| !c.is_ascii_alphabetic() && is_non_decimal(c)),
+                .find(|&(_, c)| !c.is_ascii_alphabetic() && !c.is_ascii_digit()),
             // single character, e.g. = or ,
             _ => self.iter.next(),
         };
