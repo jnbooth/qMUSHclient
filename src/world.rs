@@ -45,9 +45,6 @@ pub enum ScriptRecompile {
     Always,
     Never,
 }
-fn default_foreground() -> RColor {
-    RColor::from(ColorRole::Text)
-}
 
 mod keypad_serde {
     use super::*;

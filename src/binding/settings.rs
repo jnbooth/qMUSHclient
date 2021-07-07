@@ -56,15 +56,22 @@ impl RSettings {
             )
         })
     }
-    fn qget(&self, key: &str) -> RVariant {
-        RVariant::from(unsafe { self.0.value_1a(&QString::from_std_str(key)) })
+    fn qget(&self, key: &str) -> Result<RVariant, Error> {
+        unsafe {
+            let key = QString::from_std_str(key);
+            if self.0.contains(&key) {
+                Ok(RVariant::from(self.0.value_1a(&key)))
+            } else {
+                Err(Error::NotFound)
+            }
+        }
     }
     pub fn get<T>(&self, key: &str) -> Result<T, Error>
     where
         T: TryFrom<RVariant>,
         Error: From<T::Error>,
     {
-        Ok(T::try_from(self.qget(key))?)
+        Ok(T::try_from(self.qget(key)?)?)
     }
 
     pub fn set<T>(&self, key: &str, val: T)
@@ -83,7 +90,7 @@ impl RSettings {
         T::Item: TryFrom<RVariant>,
         Error: From<<T::Item as TryFrom<RVariant>>::Error>,
     {
-        let list = CppBox::<QListOfQVariant>::try_from(self.qget(key))?;
+        let list = CppBox::<QListOfQVariant>::try_from(self.qget(key)?)?;
         let vec: Result<_, _> = unsafe { list.into_iter() }
             .map(|x| T::Item::try_from(RVariant::from(x)))
             .collect();

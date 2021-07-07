@@ -1,11 +1,8 @@
 use std::str;
 
-use uuid::Uuid;
-
 use crate::enums::Enum;
 
-pub type PluginId = Uuid;
-
+#[allow(dead_code)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Callback {
     // install / remove

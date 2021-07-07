@@ -1,5 +1,5 @@
 use std::cell::RefCell;
-use std::convert::{TryFrom, TryInto};
+use std::convert::TryInto;
 use std::io::{self, BufReader, Read, Write};
 use std::iter::Iterator;
 use std::rc::Rc;
@@ -18,7 +18,6 @@ use crate::binding::{Printable, RColor, RIODevice, RWidget};
 use crate::client::color::Colors;
 use crate::client::state::Latest;
 use crate::constants::{branding, config};
-use crate::enums::EnumSet;
 use crate::escape::{ansi, telnet};
 use crate::mxp;
 use crate::prependbufreader::prepend_buf_reader;
@@ -32,7 +31,7 @@ pub mod state;
 pub mod style;
 
 use color::WorldColor;
-use state::{ClientState, ConnectPhase, Iac, Mccp, MessageFlag, Phase, Source};
+use state::{ClientState, Mccp, Phase};
 use style::{Style, TextStyle};
 
 type Decompress<T> = flate2::bufread::ZlibDecoder<T>;
@@ -157,7 +156,6 @@ impl Client {
         self.state.disconnect_ok = true;
         // work out how long they were connected
         self.state.total_connect_duration += self.latest.connected.elapsed();
-        self.state.connect_phase = ConnectPhase::NotConnected;
         self.mxp_off(true);
         self.socket.close();
     }
@@ -195,7 +193,7 @@ impl Client {
         };
         match res {
             Ok(0) => (),
-            Ok(res) => self.display_msg(self.bufinput[0..res].to_vec(), enums![]),
+            Ok(res) => self.display_msg(self.bufinput[0..res].to_vec()),
             Err(e) => eprintln!("Stream error: {}", e),
         }
     }
@@ -895,10 +893,6 @@ impl Client {
         }
     }
 
-    fn mxp_close_tag(&self, _tag: &str) {
-        // TODO
-    }
-
     fn mxp_collected_entity(&mut self) -> Result<(), mxp::ParseError> {
         let bytestring = mem::take(&mut self.state.mxp_string);
         let text = str::from_utf8(&bytestring).map_err(|_| {
@@ -910,7 +904,7 @@ impl Client {
             let text = entity.as_bytes().to_vec();
             // if the entity happens to be < & > etc. don't reprocess it
             self.state.mxp_active = false;
-            self.display_msg(text, enums![]);
+            self.display_msg(text);
             self.state.mxp_active = true;
         }
         Ok(())
@@ -988,27 +982,16 @@ impl Client {
         }
     }
 
-    fn display_msg(&mut self, mut data: Vec<u8>, flags: EnumSet<MessageFlag>) {
+    fn display_msg(&mut self, mut data: Vec<u8>) {
         #[cfg(debug_assertions)]
         println!("{}", String::from_utf8_lossy(&data));
-        if !flags.contains(MessageFlag::Fake) {
-            self.state.current_action_source = Source::Server;
-            data = self
-                .plugins
-                .receive_from_all(Callback::PacketReceived, data);
-            self.state.current_action_source = Source::Unknown;
-            if data.len() == 0 {
-                return; // plugin discarded it
-            }
-            self.style.clear_flags(); // MUD input cancels style flags
+        data = self
+            .plugins
+            .receive_from_all(Callback::PacketReceived, data);
+        if data.len() == 0 {
+            return; // plugin discarded it
         }
-
-        let blockstate = self.cursor.current_block().user_state();
-        let blockflags = EnumSet::from_raw(<_>::try_from(blockstate).unwrap_or(0));
-
-        if flags.contains(MessageFlag::Comment) && !blockflags.contains(MessageFlag::Comment) {
-            self.cursor.insert_block();
-        }
+        self.style.clear_flags(); // MUD input cancels style flags
 
         let mut iter = data.iter_mut();
 
@@ -1161,71 +1144,67 @@ impl Client {
                     // telnet negotiation : in response to WILL, we say DONT
                     // (except for compression, MXP, TERMINAL_TYPE and SGA), we *will* handle that)
                     self.phase = Phase::Normal; // back to normal text after this character
-                    self.state.iac.get(Iac::Will, c);
-                    let packet = match c {
+                    let verb = match c {
                         telnet::COMPRESS | telnet::COMPRESS2 => {
                             if self.world.disable_compression {
-                                self.state.iac.send(Iac::Dont, c)
+                                telnet::DONT
                             } else {
                                 self.init_zlib(&[]);
                                 if c == telnet::COMPRESS && self.state.supports_mccp_2 {
                                     // already agreed to MCCP 2 - no compression
-                                    self.state.iac.send(Iac::Dont, c)
+                                    telnet::DONT
                                 } else {
                                     if c == telnet::COMPRESS2 {
                                         self.state.supports_mccp_2 = true;
                                     }
-                                    self.state.iac.send(Iac::Do, c)
+                                    telnet::DO
                                 }
                             }
                         }
-                        telnet::SGA => self.state.iac.send(Iac::Do, c), // Suppress GoAhead
-                        telnet::MUD_SPECIFIC => self.state.iac.send(Iac::Do, c),
+                        telnet::SGA => telnet::DO, // Suppress GoAhead
+                        telnet::MUD_SPECIFIC => telnet::DO,
                         telnet::ECHO => {
                             if self.world.no_echo_off {
-                                self.state.iac.send(Iac::Dont, c)
+                                telnet::DONT
                             } else {
                                 self.state.no_echo = true;
-                                self.state.iac.send(Iac::Do, c)
+                                telnet::DO
                             }
                         }
                         telnet::MXP => match self.world.use_mxp {
-                            UseMxp::Never => self.state.iac.send(Iac::Dont, c),
+                            UseMxp::Never => telnet::DONT,
                             UseMxp::Query => {
-                                let packet = self.state.iac.send(Iac::Do, c);
                                 self.mxp_on(false, false);
-                                packet
+                                telnet::DO
                             }
-                            _ => self.state.iac.send(Iac::Do, c),
+                            _ => telnet::DO,
                         },
                         telnet::WILL_EOR => {
                             if self.world.convert_ga_to_newline {
-                                self.state.iac.send(Iac::Do, c)
+                                telnet::DO
                             } else {
-                                self.state.iac.send(Iac::Dont, c)
+                                telnet::DONT
                             }
                         }
-                        telnet::CHARSET => self.state.iac.send(Iac::Do, c),
+                        telnet::CHARSET => telnet::DO,
                         _ => {
                             if self.telnet_callbacks(c, "WILL", "SENT_DO") {
-                                self.state.iac.send(Iac::Do, c)
+                                telnet::DO
                             } else {
-                                self.state.iac.send(Iac::Dont, c)
+                                telnet::DONT
                             }
                         }
                     };
-                    self.send_packet(&packet);
+                    self.send_packet(&[telnet::IAC, verb, c]);
                 }
                 // Received: IAC WONT x
                 Phase::Wont => {
                     // telnet negotiation : in response to WONT, we say DONT
                     self.phase = Phase::Normal;
-                    self.state.iac.get(Iac::Wont, c);
-                    let packet = self.state.iac.send(Iac::Dont, c);
                     if !self.world.no_echo_off {
                         self.state.no_echo = false;
                     }
-                    self.send_packet(&packet);
+                    self.send_packet(&[telnet::IAC, telnet::DONT, c]);
                 }
                 // Received: IAC DO x
                 // for unknown types we query plugins: function OnPluginTelnetRequest (num, type)
@@ -1237,56 +1216,51 @@ impl Client {
                     // for others we query plugins to see if they want to handle it or not
                     // scoped borrow
                     self.phase = Phase::Normal;
-                    self.state.iac.get(Iac::Do, c);
 
-                    let packet = match c {
+                    let verb = match c {
                         // things we will do
                         telnet::SGA | telnet::MUD_SPECIFIC | telnet::ECHO | telnet::CHARSET => {
-                            self.state.iac.send(Iac::Will, c)
+                            telnet::WILL
                         }
                         // for MTTS start back at sequence 0
                         telnet::TERMINAL_TYPE => {
                             self.state.ttype_sequence = 0;
-                            self.state.iac.send(Iac::Will, c)
+                            telnet::WILL
                         }
                         telnet::NAWS => {
                             // option off - must be server initiated
                             if self.world.naws {
                                 self.state.naws_wanted = true;
-                                let packet = self.state.iac.send(Iac::Will, c);
                                 self.send_window_sizes(self.world.wrap_column);
-                                packet
+                                telnet::WILL
                             } else {
-                                self.state.iac.send(Iac::Wont, c)
+                                telnet::WONT
                             }
                         }
                         telnet::MXP => match self.world.use_mxp {
-                            UseMxp::Never => self.state.iac.send(Iac::Wont, c),
+                            UseMxp::Never => telnet::WONT,
                             UseMxp::Query => {
-                                let packet = self.state.iac.send(Iac::Will, c);
                                 self.mxp_on(false, false);
-                                packet
+                                telnet::WILL
                             }
-                            _ => self.state.iac.send(Iac::Will, c),
+                            _ => telnet::WILL,
                         },
                         _ => {
                             if self.telnet_callbacks(c, "DO", "SENT_WILL") {
-                                self.state.iac.send(Iac::Will, c)
+                                telnet::WILL
                             } else {
-                                self.state.iac.send(Iac::Wont, c)
+                                telnet::WONT
                             }
                         }
                     };
-                    self.send_packet(&packet);
+                    self.send_packet(&[telnet::IAC, verb, c]);
                 }
                 // Received: IAC DONT x
                 Phase::Dont => {
                     // telnet negotiation : in response to DONT, we say WONT
                     self.phase = Phase::Normal;
-                    self.state.iac.get(Iac::Dont, c);
-                    let packet = self.state.iac.send(Iac::Wont, c);
                     let mxp = self.state.mxp_active;
-                    self.send_packet(&packet);
+                    self.send_packet(&[telnet::IAC, telnet::WONT, c]);
                     match c {
                         telnet::MXP if mxp => self.mxp_off(true),
                         // for MTTS start back at sequence 0

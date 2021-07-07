@@ -15,13 +15,13 @@ use super::uic;
 use super::worldprefs::WorldPrefs;
 use super::worldtab::{SelectionMode, WorldTab};
 use crate::binding::{RDialog, RSettings, RWidget};
+use crate::constants::config;
 use crate::persist;
 use crate::tr::TrContext;
 use crate::world::World;
 
 const SAVE_DIR: &str = "/home/j/Downloads";
 
-const MAX_RECENT: usize = 5;
 const KEY_RECENT: &str = "recent";
 fn only_filename(s: &str) -> &str {
     Path::new(s)
@@ -70,6 +70,7 @@ impl App {
             self.ui.world_tabs.tab_close_requested().connect(&self.slot_close_world());
             self.ui.action_new.triggered().connect(&self.slot_new_world());
             self.ui.action_open_world.triggered().connect(&self.slot_open_world());
+            self.ui.action_open_worlds_in_startup_list.triggered().connect(&self.slot_open_all());
             self.ui.action_close_world.triggered().connect(&self.slot_close_current_world());
             self.ui.action_save_world_details.triggered().connect(&self.slot_save_world());
             self.ui.action_save_world_details_as.triggered().connect(&self.slot_save_world_as());
@@ -83,7 +84,7 @@ impl App {
             self.ui.action_paste.triggered().connect(&self.slot_paste());
             self.ui.action_select_all.triggered().connect(&self.slot_select_all());
 
-            self.recent.borrow_mut().truncate(MAX_RECENT);
+            self.recent.borrow_mut().truncate(config::MAX_RECENT);
             self.setup_recents();
         }
     }
@@ -127,7 +128,7 @@ impl App {
     }
 
     fn save_recents(self: &Rc<Self>) {
-        self.recent.borrow_mut().truncate(MAX_RECENT);
+        self.recent.borrow_mut().truncate(config::MAX_RECENT);
         self.settings.set_list(KEY_RECENT, &*self.recent.borrow());
         self.setup_recents();
     }
@@ -340,7 +341,7 @@ impl App {
     }
 
     #[slot(SlotNoArgs)]
-    fn open_world_list(self: &Rc<Self>) {
+    fn open_all(self: &Rc<Self>) {
         if let Ok(list) = self.settings.get_list::<Vec<_>>("startuplist") {
             for filename in list {
                 self.open_world_file(&filename);

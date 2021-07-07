@@ -16,7 +16,7 @@ mod words;
 pub use argument::{Arg, Argument, ArgumentIndex, Arguments, Keyword};
 pub use atom::{Action, Atom, Tag, TagFlag};
 pub use element::{Element, ElementComponent, ElementItem, ElementMap};
-pub use error::{is_valid, validate, Error, Info, ParseError, Warning};
+pub use error::{is_valid, validate, Error, ParseError};
 pub use words::Words;
 
 pub const VERSION: &str = "0.5";
@@ -41,23 +41,9 @@ impl Mode {
     pub const PERM_SECURE: Self = Self(6);
     /// Locked mode until mode change.
     pub const PERM_LOCKED: Self = Self(7);
-    /// The line is parsed as the name of a room.
-    pub const ROOM_NAME: Self = Self(10);
-    /// The line is parsed as the description of a room.
-    pub const ROOM_DESCRIPTION: Self = Self(11);
-    /// The line is parsed as an exit line for a room.
-    pub const ROOM_EXITS: Self = Self(12);
-    /// Text sent from the server at the beginning of a session.
-    pub const WELCOME: Self = Self(19);
 }
 
 impl Mode {
-    pub const fn is_permanent(self) -> bool {
-        match self {
-            Self::PERM_OPEN | Self::PERM_SECURE | Self::PERM_LOCKED => true,
-            _ => false,
-        }
-    }
     pub const fn is_open(self) -> bool {
         match self {
             Self::OPEN | Self::PERM_OPEN => true,
@@ -77,21 +63,6 @@ impl Mode {
             }
             _ => false,
         }
-    }
-
-    pub fn name(self) -> String {
-        match self {
-            Self::OPEN => tr!("open"),
-            Self::SECURE => tr!("secure"),
-            Self::LOCKED => tr!("locked"),
-            Self::RESET => tr!("reset"),
-            Self::SECURE_ONCE => tr!("secure next tag only"),
-            Self::PERM_OPEN => tr!("permanently open"),
-            Self::PERM_SECURE => tr!("permanently secure"),
-            Self::PERM_LOCKED => tr!("permanently locked"),
-            Self(mode) => tr!("unknown mode {}", mode),
-        }
-        .to_std_string()
     }
 }
 
@@ -222,10 +193,6 @@ impl DerefMut for EntityMap {
 const CHARS: &str = "\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f";
 
 impl EntityMap {
-    pub fn new() -> Self {
-        Self::default()
-    }
-
     pub fn get(&self, key: &str) -> Result<Option<&str>, ParseError> {
         if key.starts_with('#') {
             let id = if key.starts_with('x') {

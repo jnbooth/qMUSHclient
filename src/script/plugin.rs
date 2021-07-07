@@ -259,7 +259,6 @@ impl<T: Clone, C> CloneWith<C> for T {
 pub struct PluginHandler<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> {
     userdata: U,
     initialize: String,
-    methods: Vec<String>,
     plugins: Vec<Plugin>,
 }
 
@@ -291,7 +290,6 @@ impl<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> PluginHandle
         Self {
             userdata,
             initialize,
-            methods: Vec::new(),
             plugins: Vec::new(),
         }
     }
@@ -345,7 +343,7 @@ impl<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> PluginHandle
         }
     }
 
-    pub fn send_to_first<A: ScriptArgs + Clone>(&mut self, cb: Callback, args: A) -> bool {
+    pub fn _send_to_first<A: ScriptArgs + Clone>(&mut self, cb: Callback, args: A) -> bool {
         self.iter_mut(cb)
             .any(|p| p.call(cb, args.clone()).unwrap_or(false))
     }

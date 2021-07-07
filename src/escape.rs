@@ -130,6 +130,7 @@ pub mod telnet {
     }
 }
 
+#[allow(dead_code)]
 pub mod ansi {
     pub const RESET: u8 = 0;
     pub const BOLD: u8 = 1;

@@ -83,10 +83,6 @@ impl Style {
         self.spans.last().unwrap_or(DEFAULT)
     }
 
-    pub const fn span_style(&self) -> EnumSet<TextStyle> {
-        self.span_flags
-    }
-
     pub fn set_world(&mut self, world: Rc<World>) {
         self.world = world;
     }
@@ -221,7 +217,7 @@ impl Style {
         }
     }
 
-    pub fn background(&self) -> &WorldColor {
+    pub fn _background(&self) -> &WorldColor {
         if self.ansi_flags.contains(TextStyle::Inverse) {
             &self.background
         } else {

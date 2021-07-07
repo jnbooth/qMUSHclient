@@ -6,6 +6,7 @@ use qt_widgets::QTextEdit;
 use crate::binding::{Printable, RWidget};
 use crate::tr::TrContext;
 
+#[allow(dead_code)]
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, TrContext)]
 pub enum Pad {
     Normal,
@@ -90,7 +91,7 @@ impl Notepad {
         }
     }
 
-    pub fn clear(&mut self, pad: Pad) {
+    pub fn _clear(&mut self, pad: Pad) {
         if let Some(pad) = self.pads.get(&pad) {
             unsafe {
                 pad.widget.clear();

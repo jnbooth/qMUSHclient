@@ -1,4 +1,3 @@
-#![allow(dead_code)] // TODO
 #![warn(unsafe_op_in_unsafe_fn)]
 
 #[macro_use]
@@ -9,13 +8,13 @@ extern crate luajit_src;
 extern crate pcre2_sys;
 
 #[macro_use]
-mod enums;
+pub mod enums;
 #[macro_use]
-mod tr;
+pub mod tr;
 
 mod api;
-mod binding;
-mod caseinsensitive;
+pub mod binding;
+pub mod caseinsensitive;
 mod client;
 mod constants;
 mod escape;

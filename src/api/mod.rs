@@ -108,7 +108,7 @@ impl Api {
         self.world = world;
     }
 
-    pub fn append_to_notepad<S: Printable>(&self, title: String, s: S) {
+    pub fn _append_to_notepad<S: Printable>(&self, title: String, s: S) {
         self.notepad
             .borrow_mut()
             .append(Pad::Script(title), AlignmentFlag::AlignLeft, s);
@@ -128,16 +128,16 @@ impl Api {
         self.cursor.insert_text_colored(s, fg, bg);
     }
 
-    fn send<S: AsRef<[u8]>>(&self, buf: S) -> io::Result<()> {
+    fn _send<S: AsRef<[u8]>>(&self, buf: S) -> io::Result<()> {
         let buf = buf.as_ref();
         self.socket.io().write_all(buf)?;
         Ok(())
     }
 
-    pub fn send_packet(&self, data: &[u8]) {
+    pub fn _send_packet(&self, data: &[u8]) {
         if !self.socket.writable() {
             eprintln!("Tried to send over a closed connection: {:?}", data);
-        } else if let Err(e) = self.send(data) {
+        } else if let Err(e) = self._send(data) {
             eprintln!("Error sending packet {:?}: {}", data, e);
         }
     }

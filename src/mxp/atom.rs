@@ -29,8 +29,6 @@ pub enum TagFlag {
     Command,
     /// Tag is Pueblo-only
     Pueblo,
-    /// Tag is MXP-only
-    Mxp,
     /// Not closed by reset (eg. body)
     NoReset,
     /// Not really implemented (for <supports> tag)
@@ -163,10 +161,6 @@ pub struct Atom {
 }
 
 impl Atom {
-    pub fn exists(name: &str) -> bool {
-        ALL_ATOMS.contains_key(name)
-    }
-
     pub fn get(name: &str) -> Option<Self> {
         ALL_ATOMS.get(name).map(Clone::clone)
     }
@@ -293,7 +287,7 @@ static ALL_ATOMS: Lazy<CaseFoldMap<String, Atom>> = Lazy::new(|| {
     add("version", enums![Command], Version, &[]);
     add("reset", enums![Command], Reset, &[]);
     const MXP_ARGS: &[&CaseFold<str>] = unsafe { &[case("off")] };
-    add("mxp", enums![Command], Reset, MXP_ARGS);
+    add("mxp", enums![Command], Mxp, MXP_ARGS);
     add("support", enums![Command], Support, &[]);
     add("option", enums![Command], SetOption, &[]);
     add("afk", enums![Command], Afk, &[]);

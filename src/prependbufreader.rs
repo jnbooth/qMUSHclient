@@ -7,9 +7,9 @@ use std::mem::ManuallyDrop;
 // Yep—it all depends on creating a struct with exactly the same layout as the official BufReader
 // so I can poke at fields that are supposed to be private. Obviously, this is terribly unsafe!
 struct PrependBufReader<R> {
-    inner: R,
+    _inner: R,
     buf: Box<[u8]>,
-    pos: usize,
+    _pos: usize,
     cap: usize,
 }
 
