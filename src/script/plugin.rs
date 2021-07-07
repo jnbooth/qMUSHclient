@@ -310,8 +310,7 @@ impl<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> PluginHandle
         {
             self.plugins.remove(old);
         }
-        let engine = Lua::new();
-        crate::ffi::lua::load_libs(&engine)?;
+        let engine = crate::ffi::lua::new_lua()?;
 
         engine
             .globals()
