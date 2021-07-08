@@ -9,12 +9,11 @@ use std::{mem, str};
 use cpp_core::CppBox;
 use qt_core::{AlignmentFlag, QBox, QPtr, QString};
 use qt_network::QTcpSocket;
-use qt_widgets::q_message_box::Icon;
 use qt_widgets::QTextBrowser;
 
 use crate::api::Api;
 use crate::binding::text::{CharFormat, Cursor};
-use crate::binding::{Printable, RColor, RIODevice, RWidget};
+use crate::binding::{Printable, RColor, RIODevice};
 use crate::client::color::Colors;
 use crate::client::state::Latest;
 use crate::constants::{branding, config};
@@ -62,7 +61,7 @@ impl Fragment {
     }
 }
 
-#[derive(RWidget, TrContext)]
+#[derive(TrContext)]
 pub struct Client {
     widget: QPtr<QTextBrowser>,
     cursor: Cursor,
@@ -122,18 +121,16 @@ impl Client {
     }
 
     fn load_worldscript(&mut self) {
+        // todo display errors
         match self.world.make_plugin() {
-            Ok(Some(plugin)) => mem::drop(self.plugins.load_plugin(plugin)), // todo I guess
+            Ok(Some(plugin)) => mem::drop(self.plugins.load_plugin(plugin)),
             Ok(None) => (),
-            Err(e) => self.alert(
-                Icon::Critical,
-                tr!(
-                    "Couldn't load world script at {}",
-                    self.world.script_filename,
-                ),
-                Some(e.to_string()),
-            ),
+            Err(_) => (),
         };
+    }
+
+    pub fn on_save(&mut self) {
+        self.plugins.alter_userdata(|api| api.save_variables());
     }
 
     pub fn set_world(&mut self, world: Rc<World>) {

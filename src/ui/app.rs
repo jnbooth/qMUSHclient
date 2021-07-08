@@ -241,6 +241,7 @@ impl App {
             recents.push_front(save_as);
         }
         self.save_recents();
+        tab.client.borrow_mut().on_save();
     }
 
     unsafe fn with_input<O: Default>(&self, f: unsafe fn(&QLineEdit) -> O) -> O {

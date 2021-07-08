@@ -53,7 +53,8 @@ pub trait QList: CppDeletable {
     /// # Safety
     ///
     /// All items produced by `iter` must be valid
-    unsafe fn from_iter<I: Iterator<Item = Self::Item>>(iter: I) -> CppBox<Self> {
+    unsafe fn from_iter<I: IntoIterator<Item = Self::Item>>(iter: I) -> CppBox<Self> {
+        let iter = iter.into_iter();
         let this = Self::new();
         this.reserve(iter.size_hint().0 as c_int);
         unsafe {

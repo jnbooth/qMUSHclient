@@ -494,6 +494,11 @@ where
     }
 }
 
+impl<K: AsRef<str>> From<&hashbrown::HashMap<K, String>> for RVariant {
+    fn from(value: &hashbrown::HashMap<K, String>) -> Self {
+        from_map(value)
+    }
+}
 impl<K: AsRef<str>, V: Into<RVariant>> From<hashbrown::HashMap<K, V>> for RVariant {
     fn from(value: hashbrown::HashMap<K, V>) -> Self {
         from_map(value)
@@ -507,6 +512,11 @@ impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for hashbrown::HashM
     }
 }
 
+impl<K: AsRef<str>> From<&collections::HashMap<K, String>> for RVariant {
+    fn from(value: &collections::HashMap<K, String>) -> Self {
+        from_map(value)
+    }
+}
 impl<K: AsRef<str>, V: Into<RVariant>> From<collections::HashMap<K, V>> for RVariant {
     fn from(value: collections::HashMap<K, V>) -> Self {
         from_map(value)
@@ -520,6 +530,11 @@ impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for collections::Has
     }
 }
 
+impl<K: AsRef<str>> From<&BTreeMap<K, String>> for RVariant {
+    fn from(value: &BTreeMap<K, String>) -> Self {
+        from_map(value)
+    }
+}
 impl<K: AsRef<str>, V: Into<RVariant>> From<BTreeMap<K, V>> for RVariant {
     fn from(value: BTreeMap<K, V>) -> Self {
         from_map(value)
