@@ -324,16 +324,6 @@ impl World {
             .collect::<Vec<_>>()
             .try_into()
             .unwrap();
-        let custom_colors: [RColorPair; 16] = Colors::ansi16()
-            .to_vec()
-            .into_iter()
-            .map(|foreground| RColorPair {
-                foreground,
-                background: RColor::rgb(0, 0, 0),
-            })
-            .collect::<Vec<_>>()
-            .try_into()
-            .unwrap();
         Self {
             // IP address
             name: String::new(),
@@ -440,7 +430,7 @@ impl World {
             use_default_colors: true,
             ansi_colors: Colors::ansi16(),
             custom_names,
-            custom_colors,
+            custom_colors: Colors::default_custom(),
 
             // Triggers
             enable_triggers: true,

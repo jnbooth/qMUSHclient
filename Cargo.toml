@@ -28,6 +28,7 @@ qt_gui = { path = "lib/qt_gui" }
 qt_network = { path = "lib/qt_network" }
 qt_ui_tools = { path = "lib/qt_ui_tools" }
 qt_widgets = { path = "lib/qt_widgets" }
+rand = "0.8.4"
 serde = { version = "1.0.119", features = ["derive"] }
 serde_json = "1.0.64"
 uuid = { version = "0.8.2", features = ["v4"] }

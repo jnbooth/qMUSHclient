@@ -408,17 +408,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="to_custom">
-         <property name="text">
-          <string>&amp;Copy to custom...</string>
-         </property>
-         <property name="icon">
-          <iconset theme="edit-copy">
-           <normaloff>.</normaloff>.</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="random">
          <property name="text">
           <string>Random</string>

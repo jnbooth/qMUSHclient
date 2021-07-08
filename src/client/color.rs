@@ -4,8 +4,10 @@ use std::convert::TryInto;
 use hashbrown::HashMap;
 use mlua::{Error as E, FromLua, Lua, Value};
 use once_cell::sync::Lazy;
+use qt_core::GlobalColor;
 use serde::{Deserialize, Serialize};
 
+use crate::binding::color::RColorPair;
 use crate::binding::RColor;
 use crate::escape::ansi;
 
@@ -208,7 +210,7 @@ static NAMED_COLORS: Lazy<HashMap<String, RColor>> = Lazy::new(|| {
         ("yellowgreen", 0x9ACD32),
     ]
     .iter()
-    .map(|&(s, code)| (s.to_owned(), RColor::from_code(0xFF000000 | code)))
+    .map(|&(s, code)| (s.to_owned(), RColor::from(code)))
     .collect()
 });
 
@@ -289,5 +291,26 @@ impl Colors {
     pub fn ansi16() -> [RColor; 16] {
         let colors: &[RColor; 16] = XTERM_COLORS[..16].try_into().unwrap();
         colors.to_owned()
+    }
+
+    pub fn default_custom() -> [RColorPair; 16] {
+        [
+            RColorPair::new(0xFF8080, GlobalColor::Transparent),
+            RColorPair::new(0xFFFF80, GlobalColor::Transparent),
+            RColorPair::new(0x80FF80, GlobalColor::Transparent),
+            RColorPair::new(0x80FFFF, GlobalColor::Transparent),
+            RColorPair::new(0x0080FF, GlobalColor::Transparent),
+            RColorPair::new(0xFF80c0, GlobalColor::Transparent),
+            RColorPair::new(0xFF0000, GlobalColor::Transparent),
+            RColorPair::new(0x0080C0, GlobalColor::Transparent),
+            RColorPair::new(0x804040, GlobalColor::Transparent),
+            RColorPair::new(0xFF8040, GlobalColor::Transparent),
+            RColorPair::new(0x008080, GlobalColor::Transparent),
+            RColorPair::new(0x004080, GlobalColor::Transparent),
+            RColorPair::new(0xFF0080, GlobalColor::Transparent),
+            RColorPair::new(0x008000, GlobalColor::Transparent),
+            RColorPair::new(0x0000FF, GlobalColor::Transparent),
+            RColorPair::new(0x686868, GlobalColor::Transparent),
+        ]
     }
 }

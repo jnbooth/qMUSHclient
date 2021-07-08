@@ -85,6 +85,13 @@ impl From<GlobalColor> for RColor {
         Self::of(unsafe { &QColor::from_global_color(value) })
     }
 }
+
+impl From<c_uint> for RColor {
+    fn from(value: c_uint) -> Self {
+        Self::from_code(value | 0xFF000000)
+    }
+}
+
 impl Default for RColor {
     fn default() -> Self {
         Self::from(unsafe { QBrush::new() })
@@ -139,17 +146,36 @@ impl RColor {
         }
     }
 
-    pub fn reshade(&self, adjust: c_int) -> Self {
+    fn with_hsla<F>(&self, f: F) -> Self
+    where
+        F: FnOnce(&mut c_int, &mut c_int, &mut c_int, &mut c_int),
+    {
+        let mut h = 0;
+        let mut s = 0;
+        let mut l = 0;
+        let mut a = 0;
         unsafe {
-            let mut h = 0;
-            let mut s = 0;
-            let mut l = 0;
-            let mut a = 0;
             self.color()
                 .to_hsl()
                 .get_hsl_4a(&mut h, &mut s, &mut l, &mut a);
-            Self::from(QColor::from_hsl_4a(h, s, (l + adjust).clamp(0, 359), a))
         }
+        f(&mut h, &mut s, &mut l, &mut a);
+        Self::from(unsafe { QColor::from_hsl_4a(h, s, l, a) })
+    }
+
+    pub fn reshade(&self, adjust: c_int) -> Self {
+        self.with_hsla(|_h, _s, l, _a| *l = (*l + adjust).clamp(0, 255))
+    }
+
+    pub fn saturate(&self, adjust: c_int) -> Self {
+        self.with_hsla(|_h, s, _l, _a| *s = (*s + adjust).clamp(0, 255))
+    }
+
+    pub fn invert(&self) -> Self {
+        self.with_hsla(|h, _s, l, _a| {
+            *h = (*h + 180) % 360;
+            *l = 255 - *l;
+        })
     }
 
     pub fn pick<P: CastInto<Ptr<QWidget>>>(&self, parent: P) -> Option<Self> {
