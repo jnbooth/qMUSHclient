@@ -80,6 +80,7 @@
     <addaction name="action_activity_toolbar"/>
     <addaction name="action_status_bar"/>
     <addaction name="action_info_bar"/>
+    <addaction name="actionWorld_Notepad"/>
     <addaction name="separator"/>
     <addaction name="action_reset_toolbar_locations"/>
     <addaction name="action_always_on_top"/>
@@ -642,28 +643,6 @@
     <string>Generate Unique I&amp;D...</string>
    </property>
   </action>
-  <action name="actionNotepad">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Notepad</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+W</string>
-   </property>
-  </action>
-  <action name="actionFlip_To_Notepad">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Flip To Notepad</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Alt+Space</string>
-   </property>
-  </action>
   <action name="action_color_picker">
    <property name="icon">
     <iconset theme="color-picker">
@@ -914,11 +893,6 @@
   <action name="action_connect_to_worlds_in_startup_list">
    <property name="text">
     <string>Connect To Worlds &amp;In Startup List</string>
-   </property>
-  </action>
-  <action name="actionActivate_Input_Area">
-   <property name="text">
-    <string>Activate &amp;Input Area</string>
    </property>
   </action>
   <action name="action_next_command">
@@ -1652,6 +1626,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Y, Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionWorld_Notepad">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>World Notepad</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Space</string>
    </property>
   </action>
  </widget>

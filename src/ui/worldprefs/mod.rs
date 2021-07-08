@@ -41,21 +41,22 @@ macro_rules! impl_prefpagenew {
 }
 
 macro_rules! connect_world_one {
-    ($self:ident, $field:ident, $fieldname:ident$(, $subfield:ident)?) => {
+    ($ui:ident, $self:ident, $field:ident, $fieldname:ident$(, $subfield:ident)?) => {
         $self.connect(
-            $self.ui.$fieldname.clone(),
+            $ui.$fieldname.clone(),
             |world| &mut world.$field$(.$subfield)?
         )
     };
-    ($self:ident, $field:ident) => {
-        connect_world_one!($self, $field, $field)
+    ($ui:ident, $self:ident, $field:ident) => {
+        connect_world_one!($ui, $self, $field, $field)
     };
 }
 
 macro_rules! connect_world {
     ($self:ident, $($field:ident$(.$subfield:ident $fieldname:ident)?),+$(,)?) => {
+        let ui = &$self.ui;
         $(
-            connect_world_one!($self, $field$(, $fieldname, $subfield)?);
+            connect_world_one!(ui, $self, $field$(, $fieldname, $subfield)?);
         )+
     }
 }
@@ -181,11 +182,11 @@ pub struct WorldPrefs {
 }
 impl RDialog<DialogCode> for WorldPrefs {
     fn exec(&self) -> DialogCode {
+        let ui = &self.ui;
         unsafe {
-            self.ui
-                .settings_tree
-                .set_current_item_1a(self.ui.settings_tree.top_level_item(0).child(0));
-            DialogCode::from(self.ui.widget.exec())
+            ui.settings_tree
+                .set_current_item_1a(ui.settings_tree.top_level_item(0).child(0));
+            DialogCode::from(ui.widget.exec())
         }
     }
 }
@@ -220,13 +221,14 @@ impl WorldPrefs {
     #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         unsafe {
+            let ui = &self.ui;
             for page in self.pages.values() {
                 let page = page.get_page();
                 page.set_visible(false);
-                self.ui.contents.add_widget(page);
+                ui.contents.add_widget(page);
             }
-            self.ui.settings_tree.expand_all();
-            self.ui.settings_tree.current_item_changed().connect(&self.slot_choose_page());
+            ui.settings_tree.expand_all();
+            ui.settings_tree.current_item_changed().connect(&self.slot_choose_page());
             self.browse("IP address");
         }
     }

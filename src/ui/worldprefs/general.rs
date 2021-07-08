@@ -103,19 +103,12 @@ impl PrefsConnecting {
 
     #[slot(SlotNoArgs)]
     fn update_connect_text(&self) {
-        let connect_text = unsafe {
-            self.ui
-                .connect_text
-                .to_plain_text()
-                .trimmed()
-                .to_std_string()
-        };
+        let ui = &self.ui;
+        let connect_text = unsafe { ui.connect_text.to_plain_text().trimmed().to_std_string() };
         let lines = connect_text.lines().count();
         if lines != self.lines_cache.replace(lines) {
             unsafe {
-                self.ui
-                    .connect_text_lines
-                    .set_text(&tr!(lines, "(%n line(s))"));
+                ui.connect_text_lines.set_text(&tr!(lines, "(%n line(s))"));
             }
         }
         if let Some(mut world) = self
@@ -176,21 +169,22 @@ impl PrefsLogging {
             log_line_postamble_input,
             log_line_postamble_notes,
         );
+        let ui = &self.ui;
         self.connect_browse_button(
             Browse::Save,
-            &self.ui.auto_log_file_name_browse,
-            &self.ui.auto_log_file_name,
+            &ui.auto_log_file_name_browse,
+            &ui.auto_log_file_name,
             "logs",
             "Text files (*.txt)",
         );
         unsafe {
-            self.ui.button_box.help_requested().connect(&self.slot_show_help());
-            let reset = self.ui.button_box.button(StandardButton::RestoreDefaults);
+            ui.button_box.help_requested().connect(&self.slot_show_help());
+            let reset = ui.button_box.button(StandardButton::RestoreDefaults);
             reset.clicked().connect(&self.slot_set_defaults());
             self.enable_if(
-                &self.ui.log_html,
+                &ui.log_html,
                 true,
-                [self.ui.log_in_color.static_upcast(), reset.static_upcast()],
+                [ui.log_in_color.static_upcast(), reset.static_upcast()],
             );
         }
     }
@@ -204,12 +198,11 @@ impl PrefsLogging {
 
     #[slot(SlotNoArgs)]
     fn set_defaults(&self) {
+        let ui = &self.ui;
         unsafe {
-            self.ui
-                .log_file_preamble
+            ui.log_file_preamble
                 .set_plain_text(&QString::from_std_str(DEFAULT_PREAMBLE));
-            self.ui
-                .log_file_postamble
+            ui.log_file_postamble
                 .set_plain_text(&QString::from_std_str(DEFAULT_POSTAMBLE));
         }
     }
@@ -241,10 +234,11 @@ impl PrefsChat {
             auto_allow_files,
             chat_file_save_directory,
         );
+        let ui = &self.ui;
         self.connect_browse_button(
             Browse::Directory,
-            &self.ui.chat_file_save_directory_browse,
-            &self.ui.chat_file_save_directory,
+            &ui.chat_file_save_directory_browse,
+            &ui.chat_file_save_directory,
             "",
             "",
         );

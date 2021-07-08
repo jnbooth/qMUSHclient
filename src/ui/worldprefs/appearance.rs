@@ -59,24 +59,25 @@ impl PrefsOutput {
             convert_ga_to_newline,
             terminal_identification,
         );
+        let ui = &self.ui;
         self.connect_font(
-            self.ui.output_font.clone(),
-            self.ui.output_font_size.clone(),
+            ui.output_font.clone(),
+            ui.output_font_size.clone(),
             |world| &mut world.output_font,
         );
         unsafe {
             self.enable_if(
-                &self.ui.use_default_output_font,
+                &ui.use_default_output_font,
                 false,
                 [
-                    self.ui.output_font.static_upcast(),
-                    self.ui.output_font_size.static_upcast(),
+                    ui.output_font.static_upcast(),
+                    ui.output_font_size.static_upcast(),
                 ],
             );
             self.enable_if(
-                &self.ui.copy_selection_to_clipboard,
+                &ui.copy_selection_to_clipboard,
                 true,
-                [self.ui.auto_copy_to_clipboard_in_html.static_upcast()],
+                [ui.auto_copy_to_clipboard_in_html.static_upcast()],
             );
         }
     }
@@ -157,19 +158,20 @@ impl PrefsColor {
         for (i, field) in self.colorfields.iter().enumerate() {
             self.connect(field.clone(), move |world| &mut world.ansi_colors[i]);
         }
+        let ui = &self.ui;
         unsafe {
-            self.ui.swap.clicked().connect(&self.slot_swap());
-            self.ui.reset.clicked().connect(&self.slot_reset());
-            self.ui.invert.clicked().connect(&self.slot_invert());
-            self.ui.random.clicked().connect(&self.slot_random());
-            self.ui.saturate.clicked().connect(&self.slot_saturate());
-            self.ui.desaturate.clicked().connect(&self.slot_desaturate());
-            self.ui.lighter.clicked().connect(&self.slot_lighter());
-            self.ui.darker.clicked().connect(&self.slot_darker());
-            self.ui.lighter_normal.clicked().connect(&self.slot_lighter_front());
-            self.ui.lighter_bold.clicked().connect(&self.slot_lighter_back());
-            self.ui.darker_normal.clicked().connect(&self.slot_darker_front());
-            self.ui.darker_bold.clicked().connect(&self.slot_darker_back());
+            ui.swap.clicked().connect(&self.slot_swap());
+            ui.reset.clicked().connect(&self.slot_reset());
+            ui.invert.clicked().connect(&self.slot_invert());
+            ui.random.clicked().connect(&self.slot_random());
+            ui.saturate.clicked().connect(&self.slot_saturate());
+            ui.desaturate.clicked().connect(&self.slot_desaturate());
+            ui.lighter.clicked().connect(&self.slot_lighter());
+            ui.darker.clicked().connect(&self.slot_darker());
+            ui.lighter_normal.clicked().connect(&self.slot_lighter_front());
+            ui.lighter_bold.clicked().connect(&self.slot_lighter_back());
+            ui.darker_normal.clicked().connect(&self.slot_darker_front());
+            ui.darker_bold.clicked().connect(&self.slot_darker_back());
         }
     }
 
@@ -376,17 +378,15 @@ impl PrefsCustomColor {
                 &mut world.custom_colors[i].background
             });
         }
+        let ui = &self.ui;
         unsafe {
-            self.ui.reset.clicked().connect(&self.slot_reset());
-            self.ui.invert.clicked().connect(&self.slot_invert());
-            self.ui.random.clicked().connect(&self.slot_random());
-            self.ui.saturate.clicked().connect(&self.slot_saturate());
-            self.ui
-                .desaturate
-                .clicked()
-                .connect(&self.slot_desaturate());
-            self.ui.lighter.clicked().connect(&self.slot_lighter());
-            self.ui.darker.clicked().connect(&self.slot_darker());
+            ui.reset.clicked().connect(&self.slot_reset());
+            ui.invert.clicked().connect(&self.slot_invert());
+            ui.random.clicked().connect(&self.slot_random());
+            ui.saturate.clicked().connect(&self.slot_saturate());
+            ui.desaturate.clicked().connect(&self.slot_desaturate());
+            ui.lighter.clicked().connect(&self.slot_lighter());
+            ui.darker.clicked().connect(&self.slot_darker());
         }
     }
 

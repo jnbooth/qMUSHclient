@@ -6,7 +6,10 @@ use std::path::Path;
 use std::rc::Rc;
 
 use cpp_core::{CppBox, NullPtr};
-use qt_core::{slot, FocusReason, QCoreApplication, QPtr, QString, SlotNoArgs, SlotOfInt};
+use qt_core::{
+    slot, FocusReason, QBox, QCoreApplication, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt,
+};
+use qt_gui::QTextDocument;
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::*;
@@ -33,6 +36,8 @@ fn only_filename(s: &str) -> &str {
 #[derive(RWidget, TrContext)]
 pub struct App {
     ui: uic::App,
+    notepad: QBox<QTextEdit>,
+    blank: QBox<QTextDocument>,
     save_dir: CppBox<QString>,
     save_filter: CppBox<QString>,
     recent: RefCell<VecDeque<String>>,
@@ -49,40 +54,52 @@ impl App {
             .get_list(KEY_RECENT)
             .unwrap_or_else(|_| VecDeque::new());
 
-        let this = Rc::new(App {
-            ui: uic::App::load(NullPtr),
-            save_dir: QString::from_std_str(SAVE_DIR),
-            save_filter: tr!("World files (*.qmc);;All Files (*.*)"),
-            recent: RefCell::new(recent),
-            world_tabs: RefCell::new(Vec::new()),
-            current: Cell::new(None),
-            current_input: RefCell::new(unsafe { QPtr::null() }),
-            settings,
-        });
-        this.init();
-        this
+        let ui = uic::App::load(NullPtr);
+
+        unsafe {
+            let this = Rc::new(App {
+                blank: QTextDocument::from_q_object(&ui.widget),
+                ui,
+                notepad: QTextEdit::new(),
+                save_dir: QString::from_std_str(SAVE_DIR),
+                save_filter: tr!("World files (*.qmc);;All Files (*.*)"),
+                recent: RefCell::new(recent),
+                world_tabs: RefCell::new(Vec::new()),
+                current: Cell::new(None),
+                current_input: RefCell::new(QPtr::null()),
+                settings,
+            });
+            this.init();
+            this
+        }
     }
 
     #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         unsafe {
-            self.ui.world_tabs.current_changed().connect(&self.slot_current_changed());
-            self.ui.world_tabs.tab_close_requested().connect(&self.slot_close_world());
-            self.ui.action_new.triggered().connect(&self.slot_new_world());
-            self.ui.action_open_world.triggered().connect(&self.slot_open_world());
-            self.ui.action_open_worlds_in_startup_list.triggered().connect(&self.slot_open_all());
-            self.ui.action_close_world.triggered().connect(&self.slot_close_current_world());
-            self.ui.action_save_world_details.triggered().connect(&self.slot_save_world());
-            self.ui.action_save_world_details_as.triggered().connect(&self.slot_save_world_as());
-            self.ui.action_world_properties.triggered().connect(&self.slot_open_preferences());
-            self.ui.action_exit.triggered().connect(&self.slot_exit());
+            self.notepad.hide();
+            self.notepad.set_enabled(false);
 
-            self.ui.action_undo.triggered().connect(&self.slot_undo());
-            self.ui.action_redo.triggered().connect(&self.slot_redo());
-            self.ui.action_cut.triggered().connect(&self.slot_cut());
-            self.ui.action_copy.triggered().connect(&self.slot_copy());
-            self.ui.action_paste.triggered().connect(&self.slot_paste());
-            self.ui.action_select_all.triggered().connect(&self.slot_select_all());
+            let ui = &self.ui;
+            ui.world_tabs.current_changed().connect(&self.slot_current_changed());
+            ui.world_tabs.tab_close_requested().connect(&self.slot_close_world());
+            ui.action_new.triggered().connect(&self.slot_new_world());
+            ui.action_open_world.triggered().connect(&self.slot_open_world());
+            ui.action_open_worlds_in_startup_list.triggered().connect(&self.slot_open_all());
+            ui.action_close_world.triggered().connect(&self.slot_close_current_world());
+            ui.action_save_world_details.triggered().connect(&self.slot_save_world());
+            ui.action_save_world_details_as.triggered().connect(&self.slot_save_world_as());
+            ui.action_world_properties.triggered().connect(&self.slot_open_preferences());
+            ui.action_exit.triggered().connect(&self.slot_exit());
+
+            ui.action_undo.triggered().connect(&self.slot_undo());
+            ui.action_redo.triggered().connect(&self.slot_redo());
+            ui.action_cut.triggered().connect(&self.slot_cut());
+            ui.action_copy.triggered().connect(&self.slot_copy());
+            ui.action_paste.triggered().connect(&self.slot_paste());
+            ui.action_select_all.triggered().connect(&self.slot_select_all());
+
+            ui.action_world_notepad.toggled().connect(&self.slot_toggle_notepad());
 
             self.recent.borrow_mut().truncate(config::MAX_RECENT);
             self.setup_recents();
@@ -98,12 +115,13 @@ impl App {
     }
 
     fn setup_recents(self: &Rc<Self>) {
+        let ui = &self.ui;
         for (i, (button, path)) in [
-            &self.ui.action_rec_1,
-            &self.ui.action_rec_2,
-            &self.ui.action_rec_3,
-            &self.ui.action_rec_4,
-            &self.ui.action_rec_5,
+            &ui.action_rec_1,
+            &ui.action_rec_2,
+            &ui.action_rec_3,
+            &ui.action_rec_4,
+            &ui.action_rec_5,
         ]
         .iter()
         .zip(self.recent.borrow().iter().map(ToOwned::to_owned))
@@ -148,25 +166,26 @@ impl App {
     }
 
     fn set_world_menus_enabled(&self, enabled: bool) {
+        let ui = &self.ui;
         for &action in &[
-            &self.ui.action_close_world,
-            &self.ui.action_import,
-            &self.ui.action_plugins,
-            &self.ui.action_plugin_wizard,
-            &self.ui.action_save_world_details,
-            &self.ui.action_save_world_details_as,
-            &self.ui.action_print,
-            &self.ui.action_log_session,
-            &self.ui.action_reload_defaults,
-            &self.ui.action_world_properties,
-            &self.ui.action_undo,
-            &self.ui.action_paste,
-            &self.ui.action_paste_to_world,
-            &self.ui.action_recall_last_word,
-            &self.ui.action_select_all,
-            &self.ui.action_debug_packets,
-            &self.ui.action_go_to_matching_brace,
-            &self.ui.action_select_to_matching_brace,
+            &ui.action_close_world,
+            &ui.action_import,
+            &ui.action_plugins,
+            &ui.action_plugin_wizard,
+            &ui.action_save_world_details,
+            &ui.action_save_world_details_as,
+            &ui.action_print,
+            &ui.action_log_session,
+            &ui.action_reload_defaults,
+            &ui.action_world_properties,
+            &ui.action_undo,
+            &ui.action_paste,
+            &ui.action_paste_to_world,
+            &ui.action_recall_last_word,
+            &ui.action_select_all,
+            &ui.action_debug_packets,
+            &ui.action_go_to_matching_brace,
+            &ui.action_select_to_matching_brace,
         ] {
             unsafe {
                 action.set_enabled(enabled);
@@ -178,21 +197,11 @@ impl App {
         let tabname = QString::from_std_str(world.name.replace('&', ""));
         let should_open = world.connect_method.is_some();
         let worldtab = WorldTab::new(self.widget(), world, filename);
-        unsafe {
-            self.ui.world_tabs.add_tab_2a(worldtab.widget(), &tabname);
-            self.ui
-                .world_tabs
-                .set_current_index(self.ui.world_tabs.count() - 1);
-            self.set_world_menus_enabled(true);
-
-            worldtab
-                .ui
-                .input
-                .set_focus_1a(FocusReason::ActiveWindowFocusReason);
-            if should_open {
-                worldtab.client.borrow_mut().connect();
-            }
+        if should_open {
+            worldtab.client.borrow_mut().connect();
         }
+        let tab = worldtab.widget();
+        let inputfield = worldtab.ui.input.clone();
         let this = Rc::downgrade(self);
         worldtab.connect_selection_changed(move |mode| {
             if let Some(this) = this.upgrade() {
@@ -200,10 +209,16 @@ impl App {
             }
         });
         self.world_tabs.borrow_mut().push(worldtab);
+        let ui = &self.ui;
+        unsafe {
+            ui.world_tabs.add_tab_2a(tab, &tabname);
+            ui.world_tabs.set_current_index(ui.world_tabs.count() - 1);
+            inputfield.set_focus_1a(FocusReason::ActiveWindowFocusReason);
+        }
     }
     fn current_tab(&self) -> Option<Rc<WorldTab>> {
         let current = self.current.get()?;
-        self.world_tabs.borrow().get(current).map(Clone::clone)
+        Some(self.world_tabs.borrow().get(current)?.clone())
     }
 
     fn save_world_file(self: &Rc<Self>, force_different: bool) {
@@ -256,17 +271,20 @@ impl App {
     #[slot(SlotOfInt)]
     fn current_changed(&self, index: c_int) {
         self.current.replace(usize::try_from(index).ok());
+        let ui = &self.ui;
         match self.current_tab() {
             None => {
                 self.set_world_menus_enabled(false);
-                self.current_input.replace(unsafe { QPtr::null() });
-                for action in &[
-                    &self.ui.action_cut,
-                    &self.ui.action_copy,
-                    &self.ui.action_copy_as_html,
-                    &self.ui.action_redo,
-                ] {
-                    unsafe {
+                unsafe {
+                    self.notepad.set_document(&self.blank);
+                    self.notepad.set_enabled(false);
+                    self.current_input.replace(QPtr::null());
+                    for action in &[
+                        &ui.action_cut,
+                        &ui.action_copy,
+                        &ui.action_copy_as_html,
+                        &ui.action_redo,
+                    ] {
                         action.set_enabled(false);
                     }
                 }
@@ -275,23 +293,21 @@ impl App {
                 self.set_world_menus_enabled(true);
                 self.current_input.replace(tab.ui.input.clone());
                 unsafe {
-                    self.ui
-                        .action_redo
-                        .set_enabled(tab.ui.input.is_redo_available());
+                    ui.action_redo.set_enabled(tab.ui.input.is_redo_available());
                     self.selection_changed(tab.selection_mode());
+                    self.notepad.set_document(&tab.notepad);
+                    self.notepad.set_enabled(true);
                 }
             }
         }
     }
 
     fn selection_changed(&self, mode: SelectionMode) {
+        let ui = &self.ui;
         unsafe {
-            self.ui.action_cut.set_enabled(mode == SelectionMode::Input);
-            self.ui
-                .action_copy
-                .set_enabled(mode != SelectionMode::Neither);
-            self.ui
-                .action_copy_as_html
+            ui.action_cut.set_enabled(mode == SelectionMode::Input);
+            ui.action_copy.set_enabled(mode != SelectionMode::Neither);
+            ui.action_copy_as_html
                 .set_enabled(mode == SelectionMode::Output);
         }
     }
@@ -362,11 +378,13 @@ impl App {
 
     #[slot(SlotNoArgs)]
     fn close_current_world(&self) {
+        unsafe { self.notepad.set_document(&self.blank) };
         self.close_world(self.current.get().unwrap() as c_int);
     }
 
     #[slot(SlotOfInt)]
     fn close_world(&self, i: c_int) {
+        unsafe { self.notepad.set_document(&self.blank) };
         let tab = self.world_tabs.borrow_mut().remove(i as usize);
         tab.client.borrow_mut().disconnect();
     }
@@ -433,6 +451,13 @@ impl App {
     #[slot(SlotNoArgs)]
     fn select_all(&self) {
         unsafe { self.with_input(QLineEdit::select_all) }
+    }
+
+    #[slot(SlotOfBool)]
+    fn toggle_notepad(&self, checked: bool) {
+        unsafe {
+            self.notepad.set_visible(checked);
+        }
     }
 
     #[slot(SlotNoArgs)]

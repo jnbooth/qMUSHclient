@@ -39,10 +39,9 @@ impl PrefsCommands {
             spam_line_count,
             spam_message,
         );
-        self.connect_font(
-            self.ui.input_font.clone(),
-            self.ui.input_font_size.clone(),
-            |world| &mut world.input_font,
-        );
+        let ui = &self.ui;
+        self.connect_font(ui.input_font.clone(), ui.input_font_size.clone(), |world| {
+            &mut world.input_font
+        });
     }
 }

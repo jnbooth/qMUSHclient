@@ -2,10 +2,10 @@ use std::cell::{self, RefCell};
 use std::rc::Rc;
 
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
-use qt_core::{slot, FocusReason, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs};
+use qt_core::{slot, FocusReason, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
 use qt_gui::q_text_cursor::MoveOperation;
-use qt_gui::QDesktopServices;
+use qt_gui::{QDesktopServices, QTextDocument};
 use qt_network::q_abstract_socket::SocketError;
 use qt_network::{QTcpSocket, SlotOfSocketError};
 use qt_widgets::q_message_box::{ButtonRole, Icon, StandardButton};
@@ -69,6 +69,7 @@ pub struct WorldTab {
     pub ui: uic::WorldTab,
     pub client: RefCell<Client>,
     pub saved: RefCell<Option<String>>,
+    pub notepad: QBox<QTextDocument>,
     world: RefCell<Rc<World>>,
 }
 
@@ -82,39 +83,44 @@ impl WorldTab {
         ui.init();
         ui.colorify(&world);
         let world = Rc::new(world);
-        let socketbox = unsafe { QTcpSocket::new_1a(&ui.widget) };
-        let socket = unsafe { socketbox.static_upcast() };
-        let client = unsafe { Client::new(ui.output.clone(), socketbox, world.clone()) };
+        unsafe {
+            let socketbox = QTcpSocket::new_1a(&ui.widget);
+            let socket = socketbox.static_upcast();
+            let client = Client::new(ui.output.clone(), socketbox, world.clone());
 
-        let this = Rc::new(Self {
-            client: RefCell::new(client),
-            saved: RefCell::new(saved),
-            ui,
-            world: RefCell::new(world),
-        });
-        this.init(socket);
-        this
+            let this = Rc::new(Self {
+                client: RefCell::new(client),
+                saved: RefCell::new(saved),
+                notepad: QTextDocument::from_q_object(&ui.widget),
+                ui,
+                world: RefCell::new(world),
+            });
+            this.init(socket);
+            this
+        }
     }
 
     #[rustfmt::skip]
     fn init(self: &Rc<Self>, socket: QPtr<QTcpSocket>) {
         unsafe {
+            let ui = &self.ui;
+            ui.output.set_read_only(true);
+            ui.output.custom_context_menu_requested().connect(&self.slot_menu_open());
+            ui.input.return_pressed().connect(&self.slot_send());
+            ui.input.editing_finished().connect(&self.slot_deselect());
+            ui.input.selection_changed().connect(&self.slot_input_selected());
+            ui.output.selection_changed().connect(&self.slot_output_selected());
             socket.error_occurred().connect(&self.slot_socket_error());
             socket.ready_read().connect(&self.slot_receive());
-            self.ui.output.set_read_only(true);
-            self.ui.output.custom_context_menu_requested().connect(&self.slot_menu_open());
-            self.ui.input.return_pressed().connect(&self.slot_send());
-            self.ui.input.editing_finished().connect(&self.slot_deselect());
-            self.ui.input.selection_changed().connect(&self.slot_input_selected());
-            self.ui.output.selection_changed().connect(&self.slot_output_selected());
         }
     }
 
     pub fn selection_mode(&self) -> SelectionMode {
+        let ui = &self.ui;
         unsafe {
-            if self.ui.input.has_selected_text() {
+            if ui.input.has_selected_text() {
                 SelectionMode::Input
-            } else if self.ui.output.text_cursor().has_selection() {
+            } else if ui.output.text_cursor().has_selection() {
                 SelectionMode::Output
             } else {
                 SelectionMode::Neither
@@ -123,8 +129,9 @@ impl WorldTab {
     }
 
     pub fn connect_selection_changed<F: FnMut(SelectionMode) + 'static>(&self, mut f: F) {
-        let input = self.ui.input.clone();
-        let output = self.ui.output.clone();
+        let ui = &self.ui;
+        let input = ui.input.clone();
+        let output = ui.output.clone();
         let mut mode = SelectionMode::get_current(&input, &output);
         unsafe {
             let slot = SlotNoArgs::new(self.widget(), move || {
@@ -134,8 +141,8 @@ impl WorldTab {
                     mode = new_mode;
                 }
             });
-            self.ui.input.selection_changed().connect(&slot);
-            self.ui.output.selection_changed().connect(&slot);
+            ui.input.selection_changed().connect(&slot);
+            ui.output.selection_changed().connect(&slot);
         }
     }
 
@@ -222,21 +229,23 @@ impl WorldTab {
     }
     #[slot(SlotNoArgs)]
     fn input_selected(&self) {
+        let ui = &self.ui;
         unsafe {
-            if self.ui.input.has_selected_text() {
-                self.ui.output.move_cursor_1a(MoveOperation::End);
+            if ui.input.has_selected_text() {
+                ui.output.move_cursor_1a(MoveOperation::End);
             }
         }
     }
     #[slot(SlotNoArgs)]
     fn output_selected(&self) {
+        let ui = &self.ui;
         unsafe {
-            if self.ui.output.text_cursor().has_selection() {
-                self.ui.input.deselect();
-                //self.ui.input.set_focus_policy(FocusPolicy::StrongFocus);
-                self.ui.output.set_focus_1a(FocusReason::MouseFocusReason);
+            if ui.output.text_cursor().has_selection() {
+                ui.input.deselect();
+                //ui.input.set_focus_policy(FocusPolicy::StrongFocus);
+                ui.output.set_focus_1a(FocusReason::MouseFocusReason);
             } else {
-                self.ui.input.set_focus_1a(FocusReason::MouseFocusReason);
+                ui.input.set_focus_1a(FocusReason::MouseFocusReason);
             }
         }
     }
@@ -248,29 +257,27 @@ impl WorldTab {
 
     #[slot(SlotNoArgs)]
     fn send(&self) {
-        let input = unsafe { self.ui.input.text() }.to_std_string();
+        let ui = &self.ui;
         unsafe {
-            self.ui.input.clear();
-        }
-        if let Err(e) = self.client.borrow_mut().send_command(input) {
-            eprintln!("Failed to send data: {}", e); // will be handled in GUI by socket_error()
+            let input = ui.input.text().to_std_string();
+            ui.input.clear();
+            if let Err(e) = self.client.borrow_mut().send_command(input) {
+                eprintln!("Failed to send data: {}", e); // will be handled in GUI by socket_error()
+            }
         }
     }
 
     #[slot(SlotOfQPoint)]
     fn menu_open(&self, point: Ref<QPoint>) {
+        let ui = &self.ui;
         unsafe {
-            let format = self
-                .ui
-                .output
-                .cursor_for_position(point.clone())
-                .char_format();
+            let format = ui.output.cursor_for_position(point.clone()).char_format();
             let anchor_names = format.anchor_names();
             if anchor_names.is_empty() {
-                self.ui.output.create_standard_context_menu_1a(point);
+                ui.output.create_standard_context_menu_1a(point);
                 return;
             }
-            let menu = QMenu::from_q_widget(&self.ui.output);
+            let menu = QMenu::from_q_widget(&ui.output);
             for anchor_name in anchor_names.iter() {
                 menu.add_action_q_string(anchor_name);
             }
@@ -281,7 +288,7 @@ impl WorldTab {
             if format.is_anchor() {
                 open_link(&chosen.text())
             } else {
-                self.ui.input.set_text(&chosen.text())
+                ui.input.set_text(&chosen.text())
             };
         }
     }
