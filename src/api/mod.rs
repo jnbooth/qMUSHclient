@@ -127,7 +127,9 @@ impl Api {
     }
 
     pub fn save_variables(&mut self) {
-        RSettings::default().set(&self.variables_key, &*self.variables.borrow());
+        if !self.variables_key.is_empty() {
+            RSettings::default().set(&self.variables_key, &*self.variables.borrow());
+        }
     }
 
     pub fn set_world(&mut self, world: Rc<World>) {
