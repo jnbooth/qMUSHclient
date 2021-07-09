@@ -6,7 +6,7 @@ use std::os::raw::c_int;
 /// An OR-combination of integer values of the enum type `E`.
 ///
 /// This type serves as a replacement for Qt's `QFlags` C++ template class.
-#[derive(Clone, Copy)]
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct QFlags<E> {
     value: c_int,
     _phantom_data: PhantomData<E>,
