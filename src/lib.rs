@@ -21,7 +21,6 @@ mod escape;
 mod ffi;
 mod mxp;
 mod persist;
-mod prependbufreader;
 mod script;
 mod ui;
 mod world;

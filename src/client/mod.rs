@@ -1,6 +1,6 @@
 use std::cell::RefCell;
 use std::convert::TryInto;
-use std::io::{self, BufReader, Read, Write};
+use std::io::{self, Read, Write};
 use std::iter::Iterator;
 use std::rc::Rc;
 use std::time::Instant;
@@ -19,7 +19,6 @@ use crate::client::state::Latest;
 use crate::constants::{branding, config};
 use crate::escape::{ansi, telnet};
 use crate::mxp;
-use crate::prependbufreader::prepend_buf_reader;
 use crate::script::{Callback, PluginHandler, PluginId};
 use crate::tr::TrContext;
 use crate::ui::{Notepad, Pad};
@@ -27,13 +26,13 @@ use crate::world::{AutoConnect, UseMxp, World};
 
 pub mod color;
 pub mod state;
+mod stream;
+use stream::MudStream;
 pub mod style;
 
 use color::WorldColor;
 use state::{ClientState, Mccp, Phase};
 use style::{Style, TextStyle};
-
-type Decompress<T> = flate2::bufread::ZlibDecoder<T>;
 
 #[inline]
 fn left<T>(xs: &[T], amt: usize) -> &[T] {
@@ -66,9 +65,9 @@ pub struct Client {
     widget: QPtr<QTextBrowser>,
     cursor: Cursor,
     socket: RIODevice<QTcpSocket>,
+    stream: MudStream,
     bufinput: [u8; config::SOCKET_BUFFER],
     bufoutput: Vec<u8>,
-    stream: Option<Decompress<BufReader<RIODevice<QTcpSocket>>>>,
     plugins: PluginHandler<Api>,
     world: Rc<World>,
     notepad: Rc<RefCell<Notepad>>,
@@ -101,10 +100,10 @@ impl Client {
         let mut this = Self {
             notepad,
             cursor: unsafe { Cursor::get(&widget) },
+            stream: MudStream::new(socket.clone()),
             socket,
             bufinput: [0; config::SOCKET_BUFFER],
             bufoutput: Vec::new(),
-            stream: None,
             style: Style::new(
                 CharFormat::from(unsafe { widget.current_char_format() }),
                 world.clone(),
@@ -188,11 +187,7 @@ impl Client {
     }
 
     pub fn read(&mut self) {
-        let res = match self.stream.as_mut() {
-            Some(stream) => stream.read(&mut self.bufinput),
-            None => self.socket.read(&mut self.bufinput),
-        };
-        match res {
+        match self.stream.read(&mut self.bufinput) {
             Ok(0) => (),
             Ok(res) => self.display_msg(self.bufinput[0..res].to_vec()),
             Err(e) => eprintln!("Stream error: {}", e),
@@ -241,9 +236,8 @@ impl Client {
         self.bufoutput.append(&mut self.state.utf8_sequence);
     }
 
-    fn init_zlib(&mut self, prepend: &[u8]) {
-        let buf = prepend_buf_reader(config::COMPRESS_BUFFER, self.socket.clone(), prepend);
-        self.stream = Some(Decompress::new(buf));
+    fn init_zlib(&mut self, prepend: Vec<u8>) {
+        self.stream.start_decompressing(prepend);
     }
 
     fn interpret_ansi(&mut self, code: u8) {
@@ -1151,7 +1145,6 @@ impl Client {
                             if self.world.disable_compression {
                                 telnet::DONT
                             } else {
-                                self.init_zlib(&[]);
                                 if c == telnet::COMPRESS && self.state.supports_mccp_2 {
                                     // already agreed to MCCP 2 - no compression
                                     telnet::DONT
@@ -1311,7 +1304,7 @@ impl Client {
                         iter.next();
                         // initialise compression library if not already done and copy
                         // compressed data to compression buffer
-                        self.init_zlib(iter.into_slice());
+                        self.init_zlib(iter.into_slice().to_vec());
                         // done with this loop, now it needs to be decompressed
                         return;
                     } else {
@@ -1345,10 +1338,10 @@ impl Client {
                                     self.state.mccp_ver = Some(Mccp::V2);
                                     // special case, can't keep treating the  data as if it was not compressed
                                     // skip SE (normaly done at end of loop)
-                                    iter.next();
+                                    //iter.next();
                                     // initialise compression library if not already done and copy
                                     // compressed data to compression buffer
-                                    self.init_zlib(iter.into_slice());
+                                    self.init_zlib(iter.into_slice().to_vec());
                                     // done with this loop, now it needs to be decompressed
                                     return;
                                 }
