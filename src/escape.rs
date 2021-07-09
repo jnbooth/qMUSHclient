@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 pub mod telnet {
     pub const ESC: u8 = 0x1B;
     /// IAC WILL END-OF-RECORD.
@@ -130,7 +132,6 @@ pub mod telnet {
     }
 }
 
-#[allow(dead_code)]
 pub mod ansi {
     pub const RESET: u8 = 0;
     pub const BOLD: u8 = 1;

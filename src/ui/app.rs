@@ -444,7 +444,6 @@ impl App {
     }
     #[slot(SlotNoArgs)]
     fn copy(&self) {
-        println!("lesgo");
         unsafe {
             match self.current_input.borrow().as_ref() {
                 Some(input) if input.has_selected_text() => input.copy(),

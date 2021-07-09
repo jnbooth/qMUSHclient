@@ -61,8 +61,7 @@ impl PrefsAddress {
     fn open_proxy_settings(&self) {
         let page = PrefsProxy::new(self.widget(), self.world.clone());
         unsafe {
-            let a = page.ui.widget.exec();
-            println!("{}", a);
+            page.ui.widget.exec();
         }
     }
 }
