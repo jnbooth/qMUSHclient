@@ -1,8 +1,8 @@
 use std::borrow::Borrow;
-use std::os::raw::c_int;
+use std::os::raw::{c_double, c_int};
 
-use cpp_core::{CppBox, Ptr, StaticUpcast};
-use qt_core::{LayoutDirection, QObject, QPtr, QString, QStringList};
+use cpp_core::{CastInto, CppBox, Ptr, StaticUpcast};
+use qt_core::{AlignmentFlag, LayoutDirection, QFlags, QObject, QPtr, QString, QStringList};
 use qt_gui::q_font::Weight;
 use qt_gui::q_text_cursor::{MoveMode, MoveOperation, SelectionType};
 pub use qt_gui::q_text_frame_format::Position as FramePosition;
@@ -72,21 +72,17 @@ impl Cursor {
     /// # Safety
     ///
     /// `widget` must be valid.
-    pub unsafe fn get<T: StaticUpcast<QTextEdit> + StaticUpcast<QObject>>(widget: &QPtr<T>) -> Self {
-        unsafe {
-            let widget: QPtr<QTextEdit> = widget.static_upcast();
-            widget.text_cursor().into()
-        }
+    pub unsafe fn get<T: CastInto<Ptr<QTextEdit>>>(widget: T) -> Self {
+        unsafe { widget.cast_into().text_cursor().into() }
     }
     /// Sets the visible cursor.
     ///
     /// # Safety
     ///
     /// `widget` must be valid.
-    pub unsafe fn set<T: StaticUpcast<QTextEdit> + StaticUpcast<QObject>>(&self, widget: &QPtr<T>) {
+    pub unsafe fn set<T: CastInto<Ptr<QTextEdit>>>(&self, widget: T) {
         unsafe {
-            let widget: QPtr<QTextEdit> = widget.static_upcast();
-            widget.set_text_cursor(&self.inner);
+            widget.cast_into().set_text_cursor(&self.inner);
         }
     }
     /// Returns the anchor position; this is the same as position() unless there is a selection in which case position() marks one end of the selection and anchor() marks the other end. Just like the cursor position, the anchor position is between characters.
@@ -486,6 +482,28 @@ macro_rules! impl_fmt {
 pub struct BlockFormat(pub(super) CppBox<QTextBlockFormat>);
 impl_fmt!(BlockFormat, QTextBlockFormat);
 
+impl BlockFormat {
+    pub fn alignment(&self) -> QFlags<AlignmentFlag> {
+        unsafe { self.0.alignment() }
+    }
+
+    pub fn set_alignment<T: Into<QFlags<AlignmentFlag>>>(&self, align: T) {
+        unsafe {
+            self.0.set_alignment(align.into());
+        }
+    }
+
+    pub fn heading_level(&self) -> c_int {
+        unsafe { self.0.heading_level() }
+    }
+
+    pub fn set_heading_level(&self, level: c_int) {
+        unsafe {
+            self.0.set_heading_level(level);
+        }
+    }
+}
+
 #[derive(Debug)]
 pub struct CharFormat(pub(super) CppBox<QTextCharFormat>);
 impl_fmt!(CharFormat, QTextCharFormat);
@@ -515,6 +533,16 @@ impl CharFormat {
     pub fn set_underline(&self, enable: bool) {
         unsafe {
             self.0.set_font_underline(enable);
+        }
+    }
+
+    pub fn size(&self) -> c_double {
+        unsafe { self.0.font_point_size() }
+    }
+
+    pub fn set_size(&self, size: c_double) {
+        unsafe {
+            self.0.set_font_point_size(size);
         }
     }
 

@@ -1,35 +1,27 @@
 use cpp_core::CppBox;
 use hashbrown::HashMap;
-use qt_core::{AlignmentFlag, QBox, QFlags, QString};
+use qt_core::{AlignmentFlag, QBox, QString};
 use qt_widgets::QTextEdit;
 
+use crate::binding::text::Cursor;
 use crate::binding::{Printable, RWidget};
 use crate::tr::TrContext;
 
-#[allow(dead_code)]
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, TrContext)]
 pub enum Pad {
-    Normal,
-    MxpDebug,
-    Trigger(String),
+    //Trigger(String),
     Script(String),
+    #[cfg(feature = "show-special")]
     PacketDebug,
-    LineInfo,
-    XmlComments,
-    PluginInfo(String),
 }
 
 impl Pad {
     fn title(&self) -> CppBox<QString> {
         match self {
-            Self::Normal => tr!("Notepad"),
-            Self::MxpDebug => tr!("MXP Messages"),
-            Self::Trigger(s) => QString::from_std_str(&s),
+            //Self::Trigger(s) => QString::from_std_str(&s),
             Self::Script(s) => QString::from_std_str(&s),
+            #[cfg(feature = "show-special")]
             Self::PacketDebug => tr!("Packet debug"),
-            Self::LineInfo => tr!("Line Information"),
-            Self::XmlComments => tr!("XML import notes"),
-            Self::PluginInfo(s) => tr!("{} description", s),
         }
     }
 }
@@ -37,18 +29,37 @@ impl Pad {
 #[derive(Debug, RWidget, TrContext)]
 struct PadWidget {
     widget: QBox<QTextEdit>,
+    cursor: Cursor,
     kind: Pad,
 }
 
 impl PadWidget {
-    fn new(suffix: &CppBox<QString>, kind: Pad) -> Self {
+    fn new(kind: Pad) -> Self {
         unsafe {
             let widget = QTextEdit::new();
-            let title = kind.title();
-            title.append_q_string(suffix);
-            widget.set_window_title(&title);
-            Self { widget, kind }
+            widget.set_read_only(true);
+            Self {
+                cursor: Cursor::get(&widget),
+                widget,
+                kind,
+            }
         }
+    }
+
+    fn retitle(&mut self, suffix: &CppBox<QString>) {
+        unsafe {
+            let title = self.kind.title();
+            title.append_q_string(suffix);
+            self.widget.set_window_title(&title);
+        }
+    }
+
+    fn insert_header(&self) {
+        let header = unsafe {
+            QString::from_std_str("<h2>%1</h2>").arg_q_string(&self.widget.window_title())
+        };
+        self.cursor.insert_html(header);
+        self.cursor.insert_block();
     }
 }
 
@@ -65,29 +76,40 @@ impl Notepad {
             pads: HashMap::new(),
         }
     }
+
+    pub fn retitle(&mut self, title: &str) {
+        self.suffix = QString::from_std_str(title);
+        for pad in self.pads.values_mut() {
+            pad.retitle(&self.suffix);
+        }
+    }
+
     fn get_or_create(&mut self, kind: Pad) -> &PadWidget {
         if !self.pads.contains_key(&kind) {
-            self.pads
-                .insert(kind.clone(), PadWidget::new(&self.suffix, kind.clone()));
+            let mut pad = PadWidget::new(kind.clone());
+            pad.retitle(&self.suffix);
+            pad.insert_header();
+            self.pads.insert(kind.clone(), pad);
         }
         &self.pads[&kind]
     }
 
     pub fn append<S: Printable>(&mut self, kind: Pad, align: AlignmentFlag, text: S) {
-        let pad = &self.get_or_create(kind).widget;
+        let pad = &self.get_or_create(kind);
+        if align == AlignmentFlag::AlignLeft {
+            pad.cursor.insert_text(text);
+        } else {
+            pad.cursor.format.block.set_alignment(align);
+            pad.cursor.insert_block();
+            pad.cursor.insert_text(text);
+            pad.cursor
+                .format
+                .block
+                .set_alignment(AlignmentFlag::AlignLeft);
+            pad.cursor.insert_block();
+        }
         unsafe {
-            if align == AlignmentFlag::AlignLeft {
-                pad.insert_plain_text(&text.to_print());
-            } else {
-                let cursor = pad.text_cursor();
-                let oldfmt = cursor.block_format();
-                let fmt = cursor.block_format();
-                fmt.set_alignment(QFlags::from(align));
-                cursor.insert_block_1a(&fmt);
-                cursor.insert_text_1a(&text.to_print());
-                cursor.insert_block_1a(&oldfmt);
-            }
-            pad.show();
+            pad.widget.show();
         }
     }
 
@@ -95,6 +117,7 @@ impl Notepad {
         if let Some(pad) = self.pads.get(&pad) {
             unsafe {
                 pad.widget.clear();
+                pad.insert_header();
             }
         }
     }

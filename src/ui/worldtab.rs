@@ -70,6 +70,7 @@ pub struct WorldTab {
     pub client: RefCell<Client>,
     pub saved: RefCell<Option<String>>,
     pub notepad: QBox<QTextDocument>,
+    pub notepad_title: CppBox<QString>,
     world: RefCell<Rc<World>>,
 }
 
@@ -82,6 +83,7 @@ impl WorldTab {
         let ui = uic::WorldTab::load(parent);
         ui.init();
         ui.colorify(&world);
+        let notepad_title = tr!("World Notepad - {}", world.name);
         let world = Rc::new(world);
         unsafe {
             let socketbox = QTcpSocket::new_1a(&ui.widget);
@@ -92,6 +94,7 @@ impl WorldTab {
                 client: RefCell::new(client),
                 saved: RefCell::new(saved),
                 notepad: QTextDocument::from_q_object(&ui.widget),
+                notepad_title,
                 ui,
                 world: RefCell::new(world),
             });
@@ -147,6 +150,14 @@ impl WorldTab {
     }
 
     pub fn set_world(&self, world: World) {
+        let newtitle = world.name.as_str();
+        if self.world.borrow().name != newtitle {
+            unsafe {
+                self.notepad_title
+                    .swap(&tr!("World Notepad - {}", world.name));
+            }
+            self.client.borrow_mut().retitle(newtitle);
+        }
         self.ui.colorify(&world);
         let world = Rc::new(world);
         self.client.borrow_mut().set_world(world.clone());

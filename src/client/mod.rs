@@ -142,6 +142,10 @@ impl Client {
         self.load_worldscript();
     }
 
+    pub fn retitle(&mut self, name: &str) {
+        self.notepad.borrow_mut().retitle(name);
+    }
+
     pub fn connect(&mut self) {
         let world = &*self.world;
         self.socket.connect(&world.site, world.port);
@@ -221,6 +225,7 @@ impl Client {
         self.scroll_to_bottom();
     }
 
+    #[cfg(feature = "show-special")]
     pub fn append_to_notepad<S: Printable>(&self, kind: Pad, align: AlignmentFlag, s: S) {
         self.notepad.borrow_mut().append(kind, align, s);
     }

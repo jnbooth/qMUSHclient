@@ -37,6 +37,7 @@ fn only_filename(s: &str) -> &str {
 pub struct App {
     ui: uic::App,
     notepad: QBox<QTextEdit>,
+    notepad_title: CppBox<QString>,
     blank: QBox<QTextDocument>,
     save_dir: CppBox<QString>,
     save_filter: CppBox<QString>,
@@ -61,6 +62,7 @@ impl App {
                 blank: QTextDocument::from_q_object(&ui.widget),
                 ui,
                 notepad: QTextEdit::new(),
+                notepad_title: tr!("World Notebook"),
                 save_dir: QString::from_std_str(SAVE_DIR),
                 save_filter: tr!("World files (*.qmc);;All Files (*.*)"),
                 recent: RefCell::new(recent),
@@ -79,6 +81,7 @@ impl App {
         unsafe {
             self.notepad.hide();
             self.notepad.set_enabled(false);
+            self.notepad.set_window_title(&self.notepad_title);
 
             let ui = &self.ui;
             ui.world_tabs.current_changed().connect(&self.slot_current_changed());
@@ -278,6 +281,7 @@ impl App {
                 unsafe {
                     self.notepad.set_document(&self.blank);
                     self.notepad.set_enabled(false);
+                    self.notepad.set_window_title(&self.notepad_title);
                     self.current_input.replace(QPtr::null());
                     for action in &[
                         &ui.action_cut,
@@ -297,6 +301,7 @@ impl App {
                     self.selection_changed(tab.selection_mode());
                     self.notepad.set_document(&tab.notepad);
                     self.notepad.set_enabled(true);
+                    self.notepad.set_window_title(&tab.notepad_title);
                 }
             }
         }
@@ -407,6 +412,9 @@ impl App {
         let prefs = WorldPrefs::new(self.widget(), Rc::downgrade(&worldcell));
         if prefs.exec() == DialogCode::Accepted {
             tab.set_world(Rc::try_unwrap(worldcell).unwrap().into_inner());
+            unsafe {
+                self.notepad.set_window_title(&tab.notepad_title);
+            }
         }
     }
 
