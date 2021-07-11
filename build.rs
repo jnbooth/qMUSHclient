@@ -41,7 +41,6 @@ fn build_lua_libs() {
 
     let lsqlite3 = root.join("lsqlite3");
     lua_build
-        .clone()
         .warnings(false)
         .file(lsqlite3.join("lsqlite3.c"))
         .file(lsqlite3.join("extras").join("extension-functions.c"))

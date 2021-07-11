@@ -45,24 +45,16 @@ impl Mode {
 
 impl Mode {
     pub const fn is_open(self) -> bool {
-        match self {
-            Self::OPEN | Self::PERM_OPEN => true,
-            _ => false,
-        }
+        matches!(self, Self::OPEN | Self::PERM_OPEN)
     }
     pub const fn is_secure(self) -> bool {
-        match self {
-            Self::SECURE | Self::SECURE_ONCE | Self::PERM_SECURE => true,
-            _ => false,
-        }
+        matches!(self, Self::SECURE | Self::SECURE_ONCE | Self::PERM_SECURE)
     }
     pub const fn is_mxp(self) -> bool {
-        match self {
-            Self::OPEN | Self::PERM_OPEN | Self::SECURE | Self::SECURE_ONCE | Self::PERM_SECURE => {
-                true
-            }
-            _ => false,
-        }
+        matches!(
+            self,
+            Self::PERM_OPEN | Self::SECURE | Self::SECURE_ONCE | Self::PERM_SECURE
+        )
     }
 }
 
@@ -195,10 +187,9 @@ const CHARS: &str = "\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0
 impl EntityMap {
     pub fn get(&self, key: &str) -> Result<Option<&str>, ParseError> {
         if key.starts_with('#') {
-            let id = if key.starts_with('x') {
-                u8::from_str_radix(&key[1..], 16)
-            } else {
-                u8::from_str_radix(key, 10)
+            let id = match key.strip_prefix('x') {
+                Some(hex) => u8::from_str_radix(hex, 16),
+                None => u8::from_str_radix(key, 10),
             }
             .map_err(|_| ParseError::new(key, Error::InvalidEntityNumber))?;
             if id < 32 && id != b'\t' && id != b'\n' && id != b'\r' {
@@ -258,6 +249,7 @@ impl EntityMap {
             b"ordf" => Some("ª"),
             b"laquo" => Some("«"),
             b"not" => Some("¬"),
+            #[allow(clippy::invisible_characters)]
             b"shy" => Some("­"),
             b"reg" => Some("®"),
             b"macr" => Some("¯"),

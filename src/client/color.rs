@@ -300,7 +300,7 @@ impl Colors {
             RColorPair::new(0x80FF80, GlobalColor::Transparent),
             RColorPair::new(0x80FFFF, GlobalColor::Transparent),
             RColorPair::new(0x0080FF, GlobalColor::Transparent),
-            RColorPair::new(0xFF80c0, GlobalColor::Transparent),
+            RColorPair::new(0xFF80C0, GlobalColor::Transparent),
             RColorPair::new(0xFF0000, GlobalColor::Transparent),
             RColorPair::new(0x0080C0, GlobalColor::Transparent),
             RColorPair::new(0x804040, GlobalColor::Transparent),

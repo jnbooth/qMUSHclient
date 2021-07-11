@@ -146,7 +146,7 @@ impl RColor {
         }
     }
 
-    fn with_hsla<F>(&self, f: F) -> Self
+    fn with_hsla<F>(&self, adjust: F) -> Self
     where
         F: FnOnce(&mut c_int, &mut c_int, &mut c_int, &mut c_int),
     {
@@ -159,7 +159,7 @@ impl RColor {
                 .to_hsl()
                 .get_hsl_4a(&mut h, &mut s, &mut l, &mut a);
         }
-        f(&mut h, &mut s, &mut l, &mut a);
+        adjust(&mut h, &mut s, &mut l, &mut a);
         Self::from(unsafe { QColor::from_hsl_4a(h, s, l, a) })
     }
 

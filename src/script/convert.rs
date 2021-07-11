@@ -11,17 +11,17 @@ pub trait ScriptRes: for<'lua> FromLuaMulti<'lua> {}
 impl<T: for<'lua> FromLuaMulti<'lua>> ScriptRes for T {}
 
 pub trait ScriptArg {
-    fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>>;
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value>;
 }
 
 impl ScriptArg for &QString {
-    fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         self.to_std_string().to_arg(lua)
     }
 }
 
 impl<T: ScriptArg> ScriptArg for Option<T> {
-    fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         match self {
             Some(val) => val.to_arg(lua),
             None => Ok(Value::Nil),
@@ -33,7 +33,7 @@ macro_rules! impl_arg {
     ($t:ty) => {
         impl ScriptArg for $t {
             #[inline]
-            fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+            fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
                 ToLua::to_lua(self, lua)
             }
         }
@@ -69,7 +69,7 @@ macro_rules! impl_arg_deref {
             for<'a> &'a T: ScriptArg,
             $(T: $bounds),*
         {
-            fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+            fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
                 (*self).to_arg(lua)
             }
         }
@@ -78,7 +78,7 @@ macro_rules! impl_arg_deref {
             for<'a> &'a T: ScriptArg,
             $(T: $bounds),*
         {
-            fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+            fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
                 (**self).to_arg(lua)
             }
         }
@@ -92,7 +92,7 @@ impl_arg_deref!(QPtr, StaticUpcast<QObject>);
 impl_arg_deref!(Rc);
 impl_arg_deref!(Ref);
 
-pub fn create_table<'lua, K, V, I>(lua: &'lua Lua, cont: I) -> mlua::Result<Value<'lua>>
+pub fn create_table<K, V, I>(lua: &Lua, cont: I) -> mlua::Result<Value>
 where
     K: ScriptArg,
     V: ScriptArg,
@@ -105,7 +105,7 @@ where
     lua.create_table_from(args?).map(Value::Table)
 }
 
-pub fn create_sequence<'lua, T, I>(lua: &'lua Lua, cont: I) -> mlua::Result<Value<'lua>>
+pub fn create_sequence<T, I>(lua: &Lua, cont: I) -> mlua::Result<Value>
 where
     T: ScriptArg,
     I: IntoIterator<Item = T>,
@@ -114,7 +114,7 @@ where
 }
 
 impl<T: ScriptArg> ScriptArg for Vec<T> {
-    fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         create_sequence(lua, self)
     }
 }
@@ -122,7 +122,7 @@ impl<T: ScriptArg> ScriptArg for Vec<T> {
 impl<K: ScriptArg + Eq + Hash, V: ScriptArg, S: BuildHasher> ScriptArg
     for hashbrown::HashMap<K, V, S>
 {
-    fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         create_table(lua, self)
     }
 }
@@ -130,29 +130,29 @@ impl<K: ScriptArg + Eq + Hash, V: ScriptArg, S: BuildHasher> ScriptArg
 impl<K: ScriptArg + Eq + Hash, V: ScriptArg, S: BuildHasher> ScriptArg
     for std::collections::HashMap<K, V, S>
 {
-    fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         create_table(lua, self)
     }
 }
 
 impl<K: ScriptArg + Ord, V: ScriptArg> ScriptArg for BTreeMap<K, V> {
-    fn to_arg<'lua>(self, lua: &'lua Lua) -> mlua::Result<Value<'lua>> {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         create_table(lua, self)
     }
 }
 
 pub trait ScriptArgs {
-    fn to_args<'lua>(self, lua: &'lua Lua) -> mlua::Result<MultiValue<'lua>>;
+    fn to_args(self, lua: &Lua) -> mlua::Result<MultiValue>;
 }
 
 impl ScriptArgs for () {
-    fn to_args<'lua>(self, _: &'lua Lua) -> mlua::Result<MultiValue<'lua>> {
+    fn to_args(self, _: &Lua) -> mlua::Result<MultiValue> {
         Ok(MultiValue::new())
     }
 }
 
 impl<T: ScriptArg> ScriptArgs for T {
-    fn to_args<'lua>(self, lua: &'lua Lua) -> mlua::Result<MultiValue<'lua>> {
+    fn to_args(self, lua: &Lua) -> mlua::Result<MultiValue> {
         ToLuaMulti::to_lua_multi(self.to_arg(lua), lua)
     }
 }
@@ -168,7 +168,7 @@ macro_rules! impl_args {
         where $($name: ScriptArg,)*
         {
             #[allow(non_snake_case)]
-            fn to_args<'lua>(self, lua: &'lua Lua) -> mlua::Result<MultiValue<'lua>> {
+            fn to_args(self, lua: &Lua) -> mlua::Result<MultiValue> {
                 let ($($name,)*) = self;
 
                 ToLuaMulti::to_lua_multi((

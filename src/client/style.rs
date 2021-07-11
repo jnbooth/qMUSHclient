@@ -24,7 +24,7 @@ fn invert(format: &CharFormat) {
 }
 
 fn set_bold(color: &WorldColor, bold: bool) -> Option<WorldColor> {
-    if let &WorldColor::Ansi(code) = color {
+    if let WorldColor::Ansi(code) = *color {
         if bold && code < 8 {
             return Some(WorldColor::Ansi(code + 8));
         } else if !bold && code >= 8 {
@@ -110,7 +110,7 @@ impl Style {
                 TextStyle::Underline => self.format.set_underline(true),
                 TextStyle::Italic => self.format.set_italic(true),
                 TextStyle::Strikeout => self.format.set_strikeout(true),
-                TextStyle::Inverse => invert(&mut self.format),
+                TextStyle::Inverse => invert(&self.format),
                 TextStyle::Bold => self.set_ansi_bold(true),
             }
         }
@@ -124,7 +124,7 @@ impl Style {
                     TextStyle::Underline => self.format.set_underline(false),
                     TextStyle::Italic => self.format.set_italic(false),
                     TextStyle::Strikeout => self.format.set_strikeout(false),
-                    TextStyle::Inverse => invert(&mut self.format),
+                    TextStyle::Inverse => invert(&self.format),
                     TextStyle::Bold => self.set_ansi_bold(false),
                 }
             }
@@ -140,7 +140,7 @@ impl Style {
             self.format.set_italic(false);
         }
         if clearing.contains(TextStyle::Inverse) {
-            invert(&mut self.format);
+            invert(&self.format);
         }
         if clearing.contains(TextStyle::Bold) {
             self.format.set_bold(false);
@@ -237,7 +237,7 @@ impl Style {
                 TextStyle::Underline => self.format.set_underline(enable),
                 TextStyle::Italic => self.format.set_italic(enable),
                 TextStyle::Strikeout => self.format.set_strikeout(enable),
-                TextStyle::Inverse => invert(&mut self.format),
+                TextStyle::Inverse => invert(&self.format),
                 TextStyle::Bold => self.set_ansi_bold(enable),
             }
         }

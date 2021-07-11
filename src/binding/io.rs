@@ -73,7 +73,12 @@ impl<Q: QIO> RIODevice<Q> {
     #[inline]
     fn qtry(&self, res: i64) -> io::Result<usize> {
         if res < 0 {
-            Err(unsafe { QIO::get_error(&self.inner) })
+            Err(unsafe {
+                io::Error::new(
+                    self.inner.io_error(),
+                    self.device.error_string().to_std_string(),
+                )
+            })
         } else {
             Ok(res as usize)
         }
@@ -94,11 +99,7 @@ impl<Q: QIO> RIODevice<Q> {
     }
 
     pub fn flush(&self) -> io::Result<()> {
-        if unsafe { QIO::flush(&self.inner) } {
-            Ok(())
-        } else {
-            Ok(()) // TODO
-        }
+        unsafe { self.inner.io_flush() }
     }
 
     pub fn close(&self) {
@@ -251,68 +252,136 @@ impl QIOError for ProcessError {
     }
 }
 
+#[allow(clippy::upper_case_acronyms)]
 pub trait QIO: CppDeletable + StaticUpcast<QIODevice> + StaticUpcast<QObject> {
-    /// # Safety
-    ///
-    /// `this` must be valid.
-    unsafe fn get_error(this: &QPtr<Self>) -> io::Error;
-    /// # Safety
-    ///
-    /// `this` must be valid.
-    unsafe fn flush(this: &QPtr<Self>) -> bool;
+    unsafe fn io_error(&self) -> io::ErrorKind;
+    unsafe fn io_flush(&self) -> io::Result<()>;
 }
-
-macro_rules! impl_qio {
-    ($t:ty, $me:ident) => {
-        impl QIO for $t {
-            unsafe fn get_error(this: &QPtr<Self>) -> io::Error {
-                unsafe {
-                    io::Error::new(
-                        QIOError::to_io_error(this.$me()),
-                        this.error_string().to_std_string(),
-                    )
-                }
-            }
-
-            unsafe fn flush(this: &QPtr<Self>) -> bool {
-                unsafe { this.flush() }
-            }
-        }
-    };
-}
-
-impl_qio!(QAbstractSocket, error2);
-impl_qio!(QSslSocket, error2);
-impl_qio!(QTcpSocket, error2);
-impl_qio!(QUdpSocket, error2);
-
-impl_qio!(QFileDevice, error);
-impl_qio!(QFile, error);
-impl_qio!(QSaveFile, error);
-
-impl_qio!(QLocalSocket, error2);
-
-impl_qio!(QNetworkReply, error2);
-
-impl_qio!(QProcess, error2);
 
 impl QIO for QBuffer {
-    unsafe fn get_error(this: &QPtr<Self>) -> io::Error {
-        io::Error::new(
-            io::ErrorKind::Other,
-            unsafe { this.error_string() }.to_std_string(),
-        )
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        io::ErrorKind::Other
     }
 
-    unsafe fn flush(_: &QPtr<Self>) -> bool {
-        true
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        Ok(())
     }
 }
 
-trait DummyFlush {
-    unsafe fn flush(&self) -> bool {
-        true
+impl QIO for QAbstractSocket {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error2().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        unsafe {
+            self.flush();
+        }
+        Ok(())
     }
 }
-impl DummyFlush for QNetworkReply {}
-impl DummyFlush for QProcess {}
+impl QIO for QSslSocket {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error2().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        unsafe {
+            self.flush();
+        }
+        Ok(())
+    }
+}
+impl QIO for QTcpSocket {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error2().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        unsafe {
+            self.flush();
+        }
+        Ok(())
+    }
+}
+impl QIO for QUdpSocket {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error2().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        unsafe {
+            self.flush();
+        }
+        Ok(())
+    }
+}
+impl QIO for QLocalSocket {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error2().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        unsafe {
+            self.flush();
+        }
+        Ok(())
+    }
+}
+
+impl QIO for QFileDevice {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        unsafe {
+            self.flush();
+        }
+        Ok(())
+    }
+}
+impl QIO for QFile {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        unsafe {
+            self.flush();
+        }
+        Ok(())
+    }
+}
+impl QIO for QSaveFile {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        unsafe {
+            self.flush();
+        }
+        Ok(())
+    }
+}
+
+impl QIO for QNetworkReply {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error2().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        Ok(())
+    }
+}
+
+impl QIO for QProcess {
+    unsafe fn io_error(&self) -> io::ErrorKind {
+        unsafe { self.error2().to_io_error() }
+    }
+
+    unsafe fn io_flush(&self) -> io::Result<()> {
+        Ok(())
+    }
+}

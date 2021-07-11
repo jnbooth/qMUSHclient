@@ -196,10 +196,7 @@ impl Plugin {
         let globals = engine.globals();
 
         let callbacks: EnumSet<Callback> = Callback::enumerate()
-            .filter(|cb| match globals.raw_get(cb.to_str()) {
-                Ok(Value::Function(..)) => true,
-                _ => false,
-            })
+            .filter(|cb| matches!(globals.raw_get(cb.to_str()), Ok(Value::Function(..))))
             .collect();
 
         std::mem::drop(globals);
@@ -279,9 +276,9 @@ impl<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> PluginHandle
 
         let mut initialize = String::new();
         for me in gatherer.into_vec() {
-            write!(
+            writeln!(
                 initialize,
-                "_G[{:?}] = function(...) __{}[{:?}](__{},...) end\n",
+                "_G[{:?}] = function(...) __{}[{:?}](__{},...) end",
                 me, USERDATA_KEY, me, USERDATA_KEY,
             )
             .ok();

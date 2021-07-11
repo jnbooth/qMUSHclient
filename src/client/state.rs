@@ -86,17 +86,17 @@ pub enum Phase {
 
 impl Phase {
     pub const fn is_mxp(self) -> bool {
-        match self {
+        matches!(
+            self,
             Self::MxpElement
-            | Self::MxpComment
-            | Self::MxpQuote
-            | Self::MxpEntity
-            | Self::MxpRoomName
-            | Self::MxpRoomDescription
-            | Self::MxpRoomExits
-            | Self::MxpWelcome => true,
-            _ => false,
-        }
+                | Self::MxpComment
+                | Self::MxpQuote
+                | Self::MxpEntity
+                | Self::MxpRoomName
+                | Self::MxpRoomDescription
+                | Self::MxpRoomExits
+                | Self::MxpWelcome
+        )
     }
 }
 

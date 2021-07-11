@@ -107,7 +107,7 @@ impl Element {
         };
 
         let tag = match scanner.next_or(&["tag"]).and_then(|s| s.parse().ok()) {
-            Some(i) if i < 20 || i > 99 => None,
+            Some(i) if !(20..=99).contains(&i) => None,
             tag => tag,
         };
 

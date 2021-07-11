@@ -154,7 +154,7 @@ impl App {
         self.setup_recents();
     }
 
-    fn open_world_file(self: &Rc<Self>, path: &String) {
+    fn open_world_file(self: &Rc<Self>, path: &str) {
         self.recent.borrow_mut().retain(|x| x != path);
         match persist::load_world(path) {
             Ok(world) => {
@@ -369,7 +369,7 @@ impl App {
 
     #[slot(SlotNoArgs)]
     fn open_all(self: &Rc<Self>) {
-        if let Ok(list) = self.settings.get_list::<Vec<_>>("startuplist") {
+        if let Ok(list) = self.settings.get_list::<Vec<String>>("startuplist") {
             for filename in list {
                 self.open_world_file(&filename);
             }

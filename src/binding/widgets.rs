@@ -52,37 +52,29 @@ pub trait RWidget {
                 Key::KeyReturn.to_int(),
                 QFlags::from(0),
             );
-            button
-                .clicked()
-                .connect(&SlotNoArgs::new(widget.clone(), move || {
-                    let try_dir = field.text();
-                    let dir = if try_dir.is_empty() {
-                        &default_dir
-                    } else {
-                        &try_dir
-                    };
-                    let filename = match browse {
-                        Browse::Open => QFileDialog::get_open_file_name_4a(
-                            widget.clone(),
-                            &caption,
-                            dir,
-                            &filter,
-                        ),
-                        Browse::Save => QFileDialog::get_save_file_name_4a(
-                            widget.clone(),
-                            &caption,
-                            dir,
-                            &filter,
-                        ),
-                        Browse::Directory => {
-                            QFileDialog::get_existing_directory_3a(widget.clone(), &caption, dir)
-                        }
-                    };
-                    if !filename.is_empty() {
-                        field.set_text(&filename);
-                        field.event(&keypress);
+            button.clicked().connect(&SlotNoArgs::new(widget, move || {
+                let try_dir = field.text();
+                let dir = if try_dir.is_empty() {
+                    &default_dir
+                } else {
+                    &try_dir
+                };
+                let filename = match browse {
+                    Browse::Open => {
+                        QFileDialog::get_open_file_name_4a(widget, &caption, dir, &filter)
                     }
-                }));
+                    Browse::Save => {
+                        QFileDialog::get_save_file_name_4a(widget, &caption, dir, &filter)
+                    }
+                    Browse::Directory => {
+                        QFileDialog::get_existing_directory_3a(widget, &caption, dir)
+                    }
+                };
+                if !filename.is_empty() {
+                    field.set_text(&filename);
+                    field.event(&keypress);
+                }
+            }));
         }
     }
 }

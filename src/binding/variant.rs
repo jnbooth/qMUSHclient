@@ -105,7 +105,7 @@ const TYPE_NAMES: [&str; 88] = [
     "QPolygonF",
     "QColorSpace",
 ];
-pub fn type_name(ty: Type) -> &'static str {
+pub const fn type_name(ty: Type) -> &'static str {
     let i = ty.to_int() as usize;
     if i == 121 {
         "QSizePolicy"
@@ -130,6 +130,43 @@ impl From<CppBox<QVariant>> for RVariant {
 impl RVariant {
     pub fn qtype(&self) -> Type {
         Type::from(unsafe { self.0.type_() }.to_int())
+    }
+
+    fn from_strings<S: AsRef<str>, I: IntoIterator<Item = S>>(iter: I) -> Self {
+        unsafe {
+            RVariant::from(QStringList::from_iter(
+                iter.into_iter().map(|x| QString::from_std_str(x.as_ref())),
+            ))
+        }
+    }
+
+    fn from_map<K, V, T>(value: T) -> Self
+    where
+        K: AsRef<str>,
+        V: Into<RVariant>,
+        T: IntoIterator<Item = (K, V)>,
+    {
+        unsafe {
+            let hashmap = QHashOfQStringQVariant::new();
+            for (k, v) in value {
+                hashmap.insert(&QString::from_std_str(k), &v.into().0);
+            }
+            RVariant::from(hashmap)
+        }
+    }
+
+    fn into_map<V, T>(self) -> Result<T, Error>
+    where
+        V: TryFrom<RVariant, Error = Error>,
+        T: FromIterator<(String, V)>,
+    {
+        let hashmap = CppBox::<QHashOfQStringQVariant>::try_from(self)?;
+        unsafe {
+            hashmap
+                .entries()
+                .map(|(k, v)| Ok((k.to_std_string(), recast(v)?)))
+                .collect()
+        }
     }
 }
 
@@ -165,7 +202,6 @@ impl_from!(from_u64, u64);
 impl_from!(from_bool, bool);
 impl_from!(from_double, c_double);
 impl_from!(from_float, c_float);
-impl_from!(from_char, *const c_char);
 impl_from_ref!(from_q_byte_array, QByteArray);
 impl_from_ref!(from_q_bit_array, QBitArray);
 impl_from_ref!(from_q_string, QString);
@@ -200,7 +236,7 @@ impl_from_ref!(from_q_json_document, QJsonDocument);
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Error {
     WrongType { tried: Type, actual: Type },
-    InvalidTime(Type, i64, u32),
+    InvalidTime { ty: Type, major: i64, minor: u32 },
 }
 
 impl Display for Error {
@@ -212,8 +248,14 @@ impl Display for Error {
                 type_name(actual),
                 type_name(tried)
             ),
-            Self::InvalidTime(ty, secs, nano) => {
-                write!(f, "invalid time: {}, {}:{:-<9}", type_name(ty), secs, nano)
+            Self::InvalidTime { ty, major, minor } => {
+                write!(
+                    f,
+                    "invalid time: {}, {}:{:-<9}",
+                    type_name(ty),
+                    major,
+                    minor
+                )
             }
         }
     }
@@ -323,8 +365,11 @@ impl TryFrom<RVariant> for NaiveDate {
         unsafe {
             let year = date.year_0a();
             let day = date.day_of_year_0a() as u32;
-            NaiveDate::from_yo_opt(year, day)
-                .ok_or_else(|| Error::InvalidTime(Type::QDate, year as i64, day))
+            NaiveDate::from_yo_opt(year, day).ok_or(Error::InvalidTime {
+                ty: Type::QDate,
+                major: year as i64,
+                minor: day,
+            })
         }
     }
 }
@@ -349,8 +394,11 @@ impl TryFrom<RVariant> for NaiveTime {
         let msecs = unsafe { time.msecs_since_start_of_day() } as u32;
         let secs = msecs / MILLI;
         let nano = (msecs % MILLI) * NANO;
-        NaiveTime::from_num_seconds_from_midnight_opt(secs, nano)
-            .ok_or_else(|| Error::InvalidTime(Type::QTime, secs as i64, nano))
+        NaiveTime::from_num_seconds_from_midnight_opt(secs, nano).ok_or(Error::InvalidTime {
+            ty: Type::QTime,
+            major: secs as i64,
+            minor: nano,
+        })
     }
 }
 
@@ -368,8 +416,11 @@ impl TryFrom<RVariant> for NaiveDateTime {
         let msecs = unsafe { datetime.to_m_secs_since_epoch() };
         let secs = msecs / MILLI as i64;
         let nano = (msecs % MILLI as i64) as u32 * NANO;
-        NaiveDateTime::from_timestamp_opt(secs, nano)
-            .ok_or_else(|| Error::InvalidTime(Type::QTime, secs, nano))
+        NaiveDateTime::from_timestamp_opt(secs, nano).ok_or(Error::InvalidTime {
+            ty: Type::QTime,
+            major: secs,
+            minor: nano,
+        })
     }
 }
 
@@ -417,41 +468,25 @@ impl From<&String> for RVariant {
 
 impl From<Vec<String>> for RVariant {
     fn from(value: Vec<String>) -> Self {
-        unsafe {
-            RVariant::from(QStringList::from_iter(
-                value.into_iter().map(|x| QString::from_std_str(&x)),
-            ))
-        }
+        Self::from_strings(value)
     }
 }
 
 impl From<&[String]> for RVariant {
     fn from(value: &[String]) -> Self {
-        unsafe {
-            RVariant::from(QStringList::from_iter(
-                value.into_iter().map(QString::from_std_str),
-            ))
-        }
+        Self::from_strings(value)
     }
 }
 
 impl From<Vec<&str>> for RVariant {
     fn from(value: Vec<&str>) -> Self {
-        unsafe {
-            RVariant::from(QStringList::from_iter(
-                value.into_iter().map(QString::from_std_str),
-            ))
-        }
+        Self::from_strings(value)
     }
 }
 
 impl From<&[&str]> for RVariant {
     fn from(value: &[&str]) -> Self {
-        unsafe {
-            RVariant::from(QStringList::from_iter(
-                value.into_iter().map(QString::from_std_str),
-            ))
-        }
+        Self::from_strings(value)
     }
 }
 
@@ -468,6 +503,60 @@ impl TryFrom<RVariant> for Vec<String> {
     }
 }
 
+impl<K: AsRef<str>> From<&hashbrown::HashMap<K, String>> for RVariant {
+    fn from(value: &hashbrown::HashMap<K, String>) -> Self {
+        Self::from_map(value)
+    }
+}
+impl<K: AsRef<str>, V: Into<RVariant>> From<hashbrown::HashMap<K, V>> for RVariant {
+    fn from(value: hashbrown::HashMap<K, V>) -> Self {
+        Self::from_map(value)
+    }
+}
+impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for hashbrown::HashMap<String, V> {
+    type Error = Error;
+
+    fn try_from(value: RVariant) -> Result<Self, Error> {
+        value.into_map()
+    }
+}
+
+impl<K: AsRef<str>> From<&collections::HashMap<K, String>> for RVariant {
+    fn from(value: &collections::HashMap<K, String>) -> Self {
+        Self::from_map(value)
+    }
+}
+impl<K: AsRef<str>, V: Into<RVariant>> From<collections::HashMap<K, V>> for RVariant {
+    fn from(value: collections::HashMap<K, V>) -> Self {
+        Self::from_map(value)
+    }
+}
+impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for collections::HashMap<String, V> {
+    type Error = Error;
+
+    fn try_from(value: RVariant) -> Result<Self, Error> {
+        value.into_map()
+    }
+}
+
+impl<K: AsRef<str>> From<&BTreeMap<K, String>> for RVariant {
+    fn from(value: &BTreeMap<K, String>) -> Self {
+        Self::from_map(value)
+    }
+}
+impl<K: AsRef<str>, V: Into<RVariant>> From<BTreeMap<K, V>> for RVariant {
+    fn from(value: BTreeMap<K, V>) -> Self {
+        Self::from_map(value)
+    }
+}
+impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for BTreeMap<String, V> {
+    type Error = Error;
+
+    fn try_from(value: RVariant) -> Result<Self, Error> {
+        value.into_map()
+    }
+}
+
 // Qt's copy-constructors are secretly reference counters. Although `T` could be cast directly
 // from the `Ref`, `new_copy` signals to Qt that this function wants ownership of the data.
 // There might be a way to do it without the copy constructor, but whenever I've tried, it seemed
@@ -476,87 +565,4 @@ impl TryFrom<RVariant> for Vec<String> {
 // with them for now.
 fn recast<T: TryFrom<RVariant, Error = Error>>(variant: Ref<QVariant>) -> Result<T, Error> {
     T::try_from(RVariant(unsafe { QVariant::new_copy(variant) }))
-}
-
-fn from_map<K, V, T>(value: T) -> RVariant
-where
-    K: AsRef<str>,
-    V: Into<RVariant>,
-    T: IntoIterator<Item = (K, V)>,
-{
-    unsafe {
-        let hashmap = QHashOfQStringQVariant::new();
-        for (k, v) in value {
-            hashmap.insert(&QString::from_std_str(k), &v.into().0);
-        }
-        RVariant::from(hashmap)
-    }
-}
-
-fn to_map<V, T>(value: RVariant) -> Result<T, Error>
-where
-    V: TryFrom<RVariant, Error = Error>,
-    T: FromIterator<(String, V)>,
-{
-    let hashmap = CppBox::<QHashOfQStringQVariant>::try_from(value)?;
-    unsafe {
-        hashmap
-            .entries()
-            .map(|(k, v)| Ok((k.to_std_string(), recast(v)?)))
-            .collect()
-    }
-}
-
-impl<K: AsRef<str>> From<&hashbrown::HashMap<K, String>> for RVariant {
-    fn from(value: &hashbrown::HashMap<K, String>) -> Self {
-        from_map(value)
-    }
-}
-impl<K: AsRef<str>, V: Into<RVariant>> From<hashbrown::HashMap<K, V>> for RVariant {
-    fn from(value: hashbrown::HashMap<K, V>) -> Self {
-        from_map(value)
-    }
-}
-impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for hashbrown::HashMap<String, V> {
-    type Error = Error;
-
-    fn try_from(value: RVariant) -> Result<Self, Error> {
-        to_map(value)
-    }
-}
-
-impl<K: AsRef<str>> From<&collections::HashMap<K, String>> for RVariant {
-    fn from(value: &collections::HashMap<K, String>) -> Self {
-        from_map(value)
-    }
-}
-impl<K: AsRef<str>, V: Into<RVariant>> From<collections::HashMap<K, V>> for RVariant {
-    fn from(value: collections::HashMap<K, V>) -> Self {
-        from_map(value)
-    }
-}
-impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for collections::HashMap<String, V> {
-    type Error = Error;
-
-    fn try_from(value: RVariant) -> Result<Self, Error> {
-        to_map(value)
-    }
-}
-
-impl<K: AsRef<str>> From<&BTreeMap<K, String>> for RVariant {
-    fn from(value: &BTreeMap<K, String>) -> Self {
-        from_map(value)
-    }
-}
-impl<K: AsRef<str>, V: Into<RVariant>> From<BTreeMap<K, V>> for RVariant {
-    fn from(value: BTreeMap<K, V>) -> Self {
-        from_map(value)
-    }
-}
-impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for BTreeMap<String, V> {
-    type Error = Error;
-
-    fn try_from(value: RVariant) -> Result<Self, Error> {
-        to_map(value)
-    }
 }

@@ -155,7 +155,7 @@ impl Error {
 }
 
 impl ScriptArg for Error {
-    fn to_arg<'lua>(self, _: &'lua Lua) -> mlua::Result<Value<'lua>> {
+    fn to_arg(self, _: &Lua) -> mlua::Result<Value> {
         Ok(Value::Integer(self as i64 + 1_000))
     }
 }

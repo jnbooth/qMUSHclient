@@ -156,8 +156,7 @@ impl Client {
     }
 
     pub fn connect(&mut self) {
-        let world = &*self.world;
-        self.socket.connect(&world.site, world.port);
+        self.socket.connect(&self.world.site, self.world.port);
         self.latest.connected = Instant::now();
     }
 
@@ -678,11 +677,9 @@ impl Client {
         // special processing for Pueblo
         // a tag like this: <A XCH_CMD="examine #1">
         // will convert to a SEND tag
-        if action == Action::Hyperlink {
-            if args.get("xch_cmd").is_some() {
-                self.state.pueblo_active = true; // for correct newline processing
-                action = Action::Send;
-            }
+        if action == Action::Hyperlink && args.get("xch_cmd").is_some() {
+            self.state.pueblo_active = true; // for correct newline processing
+            action = Action::Send;
         }
         match action {
             // temporarily make headlines the same as bold
@@ -746,7 +743,7 @@ impl Client {
                 for fg in scanner
                     .next_or(&["color", "fgcolor"])
                     .unwrap_or("")
-                    .split(",")
+                    .split(',')
                 {
                     match fg.to_lowercase().as_str() {
                         "blink" | "italic" => span.flags.insert(TextStyle::Italic),
@@ -791,12 +788,12 @@ impl Client {
                 self.send(Atom::supported(args)).ok();
             }
             Action::User => {
-                if !world.player.is_empty() && world.connect_method == Some(AutoConnect::MXP) {
+                if !world.player.is_empty() && world.connect_method == Some(AutoConnect::Mxp) {
                     self.send(format!("{}\n", world.player)).ok();
                 }
             }
             Action::Password => {
-                if !world.password.is_empty() && world.connect_method == Some(AutoConnect::MXP) {
+                if !world.password.is_empty() && world.connect_method == Some(AutoConnect::Mxp) {
                     self.send(format!("{}\n", world.password)).ok();
                 }
             }
@@ -884,7 +881,7 @@ impl Client {
             }
             Action::Var => {
                 let variable = args.get(0).unwrap_or("");
-                if mxp::is_valid(variable) && !mxp::EntityMap::global(variable).is_some() {
+                if mxp::is_valid(variable) && mxp::EntityMap::global(variable).is_none() {
                     span.variable = Some(variable.to_owned());
                 }
             }
@@ -1093,7 +1090,7 @@ impl Client {
                 | Phase::Background24bgFinish
                 | Phase::Background24bbFinish => {
                     self.flush(); // style is changing, so be sure to print whatever we've got
-                    if c >= b'0' && c <= b'9' {
+                    if (b'0'..=b'9').contains(&c) {
                         self.state.ansi_code = self.state.ansi_code * 10 + (c - b'0');
                     } else if c == b'm' {
                         self.interpret_code();
@@ -1152,18 +1149,15 @@ impl Client {
                     self.phase = Phase::Normal; // back to normal text after this character
                     let verb = match c {
                         telnet::COMPRESS | telnet::COMPRESS2 => {
-                            if self.world.disable_compression {
+                            if self.world.disable_compression
+                                || (c == telnet::COMPRESS && self.state.supports_mccp_2)
+                            {
                                 telnet::DONT
                             } else {
-                                if c == telnet::COMPRESS && self.state.supports_mccp_2 {
-                                    // already agreed to MCCP 2 - no compression
-                                    telnet::DONT
-                                } else {
-                                    if c == telnet::COMPRESS2 {
-                                        self.state.supports_mccp_2 = true;
-                                    }
-                                    telnet::DO
+                                if c == telnet::COMPRESS2 {
+                                    self.state.supports_mccp_2 = true;
                                 }
+                                telnet::DO
                             }
                         }
                         telnet::SGA => telnet::DO, // Suppress GoAhead

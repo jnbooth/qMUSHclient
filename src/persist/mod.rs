@@ -33,7 +33,7 @@ const CURRENT_VERSION: u8 = 1;
 
 pub fn save_world(world: &World, path: &str) -> Result<(), Box<dyn StdError>> {
     let mut file = File::create(path)?;
-    file.write(&[CURRENT_VERSION])?;
+    file.write_all(&[CURRENT_VERSION])?;
     bincode::serialize_into(file, world)?;
     Ok(())
 }

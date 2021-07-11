@@ -1,3 +1,5 @@
+#![allow(clippy::wrong_self_convention)]
+#![allow(clippy::from_str_radix_10)]
 #![warn(unsafe_op_in_unsafe_fn)]
 
 #[macro_use]

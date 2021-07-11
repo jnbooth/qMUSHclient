@@ -26,9 +26,9 @@ pub enum ProxyType {
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
 pub enum AutoConnect {
-    MUSH,
+    Mush,
     Diku,
-    MXP,
+    Mxp,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]

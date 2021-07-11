@@ -282,7 +282,7 @@ impl WorldTab {
     fn menu_open(&self, point: Ref<QPoint>) {
         let ui = &self.ui;
         unsafe {
-            let format = ui.output.cursor_for_position(point.clone()).char_format();
+            let format = ui.output.cursor_for_position(point).char_format();
             let anchor_names = format.anchor_names();
             if anchor_names.is_empty() {
                 ui.output.create_standard_context_menu_1a(point);

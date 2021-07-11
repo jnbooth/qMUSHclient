@@ -166,7 +166,7 @@ impl Atom {
     }
 
     pub fn supported(args: Arguments) -> String {
-        const ERR: &'static str = "unexpected format error in Atom::supported";
+        const ERR: &str = "unexpected format error in Atom::supported";
         let mut supported = String::from("\x1B[1z<SUPPORTS ");
         if args.is_empty() {
             for atom in ALL_ATOMS.values() {
@@ -177,7 +177,7 @@ impl Atom {
             }
         } else {
             for arg in args.values() {
-                let mut questions = arg.split(".");
+                let mut questions = arg.split('.');
                 let tag = questions.next().unwrap();
                 match Atom::get(tag) {
                     None => write!(supported, "-{} ", tag).expect(ERR),

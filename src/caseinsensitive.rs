@@ -243,6 +243,7 @@ impl<'a, S: ?Sized + ToOwned + AsRef<str>> CaseFold<'a, S> {
     }
 
     #[inline]
+    #[allow(clippy::type_complexity)]
     fn pair<'b, Rhs: ?Sized + ToOwned + AsRef<str>>(
         &'a self,
         other: &'b CaseFold<'b, Rhs>,
