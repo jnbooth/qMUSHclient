@@ -12,7 +12,7 @@ use qt_widgets::q_message_box::{ButtonRole, Icon, StandardButton};
 use qt_widgets::*;
 
 use super::uic;
-use crate::binding::color::Colored;
+use crate::binding::color::RColorPair;
 use crate::binding::{QList, RWidget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
@@ -52,9 +52,12 @@ impl uic::WorldTab {
         }
     }
     fn colorify(&self, world: &World) {
-        self.output
-            .set_background_color(world.color(&WorldColor::BLACK));
+        let colorpair = RColorPair::new(
+            world.color(&WorldColor::WHITE).clone(),
+            world.color(&WorldColor::BLACK).clone(),
+        );
         unsafe {
+            self.output.set_style_sheet(&colorpair.stylesheet());
             self.output.document().set_default_font(&world.input_font);
             // QLineEdit requires a little coaxing to enable transparency
             self.input

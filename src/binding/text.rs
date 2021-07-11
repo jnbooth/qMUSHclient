@@ -1,4 +1,5 @@
 use std::borrow::Borrow;
+use std::ops::Deref;
 use std::os::raw::{c_double, c_int};
 
 use cpp_core::{CastInto, CppBox, Ptr, StaticUpcast};
@@ -453,26 +454,72 @@ impl Block {
     }
 }
 
+pub struct TextFormat(pub(super) QTextFormat);
+
+impl TextFormat {
+    fn new(fmt: &QTextFormat) -> &Self {
+        // SAFETY: Basic pointer stuff. This is the exact same trick used by Path and OsStr.
+        unsafe { &*(fmt as *const QTextFormat as *const Self) }
+    }
+
+    /// Clears the brush used to paint the document's foreground. The default brush will be used.
+    pub fn clear_foreground(&self) {
+        unsafe {
+            self.0.clear_foreground();
+        }
+    }
+
+    /// Clears the brush used to paint the document's background. The default brush will be used.
+    pub fn clear_background(&self) {
+        unsafe {
+            self.0.clear_background();
+        }
+    }
+
+    /// Returns the document's layout direction.
+    pub fn layout_direction(&self) -> LayoutDirection {
+        unsafe { self.0.layout_direction() }
+    }
+
+    /// Sets the document's layout direction to the specified direction.
+    pub fn set_layout_direction(&self, direction: LayoutDirection) {
+        unsafe {
+            self.0.set_layout_direction(direction);
+        }
+    }
+}
+
+impl Colored for TextFormat {
+    fn foreground_color(&self) -> RColor {
+        self.0.foreground_color()
+    }
+
+    fn set_foreground_color(&self, color: &RColor) {
+        self.0.set_foreground_color(color)
+    }
+
+    fn background_color(&self) -> RColor {
+        self.0.background_color()
+    }
+
+    fn set_background_color(&self, color: &RColor) {
+        self.0.set_background_color(color)
+    }
+}
+
 macro_rules! impl_fmt {
     ($t:ty, $from:ty) => {
-        impl From<CppBox<$from>> for $t {
-            fn from(value: CppBox<$from>) -> Self {
-                Self(value)
+        impl Deref for $t {
+            type Target = TextFormat;
+
+            fn deref(&self) -> &Self::Target {
+                TextFormat::new(self.0.deref())
             }
         }
 
-        impl Colored for $t {
-            fn foreground_color(&self) -> RColor {
-                self.0.foreground_color()
-            }
-            fn background_color(&self) -> RColor {
-                self.0.background_color()
-            }
-            fn set_foreground_color(&self, color: &RColor) {
-                self.0.set_foreground_color(color)
-            }
-            fn set_background_color(&self, color: &RColor) {
-                self.0.set_background_color(color)
+        impl From<CppBox<$from>> for $t {
+            fn from(value: CppBox<$from>) -> Self {
+                Self(value)
             }
         }
     };

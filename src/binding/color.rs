@@ -16,6 +16,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub struct RColor {
     pub(super) inner: CppBox<QBrush>,
     code: c_uint,
+    transparent: bool,
 }
 
 // SAFETY: RColor is immutable.
@@ -48,6 +49,7 @@ impl Clone for RColor {
         Self {
             inner: unsafe { QBrush::new_copy(&self.inner) },
             code: self.code,
+            transparent: self.transparent,
         }
     }
 }
@@ -55,6 +57,7 @@ impl Debug for RColor {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         f.debug_struct("RColor")
             .field("code", &format_args!("#{:08X}", self.code))
+            .field("transparent", &self.transparent)
             .finish()
     }
 }
@@ -121,6 +124,7 @@ impl RColor {
             let color = color.cast_into();
             Self {
                 code: color.rgba(),
+                transparent: color.alpha() == 0,
                 inner: QBrush::from_q_color(color),
             }
         }
@@ -215,6 +219,12 @@ impl RColorPair {
             self.foreground, self.background
         ))
     }
+
+    pub fn set_style<T: CastInto<Ptr<QWidget>>>(&self, widget: T) {
+        unsafe {
+            widget.cast_into().set_style_sheet(&self.stylesheet());
+        }
+    }
 }
 
 pub trait HasPalette {
@@ -268,7 +278,11 @@ impl Colored for QTextFormat {
     }
     fn set_background_color(&self, color: &RColor) {
         unsafe {
-            self.set_background(&color.inner);
+            if color.transparent {
+                self.clear_background();
+            } else {
+                self.set_background(&color.inner);
+            }
         }
     }
 }

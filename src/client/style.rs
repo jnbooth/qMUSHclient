@@ -157,38 +157,36 @@ impl Style {
 
     fn set_foreground_raw(&mut self, color: WorldColor) {
         if self.foreground != color {
-            let fg = if color != WorldColor::WHITE {
-                self.world.color(&color)
+            if color != WorldColor::WHITE {
+                self.format.set_foreground_color(self.world.color(&color));
             } else if let Some(newcolor) = self
                 .spans
                 .iter()
                 .rev()
                 .find_map(|span| span.foreground.as_ref())
             {
-                newcolor
+                self.format.set_foreground_color(newcolor);
             } else {
-                self.world.color(&color)
+                self.format.clear_foreground();
             };
-            self.format.set_foreground_color(fg);
             self.foreground = color;
         }
     }
 
     fn set_background_raw(&mut self, color: WorldColor) {
         if self.background != color {
-            let bg = if color != WorldColor::BLACK {
-                self.world.color(&color)
+            if color != WorldColor::BLACK {
+                self.format.set_background_color(self.world.color(&color));
             } else if let Some(newcolor) = self
                 .spans
                 .iter()
                 .rev()
                 .find_map(|span| span.background.as_ref())
             {
-                newcolor
+                self.format.set_background_color(newcolor);
             } else {
-                self.world.color(&color)
+                self.format.clear_background();
             };
-            self.format.set_background_color(bg);
             self.background = color;
         }
     }
@@ -249,9 +247,7 @@ impl Style {
                 .find_map(|span| span.foreground.as_ref())
             {
                 Some(fg) => self.format.set_foreground_color(fg),
-                None => self
-                    .format
-                    .set_foreground_color(self.world.color(&WorldColor::WHITE)),
+                None => self.format.clear_foreground(),
             }
         }
         if self.background == WorldColor::BLACK {
@@ -262,17 +258,7 @@ impl Style {
                 .find_map(|span| span.background.as_ref())
             {
                 Some(bg) => self.format.set_background_color(bg),
-                None => self
-                    .format
-                    .set_background_color(self.world.color(&WorldColor::BLACK)),
-            }
-            if let Some(bg) = self
-                .spans
-                .iter()
-                .rev()
-                .find_map(|span| span.background.as_ref())
-            {
-                self.format.set_background_color(&bg);
+                None => self.format.clear_background(),
             }
         }
         self.span_flags = new_flags;
