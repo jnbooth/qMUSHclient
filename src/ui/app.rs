@@ -156,13 +156,22 @@ impl App {
 
     fn open_world_file(self: &Rc<Self>, path: &str) {
         self.recent.borrow_mut().retain(|x| x != path);
+        use persist::Error;
         match persist::load_world(path) {
             Ok(world) => {
                 self.title_from_file(path);
                 self.recent.borrow_mut().push_front(path.to_owned());
                 self.start_world(world, Some(path.to_owned()));
             }
-            Err(e) => self.alert(Icon::Critical, tr!("Cannot open file"), &*e),
+            Err(Error::FileError(e)) => {
+                self.alert(Icon::Critical, tr!("Couldn't open the file"), &e)
+            }
+            Err(Error::SerialError(e)) => {
+                self.alert(Icon::Critical, tr!("Failed to decode the file"), &e)
+            }
+            Err(Error::NotSave) => {
+                self.alert(Icon::Critical, tr!("Incorrect file type"), &Error::NotSave)
+            }
         }
 
         self.save_recents();
@@ -246,9 +255,17 @@ impl App {
             return;
         }
 
-        if let Err(e) = persist::save_world(&world, &save_as) {
-            self.alert(Icon::Critical, tr!("Cannot save file"), &*e);
-            return;
+        use persist::Error;
+        match persist::save_world(&world, &save_as) {
+            Err(Error::FileError(e)) => {
+                self.alert(Icon::Critical, tr!("Couldn't save the file"), &e);
+                return;
+            }
+            Err(Error::SerialError(e)) => {
+                self.alert(Icon::Critical, tr!("Failed to encode the file"), &e);
+                return;
+            }
+            _ => (),
         }
 
         self.title_from_file(&save_as);
