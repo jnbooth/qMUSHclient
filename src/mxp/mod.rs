@@ -225,7 +225,7 @@ impl EntityMap {
                 return Ok(None);
             }
             match el.attributes.iter().find(|&(i, attr)| match i {
-                ArgumentIndex::Positional(_) => attr.eq_ignore_ascii_case(entity),
+                ArgumentIndex::Positional(..) => attr.eq_ignore_ascii_case(entity),
                 ArgumentIndex::Named(name) => name.eq_ignore_ascii_case(entity),
             }) {
                 None => self.get(entity),

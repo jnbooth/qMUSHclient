@@ -248,7 +248,7 @@ impl Style {
                 .rev()
                 .find_map(|span| span.foreground.as_ref())
             {
-                Some(fg) => self.format.set_foreground_color(&fg),
+                Some(fg) => self.format.set_foreground_color(fg),
                 None => self
                     .format
                     .set_foreground_color(self.world.color(&WorldColor::WHITE)),
@@ -261,7 +261,7 @@ impl Style {
                 .rev()
                 .find_map(|span| span.background.as_ref())
             {
-                Some(bg) => self.format.set_background_color(&bg),
+                Some(bg) => self.format.set_background_color(bg),
                 None => self
                     .format
                     .set_background_color(self.world.color(&WorldColor::BLACK)),

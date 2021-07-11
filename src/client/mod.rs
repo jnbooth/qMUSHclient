@@ -620,7 +620,7 @@ impl Client {
                         for (i, arg) in &item.arguments {
                             let val = self.state.mxp_entities.decode_el(el, arg, &args)?;
                             match i {
-                                mxp::ArgumentIndex::Positional(_) => newargs.push(val),
+                                mxp::ArgumentIndex::Positional(..) => newargs.push(val),
                                 mxp::ArgumentIndex::Named(key) => newargs.set(key, val),
                             }
                         }
@@ -1062,7 +1062,7 @@ impl Client {
                     if let Ok(utf8array) = self.state.utf8_sequence.as_slice().try_into() {
                         match char::from_u32(u32::from_be_bytes(utf8array)) {
                             None => self.output_bad_utf8(),
-                            Some(_) => {
+                            Some(..) => {
                                 self.phase = Phase::Normal;
                                 self.bufoutput.append(&mut self.state.utf8_sequence);
                             }

@@ -31,15 +31,15 @@ impl<'a> From<&'a str> for ArgumentIndex<'a> {
 impl<'a> ArgumentIndex<'a> {
     pub fn is_positional(self) -> bool {
         match self {
-            Self::Positional(_) => true,
-            Self::Named(_) => false,
+            Self::Positional(..) => true,
+            Self::Named(..) => false,
         }
     }
 
     pub fn is_named(self) -> bool {
         match self {
-            Self::Positional(_) => false,
-            Self::Named(_) => true,
+            Self::Positional(..) => false,
+            Self::Named(..) => true,
         }
     }
 }

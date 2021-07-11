@@ -155,7 +155,7 @@ impl<'a> ElementComponent<'a> {
 
     pub fn variable(&self) -> Option<String> {
         match self {
-            Self::Atom(_) => None,
+            Self::Atom(..) => None,
             Self::Custom(el) => el.variable.clone(),
         }
     }

@@ -197,7 +197,7 @@ impl Plugin {
 
         let callbacks: EnumSet<Callback> = Callback::enumerate()
             .filter(|cb| match globals.raw_get(cb.to_str()) {
-                Ok(Value::Function(_)) => true,
+                Ok(Value::Function(..)) => true,
                 _ => false,
             })
             .collect();
@@ -265,9 +265,9 @@ pub struct PluginHandler<U: 'static + UserData + for<'a> CloneWith<&'a PluginMet
 const USERDATA_KEY: &str = "__ud";
 
 const fn truthy(value: &Value) -> bool {
-    match value {
+    match *value {
         Value::Nil | Value::Boolean(false) | Value::Integer(0) => false,
-        Value::Number(f) => *f as u64 == 0,
+        Value::Number(f) => f as u64 == 0,
         _ => true,
     }
 }

@@ -179,14 +179,14 @@ pub enum CaseFold<'a, S: 'a + ToOwned + ?Sized> {
 
 impl<'a, S: 'a + ToOwned + ?Sized> Clone for CaseFold<'a, S> {
     fn clone(&self) -> Self {
-        match *self {
+        match self {
             Self::BorrowedAscii(b) => Self::BorrowedAscii(b),
-            Self::Ascii(ref o) => {
+            Self::Ascii(o) => {
                 let b: &S = o.borrow();
                 Self::Ascii(b.to_owned())
             }
             Self::BorrowedUnicode(b) => Self::BorrowedUnicode(b),
-            Self::Unicode(ref o) => {
+            Self::Unicode(o) => {
                 let b: &S = o.borrow();
                 Self::Unicode(b.to_owned())
             }
@@ -252,8 +252,8 @@ impl<'a, S: ?Sized + ToOwned + AsRef<str>> CaseFold<'a, S> {
     > {
         match (self.try_ascii(), other.try_ascii()) {
             (Ok(x), Ok(y)) => Ok((x, y)),
-            (Ok(_), Err(y)) => Err((self.as_unicode(), y)),
-            (Err(x), Ok(_)) => Err((x, other.as_unicode())),
+            (Ok(..), Err(y)) => Err((self.as_unicode(), y)),
+            (Err(x), Ok(..)) => Err((x, other.as_unicode())),
             (Err(x), Err(y)) => Err((x, y)),
         }
     }
