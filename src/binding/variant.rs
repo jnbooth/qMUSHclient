@@ -1,6 +1,7 @@
 use std::collections;
 use std::collections::BTreeMap;
 use std::convert::TryFrom;
+use std::error::Error as StdError;
 use std::fmt::{self, Display, Formatter};
 use std::iter::FromIterator;
 use std::os::raw::*;
@@ -198,34 +199,39 @@ impl_from_ref!(from_q_json_document, QJsonDocument);
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Error {
-    MismatchedType(Type),
+    WrongType { tried: Type, actual: Type },
     InvalidTime(Type, i64, u32),
 }
 
 impl Display for Error {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        match self {
-            Self::MismatchedType(ty) => write!(f, "MismatchedType({})", type_name(*ty)),
+        match *self {
+            Self::WrongType { tried, actual } => write!(
+                f,
+                "tried to convert {} to {}",
+                type_name(actual),
+                type_name(tried)
+            ),
             Self::InvalidTime(ty, secs, nano) => {
-                write!(f, "InvalidTime({}, {}:{:-<9})", type_name(*ty), secs, nano)
+                write!(f, "invalid time: {}, {}:{:-<9}", type_name(ty), secs, nano)
             }
         }
     }
 }
 
-impl std::error::Error for Error {}
+impl StdError for Error {}
 
 macro_rules! impl_try_from {
-    ($me:ident, $t:ty, $($qt:ident),+) => {
+    ($me:ident, $t:ty, $qt1:ident$(, $qt:ident)*) => {
         impl TryFrom<RVariant> for $t {
             type Error = Error;
 
             fn try_from(value: RVariant) -> Result<Self, Error> {
-                let hastype = value.qtype();
-                if $(hastype == Type::$qt)||+ {
+                let actual = value.qtype();
+                if (actual == Type::$qt1)$(||(actual == Type::$qt))* {
                     Ok(unsafe { value.0.$me() })
                 } else {
-                    Err(Error::MismatchedType(hastype))
+                    Err(Error::WrongType { tried: Type::$qt1, actual })
                 }
             }
         }
@@ -289,8 +295,15 @@ impl TryFrom<RVariant> for char {
     type Error = Error;
 
     fn try_from(value: RVariant) -> Result<Self, Error> {
-        const E: Error = Error::MismatchedType(Type::ULongLong);
-        char::try_from(u32::try_from(u64::try_from(value)?).map_err(|_| E)?).map_err(|_| E)
+        let try64 = u64::try_from(value)?;
+        let try32 = u32::try_from(try64).map_err(|_| Error::WrongType {
+            tried: Type::ULong,
+            actual: Type::ULongLong,
+        })?;
+        char::try_from(try32).map_err(|_| Error::WrongType {
+            tried: Type::ULong,
+            actual: Type::Char,
+        })
     }
 }
 

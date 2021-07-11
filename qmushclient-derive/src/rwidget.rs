@@ -28,13 +28,17 @@ pub fn derive_rwidget(input: TokenStream) -> TokenStream {
     let expanded = quote! {
         impl #impl_generics RWidget for #name #ty_generics #where_clause {
             fn widget(&self) -> cpp_core::Ptr<qt_widgets::QWidget> {
-                unsafe { self.#widget.as_ptr().static_upcast() }
+                unsafe {
+                    use cpp_core::CastFrom;
+                    cpp_core::Ptr::cast_from(&self.#widget)
+                }
             }
         }
 
         impl #impl_generics cpp_core::StaticUpcast<qt_core::QObject> for #name #ty_generics #where_clause {
             unsafe fn static_upcast(ptr: cpp_core::Ptr<Self>) -> cpp_core::Ptr<qt_core::QObject> {
-                ptr.#widget.as_ptr().static_upcast()
+                use cpp_core::CastFrom;
+                cpp_core::Ptr::cast_from(&ptr.#widget)
             }
         }
 

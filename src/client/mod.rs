@@ -6,14 +6,15 @@ use std::rc::Rc;
 use std::time::Instant;
 use std::{mem, str};
 
-use cpp_core::CppBox;
+use cpp_core::{CastFrom, CppBox, Ptr};
 use qt_core::{AlignmentFlag, QBox, QPtr, QString};
 use qt_network::QTcpSocket;
-use qt_widgets::QTextBrowser;
+use qt_widgets::q_message_box::Icon;
+use qt_widgets::{QTextBrowser, QWidget};
 
 use crate::api::Api;
 use crate::binding::text::{CharFormat, Cursor};
-use crate::binding::{Printable, RColor, RIODevice};
+use crate::binding::{Printable, RColor, RIODevice, RWidget};
 use crate::client::color::Colors;
 use crate::client::state::Latest;
 use crate::constants::{branding, config};
@@ -77,6 +78,12 @@ pub struct Client {
     latest: Latest,
 }
 
+impl RWidget for Client {
+    fn widget(&self) -> Ptr<QWidget> {
+        unsafe { Ptr::cast_from(&self.widget) }
+    }
+}
+
 impl Client {
     /// # Safety
     ///
@@ -120,12 +127,15 @@ impl Client {
     }
 
     fn load_worldscript(&mut self) {
-        // todo display errors
         match self.world.make_plugin() {
-            Ok(Some(plugin)) => mem::drop(self.plugins.load_plugin(plugin)),
+            Err(e) => self.alert(Icon::Warning, tr!("Failed to load world script"), &e),
             Ok(None) => (),
-            Err(_) => (),
-        };
+            Ok(Some(plugin)) => {
+                if let Err(e) = self.plugins.load_plugin(plugin) {
+                    self.alert(Icon::Warning, tr!("Failed to load world script"), &e);
+                }
+            }
+        }
     }
 
     pub fn on_save(&mut self) {

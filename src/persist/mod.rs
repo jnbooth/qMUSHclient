@@ -1,3 +1,4 @@
+use std::error::Error as StdError;
 use std::fs::File;
 use std::io::{Read, Write};
 
@@ -25,20 +26,19 @@ macro_rules! from_old_version {
                 $crate::world::World::deserialize(json)
             }
         }
-
     }
 }
 
 const CURRENT_VERSION: u8 = 1;
 
-pub fn save_world(world: &World, path: &str) -> Result<(), Box<dyn std::error::Error>> {
+pub fn save_world(world: &World, path: &str) -> Result<(), Box<dyn StdError>> {
     let mut file = File::create(path)?;
     file.write(&[CURRENT_VERSION])?;
     bincode::serialize_into(file, world)?;
     Ok(())
 }
 
-pub fn load_world(path: &str) -> Result<World, Box<dyn std::error::Error>> {
+pub fn load_world(path: &str) -> Result<World, Box<dyn StdError>> {
     let mut file = File::open(path)?;
     let mut buf: [u8; 1] = [0; 1];
     let version = match file.read(&mut buf) {

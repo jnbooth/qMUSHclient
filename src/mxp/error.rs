@@ -1,5 +1,6 @@
+use std::error::Error as StdError;
 use std::fmt::{self, Display, Formatter};
-use std::{error, str};
+use std::str;
 
 use mlua::{self, Lua, Value};
 
@@ -33,7 +34,7 @@ impl Display for ParseError {
         write!(f, "{:?}: \"{}\"", self.error, self.target)
     }
 }
-impl error::Error for ParseError {}
+impl StdError for ParseError {}
 
 impl ParseError {
     pub fn new(target: &str, error: Error) -> Self {

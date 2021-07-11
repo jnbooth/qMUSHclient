@@ -1,3 +1,4 @@
+use std::error::Error as StdError;
 use std::os::raw::c_int;
 
 use cpp_core::{Ptr, StaticUpcast};
@@ -16,18 +17,16 @@ pub enum Browse {
     Directory,
 }
 
-pub trait RWidget: StaticUpcast<QObject> {
+pub trait RWidget {
     fn widget(&self) -> Ptr<QWidget>;
 
-    fn alert<T1: Printable, T2: Printable>(&self, icon: Icon, text: T1, inform: Option<T2>) {
+    fn alert<S: Printable, E: StdError + ?Sized>(&self, icon: Icon, text: S, err: &E) {
         unsafe {
-            let msgbox = QMessageBox::from_q_widget(self.widget());
-            msgbox.set_icon(icon);
-            msgbox.set_text(&text.to_print());
-            if let Some(inform) = inform {
-                msgbox.set_informative_text(&inform.to_print());
-            }
-            msgbox.exec();
+            let alert = QMessageBox::from_q_widget(self.widget());
+            alert.set_icon(icon);
+            alert.set_text(&text.to_print());
+            alert.set_informative_text(&err.to_string().to_print());
+            alert.exec();
         }
     }
 
@@ -87,6 +86,7 @@ pub trait RWidget: StaticUpcast<QObject> {
         }
     }
 }
+
 pub trait RDialog<Response: From<c_int>>: RWidget {
     fn exec(&self) -> Response;
 }

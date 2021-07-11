@@ -162,7 +162,7 @@ impl App {
                 self.recent.borrow_mut().push_front(path.to_owned());
                 self.start_world(world, Some(path.to_owned()));
             }
-            Err(e) => self.alert(Icon::Critical, tr!("Cannot open file"), Some(e.to_string())),
+            Err(e) => self.alert(Icon::Critical, tr!("Cannot open file"), &*e),
         }
 
         self.save_recents();
@@ -230,7 +230,7 @@ impl App {
             None => return,
         };
         let world = tab.borrow_world();
-        let save_as = match tab.saved.borrow().as_ref() {
+        let save_as = match &*tab.saved.borrow() {
             Some(save_as) if !force_different => save_as.to_owned(),
             _ => unsafe {
                 QFileDialog::get_save_file_name_4a(
@@ -247,7 +247,7 @@ impl App {
         }
 
         if let Err(e) = persist::save_world(&world, &save_as) {
-            self.alert(Icon::Critical, tr!("Cannot save file"), Some(e.to_string()));
+            self.alert(Icon::Critical, tr!("Cannot save file"), &*e);
             return;
         }
 
@@ -341,7 +341,12 @@ impl App {
             };
 
             prefs.browse("IP address");
-            self.alert(Icon::Critical, failure, None::<&str>);
+            unsafe {
+                let messagebox = QMessageBox::from_q_widget(&self.ui.widget);
+                messagebox.set_icon(Icon::Critical);
+                messagebox.set_text(&failure);
+                messagebox.exec();
+            }
         }
     }
 

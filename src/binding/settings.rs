@@ -1,4 +1,5 @@
 use std::convert::{Infallible, TryFrom};
+use std::error::Error as StdError;
 use std::fmt::{self, Display, Formatter};
 use std::iter::FromIterator;
 
@@ -12,23 +13,30 @@ use super::variant::{self, RVariant};
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Error {
     NotFound,
-    ConversionError(variant::Error),
+    TypeError(variant::Error),
 }
 
 impl Display for Error {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
-            Self::NotFound => write!(f, "NotFound"),
-            Self::ConversionError(e) => write!(f, "ConversionError({})", e),
+            Self::NotFound => write!(f, "key not found in settings"),
+            Self::TypeError(e) => write!(f, "{}", e),
         }
     }
 }
 
-impl std::error::Error for Error {}
+impl StdError for Error {
+    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+        match self {
+            Self::NotFound => None,
+            Self::TypeError(e) => Some(e),
+        }
+    }
+}
 
 impl From<variant::Error> for Error {
     fn from(value: variant::Error) -> Self {
-        Self::ConversionError(value)
+        Self::TypeError(value)
     }
 }
 

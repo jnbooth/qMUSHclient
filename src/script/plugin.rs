@@ -216,7 +216,7 @@ impl Plugin {
         unsafe {
             // TODO make this more complicated
             let msgbox = QMessageBox::new();
-            msgbox.set_icon(Icon::Critical);
+            msgbox.set_icon(Icon::Warning);
             msgbox.set_text(&tr!("Script error in {}", metadata.name));
             msgbox.set_informative_text(&QString::from_std_str(&error.to_string()));
             msgbox.exec();
