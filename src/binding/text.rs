@@ -194,8 +194,8 @@ impl Cursor {
     }
     /// Inserts the text html at the current position(). The text is interpreted as HTML.
     /// Note: When using this function with a style sheet, the style sheet will only apply to the current block in the document. In order to apply a style sheet throughout a document, use Document::set_default_style_sheet() instead.
-    pub fn insert_html<P: Printable>(&self, s: P) {
-        unsafe { self.inner.insert_html(&s.to_print()) }
+    pub fn insert_html<S: Printable>(&self, text: S) {
+        unsafe { self.inner.insert_html(&text.to_print()) }
     }
     /// Inserts the image defined by the given format at the cursor's current position with the specified alignment.
     pub fn insert_image_frame(&self, align: FramePosition) {
@@ -206,11 +206,11 @@ impl Cursor {
     }
     /// Convenience method for inserting the image with the given name at the current position().
     /// This uses Document::add_resource().
-    pub fn insert_image_resource<P: Printable>(&self, s: P) {
-        unsafe { self.inner.insert_image_q_string(&s.to_print()) }
+    pub fn insert_image_resource<S: Printable>(&self, text: S) {
+        unsafe { self.inner.insert_image_q_string(&text.to_print()) }
     }
     /// Convenience function for inserting the given image with a name at the current position().
-    pub fn insert_image_named<P: Printable>(&self, image: RImage, name: P) {
+    pub fn insert_image_named<S: Printable>(&self, image: RImage, name: S) {
         unsafe {
             self.inner
                 .insert_image_q_image_q_string(&image.0, &name.to_print())
@@ -242,24 +242,24 @@ impl Cursor {
     /// Inserts text at the current position, using the current character format.
     /// If there is a selection, the selection is deleted and replaced.
     /// Any ASCII linefeed characters (\n) in the inserted text are transformed into unicode block separators, corresponding to insert_block() calls.
-    pub fn insert_text<P: Printable>(&self, s: P) {
+    pub fn insert_text<S: Printable>(&self, text: S) {
         unsafe {
             self.inner
-                .insert_text_2a(&s.to_print(), &self.format.text.0)
+                .insert_text_2a(&text.to_print(), &self.format.text.0)
         }
     }
     /// Inserts text at the current position, using a specified character format.
     /// If there is a selection, the selection is deleted and replaced.
     /// Any ASCII linefeed characters (\n) in the inserted text are transformed into unicode block separators, corresponding to insert_block() calls.
-    pub fn insert_text_formatted<P: Printable>(&self, s: P, format: &CharFormat) {
-        unsafe { self.inner.insert_text_2a(&s.to_print(), &format.0) }
+    pub fn insert_text_formatted<S: Printable>(&self, text: S, format: &CharFormat) {
+        unsafe { self.inner.insert_text_2a(&text.to_print(), &format.0) }
     }
     /// Inserts text at the current position, using the current character format plus text color.
     /// If there is a selection, the selection is deleted and replaced.
     /// Any ASCII linefeed characters (\n) in the inserted text are transformed into unicode block separators, corresponding to insert_block() calls.
-    pub fn insert_text_colored<P, B>(&self, s: P, fg: Option<B>, bg: Option<B>)
+    pub fn insert_text_colored<S, B>(&self, text: S, fg: Option<B>, bg: Option<B>)
     where
-        P: Printable,
+        S: Printable,
         B: Borrow<RColor>,
     {
         unsafe {
@@ -270,7 +270,7 @@ impl Cursor {
             if let Some(bg) = bg {
                 fmt.set_background_color(bg.borrow());
             }
-            self.inner.insert_text_2a(&s.to_print(), &fmt);
+            self.inner.insert_text_2a(&text.to_print(), &fmt);
         }
     }
     /// Moves the cursor by performing the given operation n times, using the specified mode, and returns true if all operations were completed successfully; otherwise returns false.

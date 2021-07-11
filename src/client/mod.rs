@@ -51,12 +51,12 @@ pub enum Fragment {
 }
 
 impl Fragment {
-    pub fn html<S: Printable>(s: S) -> Self {
-        Self::Html(s.to_print())
+    pub fn html<S: Printable>(text: S) -> Self {
+        Self::Html(text.to_print())
     }
 
-    pub fn text<S: Printable>(s: S) -> Self {
-        Self::Text(s.to_print())
+    pub fn text<S: Printable>(text: S) -> Self {
+        Self::Text(text.to_print())
     }
 }
 
@@ -201,28 +201,28 @@ impl Client {
         }
     }
 
-    fn insert_html<S: Printable>(&self, s: S) {
-        self.cursor.insert_html(s);
+    fn insert_html<S: Printable>(&self, text: S) {
+        self.cursor.insert_html(text);
     }
 
-    fn insert_text<S: Printable>(&self, s: S) {
-        self.cursor.insert_text_formatted(s, self.style.format());
+    fn insert_text<S: Printable>(&self, text: S) {
+        self.cursor.insert_text_formatted(text, self.style.format());
     }
 
-    pub fn print<S: Printable>(&self, s: S) {
-        self.insert_text(s);
+    pub fn print<S: Printable>(&self, text: S) {
+        self.insert_text(text);
         self.scroll_to_bottom();
     }
 
-    pub fn println<S: Printable>(&self, s: S) {
+    pub fn println<S: Printable>(&self, text: S) {
         self.cursor.insert_block();
-        self.insert_text(s);
+        self.insert_text(text);
         self.scroll_to_bottom();
     }
 
     #[cfg(feature = "show-special")]
-    pub fn append_to_notepad<S: Printable>(&self, kind: Pad, align: AlignmentFlag, s: S) {
-        self.notepad.borrow_mut().append(kind, align, s);
+    pub fn append_to_notepad<S: Printable>(&self, kind: Pad, align: AlignmentFlag, text: S) {
+        self.notepad.borrow_mut().append(kind, align, text);
     }
 
     fn flush(&mut self) {
@@ -639,8 +639,8 @@ impl Client {
 
         for fragment in fragments {
             match fragment {
-                Fragment::Html(s) => self.insert_html(s),
-                Fragment::Text(s) => self.insert_text(s),
+                Fragment::Html(text) => self.insert_html(text),
+                Fragment::Text(text) => self.insert_text(text),
                 Fragment::Break => self.cursor.insert_block(),
             }
         }
@@ -1394,7 +1394,7 @@ impl Client {
                                           128 "PROXY"             Client is a proxy allowing different users to connect from the same IP address.
 
                                     */
-                                    let s = match self.state.ttype_sequence {
+                                    let text = match self.state.ttype_sequence {
                                         0 => {
                                             self.state.ttype_sequence += 1;
                                             left(self.world.terminal_identification.as_bytes(), 20)
@@ -1407,7 +1407,7 @@ impl Client {
                                         _ => b"MTTS 9",
                                     };
                                     let p2 = [telnet::IAC, telnet::SE];
-                                    let packet = [&p1, s, &p2].concat();
+                                    let packet = [&p1, text, &p2].concat();
                                     self.send_packet(&packet);
                                 }
                             }

@@ -137,30 +137,28 @@ impl Api {
         self.world = world;
     }
 
-    pub fn append_to_notepad<S: Printable>(&self, title: String, s: S) {
+    pub fn append_to_notepad<S: Printable>(&self, title: String, text: S) {
         self.notepad
             .borrow_mut()
-            .append(Pad::Script(title), AlignmentFlag::AlignLeft, s);
+            .append(Pad::Script(title), AlignmentFlag::AlignLeft, text);
     }
 
-    pub fn note<S: Printable>(&self, s: S) {
+    pub fn note<S: Printable>(&self, text: S) {
         self.cursor.insert_block();
-        self.cursor.insert_text(s);
+        self.cursor.insert_text(text);
     }
 
-    pub fn color_note<S, B>(&self, s: S, fg: Option<B>, bg: Option<B>)
+    pub fn color_note<S, B>(&self, text: S, fg: Option<B>, bg: Option<B>)
     where
         S: Printable,
         B: Borrow<RColor>,
     {
         self.cursor.insert_block();
-        self.cursor.insert_text_colored(s, fg, bg);
+        self.cursor.insert_text_colored(text, fg, bg);
     }
 
-    fn _send<S: AsRef<[u8]>>(&self, buf: S) -> io::Result<()> {
-        let buf = buf.as_ref();
-        self.socket.io().write_all(buf)?;
-        Ok(())
+    fn _send<S: AsRef<[u8]>>(&self, text: S) -> io::Result<()> {
+        self.socket.io().write_all(text.as_ref())
     }
 
     pub fn _send_packet(&self, data: &[u8]) {

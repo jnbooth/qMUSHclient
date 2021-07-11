@@ -272,52 +272,6 @@ pub struct World {
 }
 
 impl World {
-    pub fn color<'a, 'b>(&'a self, col: &'b WorldColor) -> &'b RColor
-    where
-        'a: 'b,
-    {
-        match col {
-            WorldColor::Ansi(i) => &self.ansi_colors[*i],
-            WorldColor::CustomFg(i) => &self.custom_colors[*i].foreground,
-            WorldColor::CustomBg(i) => &self.custom_colors[*i].background,
-            WorldColor::Xterm(i) => Colors::xterm(*i),
-            WorldColor::Plain(c) => &c,
-        }
-    }
-
-    pub fn make_plugin(&self) -> io::Result<Option<PluginMetadata>> {
-        if self.script_filename.is_empty() {
-            return Ok(None);
-        }
-        let source = PathBuf::from(&self.script_filename);
-        let mut file = File::open(&source)?;
-        let metadata = file.metadata()?;
-        let mut script = String::new();
-        file.read_to_string(&mut script)?;
-        Ok(Some(PluginMetadata {
-            name: format!("World Script: {}", self.name),
-            author: "User".to_owned(),
-            purpose: "User-provided script file".to_owned(),
-            description: "Executes functions provided by the user in World Preferences".to_owned(),
-            script,
-            source,
-            id: PluginId::nil(),
-            written: DateTime::from(metadata.created()?).date(),
-            modified: DateTime::from(metadata.modified()?).date(),
-            version: Version(0),
-            client_required: Version(0),
-            installed: Local::today(),
-            sequence: i16::MIN,
-        }))
-    }
-
-    // Each plugin has one of these.
-    pub fn custom_color_map(&self) -> HashMap<String, RColorPair> {
-        let custom_names = self.custom_names.iter().map(ToOwned::to_owned);
-        let custom_colors = self.custom_colors.iter().map(ToOwned::to_owned);
-        custom_names.zip(custom_colors).collect()
-    }
-
     pub fn new() -> Self {
         let custom_names: [String; 16] = (1..=16)
             .map(|i| format!("Custom{}", i))
@@ -521,5 +475,51 @@ impl World {
             script_errors_to_output_window: false,
             note_text_color: RColor::rgb(0, 128, 255),
         }
+    }
+
+    pub fn color<'a, 'b>(&'a self, col: &'b WorldColor) -> &'b RColor
+    where
+        'a: 'b,
+    {
+        match col {
+            WorldColor::Ansi(i) => &self.ansi_colors[*i],
+            WorldColor::CustomFg(i) => &self.custom_colors[*i].foreground,
+            WorldColor::CustomBg(i) => &self.custom_colors[*i].background,
+            WorldColor::Xterm(i) => Colors::xterm(*i),
+            WorldColor::Plain(c) => c,
+        }
+    }
+
+    pub fn make_plugin(&self) -> io::Result<Option<PluginMetadata>> {
+        if self.script_filename.is_empty() {
+            return Ok(None);
+        }
+        let source = PathBuf::from(&self.script_filename);
+        let mut file = File::open(&source)?;
+        let metadata = file.metadata()?;
+        let mut script = String::new();
+        file.read_to_string(&mut script)?;
+        Ok(Some(PluginMetadata {
+            name: format!("World Script: {}", self.name),
+            author: "User".to_owned(),
+            purpose: "User-provided script file".to_owned(),
+            description: "Executes functions provided by the user in World Preferences".to_owned(),
+            script,
+            source,
+            id: PluginId::nil(),
+            written: DateTime::from(metadata.created()?).date(),
+            modified: DateTime::from(metadata.modified()?).date(),
+            version: Version(0),
+            client_required: Version(0),
+            installed: Local::today(),
+            sequence: i16::MIN,
+        }))
+    }
+
+    // Each plugin has one of these.
+    pub fn custom_color_map(&self) -> HashMap<String, RColorPair> {
+        let custom_names = self.custom_names.iter().map(ToOwned::to_owned);
+        let custom_colors = self.custom_colors.iter().map(ToOwned::to_owned);
+        custom_names.zip(custom_colors).collect()
     }
 }
