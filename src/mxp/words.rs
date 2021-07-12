@@ -45,6 +45,9 @@ impl<'a> Iterator for Words<'a> {
         const fn is_non_decimal(c: char) -> bool {
             !c.is_ascii_digit() && c != '_' && c != '-' && c != '.' && c != ','
         }
+        const fn is_non_alphabet(c: char) -> bool {
+            !c.is_ascii_alphabetic() && !c.is_ascii_digit() && c != '_' && c != '-' && c != '.'
+        }
         let (mut start, first) = self.current?;
         self.current = match first {
             // quoted string e.g. 'foo' or "foo"
@@ -65,9 +68,7 @@ impl<'a> Iterator for Words<'a> {
             // unsigned number e.g. 3,100.5
             _ if first.is_ascii_digit() => self.iter.find(|&(_, c)| is_non_decimal(c)),
             // word e.g. foo
-            _ if first.is_ascii_alphabetic() => self
-                .iter
-                .find(|&(_, c)| !c.is_ascii_alphabetic() && !c.is_ascii_digit()),
+            _ if first.is_ascii_alphabetic() => self.iter.find(|&(_, c)| is_non_alphabet(c)),
             // single character, e.g. = or ,
             _ => self.iter.next(),
         };

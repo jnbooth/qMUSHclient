@@ -62,6 +62,19 @@ impl QForm<bool> for QCheckBox {
     }
 }
 
+impl QForm<bool> for QRadioButton {
+    unsafe fn get_rust(this: QPtr<Self>) -> bool {
+        unsafe { this.is_checked() }
+    }
+
+    unsafe fn connect_rust(this: QPtr<Self>, t: &bool, receiver: QBox<SlotNoArgs>) {
+        unsafe {
+            this.set_checked(*t);
+            this.toggled().connect(&receiver);
+        }
+    }
+}
+
 impl<E: Enum> QForm<Option<E>> for QComboBox {
     unsafe fn get_rust(this: QPtr<Self>) -> Option<E> {
         usize::try_from(unsafe { this.current_index() } - 1)

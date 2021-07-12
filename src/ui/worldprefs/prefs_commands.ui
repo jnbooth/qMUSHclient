@@ -102,49 +102,52 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="speed_walk_prefix"/>
+             <widget class="QLineEdit" name="speed_walk_prefix">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
-             <widget class="QLabel" name="speed_walk_delay_label">
-              <property name="text">
-               <string>Delay:</string>
-              </property>
-              <property name="buddy">
-               <cstring>speed_walk_delay</cstring>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDoubleSpinBox" name="speed_walk_delay">
-              <property name="suffix">
-               <string> s</string>
-              </property>
-              <property name="decimals">
-               <number>3</number>
-              </property>
-              <property name="maximum">
-               <double>1000.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="speed_walk_filler_label">
-              <property name="text">
-               <string>Filler:</string>
-              </property>
-              <property name="buddy">
-               <cstring>speed_walk_filler</cstring>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="speed_walk_filler"/>
-            </item>
-           </layout>
+           <widget class="QWidget" name="speedWidget" native="true">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLabel" name="speed_walk_delay_label">
+               <property name="text">
+                <string>Delay:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="speed_walk_delay">
+               <property name="suffix">
+                <string> s</string>
+               </property>
+               <property name="decimals">
+                <number>3</number>
+               </property>
+               <property name="maximum">
+                <double>1000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="speed_walk_filler_label">
+               <property name="text">
+                <string>Filler:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="speed_walk_filler"/>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -164,6 +167,9 @@
           </item>
           <item>
            <widget class="QLineEdit" name="command_stack_character">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maxLength">
              <number>1</number>
             </property>
@@ -278,52 +284,51 @@
            </widget>
           </item>
           <item>
-           <layout class="QFormLayout" name="formLayout">
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Send:</string>
-              </property>
-              <property name="buddy">
-               <cstring>spam_message</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="spam_message"/>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="spam_line_count_label">
-              <property name="text">
-               <string>Every</string>
-              </property>
-              <property name="buddy">
-               <cstring>spam_line_count</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
-              <item>
-               <widget class="QSpinBox" name="spam_line_count">
-                <property name="maximum">
-                 <number>1000</number>
-                </property>
-                <property name="value">
-                 <number>20</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_2">
-                <property name="text">
-                 <string>identical commands</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
+           <widget class="QWidget" name="spamWidget" native="true">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <layout class="QFormLayout" name="formLayout">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Send:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="spam_message"/>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="spam_line_count_label">
+               <property name="text">
+                <string>Every</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <item>
+                <widget class="QSpinBox" name="spam_line_count">
+                 <property name="maximum">
+                  <number>1000</number>
+                 </property>
+                 <property name="value">
+                  <number>20</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>identical commands</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -454,5 +459,102 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>use_default_input_font</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>input_font</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>385</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>356</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>use_default_input_font</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>input_font_size</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>118</x>
+     <y>396</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enable_speed_walk</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>speedWidget</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>122</x>
+     <y>160</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>63</x>
+     <y>185</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enable_speed_walk</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>speed_walk_prefix</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>274</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enable_spam_prevention</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>spamWidget</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>261</x>
+     <y>508</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>558</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enable_command_stack</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>command_stack_character</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>260</x>
+     <y>286</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>287</x>
+     <y>283</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

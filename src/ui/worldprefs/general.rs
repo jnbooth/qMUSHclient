@@ -152,39 +152,37 @@ impl PrefsLogging {
     fn init(self: &Rc<Self>) {
         connect_world!(
             self,
+            log_file,
             log_file_preamble,
             log_file_postamble,
             log_output,
             log_input,
             log_notes,
             log_html,
-            log_in_color,
+            log_text,
             log_raw,
-            write_world_name_to_log,
-            log_line_preamble_output,
-            log_line_preamble_input,
-            log_line_preamble_notes,
-            log_line_postamble_output,
-            log_line_postamble_input,
-            log_line_postamble_notes,
+            log_preamble_output,
+            log_preamble_input,
+            log_preamble_notes,
+            log_postamble_output,
+            log_postamble_input,
+            log_postamble_notes,
         );
         let ui = &self.ui;
+        let world = self.world.clone();
         self.connect_browse_button(
             Browse::Save,
-            &ui.auto_log_file_name_browse,
-            &ui.auto_log_file_name,
-            "logs",
+            &ui.log_file_browse,
+            &ui.log_file,
+            move || QString::from_std_str(
+                &format!("logs/{}.txt", world.upgrade().unwrap().borrow().name)
+            ),
             "Text files (*.txt)",
         );
         unsafe {
             ui.button_box.help_requested().connect(&self.slot_show_help());
             let reset = ui.button_box.button(StandardButton::RestoreDefaults);
             reset.clicked().connect(&self.slot_set_defaults());
-            self.enable_if(
-                &ui.log_html,
-                true,
-                [ui.log_in_color.static_upcast(), reset.static_upcast()],
-            );
         }
     }
 
@@ -238,7 +236,7 @@ impl PrefsChat {
             Browse::Directory,
             &ui.chat_file_save_directory_browse,
             &ui.chat_file_save_directory,
-            "",
+            || unsafe { QString::new() },
             "",
         );
     }

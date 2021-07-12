@@ -1,6 +1,7 @@
 use std::cell::RefCell;
 use std::convert::TryInto;
-use std::io::{self, Read, Write};
+use std::fs::{self, File};
+use std::io::{self, BufWriter, Read, Write};
 use std::iter::Iterator;
 use std::rc::Rc;
 use std::time::Instant;
@@ -18,6 +19,7 @@ use crate::binding::{Printable, RColor, RIODevice, RWidget};
 use crate::client::color::Colors;
 use crate::client::state::Latest;
 use crate::constants::{branding, config};
+use crate::enums::Enum;
 use crate::escape::{ansi, telnet};
 use crate::mxp;
 use crate::script::{Callback, PluginHandler, PluginId};
@@ -51,6 +53,42 @@ pub enum Fragment {
     Break,
 }
 
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
+pub enum Log {
+    Output,
+    Input,
+    Script,
+}
+
+#[derive(Debug)]
+struct LogConfig<'a> {
+    enabled: bool,
+    prefix: &'a str,
+    suffix: &'a str,
+}
+
+impl<'a> LogConfig<'a> {
+    fn get(kind: Log, world: &'a World) -> Self {
+        match kind {
+            Log::Output => LogConfig {
+                enabled: world.log_output,
+                prefix: &world.log_preamble_output,
+                suffix: &world.log_postamble_output,
+            },
+            Log::Input => LogConfig {
+                enabled: world.log_input,
+                prefix: &world.log_preamble_input,
+                suffix: &world.log_postamble_input,
+            },
+            Log::Script => LogConfig {
+                enabled: world.log_notes,
+                prefix: &world.log_preamble_notes,
+                suffix: &world.log_postamble_notes,
+            },
+        }
+    }
+}
+
 impl Fragment {
     pub fn html<S: Printable>(text: S) -> Self {
         Self::Html(text.to_print())
@@ -76,6 +114,7 @@ pub struct Client {
     style: Style,
     state: ClientState,
     latest: Latest,
+    log: Option<BufWriter<File>>,
 }
 
 impl RWidget for Client {
@@ -121,9 +160,28 @@ impl Client {
             state: ClientState::new(),
             plugins: PluginHandler::new(api),
             latest: Latest::new(),
+            log: None,
         };
+        this.open_log();
         this.load_worldscript();
         this
+    }
+
+    fn open_log(&mut self) {
+        self.log = None;
+        let world = &*self.world;
+        if world.log_file.is_empty() {
+            return;
+        }
+        match fs::OpenOptions::new()
+            .append(true)
+            .create(true)
+            .open(&world.log_file)
+        {
+            Err(e) => self.alert(Icon::Warning, tr!("Unable to open log file"), &e),
+            Ok(_) if world.log_html => self.log = None,
+            Ok(file) => self.log = Some(BufWriter::with_capacity(config::LOG_BUFFER, file)),
+        }
     }
 
     fn load_worldscript(&mut self) {
@@ -143,11 +201,15 @@ impl Client {
     }
 
     pub fn set_world(&mut self, world: Rc<World>) {
+        let reload_log = self.world.log_file != world.log_file;
         self.style.set_world(world.clone());
         self.plugins.remove(&PluginId::nil()); // remove old worldscript
         self.plugins
             .alter_userdata(|api| api.set_world(world.clone()));
         self.world = world;
+        if reload_log {
+            self.open_log();
+        }
         self.load_worldscript();
     }
 
@@ -169,10 +231,12 @@ impl Client {
         self.socket.close();
     }
 
-    fn send<S: AsRef<[u8]>>(&self, buf: S) -> io::Result<()> {
+    fn send<S: AsRef<[u8]>>(&mut self, buf: S) -> io::Result<()> {
         let buf = buf.as_ref();
-        self.socket.io().write_all(buf)?;
-        Ok(())
+        if self.world.log_raw {
+            self.write_to_log(Log::Input, buf);
+        }
+        self.socket.io().write_all(buf)
     }
 
     pub fn send_command(&mut self, mut command: String) -> io::Result<()> {
@@ -192,6 +256,9 @@ impl Client {
             self.scroll_to_bottom();
         }
         command.push('\n');
+        if world.log_text {
+            self.write_to_log(Log::Input, command.as_bytes());
+        }
         self.send(&command)
     }
 
@@ -241,12 +308,33 @@ impl Client {
         }
     }
 
-    fn output_bad_utf8(&mut self) {
-        self.bufoutput.append(&mut self.state.utf8_sequence);
+    fn write_to_log(&mut self, kind: Log, buf: &[u8]) {
+        fn try_write(log: &mut BufWriter<File>, cfg: LogConfig, buf: &[u8]) -> io::Result<()> {
+            if !cfg.prefix.is_empty() {
+                log.write_all(cfg.prefix.as_bytes())?;
+            }
+            log.write_all(buf)?;
+            if !cfg.suffix.is_empty() {
+                log.write_all(cfg.suffix.as_bytes())?;
+            }
+            #[cfg(debug_assertions)]
+            log.flush()?; // realtime logging
+            Ok(())
+        }
+        if let Some(log) = self.log.as_mut() {
+            let cfg = LogConfig::get(kind, &self.world);
+            if !cfg.enabled {
+                return;
+            }
+            if let Err(e) = try_write(log, cfg, buf) {
+                self.alert(Icon::Warning, "Couldn't write to log", &e);
+                self.log = None;
+            }
+        }
     }
 
-    fn init_zlib(&mut self, prepend: Vec<u8>) {
-        self.stream.start_decompressing(prepend);
+    fn output_bad_utf8(&mut self) {
+        self.bufoutput.append(&mut self.state.utf8_sequence);
     }
 
     fn interpret_ansi(&mut self, code: u8) {
@@ -789,12 +877,12 @@ impl Client {
             }
             Action::User => {
                 if !world.player.is_empty() && world.connect_method == Some(AutoConnect::Mxp) {
-                    self.send(format!("{}\n", world.player)).ok();
+                    self.send(format!("{}\n", self.world.player)).ok();
                 }
             }
             Action::Password => {
                 if !world.password.is_empty() && world.connect_method == Some(AutoConnect::Mxp) {
-                    self.send(format!("{}\n", world.password)).ok();
+                    self.send(format!("{}\n", self.world.password)).ok();
                 }
             }
             Action::P => {
@@ -938,7 +1026,7 @@ impl Client {
         self.state.mxp_mode = newmode;
     }
 
-    pub fn send_window_sizes(&self, new_width: u16) {
+    pub fn send_window_sizes(&mut self, new_width: u16) {
         let [newhigh, newlow] = new_width.to_be_bytes();
         let height = unsafe { self.widget.height() / self.widget.font_metrics().height() } as u16;
         let [high, low] = height.to_be_bytes();
@@ -959,7 +1047,7 @@ impl Client {
 
     // API methods
 
-    pub fn send_packet(&self, data: &[u8]) {
+    pub fn send_packet(&mut self, data: &[u8]) {
         #[cfg(feature = "show-special")]
         self.append_to_notepad(
             Pad::PacketDebug,
@@ -985,13 +1073,18 @@ impl Client {
         }
     }
 
+    fn start_decompressing(&mut self, left: Vec<u8>, data: Vec<u8>) {
+        if self.world.log_raw {
+            self.write_to_log(Log::Output, &data[..data.len() - left.len()]);
+        }
+        self.stream.start_decompressing(left);
+    }
+
     fn display_msg(&mut self, mut data: Vec<u8>) {
-        #[cfg(debug_assertions)]
-        println!("{}", String::from_utf8_lossy(&data));
         data = self
             .plugins
             .receive_from_all(Callback::PacketReceived, data);
-        if data.len() == 0 {
+        if data.is_empty() {
             return; // plugin discarded it
         }
         self.style.clear_flags(); // MUD input cancels style flags
@@ -1308,7 +1401,7 @@ impl Client {
                         iter.next();
                         // initialise compression library if not already done and copy
                         // compressed data to compression buffer
-                        self.init_zlib(iter.into_slice().to_vec());
+                        self.start_decompressing(iter.into_slice().to_vec(), data);
                         // done with this loop, now it needs to be decompressed
                         return;
                     } else {
@@ -1345,7 +1438,7 @@ impl Client {
                                     //iter.next();
                                     // initialise compression library if not already done and copy
                                     // compressed data to compression buffer
-                                    self.init_zlib(iter.into_slice().to_vec());
+                                    self.start_decompressing(iter.into_slice().to_vec(), data);
                                     // done with this loop, now it needs to be decompressed
                                     return;
                                 }
@@ -1597,5 +1690,8 @@ impl Client {
             }
         }
         self.flush();
+        if self.world.log_raw {
+            self.write_to_log(Log::Output, &data);
+        }
     }
 }

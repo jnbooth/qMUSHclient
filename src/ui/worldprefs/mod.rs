@@ -3,7 +3,7 @@ use std::rc::{Rc, Weak};
 
 use cpp_core::{CastInto, Ptr, Ref};
 use hashbrown::HashMap;
-use qt_core::{slot, CheckState, QPtr, SlotNoArgs, SlotOfInt};
+use qt_core::{slot, QPtr, SlotNoArgs};
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::*;
 
@@ -147,28 +147,6 @@ trait PrefPageNew: 'static + PrefPage {
                     getter(&mut world.borrow_mut()).set_size(QForm::get_rust(sizefield.clone()));
                 }),
             )
-        }
-    }
-
-    fn enable_if<const N: usize>(
-        &self,
-        checkbox: &QPtr<QCheckBox>,
-        enabled: bool,
-        fields: [QPtr<QWidget>; N], // already pointers into memory
-    ) {
-        unsafe {
-            let should_enable_initial = checkbox.is_checked() == enabled;
-            for field in &fields {
-                field.set_enabled(should_enable_initial);
-            }
-            checkbox
-                .state_changed()
-                .connect(&SlotOfInt::new(self.get_page(), move |state| {
-                    let should_enable = (state == CheckState::Checked.to_int()) == enabled;
-                    for field in &fields {
-                        field.set_enabled(should_enable);
-                    }
-                }));
         }
     }
 }

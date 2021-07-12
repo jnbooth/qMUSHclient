@@ -579,6 +579,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="auto_copy_to_clipboard_in_html">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>HTML</string>
            </property>
@@ -606,5 +609,86 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>beep_sound_none</sender>
+   <signal>clicked()</signal>
+   <receiver>beep_sound</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>261</x>
+     <y>346</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>347</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>new_activity_sound_none</sender>
+   <signal>clicked()</signal>
+   <receiver>new_activity_sound</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>271</x>
+     <y>420</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>417</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>copy_selection_to_clipboard</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>auto_copy_to_clipboard_in_html</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>417</x>
+     <y>460</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>403</x>
+     <y>508</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>use_default_output_font</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>output_font_size</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>111</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>use_default_output_font</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>output_font</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

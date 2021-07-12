@@ -17,3 +17,6 @@ ritual*.json
 
 # From lsqlite3
 test.db
+
+# From debug output
+/logs/

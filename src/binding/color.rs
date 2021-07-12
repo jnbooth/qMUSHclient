@@ -219,12 +219,6 @@ impl RColorPair {
             self.foreground, self.background
         ))
     }
-
-    pub fn set_style<T: CastInto<Ptr<QWidget>>>(&self, widget: T) {
-        unsafe {
-            widget.cast_into().set_style_sheet(&self.stylesheet());
-        }
-    }
 }
 
 pub trait HasPalette {

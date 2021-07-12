@@ -72,7 +72,7 @@ impl Cursor {
     ///
     /// # Safety
     ///
-    /// `widget` must be valid.
+    /// `widget` must be valid and non-null.
     pub unsafe fn get<T: CastInto<Ptr<QTextEdit>>>(widget: T) -> Self {
         unsafe { widget.cast_into().text_cursor().into() }
     }
@@ -80,7 +80,7 @@ impl Cursor {
     ///
     /// # Safety
     ///
-    /// `widget` must be valid.
+    /// `widget` must be valid and non-null.
     pub unsafe fn set<T: CastInto<Ptr<QTextEdit>>>(&self, widget: T) {
         unsafe {
             widget.cast_into().set_text_cursor(&self.inner);

@@ -73,6 +73,9 @@
         </item>
         <item>
          <widget class="QSpinBox" name="chat_port">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -101,6 +104,9 @@
       </item>
       <item>
        <widget class="QCheckBox" name="validate_incoming_chat_calls">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>&amp;Validate caller</string>
         </property>
@@ -132,7 +138,7 @@
           <property name="text">
            <string/>
           </property>
-          <property name="autoRaise">
+          <property name="autoRaise" stdset="0">
            <bool>false</bool>
           </property>
          </widget>
@@ -318,5 +324,38 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>accept_chat_connections</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>chat_port</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>160</x>
+     <y>147</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>251</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>accept_chat_connections</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>validate_incoming_chat_calls</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>92</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>89</x>
+     <y>185</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -65,21 +65,6 @@ impl PrefsOutput {
             ui.output_font_size.clone(),
             |world| &mut world.output_font,
         );
-        unsafe {
-            self.enable_if(
-                &ui.use_default_output_font,
-                false,
-                [
-                    ui.output_font.static_upcast(),
-                    ui.output_font_size.static_upcast(),
-                ],
-            );
-            self.enable_if(
-                &ui.copy_selection_to_clipboard,
-                true,
-                [ui.auto_copy_to_clipboard_in_html.static_upcast()],
-            );
-        }
     }
 }
 

@@ -8,4 +8,5 @@ pub mod config {
     pub const MAX_RECENT: usize = 5;
     pub const COMPRESS_BUFFER: usize = 1024 * 10;
     pub const SOCKET_BUFFER: usize = 1024 * 9; // needs to be <= COMPRESS_BUFFER
+    pub const LOG_BUFFER: usize = 1024 * 9;
 }

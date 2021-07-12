@@ -1,7 +1,7 @@
 use std::error::Error as StdError;
 use std::os::raw::c_int;
 
-use cpp_core::{Ptr, StaticUpcast};
+use cpp_core::{CppBox, Ptr, StaticUpcast};
 use qt_core::{q_event, Key, QFlags, QObject, QPtr, QString, SlotNoArgs};
 use qt_gui::QKeyEvent;
 use qt_widgets::q_message_box::Icon;
@@ -30,22 +30,22 @@ pub trait RWidget {
         }
     }
 
-    fn connect_browse_button<T>(
+    fn connect_browse_button<T, F>(
         &self,
         browse: Browse,
         button: &QPtr<T>,
         field: &QPtr<QLineEdit>,
-        dir: &str,
+        suggest: F,
         ext: &str,
     ) where
         T: StaticUpcast<QObject> + StaticUpcast<QAbstractButton>,
+        F: 'static + Fn() -> CppBox<QString>,
     {
         unsafe {
             let caption = QString::new();
             let button: QPtr<QAbstractButton> = button.static_upcast();
             let field = field.to_owned();
             let widget = self.widget();
-            let default_dir = QString::from_std_str(dir);
             let filter = QString::from_std_str(ext);
             let keypress = QKeyEvent::from_type_int_q_flags_keyboard_modifier(
                 q_event::Type::KeyPress,
@@ -53,21 +53,19 @@ pub trait RWidget {
                 QFlags::from(0),
             );
             button.clicked().connect(&SlotNoArgs::new(widget, move || {
-                let try_dir = field.text();
-                let dir = if try_dir.is_empty() {
-                    &default_dir
-                } else {
-                    &try_dir
-                };
+                let mut suggested = field.text();
+                if suggested.is_empty() {
+                    suggested = suggest();
+                }
                 let filename = match browse {
                     Browse::Open => {
-                        QFileDialog::get_open_file_name_4a(widget, &caption, dir, &filter)
+                        QFileDialog::get_open_file_name_4a(widget, &caption, &suggested, &filter)
                     }
                     Browse::Save => {
-                        QFileDialog::get_save_file_name_4a(widget, &caption, dir, &filter)
+                        QFileDialog::get_save_file_name_4a(widget, &caption, &suggested, &filter)
                     }
                     Browse::Directory => {
-                        QFileDialog::get_existing_directory_3a(widget, &caption, dir)
+                        QFileDialog::get_existing_directory_3a(widget, &caption, &suggested)
                     }
                 };
                 if !filename.is_empty() {
