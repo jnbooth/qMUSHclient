@@ -9,7 +9,7 @@ use std::time::Instant;
 use std::{mem, str};
 
 use cpp_core::{CastFrom, CppBox, Ptr};
-use qt_core::{AlignmentFlag, QBox, QPtr, QString};
+use qt_core::{QBox, QPtr, QString};
 use qt_network::QTcpSocket;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::{QTextBrowser, QWidget};
@@ -25,8 +25,13 @@ use crate::escape::{ansi, telnet};
 use crate::mxp;
 use crate::script::{Callback, PluginHandler, PluginId};
 use crate::tr::TrContext;
-use crate::ui::{Notepad, Pad};
+use crate::ui::Notepad;
 use crate::world::{AutoConnect, UseMxp, World};
+
+#[cfg(feature = "show-special")]
+use crate::ui::Pad;
+#[cfg(feature = "show-special")]
+use qt_core::AlignmentFlag;
 
 pub mod color;
 pub mod state;
@@ -1115,17 +1120,14 @@ impl Client {
                     old_phase = self.phase;
                 }
                 if self.phase != Phase::Normal {
-                    if let Some(escaped) = telnet::escape_char(c) {
-                        self.append_to_notepad(Pad::PacketDebug, AlignmentFlag::AlignLeft, escaped)
+                    let data = if let Some(escaped) = telnet::escape_char(c) {
+                        escaped.to_print()
                     } else if c.is_ascii() {
-                        self.append_to_notepad(Pad::PacketDebug, AlignmentFlag::AlignLeft, &[c])
+                        [c].to_print()
                     } else {
-                        self.append_to_notepad(
-                            Pad::PacketDebug,
-                            AlignmentFlag::AlignLeft,
-                            format!("{:#X}", c),
-                        )
-                    }
+                        format!("{:#X}", c).to_print()
+                    };
+                    self.append_to_notepad(Pad::PacketDebug, AlignmentFlag::AlignLeft, data)
                 }
             }
 
