@@ -40,7 +40,7 @@ impl PrefsCommands {
             spam_message,
         );
         let ui = &self.ui;
-        self.connect_font(ui.input_font.clone(), ui.input_font_size.clone(), |world| {
+        self.connect_font(&ui.input_font, &ui.input_font_size, |world| {
             &mut world.input_font
         });
     }

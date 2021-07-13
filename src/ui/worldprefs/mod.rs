@@ -3,12 +3,12 @@ use std::rc::{Rc, Weak};
 
 use cpp_core::{CastInto, Ptr, Ref};
 use hashbrown::HashMap;
-use qt_core::{slot, QPtr, SlotNoArgs};
+use qt_core::{slot, QPtr};
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::*;
 
 use super::uic;
-use crate::binding::{RDialog, RFont, RWidget};
+use crate::binding::{RDialog, RFont, RForm, RWidget};
 use crate::tr::TrContext;
 use crate::world::World;
 
@@ -17,6 +17,9 @@ macro_rules! impl_prefpage {
         impl crate::ui::worldprefs::PrefPage for $t {
             fn get_page(&self) -> QPtr<QWidget> {
                 unsafe { self.ui.widget.static_upcast() }
+            }
+            fn get_world(&self) -> Weak<RefCell<World>> {
+                self.world.clone()
             }
             fn upgrade_world(&self) -> Option<Rc<RefCell<World>>> {
                 self.world.upgrade()
@@ -42,10 +45,7 @@ macro_rules! impl_prefpagenew {
 
 macro_rules! connect_world_one {
     ($ui:ident, $self:ident, $field:ident, $fieldname:ident$(, $subfield:ident)?) => {
-        $self.connect(
-            $ui.$fieldname.clone(),
-            |world| &mut world.$field$(.$subfield)?
-        )
+        $self.connect(&$ui.$fieldname, |world| &mut world.$field$(.$subfield)?)
     };
     ($ui:ident, $self:ident, $field:ident) => {
         connect_world_one!($ui, $self, $field, $field)
@@ -67,87 +67,62 @@ mod appearance;
 use appearance::{PrefsColor, PrefsCustomColor, PrefsMxp, PrefsOutput};
 mod input;
 use input::PrefsCommands;
-mod qform;
-
-use qform::QForm;
 
 trait PrefPage {
     fn get_page(&self) -> QPtr<QWidget>;
-    fn upgrade_world(&self) -> Option<Rc<RefCell<World>>>;
+    fn get_world(&self) -> Weak<RefCell<World>>;
+    fn upgrade_world(&self) -> Option<Rc<RefCell<World>>> {
+        self.get_world().upgrade()
+    }
 }
 
-trait PrefPageNew: 'static + PrefPage {
+trait PrefPageNew: 'static + PrefPage + RWidget {
     fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self>;
 
-    fn connect<T, Q, F>(self: &Rc<Self>, field: QPtr<Q>, getter: F)
+    fn connect<T, Q, F>(self: &Rc<Self>, field: &QPtr<Q>, getter: F)
     where
         T: 'static,
-        Q: 'static + QForm<T>,
+        Q: 'static + RForm<T>,
         F: 'static + Fn(&mut World) -> &mut T,
     {
-        let this = Rc::downgrade(self);
-        unsafe {
-            QForm::connect_rust(
-                field.clone(),
-                getter(&mut self.upgrade_world().unwrap().borrow_mut()),
-                SlotNoArgs::new(self.get_page(), move || {
-                    let this = match Weak::upgrade(&this) {
-                        Some(this) => this,
-                        None => return,
-                    };
-                    let world = match this.upgrade_world() {
-                        Some(world) => world,
-                        None => return,
-                    };
-                    *getter(&mut world.borrow_mut()) = QForm::get_rust(field.clone());
-                }),
-            );
-        }
+        let world = self.get_world();
+        self.connect_form(
+            field,
+            getter(&mut world.upgrade().unwrap().borrow_mut()),
+            move |val| {
+                if let Some(world) = world.upgrade() {
+                    *getter(&mut world.borrow_mut()) = val;
+                }
+            },
+        );
     }
 
     fn connect_font(
         self: &Rc<Self>,
-        fontfield: QPtr<QFontComboBox>,
-        sizefield: QPtr<QSpinBox>,
+        fontfield: &QPtr<QFontComboBox>,
+        sizefield: &QPtr<QSpinBox>,
         getter: fn(&mut World) -> &mut RFont,
     ) {
-        unsafe {
-            let this = Rc::downgrade(self);
-            QForm::connect_rust(
-                fontfield.clone(),
-                &getter(&mut self.upgrade_world().unwrap().borrow_mut()),
-                SlotNoArgs::new(self.get_page(), move || {
-                    let this = match Weak::upgrade(&this) {
-                        Some(this) => this,
-                        None => return,
-                    };
-                    let world = match this.upgrade_world() {
-                        Some(world) => world,
-                        None => return,
-                    };
-                    getter(&mut world.borrow_mut())
-                        .set_family(&QForm::get_rust(fontfield.clone()).family());
-                }),
-            )
-        }
-        unsafe {
-            let this = Rc::downgrade(self);
-            QForm::connect_rust(
-                sizefield.clone(),
-                &getter(&mut self.upgrade_world().unwrap().borrow_mut()).size(),
-                SlotNoArgs::new(self.get_page(), move || {
-                    let this = match Weak::upgrade(&this) {
-                        Some(this) => this,
-                        None => return,
-                    };
-                    let world = match this.upgrade_world() {
-                        Some(world) => world,
-                        None => return,
-                    };
-                    getter(&mut world.borrow_mut()).set_size(QForm::get_rust(sizefield.clone()));
-                }),
-            )
-        }
+        let world = self.get_world();
+        self.connect_form(
+            &fontfield,
+            getter(&mut world.upgrade().unwrap().borrow_mut()),
+            move |font| {
+                if let Some(world) = world.upgrade() {
+                    getter(&mut world.borrow_mut()).set_family(&font.family());
+                }
+            },
+        );
+        let world = self.get_world();
+        self.connect_form(
+            &sizefield,
+            &getter(&mut self.upgrade_world().unwrap().borrow_mut()).size(),
+            move |size| {
+                if let Some(world) = world.upgrade() {
+                    getter(&mut world.borrow_mut()).set_size(size);
+                }
+            },
+        );
     }
 }
 

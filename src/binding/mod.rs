@@ -35,4 +35,4 @@ pub use settings::RSettings;
 pub mod variant;
 
 mod widgets;
-pub use widgets::{Browse, RDialog, RWidget};
+pub use widgets::{Browse, RDialog, RForm, RWidget};

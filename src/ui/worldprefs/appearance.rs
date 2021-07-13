@@ -60,11 +60,9 @@ impl PrefsOutput {
             terminal_identification,
         );
         let ui = &self.ui;
-        self.connect_font(
-            ui.output_font.clone(),
-            ui.output_font_size.clone(),
-            |world| &mut world.output_font,
-        );
+        self.connect_font(&ui.output_font, &ui.output_font_size, |world| {
+            &mut world.output_font
+        });
     }
 }
 
@@ -141,7 +139,7 @@ impl PrefsColor {
         connect_world!(self, use_default_colors);
         self.setcolors(&self.world.upgrade().unwrap().borrow().ansi_colors);
         for (i, field) in self.colorfields.iter().enumerate() {
-            self.connect(field.clone(), move |world| &mut world.ansi_colors[i]);
+            self.connect(field, move |world| &mut world.ansi_colors[i]);
         }
         let ui = &self.ui;
         unsafe {
@@ -351,17 +349,13 @@ impl PrefsCustomColor {
     fn init(self: &Rc<Self>) {
         self.setcolors(&self.world.upgrade().unwrap().borrow().custom_colors);
         for (i, field) in self.namefields.iter().enumerate() {
-            self.connect(field.clone(), move |world| &mut world.custom_names[i]);
+            self.connect(field, move |world| &mut world.custom_names[i]);
         }
         for (i, field) in self.fgfields.iter().enumerate() {
-            self.connect(field.clone(), move |world| {
-                &mut world.custom_colors[i].foreground
-            });
+            self.connect(field, move |world| &mut world.custom_colors[i].foreground);
         }
         for (i, field) in self.bgfields.iter().enumerate() {
-            self.connect(field.clone(), move |world| {
-                &mut world.custom_colors[i].background
-            });
+            self.connect(field, move |world| &mut world.custom_colors[i].background);
         }
         let ui = &self.ui;
         unsafe {
