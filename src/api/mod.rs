@@ -1,6 +1,7 @@
 use std::borrow::Borrow;
 use std::cell::RefCell;
 use std::io::{self, Write};
+use std::os::raw::c_double;
 use std::rc::Rc;
 
 use hashbrown::HashMap;
@@ -135,6 +136,10 @@ impl Api {
     pub fn set_world(&mut self, world: Rc<World>) {
         self.custom_colors = world.custom_color_map();
         self.world = world;
+    }
+
+    pub fn set_spacing(&mut self, spacing: c_double) {
+        self.cursor.format.block.set_line_height(spacing);
     }
 
     pub fn append_to_notepad<S: Printable>(&self, title: String, text: S) {

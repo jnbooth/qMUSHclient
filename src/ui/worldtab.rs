@@ -1,18 +1,19 @@
 use std::cell::{self, RefCell};
+use std::os::raw::c_double;
 use std::rc::Rc;
 
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
 use qt_core::{slot, FocusReason, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
-use qt_gui::q_text_cursor::MoveOperation;
-use qt_gui::{QDesktopServices, QTextDocument};
+use qt_gui::q_text_block_format::LineHeightTypes;
+use qt_gui::q_text_cursor::{MoveMode, MoveOperation};
+use qt_gui::{QDesktopServices, QTextBlockFormat, QTextDocument};
 use qt_network::q_abstract_socket::SocketError;
 use qt_network::{QTcpSocket, SlotOfSocketError};
 use qt_widgets::q_message_box::{ButtonRole, Icon, StandardButton};
 use qt_widgets::*;
 
 use super::uic;
-use crate::binding::color::RColorPair;
 use crate::binding::{QList, RWidget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
@@ -51,18 +52,39 @@ impl uic::WorldTab {
             handle.set_auto_fill_background(true);
         }
     }
-    fn colorify(&self, world: &World) {
-        let colorpair = RColorPair::new(
-            world.color(&WorldColor::WHITE).clone(),
-            world.color(&WorldColor::BLACK).clone(),
-        );
+
+    fn style(&self, world: &World) {
         unsafe {
-            self.output.set_style_sheet(&colorpair.stylesheet());
-            self.output.document().set_default_font(&world.input_font);
+            self.output.set_style_sheet(&QString::from_std_str(format!(
+                r#"* {{ 
+                    color: {fg};
+                    background-color: {bg};
+                    font: {font};
+                    line-height: {spacing};
+                }}"#,
+                fg = world.color(&WorldColor::WHITE),
+                bg = world.color(&WorldColor::BLACK),
+                font = world.output_font,
+                spacing = world.line_spacing,
+            )));
+            self.input.set_font(&world.input_font);
             // QLineEdit requires a little coaxing to enable transparency
             self.input
                 .set_frame(world.input_colors.background.alpha() == 255);
             self.input.set_style_sheet(&world.input_colors.stylesheet());
+        }
+    }
+
+    fn set_spacing(&self, spacing: c_double) {
+        unsafe {
+            let cursor = self.output.cursor_for_position(&QPoint::new_0a());
+            while cursor.move_position_2a(MoveOperation::NextBlock, MoveMode::KeepAnchor) {}
+            let fmt = QTextBlockFormat::new();
+            fmt.set_line_height(
+                spacing * 100.0,
+                LineHeightTypes::ProportionalHeight.to_int(),
+            );
+            cursor.merge_block_format(&fmt);
         }
     }
 }
@@ -85,7 +107,8 @@ impl WorldTab {
     ) -> Rc<Self> {
         let ui = uic::WorldTab::load(parent);
         ui.init();
-        ui.colorify(&world);
+        ui.style(&world);
+        ui.set_spacing(world.line_spacing as c_double);
         let notepad_title = tr!("World Notepad - {}", world.name);
         let world = Rc::new(world);
         unsafe {
@@ -153,18 +176,24 @@ impl WorldTab {
     }
 
     pub fn set_world(&self, world: World) {
-        let newtitle = world.name.as_str();
-        if self.world.borrow().name != newtitle {
-            unsafe {
-                self.notepad_title
-                    .swap(&tr!("World Notepad - {}", world.name));
-            }
-            self.client.borrow_mut().retitle(newtitle);
-        }
-        self.ui.colorify(&world);
+        let newspacing = world.line_spacing as c_double;
+        let newtitle = world.name.clone();
+        self.ui.style(&world);
         let world = Rc::new(world);
         self.client.borrow_mut().set_world(world.clone());
-        self.world.replace(world);
+        let oldworldrc = self.world.replace(world);
+        let oldworld = &*oldworldrc;
+        if (oldworld.line_spacing as c_double - newspacing).abs() > 0.009 {
+            self.ui.set_spacing(newspacing);
+            self.client.borrow_mut().set_spacing(newspacing);
+        }
+        if oldworld.name != newtitle {
+            unsafe {
+                self.notepad_title
+                    .swap(&tr!("World Notepad - {}", newtitle));
+            }
+            self.client.borrow_mut().retitle(&newtitle);
+        }
     }
     pub fn borrow_world(&self) -> cell::Ref<Rc<World>> {
         self.world.borrow()
@@ -256,7 +285,6 @@ impl WorldTab {
         unsafe {
             if ui.output.text_cursor().has_selection() {
                 ui.input.deselect();
-                //ui.input.set_focus_policy(FocusPolicy::StrongFocus);
                 ui.output.set_focus_1a(FocusReason::MouseFocusReason);
             } else {
                 ui.input.set_focus_1a(FocusReason::MouseFocusReason);

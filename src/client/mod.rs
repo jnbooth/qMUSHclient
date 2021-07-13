@@ -3,6 +3,7 @@ use std::convert::TryInto;
 use std::fs::{self, File};
 use std::io::{self, BufWriter, Read, Write};
 use std::iter::Iterator;
+use std::os::raw::c_double;
 use std::rc::Rc;
 use std::time::Instant;
 use std::{mem, str};
@@ -211,6 +212,11 @@ impl Client {
             self.open_log();
         }
         self.load_worldscript();
+    }
+
+    pub fn set_spacing(&mut self, spacing: c_double) {
+        self.cursor.format.block.set_line_height(spacing);
+        self.plugins.alter_userdata(|api| api.set_spacing(spacing));
     }
 
     pub fn retitle(&mut self, name: &str) {

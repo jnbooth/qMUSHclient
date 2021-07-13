@@ -3,10 +3,40 @@ use std::os::raw::c_int;
 
 use cpp_core::{CastFrom, CppBox};
 use qt_core::QString;
-use qt_gui::q_font::{Capitalization, Style, StyleHint};
+use qt_gui::q_font::{Capitalization, Style, StyleHint, Weight};
 use qt_gui::q_font_database::SystemFont;
 use qt_gui::{QFont, QFontDatabase};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
+
+const fn display_style(style: Style) -> &'static str {
+    match style {
+        Style::StyleItalic => "italic ",
+        Style::StyleOblique => "oblique ",
+        _ => "",
+    }
+}
+
+const fn display_variant(capit: Capitalization) -> &'static str {
+    match capit {
+        Capitalization::SmallCaps => "small-caps ",
+        _ => "",
+    }
+}
+
+const fn display_weight(weight: Weight) -> &'static str {
+    match weight {
+        Weight::Thin => "100 ",
+        Weight::ExtraLight => "200 ",
+        Weight::Light => "300 ",
+        Weight::Normal => "400 ",
+        Weight::Medium => "500 ",
+        Weight::DemiBold => "600 ",
+        Weight::Bold => "700 ",
+        Weight::ExtraBold => "800 ",
+        Weight::Black => "900 ",
+        _ => "",
+    }
+}
 
 pub struct RFont(pub(super) CppBox<QFont>);
 
@@ -29,7 +59,15 @@ impl Debug for RFont {
 
 impl Display for RFont {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "{} {} pt.", self.family(), self.size())
+        write!(
+            f,
+            "{style}{variant}{weight}{size}px {family:?}",
+            style = display_style(self.style()),
+            variant = display_variant(self.capitalization()),
+            weight = display_weight(self.weight()),
+            size = self.size(),
+            family = self.family(),
+        )
     }
 }
 
@@ -96,7 +134,13 @@ impl RFont {
         }
     }
 
-    qt_field!(weight, set_weight, c_int);
+    pub fn weight(&self) -> Weight {
+        Weight::from_int(unsafe { self.0.weight() })
+    }
+
+    pub fn set_weight(&self, weight: Weight) {
+        unsafe { self.0.set_weight(weight.to_int()) }
+    }
 
     qt_field!(style, set_style, Style);
 

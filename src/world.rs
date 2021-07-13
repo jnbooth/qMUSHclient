@@ -337,7 +337,7 @@ impl World {
             // Output
             beep_sound: String::new(),
             pixel_offset: 0,
-            line_spacing: 0.0,
+            line_spacing: 1.0,
             output_font: RFont::global(StyleHint::Monospace),
             use_default_output_font: true,
             show_bold: true,
