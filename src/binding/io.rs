@@ -21,6 +21,17 @@ pub struct RIODevice<Q: QIO> {
     device: QPtr<QIODevice>,
 }
 
+// Manually implemented in order to avoid a Q: Debug bound.
+impl<Q: QIO> Debug for RIODevice<Q> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        f.debug_struct("RIODevice")
+            .field("dropper", &self.dropper)
+            .field("inner", &self.inner)
+            .field("device", &self.device)
+            .finish()
+    }
+}
+
 // Manually implemented in order to avoid a Q: Clone bound.
 impl<Q: QIO> Clone for RIODevice<Q> {
     fn clone(&self) -> Self {
@@ -29,16 +40,6 @@ impl<Q: QIO> Clone for RIODevice<Q> {
             inner: self.inner.clone(),
             device: self.device.clone(),
         }
-    }
-}
-
-impl<Q: QIO> Debug for RIODevice<Q> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        f.debug_struct("RIODevice")
-            .field("dropper", &self.dropper)
-            .field("inner", &self.inner)
-            .field("device", &self.device)
-            .finish()
     }
 }
 

@@ -50,6 +50,9 @@ impl Debug for Style {
             .field("flags", &self.ansi_flags)
             .field("foreground", &self.foreground)
             .field("background", &self.background)
+            .field("spans", &self.spans)
+            .field("span_flags", &self.span_flags)
+            .field("ansi_flags", &self.ansi_flags)
             .finish()
     }
 }

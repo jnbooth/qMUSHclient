@@ -38,22 +38,12 @@ const fn display_weight(weight: Weight) -> &'static str {
     }
 }
 
+#[derive(Debug)]
 pub struct RFont(pub(super) CppBox<QFont>);
 
 impl From<CppBox<QFont>> for RFont {
     fn from(value: CppBox<QFont>) -> Self {
         Self(value)
-    }
-}
-
-impl Debug for RFont {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        f.debug_struct("RFont")
-            .field("family", &self.family())
-            .field("size", &self.size())
-            //.field("weight", &self.weight())
-            //.field("italic", &self.italic())
-            .finish()
     }
 }
 
