@@ -339,8 +339,9 @@ dependencies = [
 
 [[package]]
 name = "mlua"
-version = "0.6.1"
-source = "git+https://github.com/khvzak/mlua/?branch=dev#1fe583027bce76a4b980242a61ad641e6df30a16"
+version = "0.6.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a9da8658821057ea9d9ac349a02960be68e967f8a1e4b2a9d9efaefc4b9f2f47"
 dependencies = [
  "bstr",
  "cc",
@@ -388,9 +389,9 @@ checksum = "a9a7ab5d64814df0fe4a4b5ead45ed6c5f181ee3ff04ba344313a6c80446c5d4"
 
 [[package]]
 name = "once_cell"
-version = "1.7.2"
+version = "1.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "af8b08b04175473088b46763e51ee54da5f9a164bc162f615b91bc179dbf15a3"
+checksum = "692fcb63b64b1758029e0a96ee63e049ce8c5948587f2f7208df04625e5f6b56"
 
 [[package]]
 name = "pathdiff"
