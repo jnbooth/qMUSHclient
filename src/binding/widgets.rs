@@ -34,7 +34,10 @@ pub trait RWidget {
         }
     }
 
-    fn connect_browse_button<T, F>(
+    /// # Safety
+    ///
+    /// `button` and `field` must be valid.
+    unsafe fn connect_browse_button<T, F>(
         &self,
         browse: Browse,
         button: &QPtr<T>,
@@ -80,10 +83,13 @@ pub trait RWidget {
         }
     }
 
-    fn connect_form<T, Q, F>(&self, field: &QPtr<Q>, initial: &T, set: F)
+    /// # Safety
+    ///
+    /// `field` must be valid.
+    unsafe fn connect_form<T, Q, F>(&self, field: &Q, initial: &T, set: F)
     where
         Q: RForm<T>,
-        F: 'static + FnMut(T),
+        F: 'static + Clone + FnMut(T),
     {
         unsafe {
             RForm::connect(field, self.widget(), initial, set);
@@ -95,24 +101,24 @@ pub trait RDialog<Response: From<c_int>>: RWidget {
     fn exec(&self) -> Response;
 }
 
-pub trait RForm<T>: StaticUpcast<QObject> {
+pub trait RForm<T> {
     /// # Safety
     ///
-    /// `this` must be valid.
-    unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &T, set: F)
+    /// `self` must be valid.
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &T, set: F)
     where
-        F: 'static + FnMut(T);
+        F: 'static + Clone + FnMut(T);
 }
 
-impl RForm<String> for QLineEdit {
-    unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &String, mut set: F)
+impl RForm<String> for QPtr<QLineEdit> {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &String, mut set: F)
     where
-        F: 'static + FnMut(String),
+        F: 'static + Clone + FnMut(String),
     {
         unsafe {
-            let this = this.clone();
-            this.set_text(&QString::from_std_str(initial));
-            this.editing_finished()
+            self.set_text(&QString::from_std_str(initial));
+            let this = self.clone();
+            self.editing_finished()
                 .connect(&SlotNoArgs::new(parent, move || {
                     set(this.text().to_std_string());
                 }));
@@ -120,15 +126,15 @@ impl RForm<String> for QLineEdit {
     }
 }
 
-impl RForm<String> for QPlainTextEdit {
-    unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &String, mut set: F)
+impl RForm<String> for QPtr<QPlainTextEdit> {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &String, mut set: F)
     where
-        F: 'static + FnMut(String),
+        F: 'static + Clone + FnMut(String),
     {
         unsafe {
-            let this = this.clone();
-            this.set_plain_text(&QString::from_std_str(initial));
-            this.text_changed()
+            self.set_plain_text(&QString::from_std_str(initial));
+            let this = self.clone();
+            self.text_changed()
                 .connect(&SlotNoArgs::new(parent, move || {
                     set(this.to_plain_text().trimmed().to_std_string());
                 }));
@@ -136,26 +142,26 @@ impl RForm<String> for QPlainTextEdit {
     }
 }
 
-impl RForm<bool> for QCheckBox {
-    unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &bool, set: F)
+impl RForm<bool> for QPtr<QCheckBox> {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &bool, set: F)
     where
-        F: 'static + FnMut(bool),
+        F: 'static + Clone + FnMut(bool),
     {
         unsafe {
-            this.set_checked(*initial);
-            this.toggled().connect(&SlotOfBool::new(parent, set));
+            self.set_checked(*initial);
+            self.toggled().connect(&SlotOfBool::new(parent, set));
         }
     }
 }
 
-impl RForm<bool> for QRadioButton {
-    unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &bool, set: F)
+impl RForm<bool> for QPtr<QRadioButton> {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &bool, set: F)
     where
-        F: 'static + FnMut(bool),
+        F: 'static + Clone + FnMut(bool),
     {
         unsafe {
-            this.set_checked(*initial);
-            this.toggled().connect(&SlotOfBool::new(parent, set));
+            self.set_checked(*initial);
+            self.toggled().connect(&SlotOfBool::new(parent, set));
         }
     }
 }
@@ -164,17 +170,17 @@ fn enum_from_index<E: Enum>(i: usize) -> Option<E> {
     E::enumerate().find(|e| e.index() == i)
 }
 
-impl<E: Enum> RForm<Option<E>> for QComboBox {
-    unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &Option<E>, mut set: F)
+impl<E: Enum> RForm<Option<E>> for QPtr<QComboBox> {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &Option<E>, mut set: F)
     where
-        F: 'static + FnMut(Option<E>),
+        F: 'static + Clone + FnMut(Option<E>),
     {
         unsafe {
-            this.set_current_index(match initial {
+            self.set_current_index(match initial {
                 None => 0,
                 Some(i) => i.index() as c_int + 1,
             });
-            this.current_index_changed()
+            self.current_index_changed()
                 .connect(&SlotOfInt::new(parent, move |index| {
                     set(usize::try_from(index - 1).ok().and_then(enum_from_index));
                 }));
@@ -182,14 +188,14 @@ impl<E: Enum> RForm<Option<E>> for QComboBox {
     }
 }
 
-impl<E: Enum> RForm<E> for QComboBox {
-    unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &E, mut set: F)
+impl<E: Enum> RForm<E> for QPtr<QComboBox> {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &E, mut set: F)
     where
-        F: 'static + FnMut(E),
+        F: 'static + Clone + FnMut(E),
     {
         unsafe {
-            this.set_current_index(initial.index() as c_int);
-            this.current_index_changed()
+            self.set_current_index(initial.index() as c_int);
+            self.current_index_changed()
                 .connect(&SlotOfInt::new(parent, move |index| {
                     if let Some(val) = usize::try_from(index).ok().and_then(enum_from_index) {
                         set(val);
@@ -199,14 +205,35 @@ impl<E: Enum> RForm<E> for QComboBox {
     }
 }
 
-impl RForm<RFont> for QFontComboBox {
-    unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &RFont, mut set: F)
+impl<E: Enum + 'static, const N: usize> RForm<E> for [QPtr<QRadioButton>; N] {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &E, set: F)
     where
-        F: 'static + FnMut(RFont),
+        F: 'static + Clone + FnMut(E),
     {
         unsafe {
-            this.set_current_font(initial);
-            this.current_font_changed()
+            for (e, field) in E::enumerate().zip(self.iter()) {
+                field.set_checked(e == *initial);
+                let mut set = set.clone();
+                field
+                    .toggled()
+                    .connect(&SlotOfBool::new(parent, move |checked| {
+                        if checked {
+                            set(e);
+                        }
+                    }));
+            }
+        }
+    }
+}
+
+impl RForm<RFont> for QPtr<QFontComboBox> {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &RFont, mut set: F)
+    where
+        F: 'static + Clone + FnMut(RFont),
+    {
+        unsafe {
+            self.set_current_font(initial);
+            self.current_font_changed()
                 .connect(&SlotOfQFont::new(parent, move |font| {
                     set(RFont::from(QFont::new_copy(font)));
                 }));
@@ -214,16 +241,16 @@ impl RForm<RFont> for QFontComboBox {
     }
 }
 
-impl RForm<RColor> for QPushButton {
-    unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &RColor, mut set: F)
+impl RForm<RColor> for QPtr<QPushButton> {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &RColor, mut set: F)
     where
-        F: 'static + FnMut(RColor),
+        F: 'static + Clone + FnMut(RColor),
     {
         unsafe {
-            let this = this.clone();
-            this.set_maximum_width(this.height());
-            this.set_palette_color(ColorRole::Button, initial);
-            this.clicked().connect(&SlotNoArgs::new(parent, move || {
+            self.set_maximum_width(self.height());
+            self.set_palette_color(ColorRole::Button, initial);
+            let this = self.clone();
+            self.clicked().connect(&SlotNoArgs::new(parent, move || {
                 if let Some(color) = this.palette_color(ColorRole::Button).pick(this.clone()) {
                     this.set_palette_color(ColorRole::Button, &color);
                     set(color);
@@ -235,15 +262,15 @@ impl RForm<RColor> for QPushButton {
 
 macro_rules! impl_int {
     ($t:ty) => {
-        impl RForm<$t> for QSpinBox {
-            unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &$t, mut set: F)
+        impl RForm<$t> for QPtr<QSpinBox> {
+            unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &$t, mut set: F)
             where
-                F: 'static + FnMut($t),
+                F: 'static + Clone + FnMut($t),
             {
                 unsafe {
-                    let this = this.clone();
-                    this.set_value(*initial as c_int);
-                    this.editing_finished()
+                    self.set_value(*initial as c_int);
+                    let this = self.clone();
+                    self.editing_finished()
                         .connect(&SlotNoArgs::new(parent, move || {
                             if let Ok(val) = <$t>::try_from(this.value()) {
                                 set(val);
@@ -253,15 +280,15 @@ macro_rules! impl_int {
             }
         }
 
-        impl RForm<$t> for QDoubleSpinBox {
-            unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &$t, mut set: F)
+        impl RForm<$t> for QPtr<QDoubleSpinBox> {
+            unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &$t, mut set: F)
             where
-                F: 'static + FnMut($t),
+                F: 'static + Clone + FnMut($t),
             {
                 unsafe {
-                    let this = this.clone();
-                    this.set_value(*initial as c_double / 1000.0);
-                    this.editing_finished()
+                    self.set_value(*initial as c_double / 1000.0);
+                    let this = self.clone();
+                    self.editing_finished()
                         .connect(&SlotNoArgs::new(parent, move || {
                             set((this.value() * 1000.0) as $t);
                         }));
@@ -273,15 +300,15 @@ macro_rules! impl_int {
 
 macro_rules! impl_float {
     ($t:ty) => {
-        impl RForm<$t> for QDoubleSpinBox {
-            unsafe fn connect<F>(this: &QPtr<Self>, parent: Ptr<QWidget>, initial: &$t, mut set: F)
+        impl RForm<$t> for QPtr<QDoubleSpinBox> {
+            unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &$t, mut set: F)
             where
-                F: 'static + FnMut($t),
+                F: 'static + Clone + FnMut($t),
             {
                 unsafe {
-                    let this = this.clone();
-                    this.set_value(*initial as c_double);
-                    this.editing_finished()
+                    self.set_value(*initial as c_double);
+                    let this = self.clone();
+                    self.editing_finished()
                         .connect(&SlotNoArgs::new(parent, move || {
                             set(this.value() as $t);
                         }));

@@ -23,11 +23,14 @@ impl_prefpagenew!(PrefsProxy);
 impl PrefsProxy {
     #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
-        connect_world!(
-            self,
-            proxy_username,
-            proxy_password,
-        );
+        // SAFETY: fields are valid.
+        unsafe {
+            connect_world!(
+                self,
+                proxy_username,
+                proxy_password,
+            );
+        }
     }
 }
 
@@ -42,17 +45,18 @@ impl_prefpagenew!(PrefsAddress);
 impl PrefsAddress {
     #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
-        connect_world!(
-            self,
-            name,
-            site,
-            port,
-            proxy_type,
-            proxy_server,
-            proxy_port,
-            save_world_automatically,
-        );
         unsafe {
+            // SAFETY: fields are valid.
+            connect_world!(
+                self,
+                name,
+                site,
+                port,
+                proxy_type,
+                proxy_server,
+                proxy_port,
+                save_world_automatically,
+            );
             self.ui.proxy_password_button.clicked().connect(&self.slot_open_proxy_settings());
         }
     }
@@ -150,39 +154,50 @@ const DEFAULT_POSTAMBLE: &str = r#"        </font>
 impl PrefsLogging {
     #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
-        connect_world!(
-            self,
-            log_file,
-            log_file_preamble,
-            log_file_postamble,
-            log_output,
-            log_input,
-            log_notes,
-            log_html,
-            log_text,
-            log_raw,
-            log_preamble_output,
-            log_preamble_input,
-            log_preamble_notes,
-            log_postamble_output,
-            log_postamble_input,
-            log_postamble_notes,
-        );
-        let ui = &self.ui;
-        let world = self.world.clone();
-        self.connect_browse_button(
-            Browse::Save,
-            &ui.log_file_browse,
-            &ui.log_file,
-            move || QString::from_std_str(
-                &format!("logs/{}.txt", world.upgrade().unwrap().borrow().name)
-            ),
-            "Text files (*.txt)",
-        );
+        // SAFETY: fields are valid.
         unsafe {
+            connect_world!(
+                self,
+                log_file,
+                log_file_preamble,
+                log_file_postamble,
+                log_output,
+                log_input,
+                log_notes,
+                log_preamble_output,
+                log_preamble_input,
+                log_preamble_notes,
+                log_postamble_output,
+                log_postamble_input,
+                log_postamble_notes,
+            );
+
+            let ui = &self.ui;
+            let world = self.world.clone();
+            self.connect_browse_button(
+                Browse::Save,
+                &ui.log_file_browse,
+                &ui.log_file,
+                move || QString::from_std_str(
+                    &format!("logs/{}.txt", world.upgrade().unwrap().borrow().name)
+                ),
+                "Text files (*.txt)",
+            );
             ui.button_box.help_requested().connect(&self.slot_show_help());
             let reset = ui.button_box.button(StandardButton::RestoreDefaults);
             reset.clicked().connect(&self.slot_set_defaults());
+
+            let worldrc = self.world.upgrade().unwrap();
+            let worldref = &mut *worldrc.borrow_mut();
+            self.connect(
+                worldref,
+                &[ui.log_text.clone(), ui.log_html.clone(), ui.log_raw.clone()],
+                |world| &mut world.log_format,
+            );
+            self.connect(worldref,
+                &[ui.log_append.clone(), ui.log_overwrite.clone()],
+                |world| &mut world.log_mode,
+            );
         }
     }
 
@@ -215,29 +230,32 @@ impl_prefpagenew!(PrefsChat);
 
 impl PrefsChat {
     fn init(self: &Rc<Self>) {
-        connect_world!(
-            self,
-            chat_name,
-            auto_allow_snooping,
-            accept_chat_connections,
-            chat_port,
-            validate_incoming_chat_calls,
-            chat_colors.foreground chat_colors_foreground,
-            chat_colors.background chat_colors_background,
-            ignore_chat_colors,
-            chat_message_prefix,
-            chat_max_lines_per_message,
-            chat_max_bytes_per_message,
-            auto_allow_files,
-            chat_file_save_directory,
-        );
-        let ui = &self.ui;
-        self.connect_browse_button(
-            Browse::Directory,
-            &ui.chat_file_save_directory_browse,
-            &ui.chat_file_save_directory,
-            || unsafe { QString::new() },
-            "",
-        );
+        // SAFETY: fields are valid.
+        unsafe {
+            connect_world!(
+                self,
+                chat_name,
+                auto_allow_snooping,
+                accept_chat_connections,
+                chat_port,
+                validate_incoming_chat_calls,
+                chat_colors.foreground chat_colors_foreground,
+                chat_colors.background chat_colors_background,
+                ignore_chat_colors,
+                chat_message_prefix,
+                chat_max_lines_per_message,
+                chat_max_bytes_per_message,
+                auto_allow_files,
+                chat_file_save_directory,
+            );
+            let ui = &self.ui;
+            self.connect_browse_button(
+                Browse::Directory,
+                &ui.chat_file_save_directory_browse,
+                &ui.chat_file_save_directory,
+                || QString::new(),
+                "",
+            );
+        }
     }
 }

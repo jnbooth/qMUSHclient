@@ -9,6 +9,8 @@ use std::time::Instant;
 use std::{mem, str};
 
 use cpp_core::{CastFrom, CppBox, Ptr};
+#[cfg(feature = "show-special")]
+use qt_core::AlignmentFlag;
 use qt_core::{QBox, QPtr, QString};
 use qt_network::QTcpSocket;
 use qt_widgets::q_message_box::Icon;
@@ -26,12 +28,9 @@ use crate::mxp;
 use crate::script::{Callback, PluginHandler, PluginId};
 use crate::tr::TrContext;
 use crate::ui::Notepad;
-use crate::world::{AutoConnect, UseMxp, World};
-
 #[cfg(feature = "show-special")]
 use crate::ui::Pad;
-#[cfg(feature = "show-special")]
-use qt_core::AlignmentFlag;
+use crate::world::{AutoConnect, LogFormat, LogMode, UseMxp, World};
 
 pub mod color;
 pub mod state;
@@ -180,12 +179,13 @@ impl Client {
             return;
         }
         match fs::OpenOptions::new()
-            .append(true)
+            .write(true)
+            .append(world.log_mode == LogMode::Append)
             .create(true)
             .open(&world.log_file)
         {
             Err(e) => self.alert(Icon::Warning, tr!("Unable to open log file"), &e),
-            Ok(_) if world.log_html => self.log = None,
+            Ok(_) if world.log_format == LogFormat::Html => self.log = None,
             Ok(file) => self.log = Some(BufWriter::with_capacity(config::LOG_BUFFER, file)),
         }
     }
@@ -244,7 +244,7 @@ impl Client {
 
     fn send<S: AsRef<[u8]>>(&mut self, buf: S) -> io::Result<()> {
         let buf = buf.as_ref();
-        if self.world.log_raw {
+        if self.world.log_format == LogFormat::Raw {
             self.write_to_log(Log::Input, buf);
         }
         self.socket.io().write_all(buf)
@@ -267,7 +267,7 @@ impl Client {
             self.scroll_to_bottom();
         }
         command.push('\n');
-        if world.log_text {
+        if world.log_format == LogFormat::Text {
             self.write_to_log(Log::Input, command.as_bytes());
         }
         self.send(&command)
@@ -1085,7 +1085,7 @@ impl Client {
     }
 
     fn start_decompressing(&mut self, left: Vec<u8>, data: Vec<u8>) {
-        if self.world.log_raw {
+        if self.world.log_format == LogFormat::Raw {
             self.write_to_log(Log::Output, &data[..data.len() - left.len()]);
         }
         self.stream.start_decompressing(left);
@@ -1698,7 +1698,7 @@ impl Client {
             }
         }
         self.flush();
-        if self.world.log_raw {
+        if self.world.log_format == LogFormat::Raw {
             self.write_to_log(Log::Output, &data);
         }
     }

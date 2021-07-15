@@ -30,39 +30,42 @@ impl_prefpagenew!(PrefsOutput);
 
 impl PrefsOutput {
     fn init(self: &Rc<Self>) {
-        connect_world!(
-            self,
-            beep_sound,
-            pixel_offset,
-            line_spacing,
-            use_default_output_font,
-            show_bold,
-            show_italic,
-            show_underline,
-            new_activity_sound,
-            max_output_lines,
-            wrap_column,
-            line_information,
-            start_paused,
-            auto_pause,
-            unpause_on_send,
-            flash_taskbar_icon,
-            disable_compression,
-            indent_paras,
-            naws,
-            carriage_return_clears_line,
-            utf_8,
-            auto_wrap_window_width,
-            show_connect_disconnect,
-            copy_selection_to_clipboard,
-            auto_copy_to_clipboard_in_html,
-            convert_ga_to_newline,
-            terminal_identification,
-        );
-        let ui = &self.ui;
-        self.connect_font(&ui.output_font, &ui.output_font_size, |world| {
-            &mut world.output_font
-        });
+        // SAFETY: fields are valid.
+        unsafe {
+            connect_world!(
+                self,
+                beep_sound,
+                pixel_offset,
+                line_spacing,
+                use_default_output_font,
+                show_bold,
+                show_italic,
+                show_underline,
+                new_activity_sound,
+                max_output_lines,
+                wrap_column,
+                line_information,
+                start_paused,
+                auto_pause,
+                unpause_on_send,
+                flash_taskbar_icon,
+                disable_compression,
+                indent_paras,
+                naws,
+                carriage_return_clears_line,
+                utf_8,
+                auto_wrap_window_width,
+                show_connect_disconnect,
+                copy_selection_to_clipboard,
+                auto_copy_to_clipboard_in_html,
+                convert_ga_to_newline,
+                terminal_identification,
+            );
+            let ui = &self.ui;
+            self.connect_font(&ui.output_font, &ui.output_font_size, |world| {
+                &mut world.output_font
+            });
+        }
     }
 }
 
@@ -76,21 +79,24 @@ impl_prefpagenew!(PrefsMxp);
 
 impl PrefsMxp {
     fn init(self: &Rc<Self>) {
-        connect_world!(
-            self,
-            use_mxp,
-            detect_pueblo,
-            hyperlink_color,
-            use_custom_link_color,
-            mud_can_change_link_color,
-            underline_hyperlinks,
-            mud_can_remove_underline,
-            hyperlink_adds_to_command_history,
-            echo_hyperlink_in_output_window,
-            ignore_mxp_color_changes,
-            send_mxp_afk_response,
-            mud_can_change_options,
-        );
+        // SAFETY: fields are valid.
+        unsafe {
+            connect_world!(
+                self,
+                use_mxp,
+                detect_pueblo,
+                hyperlink_color,
+                use_custom_link_color,
+                mud_can_change_link_color,
+                underline_hyperlinks,
+                mud_can_remove_underline,
+                hyperlink_adds_to_command_history,
+                echo_hyperlink_in_output_window,
+                ignore_mxp_color_changes,
+                send_mxp_afk_response,
+                mud_can_change_options,
+            );
+        }
     }
 }
 
@@ -136,13 +142,11 @@ impl PrefPageNew for PrefsColor {
 impl PrefsColor {
     #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
-        connect_world!(self, use_default_colors);
-        self.setcolors(&self.world.upgrade().unwrap().borrow().ansi_colors);
-        for (i, field) in self.colorfields.iter().enumerate() {
-            self.connect(field, move |world| &mut world.ansi_colors[i]);
-        }
-        let ui = &self.ui;
+        // SAFETY: fields are valid.
         unsafe {
+            connect_world!(self, use_default_colors);
+
+            let ui = &self.ui;
             ui.swap.clicked().connect(&self.slot_swap());
             ui.reset.clicked().connect(&self.slot_reset());
             ui.invert.clicked().connect(&self.slot_invert());
@@ -155,6 +159,13 @@ impl PrefsColor {
             ui.lighter_bold.clicked().connect(&self.slot_lighter_back());
             ui.darker_normal.clicked().connect(&self.slot_darker_front());
             ui.darker_bold.clicked().connect(&self.slot_darker_back());
+
+            let worldrc = self.world.upgrade().unwrap();
+            let world = &mut *worldrc.borrow_mut();
+            self.setcolors(&world.ansi_colors);
+            for (i, field) in self.colorfields.iter().enumerate() {
+                self.connect(world, field, move |world| &mut world.ansi_colors[i]);
+            }
         }
     }
 
@@ -347,18 +358,9 @@ impl PrefPageNew for PrefsCustomColor {
 
 impl PrefsCustomColor {
     fn init(self: &Rc<Self>) {
-        self.setcolors(&self.world.upgrade().unwrap().borrow().custom_colors);
-        for (i, field) in self.namefields.iter().enumerate() {
-            self.connect(field, move |world| &mut world.custom_names[i]);
-        }
-        for (i, field) in self.fgfields.iter().enumerate() {
-            self.connect(field, move |world| &mut world.custom_colors[i].foreground);
-        }
-        for (i, field) in self.bgfields.iter().enumerate() {
-            self.connect(field, move |world| &mut world.custom_colors[i].background);
-        }
-        let ui = &self.ui;
+        // SAFETY: fields are valid.
         unsafe {
+            let ui = &self.ui;
             ui.reset.clicked().connect(&self.slot_reset());
             ui.invert.clicked().connect(&self.slot_invert());
             ui.random.clicked().connect(&self.slot_random());
@@ -366,6 +368,23 @@ impl PrefsCustomColor {
             ui.desaturate.clicked().connect(&self.slot_desaturate());
             ui.lighter.clicked().connect(&self.slot_lighter());
             ui.darker.clicked().connect(&self.slot_darker());
+
+            let worldrc = self.world.upgrade().unwrap();
+            let world = &mut *worldrc.borrow_mut();
+            self.setcolors(&world.custom_colors);
+            for (i, field) in self.namefields.iter().enumerate() {
+                self.connect(world, field, move |world| &mut world.custom_names[i]);
+            }
+            for (i, field) in self.fgfields.iter().enumerate() {
+                self.connect(world, field, move |world| {
+                    &mut world.custom_colors[i].foreground
+                });
+            }
+            for (i, field) in self.bgfields.iter().enumerate() {
+                self.connect(world, field, move |world| {
+                    &mut world.custom_colors[i].background
+                });
+            }
         }
     }
 

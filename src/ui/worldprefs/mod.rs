@@ -44,20 +44,24 @@ macro_rules! impl_prefpagenew {
 }
 
 macro_rules! connect_world_one {
-    ($ui:ident, $self:ident, $field:ident, $fieldname:ident$(, $subfield:ident)?) => {
-        $self.connect(&$ui.$fieldname, |world| &mut world.$field$(.$subfield)?)
+    ($ui:ident, $world:ident, $self:ident, $field:ident, $fieldname:ident$(, $subfield:ident)?) => {
+        $self.connect(&mut *$world, &$ui.$fieldname, |world| &mut world.$field$(.$subfield)?)
     };
-    ($ui:ident, $self:ident, $field:ident) => {
-        connect_world_one!($ui, $self, $field, $field)
+    ($ui:ident, $world:ident, $self:ident, $field:ident) => {
+        connect_world_one!($ui, $world, $self, $field, $field)
     };
 }
 
 macro_rules! connect_world {
     ($self:ident, $($field:ident$(.$subfield:ident $fieldname:ident)?),+$(,)?) => {
+        let worldrc = $self.world.upgrade().unwrap();
+        let mut world = worldrc.borrow_mut();
         let ui = &$self.ui;
         $(
-            connect_world_one!(ui, $self, $field$(, $fieldname, $subfield)?);
+            connect_world_one!(ui, world, $self, $field$(, $fieldname, $subfield)?);
         )+
+        std::mem::drop(world);
+        std::mem::drop(worldrc);
     }
 }
 
@@ -79,50 +83,51 @@ trait PrefPage {
 trait PrefPageNew: 'static + PrefPage + RWidget {
     fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self>;
 
-    fn connect<T, Q, F>(self: &Rc<Self>, field: &QPtr<Q>, getter: F)
+    /// # Safety
+    ///
+    /// `field` must be valid.
+    unsafe fn connect<T, Q, F>(self: &Rc<Self>, world: &mut World, field: &Q, getter: F)
     where
         T: 'static,
         Q: 'static + RForm<T>,
-        F: 'static + Fn(&mut World) -> &mut T,
+        F: 'static + Clone + Fn(&mut World) -> &mut T,
     {
-        let world = self.get_world();
-        self.connect_form(
-            field,
-            getter(&mut world.upgrade().unwrap().borrow_mut()),
-            move |val| {
-                if let Some(world) = world.upgrade() {
+        unsafe {
+            let worldrc = self.get_world();
+            self.connect_form(field, getter(world), move |val| {
+                if let Some(world) = worldrc.upgrade() {
                     *getter(&mut world.borrow_mut()) = val;
                 }
-            },
-        );
+            });
+        }
     }
 
-    fn connect_font(
+    /// # Safety
+    ///
+    /// `fontfield` and `sizefield` must be valid.
+    unsafe fn connect_font(
         self: &Rc<Self>,
         fontfield: &QPtr<QFontComboBox>,
         sizefield: &QPtr<QSpinBox>,
         getter: fn(&mut World) -> &mut RFont,
     ) {
-        let world = self.get_world();
-        self.connect_form(
-            &fontfield,
-            getter(&mut world.upgrade().unwrap().borrow_mut()),
-            move |font| {
-                if let Some(world) = world.upgrade() {
-                    getter(&mut world.borrow_mut()).set_family(&font.family());
-                }
-            },
-        );
-        let world = self.get_world();
-        self.connect_form(
-            &sizefield,
-            &getter(&mut self.upgrade_world().unwrap().borrow_mut()).size(),
-            move |size| {
+        unsafe {
+            let world = self.get_world();
+            let worldrc = world.upgrade().unwrap();
+            let mut worldref = worldrc.borrow_mut();
+            let font = getter(&mut worldref);
+            self.connect_form(sizefield, &font.size(), move |size| {
                 if let Some(world) = world.upgrade() {
                     getter(&mut world.borrow_mut()).set_size(size);
                 }
-            },
-        );
+            });
+            let world = self.get_world();
+            self.connect_form(fontfield, font, move |font| {
+                if let Some(world) = world.upgrade() {
+                    getter(&mut world.borrow_mut()).set_family(&font.family());
+                }
+            });
+        }
     }
 }
 

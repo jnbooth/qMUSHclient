@@ -46,6 +46,19 @@ pub enum ScriptRecompile {
     Never,
 }
 
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
+pub enum LogFormat {
+    Text,
+    Html,
+    Raw,
+}
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
+pub enum LogMode {
+    Append,
+    Overwrite,
+}
+
 mod keypad_serde {
     use super::*;
 
@@ -92,12 +105,11 @@ pub struct World {
     // Logging
     pub log_file_preamble: String,
     pub log_file_postamble: String,
+    pub log_format: LogFormat,
     pub log_output: bool,
     pub log_input: bool,
     pub log_notes: bool,
-    pub log_html: bool,
-    pub log_text: bool,
-    pub log_raw: bool,
+    pub log_mode: LogMode,
     pub log_file: String,
     pub log_preamble_output: String,
     pub log_preamble_input: String,
@@ -299,12 +311,11 @@ impl World {
             // Logging
             log_file_preamble: String::new(),
             log_file_postamble: String::new(),
+            log_format: LogFormat::Text,
             log_output: true,
             log_input: true,
             log_notes: true,
-            log_html: false,
-            log_text: true,
-            log_raw: false,
+            log_mode: LogMode::Append,
             log_file: String::new(),
             log_preamble_output: String::new(),
             log_preamble_input: String::new(),
