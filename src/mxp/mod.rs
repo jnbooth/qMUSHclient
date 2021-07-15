@@ -71,6 +71,27 @@ impl Default for SendTo {
     }
 }
 
+impl SendTo {
+    pub fn attach(self, s: &str) -> String {
+        match self {
+            Self::World => ["send:", s].concat(),
+            Self::Input => ["echo:", s].concat(),
+            _ if s.starts_with("echo:") || s.starts_with("send:") => ["http://", s].concat(),
+            Self::Internet => s.to_owned(),
+        }
+    }
+
+    pub fn detach(s: &str) -> (Self, &str) {
+        if let Some(world) = s.strip_prefix("send:") {
+            (Self::World, world)
+        } else if let Some(input) = s.strip_prefix("echo:") {
+            (Self::Input, input)
+        } else {
+            (Self::Internet, s)
+        }
+    }
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Link {
     pub action: String,
@@ -84,13 +105,13 @@ pub struct Link {
 
 impl Link {
     pub fn new(action: &str, hint: Option<&str>, sendto: SendTo) -> Self {
-        let mut actions = action.split('|').map(ToOwned::to_owned);
-        let first_action = actions.next().unwrap();
+        let mut actions = action.split('|');
+        let action = sendto.attach(actions.next().unwrap());
         match hint {
             None => Self {
-                action: first_action,
+                action,
                 hint: None,
-                prompts: actions.collect(),
+                prompts: actions.map(ToOwned::to_owned).collect(),
                 sendto,
             },
             Some(hint) => {
@@ -98,10 +119,10 @@ impl Link {
                 let first_hint = hints.next().unwrap();
                 let mut prompts: Vec<_> = hints.collect();
                 if prompts.is_empty() {
-                    prompts = actions.collect();
+                    prompts = actions.map(ToOwned::to_owned).collect();
                 }
                 Self {
-                    action: first_action,
+                    action,
                     hint: Some(first_hint),
                     prompts,
                     sendto,

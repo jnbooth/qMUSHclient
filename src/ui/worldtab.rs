@@ -7,7 +7,7 @@ use qt_core::{slot, FocusReason, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, 
 use qt_gui::q_palette::ColorRole;
 use qt_gui::q_text_block_format::LineHeightTypes;
 use qt_gui::q_text_cursor::{MoveMode, MoveOperation};
-use qt_gui::{QDesktopServices, QTextBlockFormat, QTextDocument};
+use qt_gui::{QDesktopServices, QTextBlockFormat, QTextDocument, SlotOfQUrl};
 use qt_network::q_abstract_socket::SocketError;
 use qt_network::{QTcpSocket, SlotOfSocketError};
 use qt_widgets::q_message_box::{ButtonRole, Icon, StandardButton};
@@ -18,6 +18,7 @@ use crate::binding::{QList, RWidget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
 use crate::constants::branding;
+use crate::mxp::SendTo;
 use crate::tr::TrContext;
 use crate::world::World;
 
@@ -43,20 +44,10 @@ impl SelectionMode {
 }
 
 impl uic::WorldTab {
-    fn init(&self) {
-        unsafe {
-            self.widget.set_focus_proxy(&self.input);
-            self.widget.set_sizes(&QListOfInt::from_array([1, 30]));
-            let handle = self.widget.handle(1);
-            handle.set_background_role(ColorRole::Button);
-            handle.set_auto_fill_background(true);
-        }
-    }
-
     fn style(&self, world: &World) {
         unsafe {
             self.output.set_style_sheet(&QString::from_std_str(format!(
-                r#"* {{ 
+                r#"QTextBrowser {{ 
                     color: {fg};
                     background-color: {bg};
                     font: {font};
@@ -106,7 +97,6 @@ impl WorldTab {
         saved: Option<String>,
     ) -> Rc<Self> {
         let ui = uic::WorldTab::load(parent);
-        ui.init();
         ui.style(&world);
         ui.set_spacing(world.line_spacing as c_double);
         let notepad_title = tr!("World Notepad - {}", world.name);
@@ -133,12 +123,19 @@ impl WorldTab {
     fn init(self: &Rc<Self>, socket: QPtr<QTcpSocket>) {
         unsafe {
             let ui = &self.ui;
+            ui.widget.set_focus_proxy(&ui.input);
+            ui.widget.set_sizes(&QListOfInt::from_array([1, 30]));
+            let handle = ui.widget.handle(1);
+            handle.set_background_role(ColorRole::Button);
+            handle.set_auto_fill_background(true);
             ui.output.set_read_only(true);
+            ui.output.set_open_links(false);
             ui.output.custom_context_menu_requested().connect(&self.slot_menu_open());
+            ui.output.anchor_clicked().connect(&self.slot_anchor_clicked());
+            ui.output.selection_changed().connect(&self.slot_output_selected());
+            ui.input.selection_changed().connect(&self.slot_input_selected());
             ui.input.return_pressed().connect(&self.slot_send());
             ui.input.editing_finished().connect(&self.slot_deselect());
-            ui.input.selection_changed().connect(&self.slot_input_selected());
-            ui.output.selection_changed().connect(&self.slot_output_selected());
             socket.error_occurred().connect(&self.slot_socket_error());
             socket.ready_read().connect(&self.slot_receive());
         }
@@ -197,6 +194,11 @@ impl WorldTab {
     }
     pub fn borrow_world(&self) -> cell::Ref<Rc<World>> {
         self.world.borrow()
+    }
+    pub fn command(&self, cmd: String) {
+        if let Err(e) = self.client.borrow_mut().send_command(cmd) {
+            eprintln!("Failed to send data: {}", e); // will be handled in GUI by socket_error()
+        }
     }
 
     #[slot(SlotOfSocketError)]
@@ -303,9 +305,7 @@ impl WorldTab {
         unsafe {
             let input = ui.input.text().to_std_string();
             ui.input.clear();
-            if let Err(e) = self.client.borrow_mut().send_command(input) {
-                eprintln!("Failed to send data: {}", e); // will be handled in GUI by socket_error()
-            }
+            self.command(input);
         }
     }
 
@@ -314,16 +314,19 @@ impl WorldTab {
         let ui = &self.ui;
         unsafe {
             let format = ui.output.cursor_for_position(point).char_format();
+            let point = ui.output.map_to_global(point);
             let anchor_names = format.anchor_names();
             if anchor_names.is_empty() {
-                ui.output.create_standard_context_menu_1a(point);
+                ui.output
+                    .create_standard_context_menu_1a(&point)
+                    .exec_1a_mut(&point);
                 return;
             }
             let menu = QMenu::from_q_widget(&ui.output);
             for anchor_name in anchor_names.iter() {
                 menu.add_action_q_string(anchor_name);
             }
-            let chosen = menu.exec_1a_mut(point);
+            let chosen = menu.exec_1a_mut(&point);
             if chosen.is_null() {
                 return;
             }
@@ -332,6 +335,18 @@ impl WorldTab {
             } else {
                 ui.input.set_text(&chosen.text())
             };
+        }
+    }
+
+    #[slot(SlotOfQUrl)]
+    fn anchor_clicked(&self, url: Ref<QUrl>) {
+        let qtext = unsafe { url.to_string_0a() };
+        let text = qtext.to_std_string();
+        let (sendto, body) = SendTo::detach(&text);
+        match sendto {
+            SendTo::Input => unsafe { self.ui.input.set_text(&QString::from_std_str(body)) },
+            SendTo::Internet => open_link(&QString::from_std_str(body)),
+            SendTo::World => self.command(body.to_owned()),
         }
     }
 }

@@ -23,9 +23,6 @@
      <verstretch>1</verstretch>
     </sizepolicy>
    </property>
-   <property name="cursor" stdset="0">
-    <cursorShape>IBeamCursor</cursorShape>
-   </property>
    <property name="focusPolicy">
     <enum>Qt::NoFocus</enum>
    </property>
