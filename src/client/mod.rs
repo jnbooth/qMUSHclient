@@ -180,7 +180,7 @@ impl Client {
         }
         match fs::OpenOptions::new()
             .write(true)
-            .append(world.log_mode == LogMode::Append)
+            .truncate(world.log_mode == LogMode::Overwrite)
             .create(true)
             .open(&world.log_file)
         {
@@ -263,12 +263,14 @@ impl Client {
                 Some(&echo_colors.foreground),
                 Some(&echo_colors.background),
             );
-            self.cursor.insert_block();
             self.scroll_to_bottom();
         }
         command.push('\n');
         if world.log_format == LogFormat::Text {
             self.write_to_log(Log::Input, command.as_bytes());
+        }
+        if self.bufoutput.is_empty() {
+            self.bufoutput.push(b'\n');
         }
         self.send(&command)
     }
@@ -288,6 +290,10 @@ impl Client {
         }
     }
 
+    fn insert_line(&mut self) {
+        self.bufoutput.push(b'\n');
+    }
+
     fn insert_html<S: Printable>(&self, text: S) {
         self.cursor.insert_html(text);
     }
@@ -298,7 +304,6 @@ impl Client {
 
     pub fn print<S: Printable>(&self, text: S) {
         self.insert_text(text);
-        self.scroll_to_bottom();
     }
 
     pub fn println<S: Printable>(&self, text: S) {
@@ -313,9 +318,18 @@ impl Client {
     }
 
     fn flush(&mut self) {
-        if !self.bufoutput.is_empty() {
-            self.print(&self.bufoutput);
-            self.bufoutput.clear();
+        let trailing_newline = match self.bufoutput.as_slice() {
+            [] | [b'\n'] => return,
+            [.., b'\n'] => true,
+            _ => false,
+        };
+        if trailing_newline {
+            self.bufoutput.pop();
+        }
+        self.print(&self.bufoutput);
+        self.bufoutput.clear();
+        if trailing_newline {
+            //self.bufoutput.push(b'\n');
         }
     }
 
@@ -759,10 +773,9 @@ impl Client {
             match fragment {
                 Fragment::Html(text) => self.insert_html(text),
                 Fragment::Text(text) => self.insert_text(text),
-                Fragment::Break => self.cursor.insert_block(),
+                Fragment::Break => self.insert_line(),
             }
         }
-        self.scroll_to_bottom();
 
         Ok(())
     }
@@ -921,7 +934,7 @@ impl Client {
                 self.state.in_paragraph = true;
             }
             Action::Br => {
-                fragments.push(Fragment::html("<br>"));
+                fragments.push(Fragment::Break);
                 span.foreground = Some(world.color(&WorldColor::WHITE).to_owned());
                 span.background = Some(world.color(&WorldColor::BLACK).to_owned());
             }
@@ -1125,9 +1138,7 @@ impl Client {
         #[cfg(feature = "show-special")]
         let mut old_phase = self.phase;
 
-        while let Some(cref) = iter.next() {
-            let c = *cref;
-
+        while let Some(&mut c) = iter.next() {
             #[cfg(feature = "show-special")]
             {
                 if self.phase != old_phase {
@@ -1244,7 +1255,7 @@ impl Client {
                             self.state.last_line_with_iac_ga = self.state.linecount;
                             self.plugins.send_to_all(Callback::IacGa, ());
                             if self.world.convert_ga_to_newline {
-                                *cref = b'\n';
+                                self.insert_line();
                                 break;
                             } else {
                                 continue;
@@ -1705,6 +1716,8 @@ impl Client {
                             self.phase = Phase::Iac;
                         }
                     }
+                    b'\r' => (),
+                    b'\n' => self.insert_line(),
                     b'<' if self.state.mxp_active && self.state.mxp_mode.is_mxp() => {
                         self.state.mxp_string.clear();
                         self.phase = Phase::MxpElement;
@@ -1721,5 +1734,6 @@ impl Client {
         if self.world.log_format == LogFormat::Raw {
             self.write_to_log(Log::Output, &data);
         }
+        self.scroll_to_bottom();
     }
 }
