@@ -44,12 +44,12 @@ impl<const N: usize> Printable for [u8; N] {
 
 impl Printable for Vec<u8> {
     fn to_print(self) -> CppBox<QString> {
-        self[..].to_print()
+        self.as_slice().to_print()
     }
 }
 
 impl Printable for &Vec<u8> {
     fn to_print(self) -> CppBox<QString> {
-        self[..].to_print()
+        self.as_slice().to_print()
     }
 }

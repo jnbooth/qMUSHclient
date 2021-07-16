@@ -10,7 +10,7 @@ pub use qt_gui::q_text_list_format::Style as ListStyle;
 use qt_gui::*;
 
 use crate::binding::color::{Colored, RColor};
-use crate::binding::{QList, RFont};
+use crate::binding::{Printable, QList, RFont};
 
 fn optional_string(s: CppBox<QString>) -> Option<String> {
     if unsafe { s.is_empty() } {
@@ -65,6 +65,18 @@ impl Colored for TextFormat {
 
 macro_rules! impl_fmt {
     ($t:ty, $from:ty) => {
+        impl $t {
+            pub fn new() -> Self {
+                Self(unsafe { <$from>::new() })
+            }
+        }
+
+        impl Default for $t {
+            fn default() -> Self {
+                Self::new()
+            }
+        }
+
         impl Deref for $t {
             type Target = TextFormat;
 
@@ -207,9 +219,9 @@ impl CharFormat {
         optional_string(unsafe { self.0.tool_tip() })
     }
 
-    pub fn set_tooltip(&self, tooltip: &str) {
+    pub fn set_tooltip<S: Printable>(&self, tooltip: S) {
         unsafe {
-            self.0.set_tool_tip(&QString::from_std_str(tooltip));
+            self.0.set_tool_tip(&tooltip.to_print());
         }
     }
 

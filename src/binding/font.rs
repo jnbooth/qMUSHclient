@@ -97,7 +97,7 @@ impl RFont {
     }
 
     pub fn family(&self) -> String {
-        unsafe { self.0.family() }.to_std_string()
+        unsafe { self.0.family().to_std_string() }
     }
     pub fn set_family(&self, family: &str) {
         unsafe {

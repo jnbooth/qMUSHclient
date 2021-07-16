@@ -26,3 +26,11 @@ unsafe fn nonnull<Q: StaticUpcast<QObject>>(ptr: QPtr<Q>) -> Option<QPtr<Q>> {
         Some(ptr)
     }
 }
+
+fn if_valid(n: c_int) -> Option<c_int> {
+    if n == -1 {
+        None
+    } else {
+        Some(n)
+    }
+}
