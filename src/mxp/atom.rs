@@ -1,4 +1,5 @@
 use std::fmt::Write;
+use std::os::raw::c_int;
 use std::str;
 
 use once_cell::sync::Lazy;
@@ -19,6 +20,10 @@ pub struct Tag {
     pub no_reset: bool,
     /// Index in a style's span list.
     pub span_index: usize,
+    /// Position in the text document.
+    pub text_index: c_int,
+    /// Special replacement sequence for clickable links that use the text they contain.
+    pub anchor_template: Option<String>,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]

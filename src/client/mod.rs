@@ -547,19 +547,19 @@ impl Client {
         self.state.mxp_elements.clear();
     }
 
-    fn mxp_findtag(&self, was_secure: bool, name: &str) -> Result<usize, mxp::ParseError> {
+    fn mxp_findtag(&self, secure: bool, name: &str) -> Result<(usize, &mxp::Tag), mxp::ParseError> {
         for (i, tag) in self.state.mxp_active_tags.iter().enumerate().rev() {
             if tag.name.eq_ignore_ascii_case(name) {
-                if !was_secure && tag.secure {
+                if !secure && tag.secure {
                     return Err(mxp::ParseError::new(
                         name,
                         mxp::Error::TagOpenedInSecureMode,
                     ));
                 } else {
-                    return Ok(i);
+                    return Ok((i, tag));
                 }
             }
-            if !was_secure && tag.secure {
+            if !secure && tag.secure {
                 return Err(mxp::ParseError::new(
                     &tag.name,
                     mxp::Error::OpenTagBlockedBySecureTag,
@@ -582,7 +582,15 @@ impl Client {
             ));
         }
 
-        let closed = self.mxp_findtag(was_secure, name)?;
+        let (closed, tag) = self.mxp_findtag(was_secure, name)?;
+        if let Some(template) = &tag.anchor_template {
+            let select = self.cursor.document().select(tag.text_index..);
+            let fmt = CharFormat::new();
+            let text = select.text();
+            let anchor = template.replace("&text;", &text);
+            fmt.set_anchor_href(&anchor);
+            select.merge_char_format(&fmt);
+        }
         self.mxp_close_tags_from(closed);
         Ok(())
     }
@@ -680,6 +688,8 @@ impl Client {
             secure,
             no_reset: flags.contains(mxp::TagFlag::NoReset),
             span_index: self.style.len(),
+            text_index: self.cursor.position(),
+            anchor_template: None,
         });
         if !flags.contains(mxp::TagFlag::Open) && !secure {
             return Err(mxp::ParseError::new(
@@ -812,20 +822,30 @@ impl Client {
             }
             Action::Send => {
                 let mut scanner = args.scan();
-                span.action = scanner.next_or(&["href", "xch_cmd"]).map(|action| {
-                    if world.underline_hyperlinks {
-                        span.flags.insert(TextStyle::Underline);
+                let action = scanner.next_or(&["href", "xch_cmd"]).unwrap_or("&text;");
+                if world.underline_hyperlinks {
+                    span.flags.insert(TextStyle::Underline);
+                }
+                if world.use_custom_link_color {
+                    span.foreground = Some(world.hyperlink_color.clone());
+                }
+                let hint = scanner.next_or(&["hint", "xch_hint"]);
+                let sendto = if args.has_keyword(Keyword::Prompt) {
+                    SendTo::Input
+                } else {
+                    SendTo::World
+                };
+                span.action = Some(Link::new(action, hint, sendto));
+                if action.contains("&text;") {
+                    if let Some(mut tag) = self.state.mxp_active_tags.last_mut() {
+                        let template = if args.has_keyword(Keyword::Prompt) {
+                            ["echo:", action].concat()
+                        } else {
+                            ["send:", action].concat()
+                        };
+                        tag.anchor_template = Some(template);
                     }
-                    if world.use_custom_link_color {
-                        span.foreground = Some(world.hyperlink_color.clone());
-                    }
-                    let sendto = if args.has_keyword(Keyword::Prompt) {
-                        SendTo::Input
-                    } else {
-                        SendTo::World
-                    };
-                    Link::new(action, scanner.next_or(&["hint", "xch_hint"]), sendto)
-                });
+                }
             }
             Action::Hyperlink => {
                 let mut scanner = args.scan();
