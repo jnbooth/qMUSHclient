@@ -20,11 +20,12 @@ fn optional_string(s: CppBox<QString>) -> Option<String> {
     }
 }
 
+#[repr(transparent)]
 pub struct TextFormat(pub(super) QTextFormat);
 
 impl TextFormat {
     fn new(fmt: &QTextFormat) -> &Self {
-        // SAFETY: Basic pointer stuff. This is the exact same trick used by Path and OsStr.
+        // SAFETY: #[repr(transparent)]
         unsafe { &*(fmt as *const QTextFormat as *const Self) }
     }
 
@@ -71,6 +72,20 @@ macro_rules! impl_fmt {
             }
         }
 
+        impl Clone for $t {
+            fn clone(&self) -> Self {
+                Self(unsafe { <$from>::new_copy(&self.0) })
+            }
+        }
+
+        impl PartialEq<$t> for $t {
+            fn eq(&self, other: &$t) -> bool {
+                self.0.eq(unsafe { &other.0.static_upcast() })
+            }
+        }
+
+        impl Eq for $t {}
+
         impl Default for $t {
             fn default() -> Self {
                 Self::new()
@@ -94,6 +109,7 @@ macro_rules! impl_fmt {
 }
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct BlockFormat(pub(super) CppBox<QTextBlockFormat>);
 impl_fmt!(BlockFormat, QTextBlockFormat);
 
@@ -125,6 +141,7 @@ impl BlockFormat {
 }
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct CharFormat(pub(super) CppBox<QTextCharFormat>);
 impl_fmt!(CharFormat, QTextCharFormat);
 
@@ -234,17 +251,21 @@ impl CharFormat {
 }
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct ListFormat(pub(super) CppBox<QTextListFormat>);
 impl_fmt!(ListFormat, QTextListFormat);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct FrameFormat(pub(super) CppBox<QTextFrameFormat>);
 impl_fmt!(FrameFormat, QTextFrameFormat);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct TableFormat(pub(super) CppBox<QTextTableFormat>);
 impl_fmt!(TableFormat, QTextTableFormat);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct ImageFormat(pub(super) CppBox<QTextImageFormat>);
 impl_fmt!(ImageFormat, QTextImageFormat);

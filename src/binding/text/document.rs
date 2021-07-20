@@ -18,7 +18,10 @@ use crate::binding::variant::RVariant;
 use crate::binding::{Printable, RFont};
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct Block(pub(super) CppBox<QTextBlock>);
+
+impl_eq_cpp!(Block);
 
 impl From<CppBox<QTextBlock>> for Block {
     fn from(value: CppBox<QTextBlock>) -> Self {
@@ -157,25 +160,34 @@ impl Block {
 }
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct Layout(pub(super) Ptr<QTextLayout>);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct List(pub(super) QPtr<QTextList>);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct Frame(pub(super) QPtr<QTextFrame>);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct Table(pub(super) QPtr<QTextTable>);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct Fragment(pub(super) CppBox<QTextDocumentFragment>);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct TextOption(pub(super) CppBox<QTextOption>);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct Selection(pub(super) CppBox<QTextCursor>);
+
+impl_eq_cpp!(Selection);
 
 impl Selection {
     /// Returns the starting position of the selection. Selection boundaries are between characters.
@@ -265,23 +277,31 @@ impl Selection {
 }
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct DocumentLayout(pub(super) QPtr<QAbstractTextDocumentLayout>);
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct Document(pub(super) QPtr<QTextDocument>);
 
 impl Document {
     /// Adds a `resource` to the resource cache, using `resource_type` and `name` as identifiers.
     ///
     /// For example, you can add an image as a resource in order to reference it from within the
-    /// document: ```
+    /// document:
+    ///
+    /// ```
     /// document.add_resource(ResourceType::ImageResource, "mydata://image.png", image);
     /// ```
+    ///
     /// The image can be inserted into the document using the [`Cursor`](super::cursor::Cursor) API:
+    ///
     /// ```
     /// cursor.insert_image_named("mydata://image.png");
     /// ```
+    ///
     /// Alternatively, you can insert images using the HTML `img` tag:
+    ///
     /// ```
     /// editor.append(r#"<img src="mydata://image.png" />"#);
     /// ```

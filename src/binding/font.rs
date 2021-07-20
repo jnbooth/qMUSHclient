@@ -39,7 +39,10 @@ const fn display_weight(weight: Weight) -> &'static str {
 }
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct RFont(pub(super) CppBox<QFont>);
+
+impl_eq_cpp!(RFont);
 
 impl From<CppBox<QFont>> for RFont {
     fn from(value: CppBox<QFont>) -> Self {

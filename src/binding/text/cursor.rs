@@ -15,7 +15,7 @@ use crate::binding::color::{Colored, RColor};
 use crate::binding::graphics::RImage;
 use crate::binding::printable::Printable;
 
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Formats {
     pub block: BlockFormat,
     pub text: CharFormat,
@@ -25,6 +25,23 @@ pub struct Formats {
 pub struct Cursor {
     pub(super) inner: CppBox<QTextCursor>,
     pub format: Formats,
+}
+
+impl PartialEq for Cursor {
+    fn eq(&self, other: &Self) -> bool {
+        self.inner.eq(unsafe { &other.inner.as_ref() })
+    }
+}
+
+impl Eq for Cursor {}
+
+impl Clone for Cursor {
+    fn clone(&self) -> Self {
+        Self {
+            inner: unsafe { QTextCursor::new_copy(&self.inner) },
+            format: self.format.clone(),
+        }
+    }
 }
 
 impl From<CppBox<QTextCursor>> for Cursor {
@@ -266,6 +283,19 @@ impl Cursor {
             let cursor = QTextCursor::new_copy(&self.inner);
             cursor.select(selection);
             Selection(cursor)
+        }
+    }
+    /// Transiently selects texts and applies [`Selection`] operations to it.
+    pub fn with_selection<F, A>(&self, selection: SelectionType, f: F) -> A
+    where
+        F: FnOnce(&Selection) -> A,
+    {
+        unsafe {
+            self.inner.select(selection);
+            // SAFETY: #[repr(transparent)]
+            let res = f(&*(&self.inner as *const CppBox<QTextCursor> as *const Selection));
+            self.inner.clear_selection();
+            res
         }
     }
     /// Moves the cursor to the absolute position in the document specified by `pos`. The cursor is

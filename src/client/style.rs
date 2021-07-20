@@ -34,14 +34,15 @@ fn set_bold(color: &WorldColor, bold: bool) -> Option<WorldColor> {
     None
 }
 
+#[derive(PartialEq)]
 pub struct Style {
     format: CharFormat,
-    world: Rc<World>,
     foreground: WorldColor,
     background: WorldColor,
     spans: Vec<Span>,
     span_flags: EnumSet<TextStyle>,
     ansi_flags: EnumSet<TextStyle>,
+    world: Rc<World>,
 }
 
 impl Debug for Style {

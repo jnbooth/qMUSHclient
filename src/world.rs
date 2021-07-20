@@ -16,7 +16,7 @@ use crate::binding::RFont;
 use crate::client::color::{Colors, WorldColor};
 use crate::enums::Enum;
 use crate::script::{PluginId, PluginMetadata};
-use crate::Version;
+use crate::tr::TrContext;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
 pub enum ProxyType {
@@ -82,7 +82,7 @@ mod keypad_serde {
     }
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(TrContext, Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct World {
     // IP address
     pub name: String,

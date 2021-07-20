@@ -369,7 +369,7 @@ macro_rules! impl_ci {
         impl<'a, S: ?Sized> ToCaseFold<&'a CaseFold<S>> for &'a S {
             #[inline]
             fn to_case_fold(self) -> &'a CaseFold<S> {
-                // SAFETY: Basic pointer stuff. This is the exact same trick used by Path and OsStr.
+                // SAFETY: #[repr(transparent)]
                 unsafe { &*(self as *const S as *const CaseFold<S>) }
             }
         }
@@ -437,6 +437,7 @@ pub mod ascii {
     use super::ToCaseFold;
 
     #[derive(Copy, Clone, Debug, Default)]
+    #[repr(transparent)]
     pub struct CaseFold<S: ?Sized>(S);
 
     impl<S: ?Sized + AsRef<[u8]>> CaseFold<S> {
@@ -495,6 +496,7 @@ pub mod unicode {
     use super::ToCaseFold;
 
     #[derive(Copy, Clone, Debug, Default)]
+    #[repr(transparent)]
     pub struct CaseFold<S: ?Sized>(S);
 
     impl<S: ?Sized + AsRef<str>> CaseFold<S> {

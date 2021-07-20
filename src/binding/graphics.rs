@@ -55,7 +55,10 @@ impl From<Rect<c_double>> for CppBox<QRectF> {
 }
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct RImage(pub(super) CppBox<QImage>);
+
+impl_eq_cpp!(RImage);
 
 impl From<CppBox<QImage>> for RImage {
     fn from(value: CppBox<QImage>) -> Self {
@@ -64,4 +67,5 @@ impl From<CppBox<QImage>> for RImage {
 }
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct Painter(pub(super) CppBox<QPainter>);

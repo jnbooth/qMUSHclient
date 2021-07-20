@@ -119,7 +119,10 @@ pub const fn type_name(ty: Type) -> &'static str {
 }
 
 #[derive(Debug)]
+#[repr(transparent)]
 pub struct RVariant(pub(super) CppBox<QVariant>);
+
+impl_eq_cpp!(RVariant);
 
 impl From<CppBox<QVariant>> for RVariant {
     fn from(value: CppBox<QVariant>) -> Self {
