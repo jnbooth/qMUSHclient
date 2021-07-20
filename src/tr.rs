@@ -3,7 +3,29 @@ use std::fmt::{self, Write};
 use std::os::raw::{c_char, c_int};
 
 use cpp_core::{CppBox, Ptr};
-use qt_core::{QCoreApplication, QString};
+#[cfg(not(test))]
+use qt_core::QCoreApplication;
+use qt_core::QString;
+
+#[cfg(test)]
+/// A stub, because the real QCoreApplication is not initialized.
+struct QCoreApplication;
+
+#[cfg(test)]
+impl QCoreApplication {
+    pub unsafe fn translate_4a(
+        _: *const c_char,
+        key: *const c_char,
+        _: *const c_char,
+        _: c_int,
+    ) -> CppBox<QString> {
+        unsafe { QString::from_utf8_char(key) }
+    }
+
+    pub unsafe fn translate_2a(_: *const c_char, key: *const c_char) -> CppBox<QString> {
+        unsafe { QString::from_utf8_char(key) }
+    }
+}
 
 /// Any object that calls tr! should implement this trait.
 /// It's probably best to let a procedural macro derive this automatically rather than messing with
@@ -62,7 +84,7 @@ impl fmt::Write for ArgumentWalker {
     }
 }
 
-const ERROR: &str = "Unexpected error while formatting a string for translation";
+const ERROR: &str = "unexpected error while formatting a string for translation";
 /// If `n` is `Some`, formats a numerus translation. If `n` is `None`, formats without a numerus.
 fn fmt_either(context: &CStr, args: fmt::Arguments, n: Option<c_int>) -> CppBox<QString> {
     let mut walker = ArgumentWalker {

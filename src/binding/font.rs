@@ -6,6 +6,7 @@ use qt_core::QString;
 use qt_gui::q_font::{Capitalization, Style, StyleHint, Weight};
 use qt_gui::q_font_database::SystemFont;
 use qt_gui::{QFont, QFontDatabase};
+use serde::de::{Error as _, Unexpected};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 const fn display_style(style: Style) -> &'static str {
@@ -90,6 +91,7 @@ impl From<SystemFont> for RFont {
 }
 
 impl RFont {
+    #[cfg(not(test))]
     pub fn global(hint: StyleHint) -> Self {
         unsafe {
             let font = QFont::new();
@@ -97,6 +99,10 @@ impl RFont {
             font.set_family(&font.default_family());
             Self::from(font)
         }
+    }
+    #[cfg(test)] // font database may not be initialized
+    pub fn global(_: StyleHint) -> Self {
+        Self::default()
     }
 
     pub fn family(&self) -> String {
@@ -150,11 +156,22 @@ impl RFont {
 
 impl<'de> Deserialize<'de> for RFont {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        let s = String::deserialize(deserializer)?;
-        unsafe {
-            let font = QFont::new();
-            font.from_string(&QString::from_std_str(s));
-            Ok(Self::from(font))
+        let s = <&str>::deserialize(deserializer)?;
+        if s.starts_with(',') {
+            // means it's an unspecified font
+            Ok(Self::default())
+        } else {
+            unsafe {
+                let font = QFont::new();
+                if font.from_string(&QString::from_std_str(s)) {
+                    Ok(Self::from(font))
+                } else {
+                    Err(D::Error::invalid_value(
+                        Unexpected::Str(s),
+                        &"valid QFont specifier",
+                    ))
+                }
+            }
         }
     }
 }

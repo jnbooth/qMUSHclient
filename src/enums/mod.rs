@@ -159,3 +159,83 @@ impl<T: Enum> ExactSizeIterator for Enumeration<T> {
         self.count()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::mem;
+
+    use super::*;
+
+    #[rustfmt::skip] #[allow(dead_code)]
+    #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
+    pub enum DemoEnum { A, B, C, D, E, F, G, H, I, J }
+
+    // Enum tests
+
+    // static assertion proving derive(Enum) picks the smallest possible bitwise representation
+    const _: [(); mem::size_of::<<DemoEnum as Enum>::Rep>()] =
+        [(); DemoEnum::SIZE / 8 + (DemoEnum::SIZE % 8 != 0) as usize];
+
+    pub fn assert_eqs<T: Eq + Debug, X: Iterator<Item = T>, Y: Iterator<Item = T>>(x: X, y: Y) {
+        assert_eq!(x.collect::<Vec<_>>(), y.collect::<Vec<_>>());
+    }
+
+    pub fn assert_all<E: Enum + Debug, F: FnMut(E) -> bool>(mut f: F) {
+        assert_eqs(
+            E::enumerate(..).map(|x| (x, f(x))),
+            E::enumerate(..).map(|x| (x, true)),
+        );
+    }
+
+    #[test]
+    fn test_min() {
+        assert_all(|x: DemoEnum| x.succ() != Some(DemoEnum::MIN));
+    }
+
+    #[test]
+    fn test_max() {
+        assert_all(|x: DemoEnum| x.pred() != Some(DemoEnum::MAX));
+    }
+
+    #[test]
+    fn test_succ() {
+        assert_all(|x: DemoEnum| (x == DemoEnum::MAX) == x.succ().is_none());
+    }
+
+    #[test]
+    fn test_pred() {
+        assert_all(|x: DemoEnum| (x == DemoEnum::MIN) == x.pred().is_none());
+    }
+
+    #[test]
+    fn test_index() {
+        assert_eqs(DemoEnum::enumerate(..).map(Enum::index), 0..DemoEnum::SIZE);
+    }
+
+    #[test]
+    fn test_count() {
+        for x in DemoEnum::enumerate(..) {
+            for y in DemoEnum::enumerate(..) {
+                let our_count = DemoEnum::enumerate(x..=y).count();
+                let std_count = DemoEnum::enumerate(x..=y).fold(0, |count, _| count + 1);
+                if our_count != std_count {
+                    panic!(
+                        "for {}..={}, {} != {}",
+                        x.to_str(),
+                        y.to_str(),
+                        our_count,
+                        std_count
+                    );
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn test_rev() {
+        let forward: Vec<_> = DemoEnum::enumerate(..).collect();
+        let mut backward: Vec<_> = DemoEnum::enumerate(..).rev().collect();
+        backward.reverse();
+        assert_eq!(forward, backward);
+    }
+}

@@ -320,3 +320,18 @@ where
 
 impl<T: Enum> FusedIterator for EnumIter<T> where EnumIter<T>: Iterator<Item = T> {}
 
+#[cfg(test)]
+mod tests {
+    use super::super::tests::*;
+    use super::*;
+
+    // EnumSet tests
+
+    #[test]
+    fn test_enumerate() {
+        assert_eq!(
+            EnumSet { raw: !0 }.into_iter().collect::<Vec<DemoEnum>>(),
+            Enum::enumerate(..).collect::<Vec<DemoEnum>>()
+        );
+    }
+}

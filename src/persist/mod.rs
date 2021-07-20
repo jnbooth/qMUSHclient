@@ -3,9 +3,6 @@ use std::fmt::{self, Display, Formatter};
 use std::fs::File;
 use std::io::{self, Read, Write};
 
-use serde::{Deserialize, Serialize};
-
-use crate::enums::Enum;
 use crate::world::*;
 
 #[allow(unused_macros)]
@@ -90,10 +87,24 @@ pub fn load_world(path: &str) -> Result<World, Error> {
     }
 }
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
-pub enum DebugLevel {
-    Error,
-    Warning,
-    Information,
-    All,
+#[cfg(test)]
+mod tests {
+    use qt_core::Key;
+
+    use super::*;
+    use crate::script::{Alias, Timer, Trigger};
+
+    #[test]
+    pub fn test_world_roundtrip() {
+        let mut world = World::new();
+        world.proxy_type = Some(ProxyType::Socks4);
+        world.connect_method = Some(AutoConnect::Diku);
+        world.timers.push(Timer::default());
+        world.triggers.push(Trigger::default());
+        world.aliases.push(Alias::default());
+        world.keypad_shortcuts.insert(Key::Key0, String::new());
+        let to_file = bincode::serialize(&world).expect("error serializing world");
+        let from_file = bincode::deserialize::<World>(&to_file).expect("error deserializing world");
+        assert_eq!(from_file, world);
+    }
 }

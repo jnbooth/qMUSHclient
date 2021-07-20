@@ -39,7 +39,7 @@ mod tests {
     use super::*;
 
     fn test_lib(s: &[u8]) {
-        let lua = new_lua().expect("Error loading libraries");
+        let lua = new_lua().expect("error loading libraries");
         if let Err(e) = lua.load(s).exec() {
             panic!("{}", e.to_string());
         }
@@ -47,16 +47,16 @@ mod tests {
 
     #[test]
     fn test_lbc() {
-        test_lib(include_bytes!("../../c_lib/lbc/test.lua"));
+        test_lib(include_bytes!("../../tests/lbc.lua"));
     }
 
     #[test]
     fn test_lpeg() {
-        test_lib(include_bytes!("../../c_lib/lpeg/test.lua"));
+        test_lib(include_bytes!("../../tests/lpeg.lua"));
     }
 
     #[test]
     fn test_lsqlite3() {
-        test_lib(include_bytes!("../../c_lib/lsqlite3/test.lua"));
+        test_lib(include_bytes!("../../tests/lsqlite3.lua"));
     }
 }
