@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::hash::{BuildHasher, Hash};
 use std::rc::Rc;
@@ -25,6 +26,15 @@ impl<T: ScriptArg> ScriptArg for Option<T> {
         match self {
             Some(val) => val.to_arg(lua),
             None => Ok(Value::Nil),
+        }
+    }
+}
+
+impl<'a> ScriptArg for Cow<'a, str> {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        match self {
+            Cow::Borrowed(s) => s.to_arg(lua),
+            Cow::Owned(s) => s.to_arg(lua),
         }
     }
 }
@@ -102,7 +112,7 @@ where
         .into_iter()
         .map(|(k, v)| Ok((k.to_arg(lua)?, v.to_arg(lua)?)))
         .collect();
-    lua.create_table_from(args?).map(Value::Table)
+    Ok(Value::Table(lua.create_table_from(args?)?))
 }
 
 pub fn create_sequence<T, I>(lua: &Lua, cont: I) -> mlua::Result<Value>
@@ -110,12 +120,19 @@ where
     T: ScriptArg,
     I: IntoIterator<Item = T>,
 {
-    create_table(lua, cont.into_iter().enumerate().map(|(k, v)| (k + 1, v)))
+    let args: mlua::Result<Vec<_>> = cont.into_iter().map(|x| x.to_arg(lua)).collect();
+    Ok(Value::Table(lua.create_sequence_from(args)?))
 }
 
 impl<T: ScriptArg> ScriptArg for Vec<T> {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         create_sequence(lua, self)
+    }
+}
+
+impl ScriptArg for &[u8] {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        Ok(Value::String(lua.create_string(self)?))
     }
 }
 

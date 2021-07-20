@@ -1,9 +1,13 @@
-use std::fmt::Write;
+use std::cmp::Ordering;
+use std::error::Error as StdError;
+use std::fmt::{self, Display, Formatter, Write};
+use std::fs::File;
 use std::hash::Hash;
-use std::path::PathBuf;
-use std::str::{self, FromStr};
+use std::io::BufReader;
+use std::path::Path;
+use std::rc::Rc;
+use std::{io, mem, str};
 
-use chrono::{Date, Local};
 use mlua::{
     self, AnyUserData, FromLuaMulti, Function, Lua, MetaMethod, ToLuaMulti, UserData,
     UserDataMethods, Value,
@@ -11,15 +15,15 @@ use mlua::{
 use qt_core::QString;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::QMessageBox;
-use uuid::Uuid;
 
 use super::callback::Callback;
 use super::convert::{ScriptArgs, ScriptRes};
+use super::{PluginMetadata, PluginPack};
+use crate::binding::RColor;
 use crate::enums::{Enum, EnumSet};
+use crate::script::{Alias, SendRequest, Timer, Trigger};
 use crate::tr::TrContext;
-use crate::Version;
-
-pub type PluginId = Uuid;
+use crate::world::World;
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct MethodGatherer(Vec<String>);
@@ -119,63 +123,6 @@ impl<'lua, T: UserData> UserDataMethods<'lua, T> for MethodGatherer {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-/// World plugins
-pub struct PluginMetadata {
-    /// Plugin name.
-    pub name: String,
-    /// Who wrote it?
-    pub author: String,
-    /// Short description of the plugin's functionality.
-    pub purpose: String,
-    /// Long description of the plugin's functionality.
-    pub description: String,
-    /// Script source (i.e. from <script> tags).
-    pub script: String,
-    /// File that contains the plugin.
-    pub source: PathBuf,
-    /// Unique ID.
-    pub id: PluginId,
-    /// Date written.
-    pub written: Date<Local>,
-    /// Date last modified.
-    pub modified: Date<Local>,
-    /// Plugin version.
-    pub version: Version,
-    /// Minimum qMUSHclient version required.
-    pub client_required: Version,
-    /// Date installed.
-    pub installed: Date<Local>,
-    /// Evaluation order. Lower is sooner.
-    /// Negative sequences are evaluated before the main world triggers/aliases.
-    pub sequence: i16,
-}
-
-#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ParseErrorTODO;
-
-impl FromStr for PluginMetadata {
-    type Err = ParseErrorTODO;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(Self {
-            name: "TODO".to_string(),
-            author: "TODO".to_string(),
-            purpose: "TODO".to_string(),
-            description: "TODO".to_string(),
-            script: s.to_string(),
-            source: PathBuf::new(),
-            id: PluginId::new_v4(),
-            written: Local::today(),
-            modified: Local::today(),
-            version: Version(0),
-            client_required: Version(0),
-            installed: Local::today(),
-            sequence: 0,
-        })
-    }
-}
-
 #[derive(TrContext)]
 pub struct Plugin {
     metadata: PluginMetadata,
@@ -185,12 +132,35 @@ pub struct Plugin {
     callbacks: EnumSet<Callback>,
     /// Script engine for script.
     engine: Lua,
+    triggers: Vec<Trigger>,
+    aliases: Vec<Alias>,
+    timers: Vec<Timer>,
+}
+
+impl PartialEq for Plugin {
+    fn eq(&self, other: &Self) -> bool {
+        self.metadata.eq(&other.metadata)
+    }
+}
+
+impl Eq for Plugin {}
+
+impl PartialOrd for Plugin {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.metadata.sequence.partial_cmp(&other.metadata.sequence)
+    }
+}
+
+impl Ord for Plugin {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.metadata.sequence.cmp(&other.metadata.sequence)
+    }
 }
 
 impl Plugin {
-    pub fn load(engine: Lua, metadata: PluginMetadata) -> Result<Self, mlua::Error> {
-        if let Err(e) = engine.load(&metadata.script).exec() {
-            Self::alert_error(&metadata, &e);
+    pub fn load(engine: Lua, pack: PluginPack) -> mlua::Result<Self> {
+        if let Err(e) = engine.load(&pack.script).exec() {
+            Self::alert_error(&pack.metadata, &e);
             return Err(e);
         }
         let globals = engine.globals();
@@ -199,13 +169,16 @@ impl Plugin {
             .filter(|cb| matches!(globals.raw_get(cb.to_str()), Ok(Value::Function(..))))
             .collect();
 
-        std::mem::drop(globals);
+        mem::drop(globals);
 
         Ok(Plugin {
-            metadata,
+            metadata: pack.metadata,
             enabled: true,
             callbacks,
             engine,
+            triggers: pack.triggers,
+            aliases: pack.aliases,
+            timers: pack.timers,
         })
     }
 
@@ -253,10 +226,66 @@ impl<T: Clone, C> CloneWith<C> for T {
     }
 }
 
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+struct Indexed<T> {
+    index: PluginIndex,
+    val: T,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+struct Indexer<T>(Vec<Indexed<T>>);
+
+impl<T> Indexer<T> {
+    pub fn new() -> Self {
+        Self(Vec::new())
+    }
+
+    pub fn clear(&mut self) {
+        self.0.clear();
+    }
+
+    pub fn replace<'a, I>(&mut self, index: PluginIndex, iter: I)
+    where
+        I: IntoIterator<Item = &'a T>,
+        T: 'a + Clone,
+    {
+        self.0.retain(|x| x.index != index);
+        self.extend(index, iter);
+    }
+
+    pub fn extend<'a, I>(&mut self, index: PluginIndex, iter: I)
+    where
+        I: IntoIterator<Item = &'a T>,
+        T: 'a + Clone,
+    {
+        let new_iter = iter.into_iter().map(|content| Indexed {
+            index,
+            val: content.to_owned(),
+        });
+        self.0.extend(new_iter);
+    }
+
+    pub fn sort(&mut self)
+    where
+        T: Ord,
+    {
+        self.0.sort_unstable();
+    }
+
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = (PluginIndex, &mut T)> {
+        self.0
+            .iter_mut()
+            .map(|indexed| (indexed.index, &mut indexed.val))
+    }
+}
+
 pub struct PluginHandler<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> {
     userdata: U,
     initialize: String,
     plugins: Vec<Plugin>,
+    triggers: Indexer<Trigger>,
+    aliases: Indexer<Alias>,
+    timers: Indexer<Timer>,
 }
 
 const USERDATA_KEY: &str = "__ud";
@@ -268,6 +297,61 @@ const fn truthy(value: &Value) -> bool {
         _ => true,
     }
 }
+
+#[derive(Debug)]
+pub enum LoadError {
+    File(io::Error),
+    Xml(quick_xml::DeError),
+    Script(mlua::Error),
+}
+impl From<io::Error> for LoadError {
+    fn from(value: io::Error) -> Self {
+        Self::File(value)
+    }
+}
+impl From<quick_xml::DeError> for LoadError {
+    fn from(value: quick_xml::DeError) -> Self {
+        Self::Xml(value)
+    }
+}
+impl From<mlua::Error> for LoadError {
+    fn from(value: mlua::Error) -> Self {
+        Self::Script(value)
+    }
+}
+impl Display for LoadError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::File(e) => write!(f, "{}", e),
+            Self::Xml(e) => write!(f, "{}", e),
+            Self::Script(e) => write!(f, "{}", e),
+        }
+    }
+}
+impl StdError for LoadError {
+    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+        match self {
+            Self::File(e) => Some(e),
+            Self::Xml(e) => Some(e),
+            Self::Script(e) => Some(e),
+        }
+    }
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct TriggerRequests<'a> {
+    pub send: Vec<SendRequest<'a>>,
+    pub hide: bool,
+    pub foreground: Option<&'a RColor>,
+    pub background: Option<&'a RColor>,
+    pub sounds: Vec<&'a Path>,
+    pub make_bold: bool,
+    pub make_italic: bool,
+    pub make_underline: bool,
+}
+
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PluginIndex(usize);
 
 impl<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> PluginHandler<U> {
     pub fn new(userdata: U) -> Self {
@@ -288,7 +372,14 @@ impl<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> PluginHandle
             userdata,
             initialize,
             plugins: Vec::new(),
+            triggers: Indexer::new(),
+            aliases: Indexer::new(),
+            timers: Indexer::new(),
         }
+    }
+
+    pub fn clear(&mut self) {
+        self.plugins.clear();
     }
 
     fn iter_mut(&mut self, cb: Callback) -> impl Iterator<Item = &mut Plugin> {
@@ -297,27 +388,42 @@ impl<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> PluginHandle
             .filter(move |p| p.enabled && p.callbacks.contains(cb))
     }
 
-    pub fn load_plugin(&mut self, metadata: PluginMetadata) -> mlua::Result<()> {
-        if let Some(old) = self
-            .plugins
-            .iter()
-            .position(|x| x.metadata.source == metadata.source)
-        {
-            self.plugins.remove(old);
-        }
+    pub fn load_plugin_file(&mut self, path: &Path) -> Result<(), LoadError> {
+        let file = File::open(path)?;
+        let pack: PluginPack = quick_xml::de::from_reader(BufReader::new(file))?;
+        self.load_plugin(pack)?;
+        Ok(())
+    }
+
+    pub fn load_plugin(&mut self, pack: PluginPack) -> mlua::Result<()> {
+        self.plugins.push(self.init_plugin(pack)?);
+        Ok(())
+    }
+
+    fn init_plugin(&self, pack: PluginPack) -> mlua::Result<Plugin> {
         let engine = crate::ffi::lua::new_lua()?;
 
         engine
             .globals()
-            .set(USERDATA_KEY, self.userdata.clone_with(&metadata))?;
+            .set(USERDATA_KEY, self.userdata.clone_with(&pack.metadata))?;
         engine.load(&self.initialize).exec()?;
-        self.plugins.push(Plugin::load(engine, metadata)?);
-        Ok(())
+        Plugin::load(engine, pack)
     }
 
-    pub fn remove(&mut self, id: &PluginId) {
-        if let Some(old) = self.plugins.iter().position(|x| &x.metadata.id == id) {
-            self.plugins.remove(old);
+    pub fn sort(&mut self) {
+        self.triggers.clear();
+        self.aliases.clear();
+        self.timers.clear();
+
+        self.plugins.sort_unstable();
+
+        for (i, plugin) in self.plugins.iter().enumerate() {
+            self.triggers.extend(PluginIndex(i), &plugin.triggers);
+            self.triggers.sort();
+            self.aliases.extend(PluginIndex(i), &plugin.aliases);
+            self.aliases.sort();
+            self.timers.extend(PluginIndex(i), &plugin.timers);
+            self.timers.sort();
         }
     }
 
@@ -338,6 +444,74 @@ impl<U: 'static + UserData + for<'a> CloneWith<&'a PluginMetadata>> PluginHandle
                 }
             }
         }
+    }
+
+    pub fn update_world_plugin(&mut self, old: &Rc<World>, new: &Rc<World>) -> mlua::Result<()> {
+        let i = match self.plugins.iter().position(|x| x.metadata.is_world_plugin) {
+            Some(i) => PluginIndex(i),
+            None => return self.load_plugin(new.world_plugin()),
+        };
+        if old.world_script != new.world_script {
+            let old_plugin = &mut self.plugins[i.0];
+            let pack = PluginPack {
+                metadata: mem::take(&mut old_plugin.metadata),
+                triggers: mem::take(&mut old_plugin.triggers),
+                aliases: mem::take(&mut old_plugin.aliases),
+                timers: mem::take(&mut old_plugin.timers),
+                script: new.world_script.clone(),
+            };
+            self.plugins[i.0] = self.init_plugin(pack)?;
+        }
+        if old.triggers != new.triggers {
+            self.triggers.replace(i, &new.triggers);
+            self.triggers.sort();
+        }
+        if old.aliases != new.aliases {
+            self.aliases.replace(i, &new.aliases);
+            self.aliases.sort();
+        }
+        if old.timers != new.timers {
+            self.timers.replace(i, &new.timers);
+            self.timers.sort();
+        }
+        Ok(())
+    }
+
+    pub fn trigger(&mut self, line: &str) -> TriggerRequests {
+        let mut requests = TriggerRequests::default();
+        for (i, trigger) in self
+            .triggers
+            .iter_mut()
+            .filter(|(_, t)| t.regex.is_match(line))
+        {
+            if trigger.one_shot {
+                trigger.enabled = false;
+            }
+            if !trigger.text.is_empty() {
+                requests.send.push(SendRequest {
+                    send_to: trigger.send_to,
+                    text: &trigger.text,
+                    plugin: i,
+                });
+            }
+            requests.hide |= trigger.omit_from_output;
+            if !requests.hide {
+                requests.make_bold |= trigger.make_bold;
+                requests.make_italic |= trigger.make_italic;
+                requests.make_underline |= trigger.make_underline;
+                if trigger.change_foreground {
+                    requests.foreground = Some(&trigger.foreground);
+                }
+                if trigger.change_background {
+                    requests.background = Some(&trigger.background);
+                }
+            }
+
+            if !trigger.keep_evaluating {
+                return requests;
+            }
+        }
+        requests
     }
 
     pub fn _send_to_first<A: ScriptArgs + Clone>(&mut self, cb: Callback, args: A) -> bool {

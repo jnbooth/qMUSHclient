@@ -1,6 +1,7 @@
 use std::convert::TryFrom;
 use std::error::Error as StdError;
 use std::os::raw::{c_double, c_int};
+use std::path::PathBuf;
 
 use cpp_core::{CppBox, Ptr, StaticUpcast};
 use qt_core::{q_event, Key, QFlags, QObject, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt};
@@ -108,6 +109,29 @@ pub trait RForm<T> {
     unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &T, set: F)
     where
         F: 'static + Clone + FnMut(T);
+}
+
+impl RForm<Option<PathBuf>> for QPtr<QLineEdit> {
+    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &Option<PathBuf>, mut set: F)
+    where
+        F: 'static + Clone + FnMut(Option<PathBuf>),
+    {
+        unsafe {
+            self.set_text(&QString::from_std_str(
+                initial.as_ref().and_then(|x| x.to_str()).unwrap_or(""),
+            ));
+            let this = self.clone();
+            self.editing_finished()
+                .connect(&SlotNoArgs::new(parent, move || {
+                    let s = this.text();
+                    set(if s.is_empty() {
+                        None
+                    } else {
+                        Some(PathBuf::from(s.to_std_string()))
+                    })
+                }));
+        }
+    }
 }
 
 impl RForm<String> for QPtr<QLineEdit> {

@@ -1,9 +1,7 @@
 use std::convert::TryInto;
-use std::fs::File;
-use std::io::{self, Read};
 use std::path::PathBuf;
 
-use chrono::{DateTime, Local};
+use chrono::Utc;
 use hashbrown::HashMap;
 use qt_core::{GlobalColor, Key};
 use qt_gui::q_font::StyleHint;
@@ -15,7 +13,7 @@ use crate::binding::color::{RColor, RColorPair};
 use crate::binding::RFont;
 use crate::client::color::{Colors, WorldColor};
 use crate::enums::Enum;
-use crate::script::{PluginId, PluginMetadata};
+use crate::script::{Alias, PluginMetadata, PluginPack, Timer, Trigger};
 use crate::tr::TrContext;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
@@ -110,7 +108,7 @@ pub struct World {
     pub log_input: bool,
     pub log_notes: bool,
     pub log_mode: LogMode,
-    pub log_file: String,
+    pub auto_log_file_name: Option<PathBuf>,
     pub log_preamble_output: String,
     pub log_preamble_input: String,
     pub log_preamble_notes: String,
@@ -119,6 +117,7 @@ pub struct World {
     pub log_postamble_notes: String,
 
     // Timers
+    pub timers: Vec<Timer>,
     pub enable_timers: bool,
     pub treeview_timers: bool,
 
@@ -134,13 +133,13 @@ pub struct World {
     pub chat_max_lines_per_message: usize,
     pub chat_max_bytes_per_message: usize,
     pub auto_allow_files: bool,
-    pub chat_file_save_directory: String,
+    pub chat_file_save_directory: Option<PathBuf>,
 
     // Notes
     pub notes: String,
 
     // Output
-    pub beep_sound: String,
+    pub beep_sound: Option<PathBuf>,
     pub pixel_offset: i16,
     pub line_spacing: f32,
     pub output_font: RFont,
@@ -148,7 +147,7 @@ pub struct World {
     pub show_bold: bool,
     pub show_italic: bool,
     pub show_underline: bool,
-    pub new_activity_sound: String,
+    pub new_activity_sound: Option<PathBuf>,
     pub max_output_lines: usize,
     pub wrap_column: u16,
 
@@ -192,6 +191,7 @@ pub struct World {
     pub custom_colors: [RColorPair; 16],
 
     // Triggers
+    pub triggers: Vec<Trigger>,
     pub enable_triggers: bool,
     pub enable_trigger_sounds: bool,
     pub treeview_triggers: bool,
@@ -236,6 +236,7 @@ pub struct World {
     pub history_lines: usize,
 
     // Aliases
+    pub aliases: Vec<Alias>,
     pub enable_aliases: bool,
     pub treeview_aliases: bool,
 
@@ -271,15 +272,18 @@ pub struct World {
     pub confirm_on_send: bool,
 
     // Scripts
+    pub world_script: String,
     pub script_prefix: String,
     pub enable_scripts: bool,
     pub warn_if_scripting_inactive: bool,
-    pub script_filename: String,
     pub edit_script_with_notepad: bool,
     pub script_editor: String,
     pub script_reload_option: ScriptRecompile,
     pub script_errors_to_output_window: bool,
     pub note_text_color: RColor,
+
+    // Hidden
+    pub plugins: Vec<PathBuf>,
 }
 
 impl World {
@@ -316,7 +320,7 @@ impl World {
             log_input: true,
             log_notes: true,
             log_mode: LogMode::Append,
-            log_file: String::new(),
+            auto_log_file_name: None,
             log_preamble_output: String::new(),
             log_preamble_input: String::new(),
             log_preamble_notes: String::new(),
@@ -325,6 +329,7 @@ impl World {
             log_postamble_notes: String::new(),
 
             // Timers
+            timers: Vec::new(),
             enable_timers: true,
             treeview_timers: true,
 
@@ -340,13 +345,13 @@ impl World {
             chat_max_lines_per_message: 0,
             chat_max_bytes_per_message: 0,
             auto_allow_files: false,
-            chat_file_save_directory: String::new(),
+            chat_file_save_directory: None,
 
             // Notes
             notes: String::new(),
 
             // Output
-            beep_sound: String::new(),
+            beep_sound: None,
             pixel_offset: 0,
             line_spacing: 1.0,
             output_font: RFont::global(StyleHint::Monospace),
@@ -354,7 +359,7 @@ impl World {
             show_bold: true,
             show_italic: true,
             show_underline: true,
-            new_activity_sound: String::new(),
+            new_activity_sound: None,
             max_output_lines: 5000,
             wrap_column: 80,
 
@@ -396,6 +401,7 @@ impl World {
             custom_colors: Colors::default_custom(),
 
             // Triggers
+            triggers: Vec::new(),
             enable_triggers: true,
             enable_trigger_sounds: true,
             treeview_triggers: true,
@@ -440,6 +446,7 @@ impl World {
             history_lines: 1000,
 
             // Aliases
+            aliases: Vec::new(),
             enable_aliases: true,
             treeview_aliases: true,
 
@@ -474,15 +481,18 @@ impl World {
             confirm_on_send: true,
 
             // Scripts
+            world_script: String::new(),
             script_prefix: String::new(),
             enable_scripts: true,
             warn_if_scripting_inactive: true,
-            script_filename: String::new(),
             edit_script_with_notepad: true,
             script_editor: "notepad".to_owned(),
             script_reload_option: ScriptRecompile::Confirm,
             script_errors_to_output_window: false,
             note_text_color: RColor::rgb(0, 128, 255),
+
+            // Hidden
+            plugins: Vec::new(),
         }
     }
 
@@ -499,36 +509,34 @@ impl World {
         }
     }
 
-    pub fn make_plugin(&self) -> io::Result<Option<PluginMetadata>> {
-        if self.script_filename.is_empty() {
-            return Ok(None);
-        }
-        let source = PathBuf::from(&self.script_filename);
-        let mut file = File::open(&source)?;
-        let metadata = file.metadata()?;
-        let mut script = String::new();
-        file.read_to_string(&mut script)?;
-        Ok(Some(PluginMetadata {
-            name: format!("World Script: {}", self.name),
-            author: "User".to_owned(),
-            purpose: "User-provided script file".to_owned(),
-            description: "Executes functions provided by the user in World Preferences".to_owned(),
-            script,
-            source,
-            id: PluginId::nil(),
-            written: DateTime::from(metadata.created()?).date(),
-            modified: DateTime::from(metadata.modified()?).date(),
-            version: Version(0),
-            client_required: Version(0),
-            installed: Local::today(),
-            sequence: i16::MIN,
-        }))
-    }
-
     // Each plugin has one of these.
     pub fn custom_color_map(&self) -> HashMap<String, RColorPair> {
         let custom_names = self.custom_names.iter().map(ToOwned::to_owned);
         let custom_colors = self.custom_colors.iter().map(ToOwned::to_owned);
         custom_names.zip(custom_colors).collect()
+    }
+
+    pub fn world_plugin(&self) -> PluginPack {
+        let today = Utc::today().naive_utc();
+        let metadata = PluginMetadata {
+            name: tr!("World Script: {}", self.name).to_std_string(),
+            author: String::new(),
+            purpose: String::new(),
+            description: String::new(),
+            id: String::new(),
+            written: today,
+            modified: today,
+            version: String::new(),
+            requires: String::new(),
+            sequence: 0,
+            is_world_plugin: true,
+        };
+        PluginPack {
+            metadata,
+            triggers: self.triggers.clone(),
+            aliases: self.aliases.clone(),
+            timers: self.timers.clone(),
+            script: self.world_script.clone(),
+        }
     }
 }

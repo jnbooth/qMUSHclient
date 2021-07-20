@@ -40,11 +40,7 @@ impl Drop for Api {
 
 impl<'a> CloneWith<&'a PluginMetadata> for Api {
     fn clone_with(&self, metadata: &'a PluginMetadata) -> Self {
-        let variables_key = format!(
-            "vars-{:?}-{:?}",
-            self.world.name,
-            metadata.source.file_name()
-        );
+        let variables_key = format!("vars-{:?}-{:?}", self.world.name, metadata.id);
         let widget = self.widget.clone();
         unsafe {
             Self {
