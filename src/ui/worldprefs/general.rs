@@ -74,7 +74,6 @@ impl PrefsAddress {
 pub struct PrefsConnecting {
     ui: uic::PrefsConnecting,
     world: Weak<RefCell<World>>,
-    lines_cache: RefCell<usize>,
 }
 impl_prefpage!(PrefsConnecting);
 
@@ -83,7 +82,6 @@ impl PrefPageNew for PrefsConnecting {
         let this = Rc::new(Self {
             ui: uic::PrefsConnecting::load(parent),
             world,
-            lines_cache: RefCell::new(0),
         });
         this.init();
         this
@@ -94,33 +92,24 @@ impl PrefsConnecting {
     #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         unsafe {
+            self.ui.connect_text.text_changed().connect(&self.slot_update_connect_text());
             connect_world!(
                 self,
                 player,
                 password,
                 connect_method,
+                connect_text,
             );
-            self.ui.connect_text.text_changed().connect(&self.slot_update_connect_text());
         }
     }
 
     #[slot(SlotNoArgs)]
     fn update_connect_text(&self) {
-        let ui = &self.ui;
-        let connect_text = unsafe { ui.connect_text.to_plain_text().trimmed().to_std_string() };
-        let lines = connect_text.lines().count();
-        if lines != self.lines_cache.replace(lines) {
-            unsafe {
-                ui.connect_text_lines.set_text(&tr!(lines, "(%n line(s))"));
+        unsafe {
+            let len = self.ui.connect_text.document().character_count();
+            if len <= 2 {
+                self.ui.connect_text_lines.set_num_int(len - 1);
             }
-        }
-        if let Some(mut world) = self
-            .world
-            .upgrade()
-            .as_ref()
-            .and_then(|x| x.try_borrow_mut().ok())
-        {
-            world.connect_text = connect_text;
         }
     }
 }
@@ -158,7 +147,7 @@ impl PrefsLogging {
         unsafe {
             connect_world!(
                 self,
-                log_file,
+                auto_log_file_name,
                 log_file_preamble,
                 log_file_postamble,
                 log_output,
@@ -177,7 +166,7 @@ impl PrefsLogging {
             self.connect_browse_button(
                 Browse::Save,
                 &ui.log_file_browse,
-                &ui.log_file,
+                &ui.auto_log_file_name,
                 move || QString::from_std_str(
                     &format!("logs/{}.txt", world.upgrade().unwrap().borrow().name)
                 ),

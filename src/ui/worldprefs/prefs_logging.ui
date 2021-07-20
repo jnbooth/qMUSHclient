@@ -46,12 +46,12 @@
         <string>Log to:</string>
        </property>
        <property name="buddy">
-        <cstring>log_file</cstring>
+        <cstring>auto_log_file_name</cstring>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="log_file"/>
+      <widget class="QLineEdit" name="auto_log_file_name"/>
      </item>
      <item>
       <widget class="QToolButton" name="log_file_none">
@@ -342,7 +342,7 @@
   <connection>
    <sender>log_file_none</sender>
    <signal>clicked()</signal>
-   <receiver>log_file</receiver>
+   <receiver>auto_log_file_name</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">

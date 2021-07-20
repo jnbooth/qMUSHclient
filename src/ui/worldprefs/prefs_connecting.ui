@@ -122,7 +122,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="connect_text_lines">
+      <widget class="QLabel" name="connect_text_lines_label">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -130,7 +130,20 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>(0 lines)</string>
+        <string>Lines:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="connect_text_lines">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>0</string>
        </property>
       </widget>
      </item>
@@ -152,5 +165,22 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>connect_text</sender>
+   <signal>blockCountChanged(int)</signal>
+   <receiver>connect_text_lines</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>392</x>
+     <y>250</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>464</x>
+     <y>204</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
