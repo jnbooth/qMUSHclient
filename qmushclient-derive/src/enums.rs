@@ -102,6 +102,14 @@ pub fn derive_enum_variant_count(input: TokenStream) -> TokenStream {
                 }
             }
 
+            fn pred(self) -> Option<Self> {
+                if self == #name::#min_bound {
+                    None
+                } else {
+                    Some(unsafe { std::mem::transmute(self as #idx - 1) })
+                }
+            }
+
             fn bit(self) -> Self::Rep {
                 1 << (self as #idx)
             }

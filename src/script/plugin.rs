@@ -195,7 +195,7 @@ impl Plugin {
         }
         let globals = engine.globals();
 
-        let callbacks: EnumSet<Callback> = Callback::enumerate()
+        let callbacks = Callback::enumerate(..)
             .filter(|cb| matches!(globals.raw_get(cb.to_str()), Ok(Value::Function(..))))
             .collect();
 

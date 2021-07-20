@@ -167,7 +167,7 @@ impl RForm<bool> for QPtr<QRadioButton> {
 }
 
 fn enum_from_index<E: Enum>(i: usize) -> Option<E> {
-    E::enumerate().find(|e| e.index() == i)
+    E::enumerate(..).find(|e| e.index() == i)
 }
 
 impl<E: Enum> RForm<Option<E>> for QPtr<QComboBox> {
@@ -211,7 +211,7 @@ impl<E: Enum + 'static, const N: usize> RForm<E> for [QPtr<QRadioButton>; N] {
         F: 'static + Clone + FnMut(E),
     {
         unsafe {
-            for (e, field) in E::enumerate().zip(self.iter()) {
+            for (e, field) in E::enumerate(..).zip(self.iter()) {
                 field.set_checked(e == *initial);
                 let mut set = set.clone();
                 field
