@@ -99,7 +99,7 @@ impl UserData for Api {
 impl Api {
     /// # Safety
     ///
-    /// `socket` must be valid.
+    /// `widget` must be valid and non-null.
     pub unsafe fn new(
         widget: QPtr<QTextBrowser>,
         socket: RIODevice<QTcpSocket>,

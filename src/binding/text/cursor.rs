@@ -57,7 +57,7 @@ impl From<CppBox<QTextCursor>> for Cursor {
 }
 
 impl Cursor {
-    /// Returns a copy of a `QTextEdit`'s [`QTextCursor`` that represents the currently visible
+    /// Returns a copy of a `QTextEdit`'s [`QTextCursor`] that represents the currently visible
     /// cursor.
     ///
     /// # Safety

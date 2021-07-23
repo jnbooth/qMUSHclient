@@ -109,7 +109,7 @@ impl RWidget for Client {
 impl Client {
     /// # Safety
     ///
-    /// `widget` and `socket` must be valid.
+    /// `widget` must be valid and non-null.
     pub unsafe fn new(
         widget: QPtr<QTextBrowser>,
         socket: QBox<QTcpSocket>,

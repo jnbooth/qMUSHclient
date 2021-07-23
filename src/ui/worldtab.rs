@@ -119,8 +119,11 @@ impl WorldTab {
         }
     }
 
+    /// # Safety:
+    ///
+    /// `socket` must be valid.
     #[rustfmt::skip]
-    fn init(self: &Rc<Self>, socket: QPtr<QTcpSocket>) {
+    unsafe fn init(self: &Rc<Self>, socket: QPtr<QTcpSocket>) {
         unsafe {
             let ui = &self.ui;
             ui.widget.set_focus_proxy(&ui.input);

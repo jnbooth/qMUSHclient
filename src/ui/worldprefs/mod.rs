@@ -204,8 +204,11 @@ impl WorldPrefs {
         }
     }
 
+    /// # Safety
+    ///
+    /// `item` must be valid.
     #[slot(SlotOfQTreeWidgetItem)]
-    fn choose_page(&self, item: Ptr<QTreeWidgetItem>) {
+    unsafe fn choose_page(&self, item: Ptr<QTreeWidgetItem>) {
         unsafe {
             if item.child_count() == 0 {
                 self.browse(&item.text(0).to_std_string());
