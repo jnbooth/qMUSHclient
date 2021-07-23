@@ -1,8 +1,6 @@
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
-use cpp_core::{CastInto, Ptr};
-use qt_core::QPtr;
 use qt_widgets::*;
 
 use super::PrefPageNew;

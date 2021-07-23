@@ -2,6 +2,7 @@ use std::convert::TryFrom;
 use std::error::Error as StdError;
 use std::os::raw::{c_double, c_int};
 use std::path::PathBuf;
+use std::rc;
 
 use cpp_core::{CppBox, Ptr, StaticUpcast};
 use qt_core::{q_event, Key, QFlags, QObject, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt};
@@ -87,13 +88,18 @@ pub trait RWidget {
     /// # Safety
     ///
     /// `field` must be valid.
-    unsafe fn connect_form<T, Q, F>(&self, field: &Q, initial: &T, set: F)
+    unsafe fn connect_form<T, Q, W, F>(&self, field: &Q, initial: &T, weak: rc::Weak<W>, mut set: F)
     where
         Q: RForm<T>,
-        F: 'static + Clone + FnMut(T),
+        W: 'static,
+        F: 'static + Clone + FnMut(&W, T),
     {
         unsafe {
-            RForm::connect(field, self.widget(), initial, set);
+            RForm::connect(field, self.widget(), initial, move |val| {
+                if let Some(strong) = weak.upgrade() {
+                    set(&strong, val)
+                }
+            });
         }
     }
 }

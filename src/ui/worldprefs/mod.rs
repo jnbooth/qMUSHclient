@@ -15,14 +15,11 @@ use crate::world::World;
 macro_rules! impl_prefpage {
     ($t:ident) => {
         impl crate::ui::worldprefs::PrefPage for $t {
-            fn get_page(&self) -> QPtr<QWidget> {
+            fn get_page(&self) -> qt_core::QPtr<qt_widgets::QWidget> {
                 unsafe { self.ui.widget.static_upcast() }
             }
-            fn get_world(&self) -> Weak<RefCell<World>> {
+            fn get_world(&self) -> std::rc::Weak<std::cell::RefCell<crate::world::World>> {
                 self.world.clone()
-            }
-            fn upgrade_world(&self) -> Option<Rc<RefCell<World>>> {
-                self.world.upgrade()
             }
         }
     };
@@ -30,9 +27,12 @@ macro_rules! impl_prefpage {
 
 macro_rules! impl_prefpagenew {
     ($t:ident) => {
-        impl PrefPageNew for $t {
-            fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self> {
-                let this = Rc::new(Self {
+        impl super::PrefPageNew for $t {
+            fn new<P: cpp_core::CastInto<cpp_core::Ptr<qt_widgets::QWidget>>>(
+                parent: P,
+                world: std::rc::Weak<std::cell::RefCell<crate::world::World>>,
+            ) -> std::rc::Rc<Self> {
+                let this = std::rc::Rc::new(Self {
                     ui: uic::$t::load(parent),
                     world,
                 });
@@ -75,9 +75,6 @@ use input::PrefsCommands;
 trait PrefPage {
     fn get_page(&self) -> QPtr<QWidget>;
     fn get_world(&self) -> Weak<RefCell<World>>;
-    fn upgrade_world(&self) -> Option<Rc<RefCell<World>>> {
-        self.get_world().upgrade()
-    }
 }
 
 trait PrefPageNew: 'static + PrefPage + RWidget {
@@ -93,11 +90,8 @@ trait PrefPageNew: 'static + PrefPage + RWidget {
         F: 'static + Clone + Fn(&mut World) -> &mut T,
     {
         unsafe {
-            let worldrc = self.get_world();
-            self.connect_form(field, getter(world), move |val| {
-                if let Some(world) = worldrc.upgrade() {
-                    *getter(&mut world.borrow_mut()) = val;
-                }
+            self.connect_form(field, getter(world), self.get_world(), move |world, val| {
+                *getter(&mut world.borrow_mut()) = val;
             });
         }
     }
@@ -112,20 +106,19 @@ trait PrefPageNew: 'static + PrefPage + RWidget {
         getter: fn(&mut World) -> &mut RFont,
     ) {
         unsafe {
-            let world = self.get_world();
-            let worldrc = world.upgrade().unwrap();
+            let worldrc = self.get_world().upgrade().unwrap();
             let mut worldref = worldrc.borrow_mut();
             let font = getter(&mut worldref);
-            self.connect_form(sizefield, &font.size(), move |size| {
-                if let Some(world) = world.upgrade() {
+            self.connect_form(
+                sizefield,
+                &font.size(),
+                self.get_world(),
+                move |world, size| {
                     getter(&mut world.borrow_mut()).set_size(size);
-                }
-            });
-            let world = self.get_world();
-            self.connect_form(fontfield, font, move |font| {
-                if let Some(world) = world.upgrade() {
-                    getter(&mut world.borrow_mut()).set_family(&font.family());
-                }
+                },
+            );
+            self.connect_form(fontfield, font, self.get_world(), move |world, font| {
+                getter(&mut world.borrow_mut()).set_family(&font.family());
             });
         }
     }
@@ -176,7 +169,6 @@ impl WorldPrefs {
             .insert(key, P::new(&self.ui.widget, self.world.clone()));
     }
 
-    #[rustfmt::skip]
     fn init(self: &Rc<Self>) {
         unsafe {
             let ui = &self.ui;
@@ -186,7 +178,9 @@ impl WorldPrefs {
                 ui.contents.add_widget(page);
             }
             ui.settings_tree.expand_all();
-            ui.settings_tree.current_item_changed().connect(&self.slot_choose_page());
+            ui.settings_tree
+                .current_item_changed()
+                .connect(&self.slot_choose_page());
             self.browse("IP address");
         }
     }

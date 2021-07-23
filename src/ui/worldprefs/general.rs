@@ -1,8 +1,7 @@
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
-use cpp_core::{CastInto, Ptr};
-use qt_core::{slot, QPtr, QString, SlotNoArgs};
+use qt_core::{slot, QString, SlotNoArgs};
 use qt_widgets::q_dialog_button_box::StandardButton;
 use qt_widgets::*;
 
@@ -13,7 +12,7 @@ use crate::ui::uic;
 use crate::world::World;
 
 #[derive(Debug, RWidget, TrContext)]
-pub struct PrefsProxy {
+struct PrefsProxy {
     ui: uic::PrefsProxy,
     world: Weak<RefCell<World>>,
 }
@@ -76,17 +75,7 @@ pub struct PrefsConnecting {
     world: Weak<RefCell<World>>,
 }
 impl_prefpage!(PrefsConnecting);
-
-impl PrefPageNew for PrefsConnecting {
-    fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self> {
-        let this = Rc::new(Self {
-            ui: uic::PrefsConnecting::load(parent),
-            world,
-        });
-        this.init();
-        this
-    }
-}
+impl_prefpagenew!(PrefsConnecting);
 
 impl PrefsConnecting {
     #[rustfmt::skip]
