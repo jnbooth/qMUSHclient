@@ -329,6 +329,7 @@ impl Client {
         args: mxp::Arguments,
     ) {
         use mxp::{Action, Atom, InList, Keyword, Link, SendTo};
+        const SPECIAL_LINK: &str = "&text;";
         let world = &*self.world;
         let get_color = |name: &str| {
             if world.ignore_mxp_color_changes {
@@ -376,7 +377,9 @@ impl Client {
             }
             Action::Send => {
                 let mut scanner = args.scan();
-                let action = scanner.next_or(&["href", "xch_cmd"]).unwrap_or("&text;");
+                let action = scanner
+                    .next_or(&["href", "xch_cmd"])
+                    .unwrap_or(SPECIAL_LINK);
                 if world.underline_hyperlinks {
                     span.flags.insert(TextStyle::Underline);
                 }
@@ -390,7 +393,7 @@ impl Client {
                     SendTo::World
                 };
                 span.action = Some(Link::new(action, hint, sendto));
-                if action.contains("&text;") {
+                if action.contains(SPECIAL_LINK) {
                     if let Some(mut tag) = self.state.mxp_active_tags.last_mut() {
                         let template = if args.has_keyword(Keyword::Prompt) {
                             ["echo:", action].concat()
@@ -403,13 +406,17 @@ impl Client {
             }
             Action::Hyperlink => {
                 let mut scanner = args.scan();
-                span.action = scanner.next_or(&["href"]).map(|action| {
-                    span.flags.insert(TextStyle::Underline);
-                    if world.use_custom_link_color {
-                        span.foreground = Some(world.hyperlink_color.clone());
+                let action = scanner.next_or(&["href"]).unwrap_or(SPECIAL_LINK);
+                span.flags.insert(TextStyle::Underline);
+                if world.use_custom_link_color {
+                    span.foreground = Some(world.hyperlink_color.clone());
+                }
+                span.action = Some(Link::new(action, None, SendTo::Internet));
+                if action.contains(SPECIAL_LINK) {
+                    if let Some(mut tag) = self.state.mxp_active_tags.last_mut() {
+                        tag.anchor_template = Some(action.to_owned());
                     }
-                    Link::new(action, None, SendTo::Internet)
-                });
+                }
             }
             Action::Font => {
                 let mut scanner = args.scan();
