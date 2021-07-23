@@ -355,7 +355,7 @@ impl TryFrom<RVariant> for char {
 impl From<NaiveDate> for RVariant {
     fn from(value: NaiveDate) -> Self {
         RVariant::from(unsafe {
-            QDate::new_3a(value.year(), value.month() as i32, value.day() as i32)
+            QDate::new_3a(value.year(), value.month() as c_int, value.day() as c_int)
         })
     }
 }
@@ -385,7 +385,7 @@ impl From<NaiveTime> for RVariant {
         let secs = value.num_seconds_from_midnight();
         let nano = value.nanosecond();
         let milli = secs * MILLI + nano / NANO;
-        RVariant::from(unsafe { QTime::from_m_secs_since_start_of_day(milli as i32) })
+        RVariant::from(unsafe { QTime::from_m_secs_since_start_of_day(milli as c_int) })
     }
 }
 

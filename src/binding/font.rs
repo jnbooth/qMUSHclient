@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::fmt::{self, Debug, Display, Formatter};
 use std::os::raw::c_int;
 
@@ -156,18 +157,18 @@ impl RFont {
 
 impl<'de> Deserialize<'de> for RFont {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        let s = <&str>::deserialize(deserializer)?;
+        let s = Cow::<'de, str>::deserialize(deserializer)?;
         if s.starts_with(',') {
             // means it's an unspecified font
             Ok(Self::default())
         } else {
             unsafe {
                 let font = QFont::new();
-                if font.from_string(&QString::from_std_str(s)) {
+                if font.from_string(&QString::from_std_str(&s)) {
                     Ok(Self::from(font))
                 } else {
                     Err(D::Error::invalid_value(
-                        Unexpected::Str(s),
+                        Unexpected::Str(&s),
                         &"valid QFont specifier",
                     ))
                 }
