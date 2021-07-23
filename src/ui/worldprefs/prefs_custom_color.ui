@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QLabel" name="title_label">
+    <widget class="QLabel" name="label_title">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -33,11 +33,17 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="_main">
+     <property name="spacing">
+      <number>20</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="_options">
+       <property name="spacing">
+        <number>6</number>
+       </property>
        <item>
-        <layout class="QGridLayout" name="gridLayout">
+        <layout class="QGridLayout" name="_colors">
          <item row="6" column="1">
           <widget class="QPushButton" name="custom_fg_1">
            <property name="text">
@@ -430,23 +436,10 @@
       </layout>
      </item>
      <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <layout class="QVBoxLayout" name="_buttons">
+       <property name="spacing">
+        <number>6</number>
        </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>43</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
         <widget class="QPushButton" name="reset">
          <property name="text">
@@ -522,19 +515,6 @@
         </spacer>
        </item>
       </layout>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>

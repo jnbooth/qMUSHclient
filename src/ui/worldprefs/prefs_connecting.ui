@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="_2">
    <item>
-    <widget class="QLabel" name="title_label">
+    <widget class="QLabel" name="label_title">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -33,86 +33,82 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="_credentials">
      <property name="title">
       <string>Character name and password</string>
      </property>
-     <layout class="QHBoxLayout" name="_3">
-      <item>
-       <layout class="QFormLayout" name="_5">
-        <item row="0" column="0">
-         <widget class="QLabel" name="player_label">
-          <property name="text">
-           <string>&amp;Name:</string>
-          </property>
-          <property name="buddy">
-           <cstring>player</cstring>
-          </property>
-         </widget>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_player">
+        <property name="text">
+         <string>&amp;Name:</string>
+        </property>
+        <property name="buddy">
+         <cstring>player</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="player"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_password">
+        <property name="text">
+         <string>&amp;Password:</string>
+        </property>
+        <property name="buddy">
+         <cstring>password</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="password">
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_connect_method">
+        <property name="text">
+         <string>&amp;Connect:</string>
+        </property>
+        <property name="buddy">
+         <cstring>connect_method</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="connect_method">
+        <item>
+         <property name="text">
+          <string>No auto-connect</string>
+         </property>
         </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="player"/>
+        <item>
+         <property name="text">
+          <string>MUSH/MOO ( CONNECT name password )</string>
+         </property>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="password_label">
-          <property name="text">
-           <string>&amp;Password:</string>
-          </property>
-          <property name="buddy">
-           <cstring>password</cstring>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>Diku-style ( name, password )</string>
+         </property>
         </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="password">
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
-          </property>
-         </widget>
+        <item>
+         <property name="text">
+          <string>MXP (automatically when requested)</string>
+         </property>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="connect_method_label">
-          <property name="text">
-           <string>&amp;Connect:</string>
-          </property>
-          <property name="buddy">
-           <cstring>connect_method</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="connect_method">
-          <item>
-           <property name="text">
-            <string>No auto-connect</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>MUSH/MOO ( CONNECT name password )</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Diku-style ( name, password )</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>MXP (automatically when requested)</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="_4">
+    <layout class="QHBoxLayout" name="_connect_header">
      <item>
-      <widget class="QLabel" name="connect_text_label">
+      <widget class="QLabel" name="label_connect_text">
        <property name="text">
         <string>Connect &amp;Text. (Sent after connected):</string>
        </property>
@@ -122,7 +118,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="connect_text_lines_label">
+      <widget class="QLabel" name="label_connect_text_lines">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -153,7 +149,7 @@
     <widget class="QPlainTextEdit" name="connect_text"/>
    </item>
    <item>
-    <widget class="QLabel" name="label_8">
+    <widget class="QLabel" name="label_help">
      <property name="text">
       <string>&quot;%name%&quot; and &quot;%password%&quot; are automatically replaced with your login.</string>
      </property>

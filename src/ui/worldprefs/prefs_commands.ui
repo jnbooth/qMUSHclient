@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>583</width>
+    <width>606</width>
     <height>848</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QLabel" name="title_label">
+    <widget class="QLabel" name="label_title">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -33,11 +33,17 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="_main">
+     <property name="spacing">
+      <number>20</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="_options">
+       <property name="spacing">
+        <number>6</number>
+       </property>
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="_output_window">
          <property name="title">
           <string>Output Window</string>
          </property>
@@ -57,7 +63,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="label_echo_colors_background">
             <property name="text">
              <string>on</string>
             </property>
@@ -87,13 +93,13 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_2">
+        <widget class="QGroupBox" name="_speed_walking">
          <property name="title">
           <string>Speed Walking</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <layout class="QHBoxLayout" name="_walk">
             <item>
              <widget class="QCheckBox" name="enable_speed_walk">
               <property name="text">
@@ -111,13 +117,13 @@
            </layout>
           </item>
           <item>
-           <widget class="QWidget" name="speedWidget" native="true">
+           <widget class="QWidget" name="_delay" native="true">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
-              <widget class="QLabel" name="speed_walk_delay_label">
+              <widget class="QLabel" name="label_speed_walk_delay">
                <property name="text">
                 <string>Delay:</string>
                </property>
@@ -137,7 +143,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="speed_walk_filler_label">
+              <widget class="QLabel" name="label_speed_walk_filler">
                <property name="text">
                 <string>Filler:</string>
                </property>
@@ -153,7 +159,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_3">
+        <widget class="QGroupBox" name="_command_stacking">
          <property name="title">
           <string>Command Stacking</string>
          </property>
@@ -179,27 +185,23 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_4">
+        <widget class="QGroupBox" name="_command_window">
          <property name="title">
           <string>Command Window</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QFontComboBox" name="input_font">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QFontComboBox" name="input_font">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <layout class="QHBoxLayout" name="_font_options">
             <item>
              <widget class="QSpinBox" name="input_font_size">
               <property name="sizePolicy">
@@ -222,56 +224,56 @@
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QHBoxLayout" name="_color">
+            <item>
+             <widget class="QLabel" name="label_input_colors_foreground">
+              <property name="text">
+               <string>Colour:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="input_colors_foreground">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_input_colors_background">
+              <property name="text">
+               <string>on</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="input_colors_background">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
          </layout>
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Colour:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="input_colors_foreground">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>on</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="input_colors_background">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_5">
+        <widget class="QGroupBox" name="_spam_prevention">
          <property name="title">
           <string>Spam Prevention</string>
          </property>
@@ -284,13 +286,13 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="spamWidget" native="true">
+           <widget class="QWidget" name="_spam_options" native="true">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <layout class="QFormLayout" name="formLayout">
              <item row="1" column="0">
-              <widget class="QLabel" name="label_3">
+              <widget class="QLabel" name="label_spam_message">
                <property name="text">
                 <string>Send:</string>
                </property>
@@ -300,14 +302,14 @@
               <widget class="QLineEdit" name="spam_message"/>
              </item>
              <item row="0" column="0">
-              <widget class="QLabel" name="spam_line_count_label">
+              <widget class="QLabel" name="label_spam_line_count">
                <property name="text">
                 <string>Every</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
-              <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <layout class="QHBoxLayout" name="_spam_line_count">
                <item>
                 <widget class="QSpinBox" name="spam_line_count">
                  <property name="maximum">
@@ -319,7 +321,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_2">
+                <widget class="QLabel" name="label_suffix_spam_line">
                  <property name="text">
                   <string>identical commands</string>
                  </property>
@@ -336,7 +338,10 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="_checkboxes">
+       <property name="spacing">
+        <number>6</number>
+       </property>
        <item>
         <widget class="QCheckBox" name="auto_repeat">
          <property name="text">
@@ -399,7 +404,7 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_10">
           <item>
-           <widget class="QLabel" name="history_lines_label">
+           <widget class="QLabel" name="label_history_lines">
             <property name="text">
              <string>Keep</string>
             </property>
@@ -416,7 +421,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_8">
+           <widget class="QLabel" name="label_suffix_history_lines">
             <property name="text">
              <string>lines</string>
             </property>
@@ -426,14 +431,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="keyboard_preferences_button">
          <property name="text">
           <string>Keyboard Preferences...</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="tab_completion_button">
          <property name="text">
           <string>Tab Completion...</string>
          </property>
@@ -495,22 +500,6 @@
   <connection>
    <sender>enable_speed_walk</sender>
    <signal>toggled(bool)</signal>
-   <receiver>speedWidget</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>122</x>
-     <y>160</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>63</x>
-     <y>185</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>enable_speed_walk</sender>
-   <signal>toggled(bool)</signal>
    <receiver>speed_walk_prefix</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
@@ -527,7 +516,7 @@
   <connection>
    <sender>enable_spam_prevention</sender>
    <signal>toggled(bool)</signal>
-   <receiver>spamWidget</receiver>
+   <receiver>_spam_options</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -553,6 +542,22 @@
     <hint type="destinationlabel">
      <x>287</x>
      <y>283</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enable_speed_walk</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>_delay</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>122</x>
+     <y>160</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>63</x>
+     <y>185</y>
     </hint>
    </hints>
   </connection>

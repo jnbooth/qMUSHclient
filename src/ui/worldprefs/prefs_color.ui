@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
    <item>
-    <widget class="QLabel" name="title_label">
+    <widget class="QLabel" name="label_title">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -33,11 +33,17 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="_main">
+     <property name="spacing">
+      <number>20</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
+      <layout class="QVBoxLayout" name="_colors">
+       <property name="spacing">
+        <number>6</number>
+       </property>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QHBoxLayout" name="_palette">
          <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
@@ -52,7 +58,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox">
+          <widget class="QGroupBox" name="_normal">
            <property name="title">
             <string>Normal</string>
            </property>
@@ -117,7 +123,7 @@
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
+          <layout class="QVBoxLayout" name="_labels">
            <item>
             <spacer name="verticalSpacer">
              <property name="orientation">
@@ -135,56 +141,56 @@
             </spacer>
            </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="label">
+            <widget class="QLabel" name="label_black">
              <property name="text">
               <string>Black</string>
              </property>
             </widget>
            </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="label_3">
+            <widget class="QLabel" name="label_red">
              <property name="text">
               <string>Red</string>
              </property>
             </widget>
            </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="label_6">
+            <widget class="QLabel" name="label_green">
              <property name="text">
               <string>Green</string>
              </property>
             </widget>
            </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="label_7">
+            <widget class="QLabel" name="label_yellow">
              <property name="text">
               <string>Yellow</string>
              </property>
             </widget>
            </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="label_5">
+            <widget class="QLabel" name="label_blue">
              <property name="text">
               <string>Blue</string>
              </property>
             </widget>
            </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="label_4">
+            <widget class="QLabel" name="label_magenta">
              <property name="text">
               <string>Magenta</string>
              </property>
             </widget>
            </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="label_8">
+            <widget class="QLabel" name="label_cyan">
              <property name="text">
               <string>Cyan</string>
              </property>
             </widget>
            </item>
            <item alignment="Qt::AlignHCenter">
-            <widget class="QLabel" name="label_2">
+            <widget class="QLabel" name="label_white">
              <property name="text">
               <string>White</string>
              </property>
@@ -209,7 +215,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_2">
+          <widget class="QGroupBox" name="_bold">
            <property name="title">
             <string>Bold</string>
            </property>
@@ -289,7 +295,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout">
+        <layout class="QGridLayout" name="_each_buttons">
          <item row="1" column="1">
           <widget class="QPushButton" name="darker_bold">
            <property name="text">
@@ -360,7 +366,10 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="_buttons">
+       <property name="spacing">
+        <number>6</number>
+       </property>
        <item>
         <widget class="QPushButton" name="reset">
          <property name="text">

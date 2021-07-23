@@ -21,7 +21,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="title_label">
+    <widget class="QLabel" name="label_title">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -39,9 +39,9 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="_log">
      <item>
-      <widget class="QLabel" name="log_file_label">
+      <widget class="QLabel" name="label_log_file">
        <property name="text">
         <string>Log to:</string>
        </property>
@@ -78,9 +78,9 @@
     </layout>
    </item>
    <item>
-    <layout class="QFormLayout" name="formLayout">
+    <layout class="QFormLayout" name="_session">
      <item row="0" column="0">
-      <widget class="QLabel" name="log_file_preamble_label">
+      <widget class="QLabel" name="label_log_file_preamble">
        <property name="text">
         <string>Session &amp;Header:</string>
        </property>
@@ -93,7 +93,7 @@
       <widget class="QPlainTextEdit" name="log_file_preamble"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="log_file_postamble_label">
+      <widget class="QLabel" name="label_log_file_postamble">
        <property name="text">
         <string>Session &amp;Footer:</string>
        </property>
@@ -115,9 +115,9 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="_options">
      <item>
-      <widget class="QGroupBox" name="groupBox_2">
+      <widget class="QGroupBox" name="_log_format">
        <property name="title">
         <string>Format of log</string>
        </property>
@@ -160,7 +160,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox">
+      <widget class="QGroupBox" name="_what_to_log">
        <property name="title">
         <string>What to log</string>
        </property>
@@ -203,7 +203,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_3">
+      <widget class="QGroupBox" name="_log_mode">
        <property name="title">
         <string>Log mode</string>
        </property>
@@ -241,9 +241,9 @@
     </layout>
    </item>
    <item>
-    <layout class="QGridLayout" name="gridLayout">
+    <layout class="QGridLayout" name="_affixes">
      <item row="2" column="0">
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="label_input">
        <property name="text">
         <string>Commands:</string>
        </property>
@@ -262,7 +262,7 @@
       <widget class="QLineEdit" name="log_postamble_notes"/>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="label_notes">
        <property name="text">
         <string>Script:</string>
        </property>
@@ -272,7 +272,7 @@
       <widget class="QLineEdit" name="log_preamble_notes"/>
      </item>
      <item row="0" column="2" alignment="Qt::AlignHCenter">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_postamble">
        <property name="font">
         <font>
          <weight>75</weight>
@@ -285,7 +285,7 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="label_output">
        <property name="text">
         <string>Output:</string>
        </property>
@@ -295,7 +295,7 @@
       <widget class="QLineEdit" name="log_preamble_input"/>
      </item>
      <item row="0" column="1">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_preamble">
        <property name="font">
         <font>
          <weight>75</weight>
@@ -313,7 +313,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label_help">
      <property name="text">
       <string>All fields above can include date fields, e.g. %a %b %d.</string>
      </property>
@@ -326,7 +326,7 @@
   <connection>
    <sender>log_html</sender>
    <signal>toggled(bool)</signal>
-   <receiver>groupBox</receiver>
+   <receiver>_what_to_log</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">

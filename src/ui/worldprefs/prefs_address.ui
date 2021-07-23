@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="_2">
    <item>
-    <widget class="QLabel" name="title_label">
+    <widget class="QLabel" name="label_title">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -33,7 +33,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="_mud">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>4</horstretch>
@@ -45,7 +45,7 @@
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="name_label">
+       <widget class="QLabel" name="label_name">
         <property name="text">
          <string>World &amp;Name:</string>
         </property>
@@ -58,7 +58,7 @@
        <widget class="QLineEdit" name="name"/>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="site_label">
+       <widget class="QLabel" name="label_site">
         <property name="text">
          <string>&amp;TCP/IP Address:</string>
         </property>
@@ -81,7 +81,7 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="port_label">
+       <widget class="QLabel" name="label_port">
         <property name="text">
          <string>&amp;Port:</string>
         </property>
@@ -123,7 +123,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="_proxy">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>3</horstretch>
@@ -135,7 +135,7 @@
      </property>
      <layout class="QFormLayout" name="_4">
       <item row="0" column="0">
-       <widget class="QLabel" name="proxy_type_label">
+       <widget class="QLabel" name="label_proxy_type">
         <property name="text">
          <string>Type:</string>
         </property>
@@ -170,7 +170,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="proxy_server_label">
+       <widget class="QLabel" name="label_proxy_server">
         <property name="text">
          <string>TCP/IP &amp;Address:</string>
         </property>
@@ -183,7 +183,7 @@
        <widget class="QLineEdit" name="proxy_server"/>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="proxy_port_label">
+       <widget class="QLabel" name="label_proxy_port">
         <property name="text">
          <string>Port:</string>
         </property>
