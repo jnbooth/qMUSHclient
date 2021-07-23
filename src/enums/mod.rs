@@ -42,6 +42,11 @@ pub trait Enum: Copy + Ord {
     /// The value's position in a complete enumeration of the type.
     fn index(self) -> usize;
 
+    /// Inverse of `index`. Returns `None` if out of range.
+    fn from_index(i: usize) -> Option<Self> {
+        Self::enumerate(..).find(|e| e.index() == i)
+    }
+
     fn enumerate<R: RangeBounds<Self>>(range: R) -> Enumeration<Self> {
         fn invalid_enum<E: Enum>() -> Enumeration<E> {
             Enumeration {
@@ -210,6 +215,19 @@ mod tests {
     #[test]
     fn test_index() {
         assert_eqs(DemoEnum::enumerate(..).map(Enum::index), 0..DemoEnum::SIZE);
+    }
+
+    #[test]
+    fn test_from_index() {
+        assert_eqs(
+            DemoEnum::enumerate(..).map(Some),
+            (0..DemoEnum::SIZE).map(DemoEnum::from_index),
+        );
+    }
+
+    #[test]
+    fn test_from_index_out_of_range() {
+        assert_eq!(DemoEnum::from_index(DemoEnum::SIZE), None);
     }
 
     #[test]

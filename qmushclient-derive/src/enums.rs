@@ -117,6 +117,14 @@ pub fn derive_enum_variant_count(input: TokenStream) -> TokenStream {
             fn index(self) -> usize {
                 self as usize
             }
+
+            fn from_index(i: usize) -> Option<Self> {
+                if i < #size {
+                    Some(unsafe { std::mem::transmute(i as #idx) })
+                } else {
+                    None
+                }
+            }
         }
 
         impl #impl_generics #name #ty_generics #where_clause {
