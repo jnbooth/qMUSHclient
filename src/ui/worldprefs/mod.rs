@@ -8,8 +8,9 @@ use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::*;
 
 use super::uic;
-use crate::binding::{RDialog, RFont, RForm, RWidget};
+use crate::binding::{RFont, RForm, RWidget};
 use crate::tr::TrContext;
+use crate::ui::worldprefs::tables::PrefsTimers;
 use crate::world::World;
 
 macro_rules! impl_prefpage {
@@ -25,9 +26,9 @@ macro_rules! impl_prefpage {
     };
 }
 
-macro_rules! impl_prefpagenew {
+macro_rules! impl_prefpageext {
     ($t:ident) => {
-        impl super::PrefPageNew for $t {
+        impl super::PrefPageExt for $t {
             fn new<P: cpp_core::CastInto<cpp_core::Ptr<qt_widgets::QWidget>>>(
                 parent: P,
                 world: std::rc::Weak<std::cell::RefCell<crate::world::World>>,
@@ -71,13 +72,16 @@ mod appearance;
 use appearance::{PrefsColor, PrefsCustomColor, PrefsMxp, PrefsOutput};
 mod input;
 use input::PrefsCommands;
+mod tables;
+use tables::{PrefsAliases, PrefsTriggers};
 
 trait PrefPage {
     fn get_page(&self) -> QPtr<QWidget>;
     fn get_world(&self) -> Weak<RefCell<World>>;
 }
 
-trait PrefPageNew: 'static + PrefPage + RWidget {
+/// These methods cannot be part of `PrefPage`, because they would prevent creating `dyn PrefPage`.
+trait PrefPageExt: 'static + PrefPage + RWidget {
     fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self>;
 
     /// # Safety
@@ -89,6 +93,7 @@ trait PrefPageNew: 'static + PrefPage + RWidget {
         Q: 'static + RForm<T>,
         F: 'static + Clone + Fn(&mut World) -> &mut T,
     {
+        // SAFETY: `field` is valid.
         unsafe {
             self.connect_form(field, getter(world), self.get_world(), move |world, val| {
                 *getter(&mut world.borrow_mut()) = val;
@@ -105,10 +110,11 @@ trait PrefPageNew: 'static + PrefPage + RWidget {
         sizefield: &QPtr<QSpinBox>,
         getter: fn(&mut World) -> &mut RFont,
     ) {
+        let worldrc = self.get_world().upgrade().unwrap();
+        let mut worldref = worldrc.borrow_mut();
+        let font = getter(&mut worldref);
+        // SAFETY: all fields are valid.
         unsafe {
-            let worldrc = self.get_world().upgrade().unwrap();
-            let mut worldref = worldrc.borrow_mut();
-            let font = getter(&mut worldref);
             self.connect_form(
                 sizefield,
                 &font.size(),
@@ -131,16 +137,6 @@ pub struct WorldPrefs {
     pages: HashMap<&'static str, Rc<dyn PrefPage>>,
     current: RefCell<Option<Ref<QWidget>>>,
 }
-impl RDialog<DialogCode> for WorldPrefs {
-    fn exec(&self) -> DialogCode {
-        let ui = &self.ui;
-        unsafe {
-            ui.settings_tree
-                .set_current_item_1a(ui.settings_tree.top_level_item(0).child(0));
-            DialogCode::from(ui.widget.exec())
-        }
-    }
-}
 
 impl WorldPrefs {
     pub fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self> {
@@ -150,21 +146,28 @@ impl WorldPrefs {
             pages: HashMap::new(),
             current: RefCell::new(None),
         };
-        this.addpage::<PrefsAddress>("IP address");
+
+        let prefs_address = PrefsAddress::new(&this.ui.widget, this.world.clone());
+        prefs_address.connect_ok(&this.ui);
+        this.pages.insert("IP address", prefs_address);
+
         this.addpage::<PrefsConnecting>("Connecting");
         this.addpage::<PrefsLogging>("Logging");
+        this.addpage::<PrefsTimers>("Timers");
         this.addpage::<PrefsChat>("Chat");
         this.addpage::<PrefsOutput>("Output");
         this.addpage::<PrefsMxp>("MXP/Pueblo");
         this.addpage::<PrefsColor>("ANSI Colour");
         this.addpage::<PrefsCustomColor>("Custom Colour");
         this.addpage::<PrefsCommands>("Commands");
+        this.addpage::<PrefsAliases>("Aliases");
+        this.addpage::<PrefsTriggers>("Triggers");
         let this = Rc::new(this);
         this.init();
         this
     }
 
-    fn addpage<P: PrefPageNew>(&mut self, key: &'static str) {
+    fn addpage<P: PrefPageExt>(&mut self, key: &'static str) {
         self.pages
             .insert(key, P::new(&self.ui.widget, self.world.clone()));
     }
@@ -195,6 +198,15 @@ impl WorldPrefs {
                 oldpage.set_visible(false);
             }
             page.set_visible(true);
+        }
+    }
+
+    pub fn exec(&self) -> DialogCode {
+        let ui = &self.ui;
+        unsafe {
+            ui.settings_tree
+                .set_current_item_1a(ui.settings_tree.top_level_item(0).child(0));
+            DialogCode::from(ui.widget.exec())
         }
     }
 

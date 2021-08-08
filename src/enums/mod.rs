@@ -135,7 +135,11 @@ impl<T: Enum> Iterator for Enumeration<T> {
     }
 
     fn count(self) -> usize {
-        self.end.index() - self.start.index()
+        if self.finished {
+            0
+        } else {
+            self.end.index() + 1 - self.start.index()
+        }
     }
 
     fn size_hint(&self) -> (usize, Option<usize>) {
@@ -148,6 +152,7 @@ impl<T: Enum> DoubleEndedIterator for Enumeration<T> {
         if self.finished {
             None
         } else if self.start == self.end {
+            self.finished = true;
             Some(self.end)
         } else {
             let at = self.end;
@@ -236,15 +241,15 @@ mod tests {
             for y in DemoEnum::enumerate(..) {
                 let our_count = DemoEnum::enumerate(x..=y).count();
                 let std_count = DemoEnum::enumerate(x..=y).fold(0, |count, _| count + 1);
-                if our_count != std_count {
-                    panic!(
-                        "for {}..={}, {} != {}",
-                        x.to_str(),
-                        y.to_str(),
-                        our_count,
-                        std_count
-                    );
-                }
+                assert_eq!(
+                    our_count,
+                    std_count,
+                    "for {}..={}, {} != {}",
+                    x.to_str(),
+                    y.to_str(),
+                    our_count,
+                    std_count
+                );
             }
         }
     }

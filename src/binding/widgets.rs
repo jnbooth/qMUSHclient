@@ -104,10 +104,6 @@ pub trait RWidget {
     }
 }
 
-pub trait RDialog<Response: From<c_int>>: RWidget {
-    fn exec(&self) -> Response;
-}
-
 pub trait RForm<T> {
     /// # Safety
     ///

@@ -53,3 +53,12 @@ impl Printable for &Vec<u8> {
         self.as_slice().to_print()
     }
 }
+
+impl<'lua> Printable for mlua::String<'lua> {
+    fn to_print(self) -> CppBox<QString> {
+        let bytes = self.as_bytes_with_nul();
+        unsafe {
+            QString::from_utf8_char_int(bytes.as_ptr() as *const c_char, bytes.len() as c_int - 1)
+        }
+    }
+}

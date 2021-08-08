@@ -10,6 +10,8 @@ use qt_core::{
     slot, FocusReason, QBox, QCoreApplication, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt,
 };
 use qt_gui::QTextDocument;
+use qt_network::q_abstract_socket::SocketState;
+use qt_network::SlotOfSocketState;
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::*;
@@ -17,7 +19,7 @@ use qt_widgets::*;
 use super::uic;
 use super::worldprefs::WorldPrefs;
 use super::worldtab::{SelectionMode, WorldTab};
-use crate::binding::{RDialog, RSettings, RWidget};
+use crate::binding::{RSettings, RWidget};
 use crate::constants::config;
 use crate::persist;
 use crate::tr::TrContext;
@@ -103,6 +105,9 @@ impl App {
             ui.action_select_all.triggered().connect(&self.slot_select_all());
 
             ui.action_world_notepad.toggled().connect(&self.slot_toggle_notepad());
+
+            ui.action_connect.triggered().connect(&self.slot_connect());
+            ui.action_disconnect.triggered().connect(&self.slot_disconnect());
 
             self.recent.borrow_mut().truncate(config::MAX_RECENT);
             self.setup_recents();
@@ -206,11 +211,27 @@ impl App {
     }
 
     fn start_world(self: &Rc<Self>, world: World, filename: Option<String>) {
+        let ui = &self.ui;
         let tabname = QString::from_std_str(world.name.replace('&', ""));
         let should_open = world.connect_method.is_some();
         let worldtab = WorldTab::new(self.widget(), world, filename);
         if should_open {
             worldtab.client.borrow_mut().connect();
+        }
+        let new_index = self.world_tabs.borrow().len();
+        unsafe {
+            self.update_socket_state(worldtab.socket.state());
+            let this = Rc::downgrade(self);
+            worldtab
+                .socket
+                .state_changed()
+                .connect(&SlotOfSocketState::new(&ui.widget, move |state| {
+                    if let Some(this) = this.upgrade() {
+                        if this.current.get() == Some(new_index) {
+                            this.update_socket_state(state);
+                        }
+                    }
+                }));
         }
         let tab = worldtab.widget();
         let inputfield = worldtab.ui.input.clone();
@@ -221,13 +242,13 @@ impl App {
             }
         });
         self.world_tabs.borrow_mut().push(worldtab);
-        let ui = &self.ui;
         unsafe {
             ui.world_tabs.add_tab_2a(tab, &tabname);
-            ui.world_tabs.set_current_index(ui.world_tabs.count() - 1);
+            ui.world_tabs.set_current_index(new_index as c_int);
             inputfield.set_focus_1a(FocusReason::ActiveWindowFocusReason);
         }
     }
+
     fn current_tab(&self) -> Option<Rc<WorldTab>> {
         let current = self.current.get()?;
         Some(self.world_tabs.borrow().get(current)?.clone())
@@ -288,6 +309,26 @@ impl App {
         }
     }
 
+    fn update_socket_state(&self, state: SocketState) {
+        let ui = &self.ui;
+        unsafe {
+            ui.action_connect
+                .set_enabled(state == SocketState::UnconnectedState);
+            ui.action_disconnect
+                .set_enabled(state == SocketState::ConnectedState);
+        }
+    }
+
+    fn selection_changed(&self, mode: SelectionMode) {
+        let ui = &self.ui;
+        unsafe {
+            ui.action_cut.set_enabled(mode == SelectionMode::Input);
+            ui.action_copy.set_enabled(mode != SelectionMode::Neither);
+            ui.action_copy_as_html
+                .set_enabled(mode == SelectionMode::Output);
+        }
+    }
+
     #[slot(SlotOfInt)]
     fn current_changed(&self, index: c_int) {
         self.current.replace(usize::try_from(index).ok());
@@ -305,6 +346,8 @@ impl App {
                         &ui.action_copy,
                         &ui.action_copy_as_html,
                         &ui.action_redo,
+                        &ui.action_connect,
+                        &ui.action_disconnect,
                     ] {
                         action.set_enabled(false);
                     }
@@ -315,6 +358,7 @@ impl App {
                 self.current_input.replace(tab.ui.input.clone());
                 unsafe {
                     ui.action_redo.set_enabled(tab.ui.input.is_redo_available());
+                    self.update_socket_state(tab.socket.state());
                     self.selection_changed(tab.selection_mode());
                     self.notepad.set_document(&tab.notepad);
                     self.notepad.set_enabled(true);
@@ -324,13 +368,17 @@ impl App {
         }
     }
 
-    fn selection_changed(&self, mode: SelectionMode) {
-        let ui = &self.ui;
-        unsafe {
-            ui.action_cut.set_enabled(mode == SelectionMode::Input);
-            ui.action_copy.set_enabled(mode != SelectionMode::Neither);
-            ui.action_copy_as_html
-                .set_enabled(mode == SelectionMode::Output);
+    #[slot(SlotNoArgs)]
+    fn connect(&self) {
+        if let Some(current) = self.current_tab() {
+            current.client.borrow_mut().connect();
+        }
+    }
+
+    #[slot(SlotNoArgs)]
+    fn disconnect(&self) {
+        if let Some(current) = self.current_tab() {
+            current.client.borrow_mut().disconnect();
         }
     }
 
@@ -340,30 +388,8 @@ impl App {
         world.chat_name = "Name-not-set".to_string();
         let world = Rc::new(RefCell::new(world));
         let prefs = WorldPrefs::new(self.widget(), Rc::downgrade(&world));
-        while prefs.exec() == DialogCode::Accepted {
-            let (named, sited) = {
-                let world = world.borrow();
-                (!world.name.is_empty(), !world.site.is_empty())
-            };
-            if named && sited {
-                self.start_world(Rc::try_unwrap(world).unwrap().into_inner(), None);
-                return;
-            }
-            let failure = if named {
-                tr!("You must enter the server address.")
-            } else if sited {
-                tr!("You must enter the world name.")
-            } else {
-                tr!("You must enter the world name and server address.")
-            };
-
-            prefs.browse("IP address");
-            unsafe {
-                let messagebox = QMessageBox::from_q_widget(&self.ui.widget);
-                messagebox.set_icon(Icon::Critical);
-                messagebox.set_text(&failure);
-                messagebox.exec();
-            }
+        if prefs.exec() == DialogCode::Accepted {
+            self.start_world(Rc::try_unwrap(world).unwrap().into_inner(), None);
         }
     }
 

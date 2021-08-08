@@ -46,7 +46,7 @@ pub struct Style {
 }
 
 impl Debug for Style {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         f.debug_struct("Style")
             .field("flags", &self.ansi_flags)
             .field("foreground", &self.foreground)

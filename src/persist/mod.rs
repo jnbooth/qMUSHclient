@@ -1,5 +1,3 @@
-use std::error::Error as StdError;
-use std::fmt::{self, Display, Formatter};
 use std::fs::File;
 use std::io::{self, Read, Write};
 
@@ -29,41 +27,12 @@ macro_rules! from_old_version {
 
 const CURRENT_VERSION: u8 = 1;
 
-#[derive(Debug)]
+#[derive(Debug, Error)]
 pub enum Error {
     FileError(io::Error),
     SerialError(bincode::Error),
+    #[error(display = "not a savefile")]
     NotSave,
-}
-impl From<io::Error> for Error {
-    fn from(value: io::Error) -> Self {
-        Self::FileError(value)
-    }
-}
-impl From<bincode::Error> for Error {
-    fn from(value: bincode::Error) -> Self {
-        Self::SerialError(value)
-    }
-}
-
-impl Display for Error {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        match self {
-            Self::FileError(e) => write!(f, "{}", e),
-            Self::SerialError(e) => write!(f, "{}", e),
-            Self::NotSave => write!(f, "not a savefile"),
-        }
-    }
-}
-
-impl StdError for Error {
-    fn source(&self) -> Option<&(dyn StdError + 'static)> {
-        match self {
-            Self::FileError(e) => Some(e),
-            Self::SerialError(e) => Some(e),
-            Self::NotSave => None,
-        }
-    }
 }
 
 pub fn save_world(world: &World, path: &str) -> Result<(), Error> {
@@ -104,7 +73,7 @@ mod tests {
         world.aliases.push(Alias::default());
         world.keypad_shortcuts.insert(Key::Key0, String::new());
         let to_file = bincode::serialize(&world).expect("error serializing world");
-        let from_file = bincode::deserialize::<World>(&to_file).expect("error deserializing world");
+        let from_file: World = bincode::deserialize(&to_file).expect("error deserializing world");
         assert_eq!(from_file, world);
     }
 }

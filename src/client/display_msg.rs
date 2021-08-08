@@ -1,6 +1,6 @@
 use std::convert::TryInto;
 use std::iter::Iterator;
-use std::str;
+use std::{io, str};
 
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
@@ -43,12 +43,12 @@ impl Client {
         }
     }
 
-    pub(super) fn display_msg(&mut self, mut data: Vec<u8>) {
+    pub(super) fn display_msg(&mut self, mut data: Vec<u8>) -> io::Result<()> {
         data = self
             .plugins
             .receive_from_all(Callback::PacketReceived, data);
         if data.is_empty() {
-            return; // plugin discarded it
+            return Ok(()); // plugin discarded it
         }
         self.style.clear_flags(); // MUD input cancels style flags
 
@@ -61,7 +61,7 @@ impl Client {
             #[cfg(feature = "show-special")]
             {
                 if self.phase != old_phase {
-                    self.flush();
+                    self.flush()?;
                     self.cursor.insert_text_colored(
                         self.phase.to_str(),
                         Some(self.world.color(&WorldColor::BRIGHT_BLACK)),
@@ -92,7 +92,7 @@ impl Client {
                 && self.phase != Phase::SubnegotiationIac
                 // the following characters will terminate any collection/negotiation phases
                 //  newline, carriage-return, escape, IAC
-                && b"\r\n\x1b\xff".contains(&c)
+                && matches!(c, b'\r' | b'\n' | b'\x1b' | b'\xff')
             {
                 if self.phase == Phase::MxpRoomName
                     || self.phase == Phase::MxpRoomDescription
@@ -140,7 +140,7 @@ impl Client {
                 | Phase::Background24brFinish
                 | Phase::Background24bgFinish
                 | Phase::Background24bbFinish => {
-                    self.flush(); // style is changing, so be sure to print whatever we've got
+                    self.flush()?; // style is changing, so be sure to print whatever we've got
                     if (b'0'..=b'9').contains(&c) {
                         self.state.ansi_code = self.state.ansi_code * 10 + (c - b'0');
                     } else if c == b'm' {
@@ -245,7 +245,7 @@ impl Client {
                             }
                         }
                     };
-                    self.send_packet(&[telnet::IAC, verb, c]);
+                    self.send_packet(&[telnet::IAC, verb, c])?;
                 }
                 // Received: IAC WONT x
                 Phase::Wont => {
@@ -254,7 +254,7 @@ impl Client {
                     if !self.world.no_echo_off {
                         self.state.no_echo = false;
                     }
-                    self.send_packet(&[telnet::IAC, telnet::DONT, c]);
+                    self.send_packet(&[telnet::IAC, telnet::DONT, c])?;
                 }
                 // Received: IAC DO x
                 // for unknown types we query plugins: function OnPluginTelnetRequest (num, type)
@@ -264,7 +264,6 @@ impl Client {
                     // telnet negotiation : in response to DO, we say WILL for:
                     //  <102> (Aardwolf), SGA, echo, NAWS, CHARSET, MXP and Terminal type
                     // for others we query plugins to see if they want to handle it or not
-                    // scoped borrow
                     self.phase = Phase::Normal;
 
                     let verb = match c {
@@ -281,7 +280,7 @@ impl Client {
                             // option off - must be server initiated
                             if self.world.naws {
                                 self.state.naws_wanted = true;
-                                self.send_window_sizes(self.world.wrap_column);
+                                self.send_window_sizes(self.world.wrap_column)?;
                                 telnet::WILL
                             } else {
                                 telnet::WONT
@@ -303,14 +302,14 @@ impl Client {
                             }
                         }
                     };
-                    self.send_packet(&[telnet::IAC, verb, c]);
+                    self.send_packet(&[telnet::IAC, verb, c])?;
                 }
                 // Received: IAC DONT x
                 Phase::Dont => {
                     // telnet negotiation : in response to DONT, we say WONT
                     self.phase = Phase::Normal;
                     let mxp = self.state.mxp_active;
-                    self.send_packet(&[telnet::IAC, telnet::WONT, c]);
+                    self.send_packet(&[telnet::IAC, telnet::WONT, c])?;
                     match c {
                         telnet::MXP if mxp => self.mxp_off(true),
                         // for MTTS start back at sequence 0
@@ -361,7 +360,7 @@ impl Client {
                         // compressed data to compression buffer
                         self.start_decompressing(iter.into_slice().to_vec(), data);
                         // done with this loop, now it needs to be decompressed
-                        return;
+                        return Ok(());
                     } else {
                         self.phase = Phase::Normal; // error
                     }
@@ -398,7 +397,7 @@ impl Client {
                                     // compressed data to compression buffer
                                     self.start_decompressing(iter.into_slice().to_vec(), data);
                                     // done with this loop, now it needs to be decompressed
-                                    return;
+                                    return Ok(());
                                 }
                             }
                             // turn MXP on, if required on subnegotiation
@@ -463,7 +462,7 @@ impl Client {
                                     };
                                     let p2 = [telnet::IAC, telnet::SE];
                                     let packet = [&p1, text, &p2].concat();
-                                    self.send_packet(&packet);
+                                    self.send_packet(&packet)?;
                                 }
                             }
                             // IAC SB CHARSET REQUEST DELIMITER <name> DELIMITER
@@ -519,7 +518,7 @@ impl Client {
                                             ];
                                             let p2 = [telnet::IAC, telnet::SE];
                                             let packet = [&p1, left(fragment, 20), &p2].concat();
-                                            self.send_packet(&packet);
+                                            self.send_packet(&packet)?;
                                         }
                                     }
                                     if !found {
@@ -530,7 +529,7 @@ impl Client {
                                             telnet::IAC,
                                             telnet::SE,
                                         ];
-                                        self.send_packet(&packet);
+                                        self.send_packet(&packet)?;
                                     }
                                 }
                             }
@@ -550,7 +549,7 @@ impl Client {
                 Phase::MxpElement => match c {
                     b'>' => {
                         if let Err(e) = self.mxp_collected_element() {
-                            self.handle_mxp_error(e);
+                            self.handle_mxp_io_error(e)?;
                         }
                         self.phase = Phase::Normal;
                     }
@@ -595,7 +594,7 @@ impl Client {
                     b';' => {
                         self.phase = Phase::Normal;
                         if let Err(e) = self.mxp_collected_entity() {
-                            self.handle_mxp_error(e);
+                            self.handle_mxp_io_error(e)?;
                         }
                     }
                     b'&' => {
@@ -647,10 +646,11 @@ impl Client {
                 },
             }
         }
-        self.flush();
+        self.flush()?;
         if self.world.log_format == LogFormat::Raw {
             self.write_to_log(Log::Output, &data);
         }
         self.scroll_to_bottom();
+        Ok(())
     }
 }

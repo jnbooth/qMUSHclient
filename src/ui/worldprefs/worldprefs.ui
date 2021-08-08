@@ -68,6 +68,11 @@
         </item>
         <item>
          <property name="text">
+          <string>Timers</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Chat</string>
          </property>
         </item>
@@ -96,6 +101,11 @@
           <string>Custom Colour</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Triggers</string>
+         </property>
+        </item>
        </item>
        <item>
         <property name="text">
@@ -104,6 +114,11 @@
         <item>
          <property name="text">
           <string>Commands</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Aliases</string>
          </property>
         </item>
        </item>

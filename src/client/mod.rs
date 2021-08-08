@@ -12,9 +12,10 @@ use cpp_core::{CastFrom, Ptr};
 use qt_core::AlignmentFlag;
 use qt_core::{QBox, QPtr};
 use qt_gui::q_text_cursor::{MoveOperation, SelectionType};
+use qt_network::q_abstract_socket::SocketState;
 use qt_network::QTcpSocket;
 use qt_widgets::q_message_box::Icon;
-use qt_widgets::{QTextBrowser, QWidget};
+use qt_widgets::{QLineEdit, QTextBrowser, QWidget};
 
 use crate::api::Api;
 use crate::binding::color::Colored;
@@ -25,7 +26,7 @@ use crate::constants::config;
 use crate::enums::Enum;
 use crate::escape::{ansi, telnet};
 use crate::mxp;
-use crate::script::{Callback, PluginHandler};
+use crate::script::{Callback, PluginHandler, Senders};
 use crate::tr::TrContext;
 use crate::ui::Notepad;
 #[cfg(feature = "show-special")]
@@ -90,7 +91,7 @@ pub struct Client {
     bufinput: [u8; config::SOCKET_BUFFER],
     bufoutput: Vec<u8>,
     line: Vec<u8>,
-    plugins: PluginHandler<Api>,
+    pub plugins: PluginHandler,
     world: Rc<World>,
     notepad: Rc<RefCell<Notepad>>,
     phase: Phase,
@@ -102,6 +103,7 @@ pub struct Client {
 
 impl RWidget for Client {
     fn widget(&self) -> Ptr<QWidget> {
+        // SAFETY: `widget` is valid.
         unsafe { Ptr::cast_from(&self.widget) }
     }
 }
@@ -109,36 +111,40 @@ impl RWidget for Client {
 impl Client {
     /// # Safety
     ///
-    /// `widget` must be valid and non-null.
+    /// `output` and `input` must be valid and non-null.
     pub unsafe fn new(
-        widget: QPtr<QTextBrowser>,
+        output: QPtr<QTextBrowser>,
+        input: QPtr<QLineEdit>,
         socket: QBox<QTcpSocket>,
         world: Rc<World>,
     ) -> Self {
         let notepad = Rc::new(RefCell::new(Notepad::new(&world.name)));
         let socket = RIODevice::new(socket);
+        // SAFETY: all fields are valid.
         let api = unsafe {
             Api::new(
-                widget.clone(),
+                output.clone(),
+                input,
                 socket.clone(),
                 world.clone(),
                 notepad.clone(),
+                Rc::new(RefCell::new(Senders::new())),
             )
         };
 
+        // SAFETY: `output` is valid.
+        let cursor = unsafe { Cursor::get(&output) };
+        let charfmt = cursor.format.text.clone();
         let mut this = Self {
             notepad,
-            cursor: unsafe { Cursor::get(&widget) },
+            cursor,
             stream: MudStream::new(socket.clone()),
             socket,
             bufinput: [0; config::SOCKET_BUFFER],
             bufoutput: Vec::new(),
             line: Vec::new(),
-            style: Style::new(
-                CharFormat::from(unsafe { widget.current_char_format() }),
-                world.clone(),
-            ),
-            widget,
+            style: Style::new(charfmt, world.clone()),
+            widget: output,
             world,
             phase: Phase::Normal,
             state: ClientState::new(),
@@ -219,17 +225,22 @@ impl Client {
     }
 
     pub fn connect(&mut self) {
-        self.socket.connect(&self.world.site, self.world.port);
-        self.latest.connected = Instant::now();
+        if self.socket.state() == SocketState::UnconnectedState {
+            self.socket.connect(&self.world.site, self.world.port);
+            self.latest.connected = Instant::now();
+        }
     }
 
     pub fn disconnect(&mut self) {
-        // don't want reconnect on manual disconnect
-        self.state.disconnect_ok = true;
-        // work out how long they were connected
-        self.state.total_connect_duration += self.latest.connected.elapsed();
-        self.mxp_off(true);
-        self.socket.close();
+        if self.socket.state() != SocketState::UnconnectedState {
+            // don't want reconnect on manual disconnect
+            self.state.disconnect_ok = true;
+            // work out how long they were connected
+            self.state.total_connect_duration += self.latest.connected.elapsed();
+            self.mxp_off(true);
+            self.socket.close();
+            self.stream.reset();
+        }
     }
 
     fn send<S: AsRef<[u8]>>(&mut self, buf: S) -> io::Result<()> {
@@ -237,7 +248,7 @@ impl Client {
         if self.world.log_format == LogFormat::Raw {
             self.write_to_log(Log::Input, buf);
         }
-        self.socket.io().write_all(buf)
+        self.socket.write_all(buf)
     }
 
     pub fn send_command(&mut self, mut command: String) -> io::Result<()> {
@@ -255,6 +266,7 @@ impl Client {
             );
             self.scroll_to_bottom();
         }
+        let matched_alias = self.plugins.alias(&command)?;
         command.push('\n');
         if world.log_format == LogFormat::Text {
             self.write_to_log(Log::Input, command.as_bytes());
@@ -262,14 +274,19 @@ impl Client {
         if self.bufoutput.is_empty() {
             self.bufoutput.push(b'\n');
         }
-        self.send(&command)
+        if matched_alias {
+            Ok(())
+        } else {
+            self.send(&command)
+        }
     }
 
-    pub fn read(&mut self) {
-        match self.stream.read(&mut self.bufinput) {
-            Ok(0) => (),
-            Ok(res) => self.display_msg(self.bufinput[0..res].to_vec()),
-            Err(e) => eprintln!("Stream error: {}", e),
+    pub fn read(&mut self) -> io::Result<()> {
+        let res = self.stream.read(&mut self.bufinput)?;
+        if res > 0 {
+            self.display_msg(self.bufinput[0..res].to_vec())
+        } else {
+            Ok(())
         }
     }
 
@@ -304,24 +321,25 @@ impl Client {
 
     #[cfg(feature = "show-special")]
     pub fn append_to_notepad<S: Printable>(&self, kind: Pad, align: AlignmentFlag, text: S) {
-        self.notepad.borrow_mut().append(kind, align, text);
+        self.notepad.borrow_mut().append_aligned(kind, align, text);
     }
 
-    fn handle_line(&mut self, cursor: &Cursor, line: &[u8]) {
+    fn handle_line(&mut self, line: Option<&[u8]>) -> io::Result<()> {
+        let line = line.unwrap_or(&self.line);
         let s = String::from_utf8_lossy(line);
         self.plugins.send_to_all(Callback::LineReceived, line);
-        let requests = self.plugins.trigger(&s);
+        let requests = self.plugins.trigger(&s)?;
 
         if requests.hide {
-            cursor.with_selection(SelectionType::BlockUnderCursor, |sel| sel.delete());
-            return;
+            self.cursor.select(SelectionType::BlockUnderCursor).delete();
+            return Ok(());
         }
         let format = CharFormat::new();
         if let Some(fg) = requests.foreground {
-            format.set_foreground_color(fg);
+            format.set_foreground_color(&fg);
         }
         if let Some(bg) = requests.background {
-            format.set_background_color(bg);
+            format.set_background_color(&bg);
         }
         if requests.make_bold {
             format.set_bold(true);
@@ -332,28 +350,34 @@ impl Client {
         if requests.make_underline {
             format.set_underline(true);
         }
-        cursor.with_selection(SelectionType::BlockUnderCursor, |sel| {
-            sel.merge_char_format(&format)
-        });
+        self.cursor
+            .select(SelectionType::BlockUnderCursor)
+            .merge_char_format(&format);
+        Ok(())
     }
 
-    fn flush(&mut self) {
-        let trailing_newline = match self.bufoutput.as_slice() {
-            [] | [b'\n'] => return,
-            [.., b'\n'] => true,
-            _ => false,
-        };
-        let has_newline = self.bufoutput.contains(&b'\n');
+    fn flush(&mut self) -> io::Result<()> {
+        if self.bufoutput.is_empty() {
+            return Ok(());
+        }
+        if self.bufoutput == b"\n" {
+            if !self.line.is_empty() {
+                self.handle_line(None)?;
+                self.line.clear();
+            }
+            return Ok(());
+        }
+        let trailing_newline = self.bufoutput.len() > 1 && self.bufoutput.ends_with(b"\n");
 
         if trailing_newline {
             self.bufoutput.pop();
         }
+        let has_newline = trailing_newline || self.bufoutput.contains(&b'\n');
+        let pos = self.cursor.position();
+        self.print(&self.bufoutput);
+        self.line.append(&mut self.bufoutput);
+
         if has_newline {
-            let cursor = self.cursor.clone();
-
-            self.print(&self.bufoutput);
-            self.line.append(&mut self.bufoutput);
-
             let mut lines = if trailing_newline {
                 Vec::new()
             } else {
@@ -361,20 +385,19 @@ impl Client {
                     .split_off(self.line.iter().rposition(|&c| c == b'\n').unwrap() + 1)
             };
             mem::swap(&mut lines, &mut self.line);
+            self.cursor.set_position(pos);
             for line in lines.split(|&c| c == b'\n') {
                 if !line.is_empty() {
-                    self.handle_line(&cursor, line);
+                    self.handle_line(Some(line))?;
                 }
-                cursor.move_position(MoveOperation::NextBlock, 1);
+                self.cursor.move_position(MoveOperation::NextBlock, 1);
             }
-            self.line.clear();
-        } else {
-            self.print(&self.bufoutput);
-            self.line.append(&mut self.bufoutput);
+            self.cursor.move_position(MoveOperation::End, 1);
         }
         if trailing_newline {
             self.bufoutput.push(b'\n');
         }
+        Ok(())
     }
 
     fn write_to_log(&mut self, kind: Log, buf: &[u8]) {
@@ -536,7 +559,7 @@ impl Client {
         }
     }
 
-    pub fn send_window_sizes(&mut self, new_width: u16) {
+    pub fn send_window_sizes(&mut self, new_width: u16) -> io::Result<()> {
         let [newhigh, newlow] = new_width.to_be_bytes();
         let height = unsafe { self.widget.height() / self.widget.font_metrics().height() } as u16;
         let [high, low] = height.to_be_bytes();
@@ -552,21 +575,19 @@ impl Client {
             telnet::IAC,
             telnet::SE,
         ];
-        self.send_packet(&packet);
+        self.send_packet(&packet)
     }
 
     // API methods
 
-    pub fn send_packet(&mut self, data: &[u8]) {
+    pub fn send_packet(&mut self, data: &[u8]) -> io::Result<()> {
         #[cfg(feature = "show-special")]
         self.append_to_notepad(
             Pad::PacketDebug,
             AlignmentFlag::AlignRight,
             telnet::escape(data),
         );
-        if let Err(e) = self.send(data) {
-            eprintln!("Error sending packet {:?}: {}", data, e);
-        }
+        self.send(data)
     }
 
     fn start_decompressing(&mut self, left: Vec<u8>, data: Vec<u8>) {

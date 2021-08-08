@@ -30,6 +30,12 @@ impl<T: ScriptArg> ScriptArg for Option<T> {
     }
 }
 
+impl ScriptArg for &String {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.as_str().to_arg(lua)
+    }
+}
+
 impl<'a> ScriptArg for Cow<'a, str> {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         match self {
@@ -112,7 +118,7 @@ where
         .into_iter()
         .map(|(k, v)| Ok((k.to_arg(lua)?, v.to_arg(lua)?)))
         .collect();
-    Ok(Value::Table(lua.create_table_from(args?)?))
+    lua.create_table_from(args?).map(Value::Table)
 }
 
 pub fn create_sequence<T, I>(lua: &Lua, cont: I) -> mlua::Result<Value>
@@ -121,7 +127,7 @@ where
     I: IntoIterator<Item = T>,
 {
     let args: mlua::Result<Vec<_>> = cont.into_iter().map(|x| x.to_arg(lua)).collect();
-    Ok(Value::Table(lua.create_sequence_from(args)?))
+    lua.create_sequence_from(args).map(Value::Table)
 }
 
 impl<T: ScriptArg> ScriptArg for Vec<T> {
@@ -132,7 +138,13 @@ impl<T: ScriptArg> ScriptArg for Vec<T> {
 
 impl ScriptArg for &[u8] {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        Ok(Value::String(lua.create_string(self)?))
+        lua.create_string(self).map(Value::String)
+    }
+}
+
+impl ScriptArg for [(); 0] {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        lua.create_table().map(Value::Table)
     }
 }
 

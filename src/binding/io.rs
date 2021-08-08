@@ -1,6 +1,6 @@
-use std::fmt::{self, Debug, Formatter};
-use std::io::{self, Read, Write};
-use std::ops::Drop;
+use std::fmt::{self, Arguments, Debug, Formatter};
+use std::io::{self, IoSlice, IoSliceMut, Read, Write};
+use std::ops::{Deref, Drop};
 use std::os::raw::c_char;
 use std::rc::Rc;
 
@@ -10,7 +10,7 @@ use qt_core::q_process::ProcessError;
 use qt_core::{
     QBox, QBuffer, QFile, QFileDevice, QIODevice, QObject, QProcess, QPtr, QSaveFile, QString,
 };
-use qt_network::q_abstract_socket::SocketError;
+use qt_network::q_abstract_socket::{SocketError, SocketState};
 use qt_network::q_local_socket::LocalSocketError;
 use qt_network::q_network_reply::NetworkError;
 use qt_network::{QAbstractSocket, QLocalSocket, QNetworkReply, QSslSocket, QTcpSocket, QUdpSocket};
@@ -23,7 +23,7 @@ pub struct RIODevice<Q: QIO> {
 
 // Manually implemented in order to avoid a Q: Debug bound.
 impl<Q: QIO> Debug for RIODevice<Q> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         f.debug_struct("RIODevice")
             .field("dropper", &self.dropper)
             .field("inner", &self.inner)
@@ -110,17 +110,37 @@ impl<Q: QIO> RIODevice<Q> {
             }
         }
     }
-    #[inline]
-    pub fn io(&self) -> RIODeviceMut<Q> {
-        RIODeviceMut(self)
-    }
 
-    pub fn write_fmt(&self, args: fmt::Arguments<'_>) -> Result<(), io::Error> {
-        RIODeviceMut(self).write_fmt(args)
+    pub fn read_vectored(mut self: &Self, bufs: &mut [IoSliceMut]) -> io::Result<usize> {
+        Read::read_vectored(&mut self, bufs)
+    }
+    pub fn read_to_end(mut self: &Self, buf: &mut Vec<u8>) -> io::Result<usize> {
+        Read::read_to_end(&mut self, buf)
+    }
+    pub fn read_to_string(mut self: &Self, buf: &mut String) -> io::Result<usize> {
+        Read::read_to_string(&mut self, buf)
+    }
+    pub fn read_exact(mut self: &Self, buf: &mut [u8]) -> io::Result<()> {
+        Read::read_exact(&mut self, buf)
+    }
+    pub fn write_vectored(mut self: &Self, bufs: &[IoSlice]) -> io::Result<usize> {
+        Write::write_vectored(&mut self, bufs)
+    }
+    pub fn write_all(mut self: &Self, buf: &[u8]) -> io::Result<()> {
+        Write::write_all(&mut self, buf)
+    }
+    pub fn write_fmt(mut self: &Self, fmt: Arguments) -> io::Result<()> {
+        Write::write_fmt(&mut self, fmt)
     }
 }
 
 impl<Q: QIO> Read for RIODevice<Q> {
+    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+        RIODevice::read(self, buf)
+    }
+}
+
+impl<Q: QIO> Read for &RIODevice<Q> {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
         RIODevice::read(self, buf)
     }
@@ -136,21 +156,13 @@ impl<Q: QIO> Write for RIODevice<Q> {
     }
 }
 
-pub struct RIODeviceMut<'a, Q: QIO>(&'a RIODevice<Q>);
-
-impl<Q: QIO> Read for RIODeviceMut<'_, Q> {
-    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
-        self.0.read(buf)
-    }
-}
-
-impl<Q: QIO> Write for RIODeviceMut<'_, Q> {
+impl<Q: QIO> Write for &RIODevice<Q> {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        self.0.write(buf)
+        RIODevice::write(self, buf)
     }
 
     fn flush(&mut self) -> io::Result<()> {
-        self.0.flush()
+        RIODevice::flush(self)
     }
 }
 
@@ -384,5 +396,11 @@ impl QIO for QProcess {
 
     unsafe fn io_flush(&self) -> io::Result<()> {
         Ok(())
+    }
+}
+
+impl<Q: QIO + Deref<Target = QAbstractSocket>> RIODevice<Q> {
+    pub fn state(&self) -> SocketState {
+        unsafe { self.inner.deref().state() }
     }
 }

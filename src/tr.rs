@@ -1,8 +1,11 @@
 use std::ffi::{CStr, CString};
 use std::fmt::{self, Write};
-use std::os::raw::{c_char, c_int};
+#[cfg(test)]
+use std::os::raw::c_char;
+use std::os::raw::c_int;
+use std::ptr;
 
-use cpp_core::{CppBox, Ptr};
+use cpp_core::CppBox;
 #[cfg(not(test))]
 use qt_core::QCoreApplication;
 use qt_core::QString;
@@ -97,12 +100,9 @@ fn fmt_either(context: &CStr, args: fmt::Arguments, n: Option<c_int>) -> CppBox<
     let mut qkey = unsafe {
         match n {
             None => QCoreApplication::translate_2a(context.as_ptr(), ckey.as_ptr()),
-            Some(n) => QCoreApplication::translate_4a(
-                context.as_ptr(),
-                ckey.as_ptr(),
-                Ptr::<c_char>::null().as_raw_ptr(),
-                n,
-            ),
+            Some(n) => {
+                QCoreApplication::translate_4a(context.as_ptr(), ckey.as_ptr(), ptr::null(), n)
+            }
         }
     };
     for arg in walker.args {
@@ -127,12 +127,5 @@ pub fn translate(context: &CStr, s: &str) -> CppBox<QString> {
 /// Translates a bare string literal with a numerus.
 pub fn translate_amount(context: &CStr, s: &str, n: c_int) -> CppBox<QString> {
     let cstr = CString::new(s).expect(ERROR);
-    unsafe {
-        QCoreApplication::translate_4a(
-            context.as_ptr(),
-            cstr.as_ptr(),
-            Ptr::<c_char>::null().as_raw_ptr(),
-            n,
-        )
-    }
+    unsafe { QCoreApplication::translate_4a(context.as_ptr(), cstr.as_ptr(), ptr::null(), n) }
 }

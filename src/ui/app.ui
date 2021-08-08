@@ -289,7 +289,8 @@
   </action>
   <action name="action_open_worlds_in_startup_list">
    <property name="icon">
-    <iconset theme="view-pages-overview"/>
+    <iconset theme="view-pages-overview">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Open Worlds in Startup List</string>
@@ -345,7 +346,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="tools-wizard"/>
+    <iconset theme="tools-wizard">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Plugin Wizard...</string>
@@ -386,7 +388,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="select-rectangular"/>
+    <iconset theme="select-rectangular">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Save Selection...</string>
@@ -409,7 +412,8 @@
   </action>
   <action name="action_print_setup">
    <property name="icon">
-    <iconset theme="document-print-preview"/>
+    <iconset theme="document-print-preview">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Print Se&amp;tup...</string>
@@ -435,7 +439,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="text-x-log"/>
+    <iconset theme="text-x-log">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Log Session...</string>
@@ -449,7 +454,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="view-refresh"/>
+    <iconset theme="view-refresh">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Reload Defaults</string>
@@ -475,7 +481,8 @@
   </action>
   <action name="action_windows_socket_info">
    <property name="icon">
-    <iconset theme="network-connect"/>
+    <iconset theme="network-connect">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Windows Socket Info...</string>
@@ -543,7 +550,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="format-text-code"/>
+    <iconset theme="format-text-code">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Copy as HTML</string>
@@ -572,7 +580,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="special_paste"/>
+    <iconset theme="special_paste">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Paste to &amp;World...</string>
@@ -586,7 +595,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="media-playlist-repeat-song"/>
+    <iconset theme="media-playlist-repeat-song">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Recall Last Word</string>
@@ -674,7 +684,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="code-context"/>
+    <iconset theme="code-context">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Go to &amp;Matching Brace</string>
@@ -688,7 +699,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="go-next-context"/>
+    <iconset theme="go-next-context">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Select to Matching Br&amp;ace</string>
@@ -840,6 +852,9 @@
    </property>
   </action>
   <action name="action_connect">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset theme="network-connect">
      <normaloff>.</normaloff>.</iconset>
@@ -945,7 +960,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="user-offline"/>
+    <iconset theme="user-offline">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Quit From This World...</string>
@@ -986,7 +1002,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="process-stop"/>
+    <iconset theme="process-stop">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Discard 0 Queued Commands</string>
@@ -1000,7 +1017,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="dialog-messages"/>
+    <iconset theme="dialog-messages">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Auto Say</string>
@@ -1029,7 +1047,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="edit-find-replace"/>
+    <iconset theme="edit-find-replace">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Global Change...</string>
@@ -1040,7 +1059,8 @@
   </action>
   <action name="action_key_name">
    <property name="icon">
-    <iconset theme="input-keyboard"/>
+    <iconset theme="input-keyboard">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Key Name...</string>
@@ -1096,7 +1116,8 @@
   </action>
   <action name="action_line_up">
    <property name="icon">
-    <iconset theme="go-up"/>
+    <iconset theme="go-up">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Line Up</string>
@@ -1107,7 +1128,8 @@
   </action>
   <action name="action_line_down">
    <property name="icon">
-    <iconset theme="go-down"/>
+    <iconset theme="go-down">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Line Down</string>
@@ -1118,7 +1140,8 @@
   </action>
   <action name="action_activity_list">
    <property name="icon">
-    <iconset theme="table"/>
+    <iconset theme="table">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Activity List</string>
@@ -1159,7 +1182,8 @@
   </action>
   <action name="action_find_again">
    <property name="icon">
-    <iconset theme="media-playlist-repeat"/>
+    <iconset theme="media-playlist-repeat">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Find Again</string>
@@ -1170,7 +1194,8 @@
   </action>
   <action name="action_recall_text">
    <property name="icon">
-    <iconset theme="deep-history"/>
+    <iconset theme="deep-history">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Recall Text...</string>
@@ -1208,7 +1233,8 @@
   </action>
   <action name="action_clear_output_buffer">
    <property name="icon">
-    <iconset theme="edit-clear"/>
+    <iconset theme="edit-clear">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Clear Output Buffer...</string>
@@ -1243,7 +1269,8 @@
   </action>
   <action name="action_go_to_bookmark">
    <property name="icon">
-    <iconset theme="go-jump"/>
+    <iconset theme="go-jump">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Go To Bookmark</string>
@@ -1266,7 +1293,8 @@
   </action>
   <action name="action_multi_line_trigger">
    <property name="icon">
-    <iconset theme="trim-to-selection"/>
+    <iconset theme="trim-to-selection">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Multi-Line Trigger...</string>
@@ -1444,7 +1472,8 @@
   </action>
   <action name="action_cascade">
    <property name="icon">
-    <iconset theme="edit-group"/>
+    <iconset theme="edit-group">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Cascade</string>
@@ -1452,7 +1481,8 @@
   </action>
   <action name="action_title_horizontally">
    <property name="icon">
-    <iconset theme="view-more-horizontal-symbolic"/>
+    <iconset theme="view-more-horizontal-symbolic">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Title Horizontally</string>
@@ -1460,7 +1490,8 @@
   </action>
   <action name="action_tile_vertically">
    <property name="icon">
-    <iconset theme="view-more-symbolic"/>
+    <iconset theme="view-more-symbolic">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Tile Vertically</string>
@@ -1468,7 +1499,8 @@
   </action>
   <action name="action_arrange_icons">
    <property name="icon">
-    <iconset theme="dialog-rows-and-columns"/>
+    <iconset theme="dialog-rows-and-columns">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Arrange Icons</string>

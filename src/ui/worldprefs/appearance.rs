@@ -9,7 +9,7 @@ use qt_gui::q_palette::ColorRole;
 use qt_widgets::*;
 use rand::RngCore;
 
-use super::PrefPageNew;
+use super::PrefPageExt;
 use crate::binding::color::{HasPalette, RColorPair};
 use crate::binding::{RColor, RWidget};
 use crate::client::color::Colors;
@@ -26,7 +26,7 @@ pub struct PrefsOutput {
     world: Weak<RefCell<World>>,
 }
 impl_prefpage!(PrefsOutput);
-impl_prefpagenew!(PrefsOutput);
+impl_prefpageext!(PrefsOutput);
 
 impl PrefsOutput {
     fn init(self: &Rc<Self>) {
@@ -75,7 +75,7 @@ pub struct PrefsMxp {
     world: Weak<RefCell<World>>,
 }
 impl_prefpage!(PrefsMxp);
-impl_prefpagenew!(PrefsMxp);
+impl_prefpageext!(PrefsMxp);
 
 impl PrefsMxp {
     fn init(self: &Rc<Self>) {
@@ -108,7 +108,7 @@ pub struct PrefsColor {
 }
 impl_prefpage!(PrefsColor);
 
-impl PrefPageNew for PrefsColor {
+impl PrefPageExt for PrefsColor {
     fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self> {
         let ui = uic::PrefsColor::load(parent);
         let colorfields = [
@@ -172,9 +172,6 @@ impl PrefsColor {
     fn setcolors(&self, colors: &[RColor]) {
         for (field, color) in self.colorfields.iter().zip(colors.iter()) {
             field.set_palette_color(ColorRole::Button, color);
-            unsafe {
-                field.repaint();
-            }
         }
     }
 
@@ -191,9 +188,6 @@ impl PrefsColor {
         {
             let adjusted = adjust(color);
             field.set_palette_color(ColorRole::Button, &adjusted);
-            unsafe {
-                field.repaint();
-            }
             *color = adjusted;
         }
     }
@@ -287,7 +281,7 @@ pub struct PrefsCustomColor {
 }
 impl_prefpage!(PrefsCustomColor);
 
-impl PrefPageNew for PrefsCustomColor {
+impl PrefPageExt for PrefsCustomColor {
     fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self> {
         let ui = uic::PrefsCustomColor::load(parent);
         let namefields = [
@@ -397,10 +391,6 @@ impl PrefsCustomColor {
         {
             fgfield.set_palette_color(ColorRole::Button, &color.foreground);
             bgfield.set_palette_color(ColorRole::Button, &color.background);
-            unsafe {
-                fgfield.repaint();
-                bgfield.repaint();
-            }
         }
     }
 
@@ -431,10 +421,6 @@ impl PrefsCustomColor {
                 foreground,
                 background,
             };
-            unsafe {
-                fgfield.repaint();
-                bgfield.repaint();
-            }
         }
     }
 

@@ -2,6 +2,7 @@ use proc_macro::TokenStream;
 
 mod binding;
 mod enums;
+mod error;
 mod rwidget;
 mod trcontext;
 mod ui_form;
@@ -29,4 +30,12 @@ pub fn derive_binding(input: TokenStream) -> TokenStream {
 #[proc_macro_derive(Enum)]
 pub fn derive_enum_variant_count(input: TokenStream) -> TokenStream {
     crate::enums::derive_enum_variant_count(input)
+}
+
+#[proc_macro_derive(Error, attributes(error))]
+pub fn derive_error(input: TokenStream) -> TokenStream {
+    match crate::error::derive_error(input) {
+        Ok(output) => output,
+        Err(err) => TokenStream::from(err.into_compile_error()),
+    }
 }

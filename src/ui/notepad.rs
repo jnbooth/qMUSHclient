@@ -1,16 +1,30 @@
 use cpp_core::CppBox;
 use hashbrown::HashMap;
-use qt_core::{AlignmentFlag, QBox, QString};
+#[cfg(feature = "show-special")]
+use qt_core::AlignmentFlag;
+use qt_core::{QBox, QString};
 use qt_widgets::QTextEdit;
 
 use crate::binding::text::Cursor;
 use crate::binding::{Printable, RWidget};
+use crate::script::Event;
 use crate::tr::TrContext;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, TrContext)]
 pub enum Pad {
-    //Trigger(String),
     Script(String),
+    Alias {
+        plugin: String,
+        label: String,
+    },
+    Timer {
+        plugin: String,
+        event: Event,
+    },
+    Trigger {
+        plugin: String,
+        label: String,
+    },
     #[cfg(feature = "show-special")]
     PacketDebug,
 }
@@ -18,8 +32,11 @@ pub enum Pad {
 impl Pad {
     fn title(&self) -> CppBox<QString> {
         match self {
-            //Self::Trigger(s) => QString::from_std_str(&s),
             Self::Script(s) => QString::from_std_str(&s),
+            Self::Alias { plugin, label } => tr!("Alias: {} ({})", label, plugin),
+            Self::Timer { plugin, event } => tr!("Timer: {} ({})", event, plugin),
+            Self::Trigger { plugin, label } => tr!("Trigger: {} ({})", label, plugin),
+            //Self::Trigger(s) => QString::from_std_str(&s),
             #[cfg(feature = "show-special")]
             Self::PacketDebug => tr!("Packet debug"),
         }
@@ -39,6 +56,7 @@ impl PadWidget {
             let widget = QTextEdit::new();
             widget.set_read_only(true);
             Self {
+                // SAFETY: `widget` is valid.
                 cursor: Cursor::get(&widget),
                 widget,
                 kind,
@@ -94,8 +112,9 @@ impl Notepad {
         &self.pads[&kind]
     }
 
-    pub fn append<S: Printable>(&mut self, kind: Pad, align: AlignmentFlag, text: S) {
-        let pad = &self.get_or_create(kind);
+    #[cfg(feature = "show-special")]
+    pub fn append_aligned<S: Printable>(&mut self, kind: Pad, align: AlignmentFlag, text: S) {
+        let pad = self.get_or_create(kind);
         if align == AlignmentFlag::AlignLeft {
             pad.cursor.insert_text(text);
         } else {
@@ -113,12 +132,27 @@ impl Notepad {
         }
     }
 
-    pub fn _clear(&mut self, pad: Pad) {
-        if let Some(pad) = self.pads.get(&pad) {
-            unsafe {
+    pub fn append<S: Printable>(&mut self, kind: Pad, text: S) {
+        let pad = self.get_or_create(kind);
+        pad.cursor.insert_text(text);
+        unsafe {
+            pad.widget.show();
+        }
+    }
+
+    pub fn replace<S: Printable>(&mut self, kind: Pad, text: S) {
+        let pad = match self.pads.get(&kind) {
+            Some(pad) => unsafe {
                 pad.widget.clear();
                 pad.insert_header();
-            }
+                &pad
+            },
+            None => self.get_or_create(kind),
+        };
+        pad.cursor.insert_text(text);
+        pad.cursor.insert_block();
+        unsafe {
+            pad.widget.show();
         }
     }
 }

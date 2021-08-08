@@ -167,11 +167,11 @@ impl Arguments {
         self.named.insert(key.to_owned(), arg);
     }
 
-    pub fn iter(&self) -> impl Iterator<Item = (ArgumentIndex<'_>, &Arg)> {
+    pub fn iter(&self) -> impl Iterator<Item = (ArgumentIndex, &Arg)> {
         self.into_iter()
     }
 
-    pub fn iter_mut(&mut self) -> impl Iterator<Item = (ArgumentIndex<'_>, &mut Argument)> {
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = (ArgumentIndex, &mut Argument)> {
         self.into_iter()
     }
 

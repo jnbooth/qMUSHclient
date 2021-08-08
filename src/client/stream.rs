@@ -1,4 +1,5 @@
 use std::io::{self, BufReader, Cursor, IoSliceMut, Read};
+use std::mem;
 
 use qt_network::QTcpSocket;
 
@@ -11,6 +12,15 @@ type Decompress<T> = flate2::bufread::ZlibDecoder<T>;
 enum ZState {
     Prepend(Cursor<Vec<u8>>, RIODevice<QTcpSocket>),
     Direct(RIODevice<QTcpSocket>),
+}
+
+impl ZState {
+    pub fn into_socket(self) -> RIODevice<QTcpSocket> {
+        match self {
+            Self::Prepend(_, socket) => socket,
+            Self::Direct(socket) => socket,
+        }
+    }
 }
 
 macro_rules! impl_read {
@@ -35,12 +45,23 @@ macro_rules! impl_read {
 
 impl Read for ZState {
     impl_read!(read, [u8]);
-    impl_read!(read_vectored, [IoSliceMut<'_>]);
+    impl_read!(read_vectored, [IoSliceMut]);
 }
 
 enum StreamState {
     Uncompressed(RIODevice<QTcpSocket>),
     Compressed(Decompress<BufReader<ZState>>),
+    Transitioning,
+}
+
+impl StreamState {
+    pub fn into_socket(self) -> RIODevice<QTcpSocket> {
+        match self {
+            StreamState::Uncompressed(socket) => socket,
+            StreamState::Compressed(reader) => reader.into_inner().into_inner().into_socket(),
+            StreamState::Transitioning => unreachable!(),
+        }
+    }
 }
 
 pub struct MudStream(StreamState);
@@ -51,10 +72,9 @@ impl MudStream {
     }
 
     pub fn start_decompressing(&mut self, prepend: Vec<u8>) {
-        let socket = match &self.0 {
-            StreamState::Uncompressed(socket) => socket.clone(),
-            _ => return,
-        };
+        let mut buf = StreamState::Transitioning;
+        mem::swap(&mut self.0, &mut buf);
+        let socket = buf.into_socket();
         let inner = if prepend.is_empty() {
             ZState::Direct(socket)
         } else {
@@ -65,6 +85,12 @@ impl MudStream {
             inner,
         )));
     }
+
+    pub fn reset(&mut self) {
+        let mut buf = StreamState::Transitioning;
+        mem::swap(&mut self.0, &mut buf);
+        self.0 = StreamState::Uncompressed(buf.into_socket());
+    }
 }
 
 impl Read for MudStream {
@@ -72,13 +98,15 @@ impl Read for MudStream {
         match &mut self.0 {
             StreamState::Uncompressed(r) => r.read(buf),
             StreamState::Compressed(r) => r.read(buf),
+            StreamState::Transitioning => unreachable!(),
         }
     }
 
-    fn read_vectored(&mut self, bufs: &mut [IoSliceMut<'_>]) -> io::Result<usize> {
+    fn read_vectored(&mut self, bufs: &mut [IoSliceMut]) -> io::Result<usize> {
         match &mut self.0 {
             StreamState::Uncompressed(r) => r.read_vectored(bufs),
             StreamState::Compressed(r) => r.read_vectored(bufs),
+            StreamState::Transitioning => unreachable!(),
         }
     }
 }

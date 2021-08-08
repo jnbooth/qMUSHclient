@@ -53,7 +53,7 @@ impl From<CppBox<QFont>> for RFont {
 }
 
 impl Display for RFont {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(
             f,
             "{style}{variant}{weight}{size}px {family:?}",

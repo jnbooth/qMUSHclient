@@ -268,7 +268,7 @@ impl<T: Debug + Enum> Debug for EnumSet<T>
 where
     EnumSet<T>: IntoIterator<Item = T> + Copy,
 {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         f.debug_list().entries(self.into_iter()).finish()
     }
 }

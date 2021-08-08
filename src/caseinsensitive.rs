@@ -23,7 +23,7 @@ impl<R: ?Sized, K: Clone, V: Clone, S: Clone> Clone for AsRefHashMap<R, K, V, S>
 }
 
 impl<R: ?Sized, K: Debug, V: Debug, S> Debug for AsRefHashMap<R, K, V, S> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         self.0.fmt(f)
     }
 }
@@ -312,14 +312,14 @@ impl<'a, S: ?Sized + AsRef<str> + ToOwned> Ord for CaseFold<'a, S> {
 
 impl<'a, S: ?Sized + AsRef<str> + ToOwned> Debug for CaseFold<'a, S> {
     #[inline]
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         Debug::fmt(self.as_str(), f)
     }
 }
 
 impl<'a, S: ?Sized + AsRef<str> + ToOwned> Display for CaseFold<'a, S> {
     #[inline]
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         Display::fmt(self.as_str(), f)
     }
 }
@@ -417,7 +417,7 @@ macro_rules! impl_ci {
 
         impl<'a, S: ?Sized + AsRef<str>> Display for CaseFold<S> {
             #[inline]
-            fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+            fn fmt(&self, f: &mut Formatter) -> fmt::Result {
                 self.as_str().fmt(f)
             }
         }
@@ -501,7 +501,7 @@ pub mod unicode {
 
     impl<S: ?Sized + AsRef<str>> CaseFold<S> {
         #[inline]
-        fn caseless_iter(&self) -> iter::FlatMap<Chars<'_>, ToLowercase, fn(char) -> ToLowercase> {
+        fn caseless_iter(&self) -> iter::FlatMap<Chars, ToLowercase, fn(char) -> ToLowercase> {
             self.0.as_ref().chars().flat_map(char::to_lowercase)
         }
     }

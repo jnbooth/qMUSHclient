@@ -172,3 +172,9 @@ impl<'a, K: Enum + Copy + Ord, V> IntoIterator for &'a mut EnumMap<K, V> {
             .filter_map(|(x, m_y)| m_y.as_mut().map(|y| (x, y)))
     }
 }
+
+#[cfg(test)]
+mod tests {
+    //use super::*;
+    //use super::super::tests::*;
+}

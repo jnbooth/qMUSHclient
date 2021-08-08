@@ -44,7 +44,10 @@ pub use printable::Printable;
 mod settings;
 pub use settings::RSettings;
 
+mod time;
+pub use time::{RTimer, TimerKind};
+
 pub mod variant;
 
 mod widgets;
-pub use widgets::{Browse, RDialog, RForm, RWidget};
+pub use widgets::{Browse, RForm, RWidget};

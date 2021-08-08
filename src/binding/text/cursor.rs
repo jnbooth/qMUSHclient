@@ -285,19 +285,6 @@ impl Cursor {
             Selection(cursor)
         }
     }
-    /// Transiently selects texts and applies [`Selection`] operations to it.
-    pub fn with_selection<F, A>(&self, selection: SelectionType, f: F) -> A
-    where
-        F: FnOnce(&Selection) -> A,
-    {
-        unsafe {
-            self.inner.select(selection);
-            // SAFETY: #[repr(transparent)]
-            let res = f(&*(&self.inner as *const CppBox<QTextCursor> as *const Selection));
-            self.inner.clear_selection();
-            res
-        }
-    }
     /// Moves the cursor to the absolute position in the document specified by `pos`. The cursor is
     /// positioned between characters.
     ///

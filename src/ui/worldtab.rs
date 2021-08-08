@@ -12,17 +12,20 @@ use qt_network::q_abstract_socket::SocketError;
 use qt_network::{QTcpSocket, SlotOfSocketError};
 use qt_widgets::q_message_box::{ButtonRole, Icon, StandardButton};
 use qt_widgets::*;
+use uuid::Uuid;
 
 use super::uic;
 use crate::binding::{QList, RWidget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
 use crate::constants::branding;
+use crate::enums::Enum;
 use crate::mxp::SendTo;
+use crate::script::SendRequest;
 use crate::tr::TrContext;
 use crate::world::World;
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum SelectionMode {
     Neither,
     Input,
@@ -47,12 +50,12 @@ impl uic::WorldTab {
     fn style(&self, world: &World) {
         unsafe {
             self.output.set_style_sheet(&QString::from_std_str(format!(
-                r#"QTextBrowser {{ 
+                r"QTextBrowser {{ 
                     color: {fg};
                     background-color: {bg};
                     font: {font};
                     line-height: {spacing};
-                }}"#,
+                }}",
                 fg = world.color(&WorldColor::WHITE),
                 bg = world.color(&WorldColor::BLACK),
                 font = world.output_font,
@@ -87,15 +90,15 @@ pub struct WorldTab {
     pub saved: RefCell<Option<String>>,
     pub notepad: QBox<QTextDocument>,
     pub notepad_title: CppBox<QString>,
+    pub socket: QPtr<QTcpSocket>,
     world: RefCell<Rc<World>>,
 }
 
 impl WorldTab {
-    pub fn new<P: CastInto<Ptr<QWidget>>>(
-        parent: P,
-        world: World,
-        saved: Option<String>,
-    ) -> Rc<Self> {
+    pub fn new<P>(parent: P, world: World, saved: Option<String>) -> Rc<Self>
+    where
+        P: CastInto<Ptr<QWidget>>,
+    {
         let ui = uic::WorldTab::load(parent);
         ui.style(&world);
         ui.set_spacing(world.line_spacing as c_double);
@@ -104,7 +107,12 @@ impl WorldTab {
         unsafe {
             let socketbox = QTcpSocket::new_1a(&ui.widget);
             let socket = socketbox.static_upcast();
-            let client = Client::new(ui.output.clone(), socketbox, world.clone());
+            let client = Client::new(
+                ui.output.clone(),
+                ui.input.clone(),
+                socketbox,
+                world.clone(),
+            );
 
             let this = Rc::new(Self {
                 client: RefCell::new(client),
@@ -113,8 +121,13 @@ impl WorldTab {
                 notepad_title,
                 ui,
                 world: RefCell::new(world),
+                socket,
             });
-            this.init(socket);
+            this.client
+                .borrow_mut()
+                .plugins
+                .set_event_handler(Rc::downgrade(&this));
+            this.init();
             this
         }
     }
@@ -123,7 +136,7 @@ impl WorldTab {
     ///
     /// `socket` must be valid.
     #[rustfmt::skip]
-    unsafe fn init(self: &Rc<Self>, socket: QPtr<QTcpSocket>) {
+    unsafe fn init(self: &Rc<Self>) {
         unsafe {
             let ui = &self.ui;
             ui.widget.set_focus_proxy(&ui.input);
@@ -139,8 +152,8 @@ impl WorldTab {
             ui.input.selection_changed().connect(&self.slot_input_selected());
             ui.input.return_pressed().connect(&self.slot_send());
             ui.input.editing_finished().connect(&self.slot_deselect());
-            socket.error_occurred().connect(&self.slot_socket_error());
-            socket.ready_read().connect(&self.slot_receive());
+            self.socket.error_occurred().connect(&self.slot_socket_error());
+            self.socket.ready_read().connect(&self.slot_receive());
         }
     }
 
@@ -198,9 +211,16 @@ impl WorldTab {
     pub fn borrow_world(&self) -> cell::Ref<Rc<World>> {
         self.world.borrow()
     }
+
     pub fn command(&self, cmd: String) {
         if let Err(e) = self.client.borrow_mut().send_command(cmd) {
             eprintln!("Failed to send data: {}", e); // will be handled in GUI by socket_error()
+        }
+    }
+
+    pub fn trigger_timer(&self, id: Uuid, request: SendRequest) {
+        if let Err(e) = self.client.borrow_mut().plugins.trigger_timer(id, request) {
+            eprintln!("Timer failed: {}", e);
         }
     }
 
@@ -299,7 +319,9 @@ impl WorldTab {
 
     #[slot(SlotNoArgs)]
     fn receive(&self) {
-        self.client.borrow_mut().read();
+        if let Err(e) = self.client.borrow_mut().read() {
+            eprintln!("Failed to read data: {}", e); // will be handled in GUI by socket_error()
+        }
     }
 
     #[slot(SlotNoArgs)]

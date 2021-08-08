@@ -20,6 +20,10 @@ fn load_libs(lua: &Lua) -> mlua::Result<()> {
     Ok(())
 }
 
+/// # Safety
+///
+/// `load_lib` executes an arbitrary C function.
+/// Its safety is therefore dependent on the safety of `f`.
 unsafe fn load_lib(lua: &Lua, name: &str, f: lua_CFunction) -> mlua::Result<()> {
     let opener = unsafe { lua.create_c_function(f) }?;
     let _: mlua::Value = lua.load_from_function(name, opener)?;

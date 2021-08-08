@@ -13,7 +13,7 @@ use crate::binding::color::{RColor, RColorPair};
 use crate::binding::RFont;
 use crate::client::color::{Colors, WorldColor};
 use crate::enums::Enum;
-use crate::script::{Alias, PluginMetadata, PluginPack, Timer, Trigger};
+use crate::script::{Alias, PluginMetadata, PluginPack, Sender, Timer, Trigger};
 use crate::tr::TrContext;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
@@ -80,6 +80,14 @@ mod keypad_serde {
     }
 }
 
+fn skip_temporary<S, T>(vec: &[T], serializer: S) -> Result<S::Ok, S::Error>
+where
+    S: serde::Serializer,
+    T: serde::Serialize + AsRef<Sender>,
+{
+    serializer.collect_seq(vec.iter().filter(|x| !x.as_ref().temporary))
+}
+
 #[derive(TrContext, Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct World {
     // IP address
@@ -117,6 +125,7 @@ pub struct World {
     pub log_postamble_notes: String,
 
     // Timers
+    #[serde(serialize_with = "skip_temporary")]
     pub timers: Vec<Timer>,
     pub enable_timers: bool,
     pub treeview_timers: bool,
@@ -191,6 +200,7 @@ pub struct World {
     pub custom_colors: [RColorPair; 16],
 
     // Triggers
+    #[serde(serialize_with = "skip_temporary")]
     pub triggers: Vec<Trigger>,
     pub enable_triggers: bool,
     pub enable_trigger_sounds: bool,
@@ -236,6 +246,7 @@ pub struct World {
     pub history_lines: usize,
 
     // Aliases
+    #[serde(serialize_with = "skip_temporary")]
     pub aliases: Vec<Alias>,
     pub enable_aliases: bool,
     pub treeview_aliases: bool,
@@ -520,16 +531,10 @@ impl World {
         let today = Utc::today().naive_utc();
         let metadata = PluginMetadata {
             name: tr!("World Script: {}", self.name).to_std_string(),
-            author: String::new(),
-            purpose: String::new(),
-            description: String::new(),
-            id: String::new(),
             written: today,
             modified: today,
-            version: String::new(),
-            requires: String::new(),
-            sequence: 0,
             is_world_plugin: true,
+            ..Default::default()
         };
         PluginPack {
             metadata,

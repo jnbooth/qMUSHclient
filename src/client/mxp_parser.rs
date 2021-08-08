@@ -1,5 +1,5 @@
 use std::iter::Iterator;
-use std::{mem, str};
+use std::{io, mem, str};
 
 use cpp_core::CppBox;
 use qt_core::QString;
@@ -32,9 +32,25 @@ impl Fragment {
     }
 }
 
+#[derive(Debug, Error)]
+pub enum ParseError {
+    Mxp(mxp::ParseError),
+    Io(io::Error),
+}
+
 impl Client {
     pub(super) fn handle_mxp_error(&self, err: mxp::ParseError) {
         eprintln!("MXP Error: {}", err);
+    }
+
+    pub(super) fn handle_mxp_io_error(&self, err: ParseError) -> io::Result<()> {
+        match err {
+            ParseError::Mxp(e) => {
+                self.handle_mxp_error(e);
+                Ok(())
+            }
+            ParseError::Io(e) => Err(e),
+        }
     }
 
     fn mxp_restore_mode(&mut self) {
@@ -213,7 +229,7 @@ impl Client {
             .append(words)
     }
 
-    pub(super) fn mxp_collected_element(&mut self) -> Result<(), mxp::ParseError> {
+    pub(super) fn mxp_collected_element(&mut self) -> Result<(), ParseError> {
         let tag =
             *self.state.mxp_string.get(0).ok_or_else(|| {
                 mxp::ParseError::new("collected element", mxp::Error::EmptyElement)
@@ -224,14 +240,14 @@ impl Client {
         })?;
 
         match tag {
-            b'!' => self.mxp_definition(&text[1..]),
-            b'/' => self.mxp_endtag(&text[1..]),
+            b'!' => self.mxp_definition(&text[1..]).map_err(Into::into),
+            b'/' => self.mxp_endtag(&text[1..]).map_err(Into::into),
             _ => self.mxp_start_tag(&text),
         }
     }
 
-    fn mxp_start_tag(&mut self, tag: &str) -> Result<(), mxp::ParseError> {
-        self.flush(); // probably going to change style or insert HTML
+    fn mxp_start_tag(&mut self, tag: &str) -> Result<(), ParseError> {
+        self.flush()?; // probably going to change style or insert HTML
         let secure = self.state.mxp_mode.is_secure();
         self.mxp_restore_mode();
         let mut words = mxp::Words::new(tag);
@@ -247,10 +263,7 @@ impl Client {
             anchor_template: None,
         });
         if !flags.contains(mxp::TagFlag::Open) && !secure {
-            return Err(mxp::ParseError::new(
-                &name,
-                mxp::Error::ElementWhenNotSecure,
-            ));
+            return Err(mxp::ParseError::new(&name, mxp::Error::ElementWhenNotSecure).into());
         }
         let argstring = words.as_str();
         let mut args = mxp::Arguments::parse_words(words)?;
@@ -280,12 +293,12 @@ impl Client {
                 for value in args.values_mut() {
                     *value = self.state.mxp_entities.decode(value)?;
                 }
-                self.mxp_open_atom(&mut span, &mut fragments, atom.action, args);
+                self.mxp_open_atom(&mut span, &mut fragments, atom.action, args)?;
             }
             mxp::ElementComponent::Custom(el) => {
                 // create a temporary vector to avoid borrow conflict
                 // could clone the element instead, but that seems like a waste
-                let actions: Result<Vec<_>, _> = el
+                let actions: Result<Vec<_>, mxp::ParseError> = el
                     .items
                     .iter()
                     .map(|item| {
@@ -301,7 +314,7 @@ impl Client {
                     })
                     .collect();
                 for (action, newargs) in actions? {
-                    self.mxp_open_atom(&mut span, &mut fragments, action, newargs);
+                    self.mxp_open_atom(&mut span, &mut fragments, action, newargs)?;
                 }
             }
         }
@@ -312,9 +325,17 @@ impl Client {
 
         for fragment in fragments {
             match fragment {
-                Fragment::Html(text) => self.insert_html(text),
-                Fragment::Text(text) => self.insert_text(text),
-                Fragment::Break => self.insert_line(),
+                Fragment::Html(text) => {
+                    self.flush()?;
+                    self.insert_html(text);
+                }
+                Fragment::Text(text) => {
+                    self.flush()?;
+                    self.insert_text(text);
+                }
+                Fragment::Break => {
+                    self.insert_line();
+                }
             }
         }
 
@@ -327,7 +348,7 @@ impl Client {
         fragments: &mut Vec<Fragment>,
         mut action: mxp::Action,
         args: mxp::Arguments,
-    ) {
+    ) -> io::Result<()> {
         use mxp::{Action, Atom, InList, Keyword, Link, SendTo};
         const SPECIAL_LINK: &str = "&text;";
         let world = &*self.world;
@@ -449,8 +470,7 @@ impl Client {
                     mxp::VERSION,
                     branding::APPNAME,
                     branding::VERSION
-                ))
-                .ok();
+                ))?;
             }
             Action::Afk => {
                 let mut scanner = args.scan();
@@ -460,21 +480,20 @@ impl Client {
                         "\x1B[1z<AFK {} {}>\n",
                         self.latest.input.elapsed().as_secs(),
                         challenge
-                    ))
-                    .ok();
+                    ))?;
                 }
             }
             Action::Support => {
-                self.send(Atom::supported(args)).ok();
+                self.send(Atom::supported(args))?;
             }
             Action::User => {
                 if !world.player.is_empty() && world.connect_method == Some(AutoConnect::Mxp) {
-                    self.send(format!("{}\n", self.world.player)).ok();
+                    self.send(format!("{}\n", self.world.player))?;
                 }
             }
             Action::Password => {
                 if !world.password.is_empty() && world.connect_method == Some(AutoConnect::Mxp) {
-                    self.send(format!("{}\n", self.world.password)).ok();
+                    self.send(format!("{}\n", self.world.password))?;
                 }
             }
             Action::P => {
@@ -567,6 +586,7 @@ impl Client {
             }
             _ => (),
         }
+        Ok(())
     }
 
     fn mxp_close_tags_from(&mut self, pos: usize) {
@@ -576,7 +596,7 @@ impl Client {
         }
     }
 
-    pub(super) fn mxp_collected_entity(&mut self) -> Result<(), mxp::ParseError> {
+    pub(super) fn mxp_collected_entity(&mut self) -> Result<(), ParseError> {
         let bytestring = mem::take(&mut self.state.mxp_string);
         let text = str::from_utf8(&bytestring).map_err(|_| {
             mxp::ParseError::new(&format!("{:?}", bytestring), mxp::Error::MalformedBytes)
@@ -587,7 +607,7 @@ impl Client {
             let text = entity.as_bytes().to_vec();
             // if the entity happens to be < & > etc. don't reprocess it
             self.state.mxp_active = false;
-            self.display_msg(text);
+            self.display_msg(text)?;
             self.state.mxp_active = true;
         }
         Ok(())

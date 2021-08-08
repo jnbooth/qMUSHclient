@@ -54,7 +54,7 @@ impl Clone for RColor {
     }
 }
 impl Debug for RColor {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         f.debug_struct("RColor")
             .field("code", &format_args!("#{:08X}", self.code))
             .field("transparent", &self.transparent)
@@ -62,7 +62,7 @@ impl Debug for RColor {
     }
 }
 impl Display for RColor {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(f, "#{:08X}", self.code)
     }
 }
@@ -215,7 +215,7 @@ impl RColorPair {
 
     pub fn stylesheet(&self) -> CppBox<QString> {
         QString::from_std_str(&format!(
-            "* {{ color: {}; background-color: {}; }}",
+            "color: {}; background-color: {};",
             self.foreground, self.background
         ))
     }
@@ -236,6 +236,7 @@ impl HasPalette for QWidget {
             let palette = self.palette();
             palette.set_brush_2a(role, &color.inner);
             self.set_palette(palette);
+            self.repaint();
         }
     }
 }

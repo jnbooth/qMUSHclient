@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TriggerEdit</class>
+ <widget class="QDialog" name="TriggerEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>670</width>
+    <height>927</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>670</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Edit Alias</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QWidget" name="reactions_pattern" native="true">
+     <layout class="QHBoxLayout" name="_3">
+      <item>
+       <widget class="QLabel" name="label_pattern">
+        <property name="text">
+         <string>&amp;Trigger:</string>
+        </property>
+        <property name="buddy">
+         <cstring>pattern</cstring>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="pattern"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="timers_event" native="true">
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="every">
+        <property name="text">
+         <string>Every </string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QSpinBox" name="every_hour">
+          <property name="suffix">
+           <string> hours</string>
+          </property>
+          <property name="maximum">
+           <number>24</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="every_minute">
+          <property name="suffix">
+           <string> minutes</string>
+          </property>
+          <property name="maximum">
+           <number>59</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="every_second">
+          <property name="suffix">
+           <string> seconds</string>
+          </property>
+          <property name="decimals">
+           <number>3</number>
+          </property>
+          <property name="maximum">
+           <double>59.999000000000002</double>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="at_time">
+        <property name="text">
+         <string>At time </string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QTimeEdit" name="time">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="displayFormat">
+         <string>h:mm:ss AP</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_text">
+     <property name="text">
+      <string>&amp;Send:</string>
+     </property>
+     <property name="buddy">
+      <cstring>text</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPlainTextEdit" name="text"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="_main">
+     <property name="spacing">
+      <number>20</number>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="_options">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <item>
+        <layout class="QFormLayout" name="_send">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_send_to">
+           <property name="text">
+            <string>Send to:</string>
+           </property>
+           <property name="buddy">
+            <cstring>send_to</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="send_to">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <item>
+            <property name="text">
+             <string>World</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Command</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Output</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Status</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Notepad (append)</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Notepad (replace)</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Speedwalk</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Variable</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Script</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="sequence_label">
+           <property name="text">
+            <string>Seq&amp;uence:</string>
+           </property>
+           <property name="buddy">
+            <cstring>sequence</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="sequence">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimum">
+            <number>-30000</number>
+           </property>
+           <property name="maximum">
+            <number>30000</number>
+           </property>
+           <property name="value">
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_script">
+           <property name="text">
+            <string>Script:</string>
+           </property>
+           <property name="buddy">
+            <cstring>script</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="script"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_group">
+           <property name="text">
+            <string>Group:</string>
+           </property>
+           <property name="buddy">
+            <cstring>group</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="group"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="variable_label">
+           <property name="visible">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Variable:</string>
+           </property>
+           <property name="buddy">
+            <cstring>variable</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QLineEdit" name="variable">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="label"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_label">
+           <property name="text">
+            <string>&amp;Label:</string>
+           </property>
+           <property name="buddy">
+            <cstring>script</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="triggers_sound">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>Sound</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <layout class="QHBoxLayout" name="_soundfile">
+            <item>
+             <widget class="QLineEdit" name="sound"/>
+            </item>
+            <item>
+             <widget class="QToolButton" name="sound_browse">
+              <property name="text">
+               <string>Browse...</string>
+              </property>
+              <property name="icon">
+               <iconset theme="document-open">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="sound_none">
+              <property name="text">
+               <string>No sound</string>
+              </property>
+              <property name="icon">
+               <iconset theme="user-trash-symbolic">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="sound_test">
+              <property name="text">
+               <string>Test</string>
+              </property>
+              <property name="icon">
+               <iconset theme="audio-volume-high-symbolic">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="sound_if_inactive">
+            <property name="text">
+             <string>Only if inactive</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="triggers_style">
+         <property name="title">
+          <string>Change colour and style</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="3">
+           <widget class="QPushButton" name="foreground">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="2">
+           <widget class="QCheckBox" name="change_background">
+            <property name="text">
+             <string>Set background colour:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QPushButton" name="background">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="make_italic">
+            <property name="text">
+             <string>Italic</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="make_underline">
+            <property name="text">
+             <string>Underline</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QCheckBox" name="change_foreground">
+            <property name="text">
+             <string>Set foreground colour:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="make_bold">
+            <property name="text">
+             <string>Bold</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="_checkboxes">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QCheckBox" name="enabled">
+         <property name="text">
+          <string>En&amp;abled</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="omit_from_output">
+         <property name="text">
+          <string>O&amp;mit from output</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="omit_from_log">
+         <property name="text">
+          <string>&amp;Omit from log file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="one_shot">
+         <property name="text">
+          <string>One-shot</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="temporary">
+         <property name="text">
+          <string>Temporary</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="ignore_case">
+         <property name="text">
+          <string>&amp;Ignore case</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="keep_evaluating">
+         <property name="text">
+          <string>&amp;Keep evaluating</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="expand_variables">
+         <property name="text">
+          <string>Expand variables</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="lowercase_wildcard">
+         <property name="text">
+          <string>Make wildcards lower-case</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="is_regex">
+         <property name="text">
+          <string>Regular expression</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="active_closed">
+         <property name="text">
+          <string>Active when disconnected</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="echo_alias">
+         <property name="text">
+          <string>Echo alias</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="omit_from_command_history">
+         <property name="text">
+          <string>Omit from command history</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="menu">
+         <property name="text">
+          <string>Menu</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="repeat">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Repeat on same line</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="multi_line">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Multi-line</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="triggers_multi_line" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item alignment="Qt::AlignRight">
+           <widget class="QLabel" name="label_lines_to_match">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Lines:</string>
+            </property>
+            <property name="buddy">
+             <cstring>lines_to_match</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="lines_to_match">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="value">
+             <number>2</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>TriggerEdit</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>917</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>TriggerEdit</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>917</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>is_regex</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>repeat</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>658</x>
+     <y>614</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>658</x>
+     <y>796</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>is_regex</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>multi_line</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>658</x>
+     <y>614</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>658</x>
+     <y>828</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>is_regex</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>triggers_multi_line</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>658</x>
+     <y>614</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>658</x>
+     <y>873</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>multi_line</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lines_to_match</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>658</x>
+     <y>828</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>649</x>
+     <y>864</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>multi_line</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_lines_to_match</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>658</x>
+     <y>828</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>549</x>
+     <y>864</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>change_foreground</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>foreground</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>322</x>
+     <y>695</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>371</x>
+     <y>697</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>change_background</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>background</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>322</x>
+     <y>731</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>371</x>
+     <y>733</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sound_none</sender>
+   <signal>clicked()</signal>
+   <receiver>sound</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>394</x>
+     <y>588</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>589</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -244,8 +244,7 @@ impl CharFormat {
 
     pub fn clear_tooltip(&self) {
         unsafe {
-            self.0.set_tool_tip(&QString::new()); // TODO does this actually
-                                                  // work?
+            self.0.set_tool_tip(&QString::new()); // TODO does this actually work?
         }
     }
 }

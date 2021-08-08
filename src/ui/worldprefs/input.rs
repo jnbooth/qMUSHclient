@@ -3,7 +3,7 @@ use std::rc::{Rc, Weak};
 
 use qt_widgets::*;
 
-use super::PrefPageNew;
+use super::PrefPageExt;
 use crate::binding::RWidget;
 use crate::tr::TrContext;
 use crate::ui::uic;
@@ -15,7 +15,7 @@ pub struct PrefsCommands {
     world: Weak<RefCell<World>>,
 }
 impl_prefpage!(PrefsCommands);
-impl_prefpagenew!(PrefsCommands);
+impl_prefpageext!(PrefsCommands);
 
 impl PrefsCommands {
     fn init(self: &Rc<Self>) {

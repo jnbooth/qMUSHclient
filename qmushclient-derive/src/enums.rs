@@ -11,11 +11,14 @@ pub fn derive_enum_variant_count(input: TokenStream) -> TokenStream {
     let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
 
     if input.variants.is_empty() {
-        panic!("Type must not be empty");
+        panic!("type must not be empty");
     }
 
-    if input.variants.iter().any(|x| x.discriminant.is_some()) {
-        panic!("Manual discriminants are unsupported");
+    if let Some(variant) = input.variants.iter().find(|x| x.discriminant.is_some()) {
+        return TokenStream::from(
+            syn::Error::new_spanned(variant, "manual discriminants are unsupported")
+                .into_compile_error(),
+        );
     }
 
     let size = input.variants.len();

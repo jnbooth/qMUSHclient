@@ -30,7 +30,7 @@ pub struct ParseError {
     error: Error,
 }
 impl Display for ParseError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(f, "{:?}: \"{}\"", self.error, self.target)
     }
 }

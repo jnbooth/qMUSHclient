@@ -5,7 +5,7 @@ use qt_core::{slot, QString, SlotNoArgs};
 use qt_widgets::q_dialog_button_box::StandardButton;
 use qt_widgets::*;
 
-use super::PrefPageNew;
+use super::PrefPageExt;
 use crate::binding::{Browse, RWidget};
 use crate::tr::TrContext;
 use crate::ui::uic;
@@ -17,7 +17,7 @@ struct PrefsProxy {
     world: Weak<RefCell<World>>,
 }
 impl_prefpage!(PrefsProxy);
-impl_prefpagenew!(PrefsProxy);
+impl_prefpageext!(PrefsProxy);
 
 impl PrefsProxy {
     #[rustfmt::skip]
@@ -39,7 +39,7 @@ pub struct PrefsAddress {
     world: Weak<RefCell<World>>,
 }
 impl_prefpage!(PrefsAddress);
-impl_prefpagenew!(PrefsAddress);
+impl_prefpageext!(PrefsAddress);
 
 impl PrefsAddress {
     #[rustfmt::skip]
@@ -60,6 +60,22 @@ impl PrefsAddress {
         }
     }
 
+    pub fn connect_ok(&self, prefs: &uic::WorldPrefs) {
+        let ui = &self.ui;
+        unsafe {
+            let button = prefs.button_group.button(StandardButton::Ok);
+            let namefield = ui.name.clone();
+            let sitefield = ui.site.clone();
+            let update = move || {
+                button.set_enabled(!namefield.text().is_empty() && !sitefield.text().is_empty())
+            };
+            update();
+            let update = SlotNoArgs::new(&ui.widget, update);
+            ui.name.text_changed().connect(&update);
+            ui.site.text_changed().connect(&update);
+        }
+    }
+
     #[slot(SlotNoArgs)]
     fn open_proxy_settings(&self) {
         let page = PrefsProxy::new(self.widget(), self.world.clone());
@@ -75,7 +91,7 @@ pub struct PrefsConnecting {
     world: Weak<RefCell<World>>,
 }
 impl_prefpage!(PrefsConnecting);
-impl_prefpagenew!(PrefsConnecting);
+impl_prefpageext!(PrefsConnecting);
 
 impl PrefsConnecting {
     #[rustfmt::skip]
@@ -109,7 +125,7 @@ pub struct PrefsLogging {
     world: Weak<RefCell<World>>,
 }
 impl_prefpage!(PrefsLogging);
-impl_prefpagenew!(PrefsLogging);
+impl_prefpageext!(PrefsLogging);
 
 const DEFAULT_PREAMBLE: &str = r#"<html>
   <head>
@@ -152,6 +168,7 @@ impl PrefsLogging {
 
             let ui = &self.ui;
             let world = self.world.clone();
+            // SAFETY: all fields are valid.
             self.connect_browse_button(
                 Browse::Save,
                 &ui.log_file_browse,
@@ -204,7 +221,7 @@ pub struct PrefsChat {
     world: Weak<RefCell<World>>,
 }
 impl_prefpage!(PrefsChat);
-impl_prefpagenew!(PrefsChat);
+impl_prefpageext!(PrefsChat);
 
 impl PrefsChat {
     fn init(self: &Rc<Self>) {
@@ -227,6 +244,7 @@ impl PrefsChat {
                 chat_file_save_directory,
             );
             let ui = &self.ui;
+            // SAFETY: all fields are valid.
             self.connect_browse_button(
                 Browse::Directory,
                 &ui.chat_file_save_directory_browse,
