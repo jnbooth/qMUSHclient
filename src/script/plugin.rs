@@ -115,7 +115,7 @@ impl Plugin {
     {
         let res = self.try_invoke(fn_name, args);
         if let Err(e) = &res {
-            Self::alert_error(&self.metadata, &e);
+            Self::alert_error(&self.metadata, e);
         }
         res
     }

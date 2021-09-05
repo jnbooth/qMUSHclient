@@ -19,7 +19,7 @@ pub fn derive_rwidget(input: TokenStream) -> TokenStream {
         .clone()
         .expect("fields must be named");
 
-    let widget = if first_field.to_string() == "ui" {
+    let widget = if first_field == "ui" {
         quote!(ui.widget)
     } else {
         first_field.into_token_stream()

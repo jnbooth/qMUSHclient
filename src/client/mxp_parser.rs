@@ -171,7 +171,7 @@ impl Client {
         self.mxp_restore_mode();
         if !was_secure {
             return Err(mxp::ParseError::new(
-                &tag,
+                tag,
                 mxp::Error::DefinitionWhenNotSecure,
             ));
         }
@@ -242,7 +242,7 @@ impl Client {
         match tag {
             b'!' => self.mxp_definition(&text[1..]).map_err(Into::into),
             b'/' => self.mxp_endtag(&text[1..]).map_err(Into::into),
-            _ => self.mxp_start_tag(&text),
+            _ => self.mxp_start_tag(text),
         }
     }
 
@@ -252,7 +252,7 @@ impl Client {
         self.mxp_restore_mode();
         let mut words = mxp::Words::new(tag);
         let name = words.validate_next_or(mxp::Error::InvalidElementName)?;
-        let component = self.state.mxp_elements.get_component(&name)?;
+        let component = self.state.mxp_elements.get_component(name)?;
         let flags = component.flags();
         self.state.mxp_active_tags.push(mxp::Tag {
             name: name.to_owned(),
@@ -263,7 +263,7 @@ impl Client {
             anchor_template: None,
         });
         if !flags.contains(mxp::TagFlag::Open) && !secure {
-            return Err(mxp::ParseError::new(&name, mxp::Error::ElementWhenNotSecure).into());
+            return Err(mxp::ParseError::new(name, mxp::Error::ElementWhenNotSecure).into());
         }
         let argstring = words.as_str();
         let mut args = mxp::Arguments::parse_words(words)?;

@@ -56,7 +56,7 @@ impl<K: Enum + Copy + Ord, V> EnumMap<K, V> {
     }
 
     pub fn iter(&self) -> impl Iterator<Item = (K, &V)> {
-        (&self).into_iter()
+        self.into_iter()
     }
 
     pub fn iter_copied(&self) -> impl '_ + Iterator<Item = (K, V)>

@@ -1,3 +1,5 @@
+use std::iter;
+
 use proc_macro::TokenStream;
 use proc_macro2::{Literal, Span};
 use quote::{quote, ToTokens};
@@ -44,9 +46,7 @@ pub fn ui_form(attrs: TokenStream, input: TokenStream) -> TokenStream {
         quote!(widget)
     };
 
-    let expanded = quote! {
-        #input
-
+    let load = quote! {
         impl #struct_name {
             pub fn load<P: cpp_core::CastInto<cpp_core::Ptr<qt_widgets::QWidget>>>(parent: P) -> Self {
                 unsafe {
@@ -66,6 +66,10 @@ pub fn ui_form(attrs: TokenStream, input: TokenStream) -> TokenStream {
             }
         }
     };
+
+    let expanded: proc_macro2::TokenStream = iter::once(input.to_token_stream())
+        .chain(iter::once(load))
+        .collect();
 
     TokenStream::from(expanded)
 }

@@ -224,7 +224,7 @@ impl Reaction {
             matches!(c, '\\'|'.'|'+'|'*'|'?'|'('|')'|'|'|'['|']'|'{'|'}'|'^'|'$'|'#')
         }
         if is_regex {
-            Regex::new(&pattern)
+            Regex::new(pattern)
         } else {
             let extra_len = pattern.bytes().filter(|&b| is_special(b as char)).count();
             let mut buf = String::with_capacity(pattern.len() + extra_len + 2);

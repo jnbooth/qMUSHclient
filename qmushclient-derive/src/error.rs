@@ -90,7 +90,7 @@ impl ErrorVariant {
             }
         }
         Ok(VariantParse::AsOther(OtherVariant {
-            display: display.unwrap_or(ident.to_string()),
+            display: display.unwrap_or_else(|| ident.to_string()),
             field: ident,
         }))
     }

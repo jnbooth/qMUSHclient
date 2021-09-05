@@ -29,8 +29,8 @@ const CURRENT_VERSION: u8 = 1;
 
 #[derive(Debug, Error)]
 pub enum Error {
-    FileError(io::Error),
-    SerialError(bincode::Error),
+    File(io::Error),
+    Serial(bincode::Error),
     #[error(display = "not a savefile")]
     NotSave,
 }

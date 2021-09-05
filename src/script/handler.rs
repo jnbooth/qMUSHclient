@@ -290,7 +290,7 @@ impl PluginHandler {
         self.timers.clear();
 
         for (i, plugin) in self.plugins.iter_mut().enumerate() {
-            senders.extend(i, &plugin);
+            senders.extend(i, plugin);
             plugin.with_api_mut(|api| api.set_index(i));
             for timer in &plugin.timers {
                 Self::start_timer(

@@ -168,10 +168,8 @@ impl App {
                 self.recent.borrow_mut().push_front(path.to_owned());
                 self.start_world(world, Some(path.to_owned()));
             }
-            Err(Error::FileError(e)) => {
-                self.alert(Icon::Critical, tr!("Couldn't open the file"), &e)
-            }
-            Err(Error::SerialError(e)) => {
+            Err(Error::File(e)) => self.alert(Icon::Critical, tr!("Couldn't open the file"), &e),
+            Err(Error::Serial(e)) => {
                 self.alert(Icon::Critical, tr!("Failed to decode the file"), &e)
             }
             Err(Error::NotSave) => {
@@ -278,11 +276,11 @@ impl App {
 
         use persist::Error;
         match persist::save_world(&world, &save_as) {
-            Err(Error::FileError(e)) => {
+            Err(Error::File(e)) => {
                 self.alert(Icon::Critical, tr!("Couldn't save the file"), &e);
                 return;
             }
-            Err(Error::SerialError(e)) => {
+            Err(Error::Serial(e)) => {
                 self.alert(Icon::Critical, tr!("Failed to encode the file"), &e);
                 return;
             }

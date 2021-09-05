@@ -74,20 +74,20 @@ impl Element {
         let mut iter = definitions.char_indices();
         while let Some((start, startc)) = iter.next() {
             if startc != '<' {
-                return Err(ParseError::new(&definitions, Error::NoTagInDefinition));
+                return Err(ParseError::new(definitions, Error::NoTagInDefinition));
             }
             loop {
                 let (end, endc) = iter
                     .next()
-                    .ok_or_else(|| ParseError::new(&definitions, Error::NoClosingDefinitionQuote))?;
+                    .ok_or_else(|| ParseError::new(definitions, Error::NoClosingDefinitionQuote))?;
                 if endc == '>' {
                     let definition = &definitions[start + 1..end];
                     items.push(ElementItem::parse(definition)?);
                     break;
                 }
-                if (endc == '\'' || endc == '"') && iter.find(|&(_, c)| c == endc).is_none() {
+                if (endc == '\'' || endc == '"') && !iter.any(|(_, c)| c == endc) {
                     return Err(ParseError::new(
-                        &definitions,
+                        definitions,
                         Error::NoClosingDefinitionQuote,
                     ));
                 }
