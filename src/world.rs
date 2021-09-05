@@ -85,7 +85,8 @@ where
     S: serde::Serializer,
     T: serde::Serialize + AsRef<Sender>,
 {
-    serializer.collect_seq(vec.iter().filter(|x| !x.as_ref().temporary))
+    let filtered: Vec<&T> = vec.iter().filter(|x| !x.as_ref().temporary).collect();
+    serializer.collect_seq(filtered)
 }
 
 #[derive(TrContext, Clone, Debug, PartialEq, Serialize, Deserialize)]
