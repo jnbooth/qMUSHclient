@@ -1,11 +1,21 @@
 use proc_macro::TokenStream;
 
+mod api;
 mod binding;
 mod enums;
 mod error;
 mod rwidget;
 mod trcontext;
 mod ui_form;
+
+#[proc_macro_attribute]
+pub fn api(attrs: TokenStream, input: TokenStream) -> TokenStream {
+    crate::api::api(attrs, input)
+}
+#[proc_macro_attribute]
+pub fn api_provider(attrs: TokenStream, input: TokenStream) -> TokenStream {
+    crate::api::api_provider(attrs, input)
+}
 
 #[proc_macro_attribute]
 pub fn ui_form(attrs: TokenStream, input: TokenStream) -> TokenStream {

@@ -7,7 +7,9 @@ use std::rc::Rc;
 
 use hashbrown::HashMap;
 use iter_chunks::IterChunks;
-use mlua::{FromLua, MultiValue, String as LString, ToLua, UserData, UserDataMethods, Value};
+use mlua::{
+    FromLua, Lua, MultiValue, Result, String as LString, ToLua, UserData, UserDataMethods, Value,
+};
 use qt_core::QPtr;
 use qt_gui::q_text_cursor::MoveOperation;
 use qt_network::QTcpSocket;
@@ -45,143 +47,11 @@ impl Drop for Api {
 
 impl UserData for Api {
     fn add_methods<'lua, M: UserDataMethods<'lua, Self>>(methods: &mut M) {
-        methods.add_method("Send", |_, this, s: LString| {
-            let mut bytes = s.as_bytes_with_nul().to_vec();
-            let nullpos = bytes.len() - 1;
-            this.echo(&bytes[..nullpos]);
-            bytes[nullpos] = b'\n';
-            let _ = this.send(&bytes);
-            Ok(())
-        });
-        methods.add_method("Note", |_, this, s: LString| {
-            this.note(s);
-            Ok(())
-        });
-        methods.add_method("ColourNote", |lua, this, vals: MultiValue| {
-            for [fg, bg, s] in vals.into_iter().chunks() {
-                let s = String::from_lua(s, lua)?;
-                let fg = Colors::from_lua(fg, lua)?;
-                let bg = Colors::from_lua(bg, lua)?;
-                this.color_note(s, fg, bg)
-            }
-            Ok(())
-        });
-        methods.add_method(
-            "AppendToNotepad",
-            |_, this, (title, contents): (String, String)| {
-                this.append_to_notepad(title, contents);
-                Ok(())
-            },
-        );
-        methods.add_method("GetVariable", |lua, this, key: String| {
-            match this.variables.borrow().get(&key) {
-                Some(val) => val.as_str().to_lua(lua),
-                None => Ok(Value::Nil),
-            }
-        });
-        methods.add_method("SetVariable", |_, this, (key, val)| {
-            this.variables.borrow_mut().insert(key, val);
-            Ok(())
-        });
-        methods.add_method("AddTrigger", |lua, this, vals: MultiValue| {
-            let mut iter = vals.into_iter();
-            let label = match iter.next() {
-                Some(val) => String::from_lua(val, lua)?,
-                None => String::new(),
-            };
-            let pattern = match iter.next() {
-                Some(val) => String::from_lua(val, lua)?,
-                None => String::new(),
-            };
-            let text = match iter.next() {
-                Some(val) => String::from_lua(val, lua)?,
-                None => String::new(),
-            };
-            let flags = match iter.next() {
-                Some(val) => u16::from_lua(val, lua)?,
-                None => 0,
-            };
-            let enabled = flags & 1 != 0;
-            let omit_from_log = flags & 2 != 0;
-            let omit_from_output = flags & 4 != 0;
-            let keep_evaluating = flags & 8 != 0;
-            let ignore_case = flags & 16 != 0;
-            let is_regex = flags & 32 != 0;
-            let expand_variables = flags & 512 != 0;
-            let replace = flags & 1024 != 0;
-            let temporary = flags & 16384 != 0;
-            let one_shot = flags & 32768 != 0;
-            let color = match iter.next() {
-                Some(val) => Colors::from_lua(val, lua)?,
-                None => None,
-            };
-            let _wildcard = iter.next();
-            let sound = match iter.next() {
-                Some(val) => String::from_lua(val, lua)?,
-                None => String::new(),
-            };
-            let script = match iter.next() {
-                Some(val) => String::from_lua(val, lua)?,
-                None => String::new(),
-            };
-
-            let regex = Reaction::make_regex(&pattern, is_regex)
-                .map_err(|e| mlua::Error::RuntimeError(e.to_string()))?;
-
-            let send = Sender {
-                label,
-                script,
-                text,
-                enabled,
-                one_shot,
-                temporary,
-                omit_from_output,
-                omit_from_log,
-                ..Default::default()
-            };
-
-            let reaction = Reaction {
-                pattern,
-                send,
-                ignore_case,
-                keep_evaluating,
-                is_regex,
-                expand_variables,
-                regex,
-                ..Default::default()
-            };
-
-            let sound = if sound.is_empty() {
-                None
-            } else {
-                Some(PathBuf::from(sound))
-            };
-
-            let trigger = match color {
-                Some(color) => Trigger {
-                    reaction,
-                    sound,
-                    change_foreground: true,
-                    foreground: color.into_owned(),
-                    ..Default::default()
-                },
-                None => Trigger {
-                    reaction,
-                    sound,
-                    ..Default::default()
-                },
-            };
-
-            if replace {
-                this.senders.borrow_mut().replace(this.index, trigger);
-            } else {
-                this.senders.borrow_mut().add(this.index, trigger);
-            }
-            Ok(())
-        });
+        self::provide_api(methods);
     }
 }
 
+#[api_provider]
 impl Api {
     /// # Safety
     ///
@@ -242,8 +112,17 @@ impl Api {
         self.index = index;
     }
 
-    pub fn set_variable(&self, key: String, value: String) {
-        self.variables.borrow_mut().insert(key, value);
+    #[api("GetVariable")]
+    pub fn get_variable<'lua>(&self, lua: &'lua Lua, key: String) -> Result<Value<'lua>> {
+        match self.variables.borrow().get(&key) {
+            Some(val) => val.as_str().to_lua(lua),
+            None => Ok(Value::Nil),
+        }
+    }
+
+    #[api("SetVariable")]
+    pub fn set_variable(&self, key: String, val: String) {
+        self.variables.borrow_mut().insert(key, val);
     }
 
     pub fn save_variables(&mut self) {
@@ -281,6 +160,11 @@ impl Api {
         self.notepad.borrow_mut().append(Pad::Script(title), text);
     }
 
+    #[api("AppendToNotepad")]
+    pub fn append_to_notepad_api(&self, title: String, text: LString) {
+        self.append_to_notepad(title, text);
+    }
+
     pub fn echo<S: Printable>(&self, text: S) {
         let world = &*self.world;
         if world.display_my_input {
@@ -298,11 +182,17 @@ impl Api {
         }
     }
 
+    //#[api("Note")]
     pub fn note<S: Printable>(&self, text: S) {
         self.cursor.move_position(MoveOperation::End, 1);
         self.cursor.insert_block();
         self.cursor.insert_text(text);
         self.scroll_to_bottom();
+    }
+
+    #[api("Note")]
+    pub fn note_api(&self, text: LString) {
+        self.note(text);
     }
 
     pub fn color_note<S, B>(&self, text: S, fg: Option<B>, bg: Option<B>)
@@ -316,8 +206,28 @@ impl Api {
         self.scroll_to_bottom();
     }
 
+    #[api("ColourNote")]
+    pub fn color_note_api(&self, lua: &Lua, vals: MultiValue) -> Result<()> {
+        for [fg, bg, s] in vals.into_iter().chunks() {
+            let s = String::from_lua(s, lua)?;
+            let fg = Colors::from_lua(fg, lua)?;
+            let bg = Colors::from_lua(bg, lua)?;
+            self.color_note(s, fg, bg);
+        }
+        Ok(())
+    }
+
     pub fn send<S: AsRef<[u8]>>(&self, text: S) -> io::Result<()> {
         self.socket.write_all(text.as_ref())
+    }
+
+    #[api("Send")]
+    pub fn send_api(&self, text: LString) {
+        let mut bytes = text.as_bytes_with_nul().to_vec();
+        let nullpos = bytes.len() - 1;
+        self.echo(&bytes[..nullpos]);
+        bytes[nullpos] = b'\n';
+        let _ = self.send(&bytes);
     }
 
     pub fn _send_packet(&self, data: &[u8]) {
@@ -326,5 +236,103 @@ impl Api {
         } else if let Err(e) = self.send(data) {
             eprintln!("Error sending packet {:?}: {}", data, e);
         }
+    }
+
+    #[api("AddTrigger")]
+    pub fn add_trigger(&self, lua: &Lua, vals: MultiValue) -> Result<()> {
+        let mut iter = vals.into_iter();
+        let label = match iter.next() {
+            Some(val) => String::from_lua(val, lua)?,
+            None => String::new(),
+        };
+        let pattern = match iter.next() {
+            Some(val) => String::from_lua(val, lua)?,
+            None => String::new(),
+        };
+        let text = match iter.next() {
+            Some(val) => String::from_lua(val, lua)?,
+            None => String::new(),
+        };
+        let flags = match iter.next() {
+            Some(val) => u16::from_lua(val, lua)?,
+            None => 0,
+        };
+        let enabled = flags & 1 != 0;
+        let omit_from_log = flags & 2 != 0;
+        let omit_from_output = flags & 4 != 0;
+        let keep_evaluating = flags & 8 != 0;
+        let ignore_case = flags & 16 != 0;
+        let is_regex = flags & 32 != 0;
+        let expand_variables = flags & 512 != 0;
+        let replace = flags & 1024 != 0;
+        let temporary = flags & 16384 != 0;
+        let one_shot = flags & 32768 != 0;
+        let color = match iter.next() {
+            Some(val) => Colors::from_lua(val, lua)?,
+            None => None,
+        };
+        let _wildcard = iter.next();
+        let sound = match iter.next() {
+            Some(val) => String::from_lua(val, lua)?,
+            None => String::new(),
+        };
+        let script = match iter.next() {
+            Some(val) => String::from_lua(val, lua)?,
+            None => String::new(),
+        };
+
+        let regex = Reaction::make_regex(&pattern, is_regex)
+            .map_err(|e| mlua::Error::RuntimeError(e.to_string()))?;
+
+        let send = Sender {
+            label,
+            script,
+            text,
+            enabled,
+            one_shot,
+            temporary,
+            omit_from_output,
+            omit_from_log,
+            ..Default::default()
+        };
+
+        let reaction = Reaction {
+            pattern,
+            send,
+            ignore_case,
+            keep_evaluating,
+            is_regex,
+            expand_variables,
+            regex,
+            ..Default::default()
+        };
+
+        let sound = if sound.is_empty() {
+            None
+        } else {
+            Some(PathBuf::from(sound))
+        };
+
+        let trigger = match color {
+            Some(color) => Trigger {
+                reaction,
+                sound,
+                change_foreground: true,
+                foreground: color.into_owned(),
+                ..Default::default()
+            },
+            None => Trigger {
+                reaction,
+                sound,
+                ..Default::default()
+            },
+        };
+
+        if replace {
+            self.senders.borrow_mut().replace(self.index, trigger);
+        } else {
+            self.senders.borrow_mut().add(self.index, trigger);
+        }
+        Ok(())
     }
 }
