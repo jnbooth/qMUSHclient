@@ -287,24 +287,26 @@ pub struct Document(pub(super) QPtr<QTextDocument>);
 impl Document {
     /// Adds a `resource` to the resource cache, using `resource_type` and `name` as identifiers.
     ///
-    /// For example, you can add an image as a resource in order to reference it from within the
-    /// document:
+    /// Note: below, `cursor` is a [`Cursor`](super::cursor::Cursor).
     ///
-    /// ```
+    ///```
+    /// use qt_gui::q_text_document::ResourceType;
+    /// # let (argc, argv) = qt_core::QCoreApplicationArgs::new().get();
+    /// # let app = unsafe { qt_widgets::QApplication::new_2a(argc, argv) };
+    /// # let image = qmushclient::binding::variant::RVariant::from(unsafe { qt_core::QVariant::new() });
+    /// # let cursor = unsafe { qmushclient::binding::text::Cursor::get(qt_widgets::QTextEdit::new().into_ptr()) };
+    ///
+    /// let document = cursor.document();
+    ///
+    /// // Add an image as a resource in order to reference it from within the document:
     /// document.add_resource(ResourceType::ImageResource, "mydata://image.png", image);
-    /// ```
     ///
-    /// The image can be inserted into the document using the [`Cursor`](super::cursor::Cursor) API:
+    /// // Insert the image into the document using the `Cursor` API:
+    /// cursor.insert_image_resource("mydata://image.png");
     ///
-    /// ```
-    /// cursor.insert_image_named("mydata://image.png");
-    /// ```
-    ///
-    /// Alternatively, you can insert images using the HTML `img` tag:
-    ///
-    /// ```
-    /// editor.append(r#"<img src="mydata://image.png" />"#);
-    /// ```
+    /// // Alternatively, insert images using the HTML `img` tag:
+    /// cursor.insert_html(r#"<img src="mydata://image.png" />"#);
+    ///```
     pub fn add_resource<T: Into<RVariant>>(
         &self,
         resource_type: ResourceType,
