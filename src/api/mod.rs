@@ -24,6 +24,8 @@ use crate::tr::TrContext;
 use crate::ui::{Notepad, Pad};
 use crate::world::World;
 
+mod getinfo;
+
 #[derive(TrContext)]
 pub struct Api {
     output: QPtr<QTextBrowser>,
@@ -48,6 +50,7 @@ impl Drop for Api {
 impl UserData for Api {
     fn add_methods<'lua, M: UserDataMethods<'lua, Self>>(methods: &mut M) {
         self::provide_api(methods);
+        getinfo::provide_api(methods);
     }
 }
 

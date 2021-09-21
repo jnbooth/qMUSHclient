@@ -16,6 +16,7 @@ chrono = {version = "0.4.19", features = ["serde"] }
 cpp_core = "0.6.0"
 fancy-regex = "0.7.1"
 flate2 = "1.0.20"
+gethostname = "0.2.1"
 hashbrown = { version = "0.11.2", features = ["serde"] }
 iter_chunks = { path = "lib/iter-chunks" }
 libsqlite3-sys = "0.22.2"
