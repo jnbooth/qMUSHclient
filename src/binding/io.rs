@@ -1,5 +1,6 @@
 use std::fmt::{self, Arguments, Debug, Formatter};
 use std::io::{self, IoSlice, IoSliceMut, Read, Write};
+use std::net::{Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4, SocketAddrV6};
 use std::ops::{Deref, Drop};
 use std::os::raw::c_char;
 use std::rc::Rc;
@@ -10,10 +11,13 @@ use qt_core::q_process::ProcessError;
 use qt_core::{
     QBox, QBuffer, QFile, QFileDevice, QIODevice, QObject, QProcess, QPtr, QSaveFile, QString,
 };
-use qt_network::q_abstract_socket::{SocketError, SocketState};
+use qt_network::q_abstract_socket::{NetworkLayerProtocol, SocketError, SocketState};
 use qt_network::q_local_socket::LocalSocketError;
 use qt_network::q_network_reply::NetworkError;
-use qt_network::{QAbstractSocket, QLocalSocket, QNetworkReply, QSslSocket, QTcpSocket, QUdpSocket};
+use qt_network::{
+    QAbstractSocket, QHostAddress, QIPv6Address, QLocalSocket, QNetworkReply, QSslSocket,
+    QTcpSocket, QUdpSocket,
+};
 
 pub struct RIODevice<Q: QIO> {
     dropper: Rc<QBox<Q>>,
@@ -166,13 +170,74 @@ impl<Q: QIO> Write for &RIODevice<Q> {
     }
 }
 
+fn ipv6_to_std(ip: &QIPv6Address) -> Ipv6Addr {
+    Ipv6Addr::from(unsafe {
+        [
+            ip.index(0),
+            ip.index(1),
+            ip.index(2),
+            ip.index(3),
+            ip.index(4),
+            ip.index(5),
+            ip.index(6),
+            ip.index(7),
+            ip.index(8),
+            ip.index(9),
+            ip.index(10),
+            ip.index(11),
+            ip.index(12),
+            ip.index(13),
+            ip.index(14),
+            ip.index(15),
+        ]
+    })
+}
+
+fn address_to_std(address: &QHostAddress, port: u16) -> SocketAddr {
+    unsafe {
+        if address.protocol() == NetworkLayerProtocol::IPv6Protocol {
+            let ip = ipv6_to_std(&address.to_i_pv6_address());
+            SocketAddr::V6(SocketAddrV6::new(ip, port, 0, 0))
+        } else {
+            let ip = Ipv4Addr::from(address.to_i_pv4_address_0a());
+            SocketAddr::V4(SocketAddrV4::new(ip, port))
+        }
+    }
+}
+
 impl<Q: QIO + StaticUpcast<QAbstractSocket>> RIODevice<Q> {
+    #[inline]
+    fn socket(&self) -> QPtr<QAbstractSocket> {
+        unsafe { self.inner.static_upcast() }
+    }
+
     pub fn connect(&self, address: &str, port: u16) {
         unsafe {
-            self.inner
-                .static_upcast::<QAbstractSocket>()
+            self.socket()
                 .connect_to_host_q_string_u16(&QString::from_std_str(address), port);
         }
+    }
+
+    pub fn local(&self) -> SocketAddr {
+        unsafe {
+            let socket = self.socket();
+            address_to_std(&socket.local_address(), socket.local_port())
+        }
+    }
+
+    pub fn peer(&self) -> SocketAddr {
+        unsafe {
+            let device = self.inner.static_upcast::<QAbstractSocket>();
+            address_to_std(&device.peer_address(), device.peer_port())
+        }
+    }
+
+    pub fn proxy_host(&self) -> String {
+        unsafe { self.socket().proxy().host_name().to_std_string() }
+    }
+
+    pub fn proxy_port(&self) -> u16 {
+        unsafe { self.socket().proxy().port() }
     }
 }
 
