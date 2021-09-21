@@ -108,7 +108,7 @@ pub fn api_provider(_: TokenStream, input: TokenStream) -> TokenStream {
         .collect();
 
     let provide = quote! {
-            pub fn #impl_generics provide_api #where_clause <'lua, M: UserDataMethods<'lua, #ty #ty_generics>>(methods: &mut M) {
+            pub fn #impl_generics provide_api #where_clause <'lua, M: mlua::UserDataMethods<'lua, #ty #ty_generics>>(methods: &mut M) {
                 #items
         }
     };
