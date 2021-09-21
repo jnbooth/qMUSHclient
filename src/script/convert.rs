@@ -1,12 +1,16 @@
 use std::borrow::Cow;
 use std::collections::BTreeMap;
+use std::ffi::{OsStr, OsString};
 use std::hash::{BuildHasher, Hash};
+use std::path::PathBuf;
 use std::rc::Rc;
 use std::str;
 
 use cpp_core::{CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
 use mlua::{self, FromLuaMulti, LightUserData, Lua, MultiValue, ToLua, ToLuaMulti, Value};
 use qt_core::{QBox, QObject, QPtr, QString};
+
+use crate::binding::RFont;
 
 pub trait ScriptRes: for<'lua> FromLuaMulti<'lua> {}
 impl<T: for<'lua> FromLuaMulti<'lua>> ScriptRes for T {}
@@ -42,6 +46,33 @@ impl<'a> ScriptArg for Cow<'a, str> {
             Cow::Borrowed(s) => s.to_arg(lua),
             Cow::Owned(s) => s.to_arg(lua),
         }
+    }
+}
+
+impl ScriptArg for &OsStr {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.to_string_lossy().to_arg(lua)
+    }
+}
+
+impl ScriptArg for &OsString {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.as_os_str().to_arg(lua)
+    }
+}
+
+impl ScriptArg for &Option<PathBuf> {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.as_ref()
+            .and_then(|x| x.to_str())
+            .unwrap_or("")
+            .to_arg(lua)
+    }
+}
+
+impl ScriptArg for &RFont {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.family().to_arg(lua)
     }
 }
 
