@@ -7,7 +7,7 @@ use std::rc::{Rc, Weak};
 use std::time::Duration;
 
 use chrono::{NaiveTime, Timelike};
-use cpp_core::{CastInto, CppBox, CppDeletable, Ptr};
+use cpp_core::{CastInto, CppDeletable, Ptr};
 use enumeration::Enum;
 use hashbrown::hash_map::Entry;
 use hashbrown::HashMap;
@@ -484,8 +484,6 @@ pub struct PrefsTimers {
     ui: uic::PrefsTimers,
     world: Weak<RefCell<World>>,
     model: TableModel<Timer>,
-    at_time: CppBox<QString>,
-    every: CppBox<QString>,
 }
 impl_prefpage!(PrefsTimers);
 
@@ -494,13 +492,7 @@ impl PrefPageExt for PrefsTimers {
         let ui = uic::PrefsTimers::load(parent);
         let model =
             unsafe { TableModel::new(ui.tree.clone(), &world.upgrade().unwrap().borrow().timers) };
-        let this = Rc::new(Self {
-            ui,
-            world,
-            model,
-            at_time: tr!("at time"),
-            every: tr!("every"),
-        });
+        let this = Rc::new(Self { ui, world, model });
         this.init();
         this
     }
