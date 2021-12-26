@@ -1,4 +1,3 @@
-use std::convert::TryFrom;
 use std::error::Error as StdError;
 use std::os::raw::{c_double, c_int};
 use std::path::PathBuf;

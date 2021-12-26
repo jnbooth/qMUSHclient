@@ -1,5 +1,4 @@
 use std::borrow::Cow;
-use std::convert::TryInto;
 
 use hashbrown::HashMap;
 use mlua::{Error as E, FromLua, Lua, Value};

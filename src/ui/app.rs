@@ -1,6 +1,5 @@
 use std::cell::{Cell, RefCell};
 use std::collections::VecDeque;
-use std::convert::TryFrom;
 use std::os::raw::c_int;
 use std::path::Path;
 use std::rc::Rc;

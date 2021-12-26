@@ -1,6 +1,5 @@
 use std::collections;
 use std::collections::BTreeMap;
-use std::convert::TryFrom;
 use std::error::Error as StdError;
 use std::fmt::{self, Display, Formatter};
 use std::iter::FromIterator;
