@@ -282,11 +282,16 @@ impl Client {
     }
 
     pub fn read(&mut self) -> io::Result<()> {
-        let res = self.stream.read(&mut self.bufinput)?;
-        if res > 0 {
-            self.display_msg(self.bufinput[0..res].to_vec())
-        } else {
-            Ok(())
+        loop {
+            let res = self.stream.read(&mut self.bufinput)?;
+            if res == 0 {
+                return Ok(());
+            }
+            self.display_msg(self.bufinput[0..res].to_vec())?;
+            // avoids a weird interaction between Qt and Decompress
+            if res != self.bufinput.len() {
+                return Ok(());
+            }
         }
     }
 

@@ -27,18 +27,19 @@ macro_rules! impl_read {
     ($me:ident, $buft:ty) => {
         fn $me(&mut self, buf: &mut $buft) -> io::Result<usize> {
             #[allow(unused_mut)]
-            let mut socket = match self {
+            let (mut socket, mut reached) = match self {
                 Self::Direct(socket) => return socket.$me(buf),
                 Self::Prepend(prepend, socket) => {
-                    if prepend.position() as usize != prepend.get_ref().len() {
-                        return prepend.$me(buf);
+                    let reached = prepend.$me(buf)?;
+                    if (reached == buf.len()) {
+                        return Ok(reached);
                     }
-                    socket.clone()
+                    (socket.clone(), reached)
                 }
             };
-            let res = socket.$me(buf);
+            reached += socket.$me(&mut buf[reached..])?;
             *self = Self::Direct(socket);
-            res
+            Ok(reached)
         }
     };
 }
