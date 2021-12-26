@@ -21,11 +21,7 @@ pub fn derive_trcontext(input: TokenStream) -> TokenStream {
 
     let expanded = quote! {
         impl #impl_generics TrContext for #name #ty_generics #where_clause {
-            #[inline]
-            fn class_name() -> &'static std::ffi::CStr {
-                // SAFETY: `#name_bytes` is 0-terminated
-                unsafe { std::ffi::CStr::from_bytes_with_nul_unchecked(#name_bytes) }
-            }
+            const CLASS_NAME: &'static std::ffi::CStr = unsafe { std::mem::transmute(#name_bytes as &[u8]) };
         }
     };
 
