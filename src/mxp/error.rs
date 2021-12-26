@@ -2,10 +2,10 @@ use std::error::Error as StdError;
 use std::fmt::{self, Display, Formatter};
 use std::str;
 
+use enumeration::Enum;
 use mlua::{self, Lua, Value};
 
 use crate::client::state::Phase;
-use crate::enums::Enum;
 use crate::script::ScriptArg;
 
 pub fn is_valid(target: &str) -> bool {

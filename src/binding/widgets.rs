@@ -5,6 +5,7 @@ use std::path::PathBuf;
 use std::rc;
 
 use cpp_core::{CppBox, Ptr, StaticUpcast};
+use enumeration::Enum;
 use qt_core::{q_event, Key, QFlags, QObject, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt};
 use qt_gui::q_palette::ColorRole;
 use qt_gui::{QFont, QKeyEvent, SlotOfQFont};
@@ -14,7 +15,6 @@ use qt_widgets::*;
 use super::Printable;
 use crate::binding::color::HasPalette;
 use crate::binding::{RColor, RFont};
-use crate::enums::Enum;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Browse {
@@ -188,25 +188,6 @@ impl RForm<bool> for QPtr<QRadioButton> {
         unsafe {
             self.set_checked(*initial);
             self.toggled().connect(&SlotOfBool::new(parent, set));
-        }
-    }
-}
-
-impl<E: Enum> RForm<Option<E>> for QPtr<QComboBox> {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &Option<E>, mut set: F)
-    where
-        F: 'static + Clone + FnMut(Option<E>),
-    {
-        unsafe {
-            debug_assert!(self.count() == 1 + E::SIZE as c_int);
-            self.set_current_index(match initial {
-                None => 0,
-                Some(i) => i.index() as c_int + 1,
-            });
-            self.current_index_changed()
-                .connect(&SlotOfInt::new(parent, move |index| {
-                    set(usize::try_from(index - 1).ok().and_then(E::from_index));
-                }));
         }
     }
 }

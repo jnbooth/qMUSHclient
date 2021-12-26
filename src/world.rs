@@ -2,6 +2,7 @@ use std::convert::TryInto;
 use std::path::PathBuf;
 
 use chrono::Utc;
+use enumeration::Enum;
 use hashbrown::HashMap;
 use qt_core::{GlobalColor, Key};
 use qt_gui::q_font::StyleHint;
@@ -12,7 +13,6 @@ use serde::{Deserialize, Serialize};
 use crate::binding::color::{RColor, RColorPair};
 use crate::binding::RFont;
 use crate::client::color::{Colors, WorldColor};
-use crate::enums::Enum;
 use crate::script::{Alias, PluginMetadata, PluginPack, Sender, Timer, Trigger};
 use crate::tr::TrContext;
 

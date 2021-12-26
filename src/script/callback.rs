@@ -1,8 +1,8 @@
 use std::str;
 
+use enumeration::Enum;
 use mlua::{Lua, Value};
 
-use crate::enums::Enum;
 use crate::script::ScriptArg;
 
 #[allow(dead_code)]
@@ -17,7 +17,7 @@ pub enum Callback {
     // world state
     Connect,
     Disconnect,
-    
+
     SaveState,
     WorldSave,
 

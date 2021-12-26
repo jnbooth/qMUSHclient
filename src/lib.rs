@@ -4,6 +4,8 @@
 
 #[macro_use]
 extern crate qmushclient_derive;
+#[macro_use]
+extern crate enumeration;
 
 extern crate libsqlite3_sys;
 extern crate luajit_src;
@@ -17,8 +19,8 @@ macro_rules! rgbtrace {
     ($($t:tt)*) => {};
 }
 
-#[macro_use]
-pub mod enums;
+//#[macro_use]
+//pub mod enums;
 #[macro_use]
 pub mod tr;
 

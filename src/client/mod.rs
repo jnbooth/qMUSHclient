@@ -8,6 +8,7 @@ use std::time::Instant;
 use std::{mem, str};
 
 use cpp_core::{CastFrom, Ptr};
+use enumeration::Enum;
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 use qt_core::{QBox, QPtr};
@@ -23,7 +24,6 @@ use crate::binding::text::{CharFormat, Cursor};
 use crate::binding::{Printable, RColor, RIODevice, RWidget};
 use crate::client::state::Latest;
 use crate::constants::config;
-use crate::enums::Enum;
 use crate::escape::{ansi, telnet};
 use crate::mxp;
 use crate::script::{Callback, PluginHandler, Senders};

@@ -7,6 +7,7 @@ use std::path::{Path, PathBuf};
 use std::rc::{Rc, Weak};
 use std::{io, mem, str};
 
+use enumeration::EnumSet;
 use hashbrown::hash_map::Entry;
 use hashbrown::HashMap;
 use mlua::{self, FromLuaMulti, Lua, MetaMethod, ToLuaMulti, UserData, UserDataMethods, Value};
@@ -17,7 +18,6 @@ use super::convert::{ScriptArgs, ScriptRes};
 use super::PluginPack;
 use crate::api::Api;
 use crate::binding::{RColor, RTimer, TimerKind};
-use crate::enums::EnumSet;
 use crate::script::indexed::{PluginIndex, Senders};
 use crate::script::plugin::API_KEY;
 use crate::script::{Alias, Plugin, SendMatch, SendTo, Sendable, Timer, Trigger};

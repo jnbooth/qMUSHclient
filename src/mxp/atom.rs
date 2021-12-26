@@ -2,12 +2,12 @@ use std::fmt::Write;
 use std::os::raw::c_int;
 use std::str;
 
+use enumeration::{self, Enum, EnumSet};
 use once_cell::sync::Lazy;
 
 use super::Arguments;
 use crate::caseinsensitive::ascii::{CaseFold, CaseFoldMap};
 use crate::caseinsensitive::ToCaseFold;
-use crate::enums::{Enum, EnumSet};
 
 /// Outstanding (unclosed) tags.
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

@@ -5,13 +5,13 @@ use std::path::PathBuf;
 use std::time::Duration;
 
 use chrono::{NaiveTime, Timelike};
+use enumeration::Enum;
 use qt_gui::q_palette::ColorRole;
 use serde::{Deserialize, Serialize};
 
 use super::Regex;
 use crate::binding::RColor;
 use crate::constants::config;
-use crate::enums::Enum;
 use crate::DurationExt;
 
 macro_rules! impl_deref {

@@ -8,6 +8,7 @@ use std::time::Duration;
 
 use chrono::{NaiveTime, Timelike};
 use cpp_core::{CastInto, CppBox, CppDeletable, Ptr};
+use enumeration::Enum;
 use hashbrown::hash_map::Entry;
 use hashbrown::HashMap;
 use qt_core::{slot, QPtr, QString, QTime, SlotNoArgs, SlotOfInt, SlotOfQString};
@@ -20,7 +21,6 @@ use qt_widgets::{QPushButton, QTreeWidget, QTreeWidgetItem, QWidget, SlotOfQTree
 use super::{uic, PrefPageExt};
 use crate::binding::color::HasPalette;
 use crate::binding::{Browse, RWidget};
-use crate::enums::Enum;
 use crate::script::{Alias, Event, Reaction, SendTo, Sender, Timer, Trigger};
 use crate::tr::TrContext;
 use crate::world::World;

@@ -1,6 +1,7 @@
 use std::cmp::Ordering;
 use std::{mem, str};
 
+use enumeration::{Enum, EnumSet};
 use mlua::{self, AnyUserData, FromLuaMulti, Function, Lua, Value};
 use qt_core::QString;
 use qt_widgets::q_message_box::Icon;
@@ -10,7 +11,6 @@ use super::callback::Callback;
 use super::convert::ScriptArgs;
 use super::{PluginMetadata, PluginPack};
 use crate::api::Api;
-use crate::enums::{Enum, EnumSet};
 use crate::script::{Alias, Timer, Trigger};
 use crate::tr::TrContext;
 

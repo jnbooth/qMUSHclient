@@ -1,10 +1,11 @@
 use std::fmt::{self, Debug, Formatter};
 use std::rc::Rc;
 
+use enumeration::{Enum, EnumSet};
+
 use crate::binding::color::Colored;
 use crate::binding::text::CharFormat;
 use crate::client::color::WorldColor;
-use crate::enums::{Enum, EnumSet};
 use crate::mxp::{SendTo, Span};
 use crate::world::World;
 

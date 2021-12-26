@@ -1,9 +1,8 @@
 use std::os::raw::c_int;
 use std::time::Duration;
 
+use enumeration::Enum;
 use qt_core::{QAbstractEventDispatcher, QBox, QTimer, SlotNoArgs};
-
-use crate::enums::Enum;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum TimerKind {

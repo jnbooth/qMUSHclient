@@ -1,7 +1,8 @@
 use std::time::{Duration, Instant};
 
+use enumeration::Enum;
+
 use super::mxp;
-use crate::enums::Enum;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Phase {

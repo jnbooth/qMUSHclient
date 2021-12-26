@@ -3,6 +3,7 @@ use std::os::raw::c_double;
 use std::rc::Rc;
 
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
+use enumeration::Enum;
 use qt_core::{slot, FocusReason, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
 use qt_gui::q_text_block_format::LineHeightTypes;
@@ -19,7 +20,6 @@ use crate::binding::{QList, RWidget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
 use crate::constants::branding;
-use crate::enums::Enum;
 use crate::mxp::SendTo;
 use crate::script::SendRequest;
 use crate::tr::TrContext;
@@ -50,7 +50,7 @@ impl uic::WorldTab {
     fn style(&self, world: &World) {
         unsafe {
             self.output.set_style_sheet(&QString::from_std_str(format!(
-                r"QTextBrowser {{ 
+                r"QTextBrowser {{
                     color: {fg};
                     background-color: {bg};
                     font: {font};
