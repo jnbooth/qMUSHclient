@@ -4,7 +4,9 @@ use std::rc::Rc;
 
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
 use enumeration::Enum;
-use qt_core::{slot, FocusReason, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs};
+use qt_core::{
+    slot, FocusReason, GlobalColor, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs,
+};
 use qt_gui::q_palette::ColorRole;
 use qt_gui::q_text_block_format::LineHeightTypes;
 use qt_gui::q_text_cursor::{MoveMode, MoveOperation};
@@ -16,7 +18,8 @@ use qt_widgets::*;
 use uuid::Uuid;
 
 use super::uic;
-use crate::binding::{QList, RWidget};
+use crate::binding::text::Cursor;
+use crate::binding::{Printable, QList, RColor, RWidget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
 use crate::constants::branding;
@@ -92,6 +95,8 @@ pub struct WorldTab {
     pub notepad_title: CppBox<QString>,
     pub socket: QPtr<QTcpSocket>,
     world: RefCell<Rc<World>>,
+    address: RefCell<String>,
+    cursor: Cursor,
 }
 
 impl WorldTab {
@@ -113,7 +118,7 @@ impl WorldTab {
                 socketbox,
                 world.clone(),
             );
-
+            let cursor = Cursor::get(&ui.output);
             let this = Rc::new(Self {
                 client: RefCell::new(client),
                 saved: RefCell::new(saved),
@@ -122,6 +127,8 @@ impl WorldTab {
                 ui,
                 world: RefCell::new(world),
                 socket,
+                address: RefCell::new(String::new()),
+                cursor,
             });
             this.client
                 .borrow_mut()
@@ -154,6 +161,8 @@ impl WorldTab {
             ui.input.editing_finished().connect(&self.slot_deselect());
             self.socket.error_occurred().connect(&self.slot_socket_error());
             self.socket.ready_read().connect(&self.slot_receive());
+            self.socket.connected().connect(&self.slot_report_connected());
+            self.socket.disconnected().connect(&self.slot_report_disconnected());
         }
     }
 
@@ -224,6 +233,14 @@ impl WorldTab {
         }
     }
 
+    pub fn notify<S: Printable, Fg: Into<RColor>>(&self, text: S, fg: Fg) {
+        if !self.cursor.at_block_start() {
+            self.cursor.insert_block();
+        }
+        self.cursor.insert_text_colored(text, Some(fg.into()), None);
+        self.cursor.insert_block();
+    }
+
     #[slot(SlotOfSocketError)]
     fn socket_error(self: &Rc<Self>, error: SocketError) {
         let msg = match error {
@@ -278,7 +295,7 @@ impl WorldTab {
                 return;
             },
         };
-        self.client.borrow_mut().println(msg);
+        self.notify(msg, GlobalColor::Red);
     }
 
     #[slot(SlotNoArgs)]
@@ -322,6 +339,21 @@ impl WorldTab {
         if let Err(e) = self.client.borrow_mut().read() {
             eprintln!("Failed to read data: {}", e); // will be handled in GUI by socket_error()
         }
+    }
+
+    #[slot(SlotNoArgs)]
+    fn report_connected(&self) {
+        let address = unsafe { self.socket.peer_address().to_string().to_std_string() };
+        self.notify(tr!("Connected to {}", address), GlobalColor::Gray);
+        self.address.replace(address);
+    }
+
+    #[slot(SlotNoArgs)]
+    fn report_disconnected(&self) {
+        self.notify(
+            tr!("Disconnected from {}", self.address.borrow()),
+            GlobalColor::Gray,
+        );
     }
 
     #[slot(SlotNoArgs)]
