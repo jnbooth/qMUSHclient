@@ -65,11 +65,7 @@ impl Element {
             None => return Ok(Vec::new()),
         };
 
-        let size_guess = definitions
-            .as_bytes()
-            .iter()
-            .filter(|&&c| c == b'<')
-            .count();
+        let size_guess = definitions.bytes().filter(|&c| c == b'<').count();
         let mut items = Vec::with_capacity(size_guess);
 
         let mut iter = definitions.char_indices();

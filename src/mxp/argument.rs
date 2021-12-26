@@ -59,36 +59,6 @@ pub enum Keyword {
     IsMap,
 }
 
-struct SizeGuess {
-    positional: usize,
-    named: usize,
-}
-
-impl SizeGuess {
-    fn guess(tag: &[u8]) -> Self {
-        let mut positional = 0;
-        let mut named = 0;
-        let mut in_named = false;
-        let mut in_whitespace = false;
-        for &c in tag {
-            if c == b'=' {
-                in_named = true;
-            } else if !c.is_ascii_whitespace() {
-                in_whitespace = false;
-            } else if !in_whitespace {
-                in_whitespace = true;
-                if in_named {
-                    named += 1;
-                } else {
-                    positional += 1;
-                }
-                in_named = false;
-            }
-        }
-        Self { positional, named }
-    }
-}
-
 #[derive(Clone, Debug)]
 pub struct Scan<'a> {
     inner: iter::Map<slice::Iter<'a, Argument>, fn(&Argument) -> &Arg>,
@@ -198,24 +168,12 @@ impl Arguments {
     }
 
     pub fn parse_words(iter: Words) -> Result<Self, ParseError> {
-        let guess = SizeGuess::guess(iter.as_str().as_bytes());
-        let mut this = Self {
-            positional: Vec::with_capacity(guess.positional),
-            named: CaseFoldMap::with_capacity(guess.named),
-            keywords: EnumSet::new(),
-        };
-        this.build(iter)?;
+        let mut this = Self::new();
+        this.append(iter)?;
         Ok(this)
     }
 
-    pub fn append(&mut self, words: Words) -> Result<(), ParseError> {
-        let guess = SizeGuess::guess(words.as_str().as_bytes());
-        self.positional.reserve(guess.positional);
-        self.named.reserve(guess.named);
-        self.build(words)
-    }
-
-    fn build(&mut self, mut iter: Words) -> Result<(), ParseError> {
+    pub fn append(&mut self, mut iter: Words) -> Result<(), ParseError> {
         while let Some(name) = iter.next() {
             if name == "/" {
                 if iter.next().is_none() {
