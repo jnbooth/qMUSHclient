@@ -86,7 +86,9 @@ impl Client {
             self.phase = Phase::Normal;
         }
         self.state.pueblo_active = false;
+        self.api_state.pueblo_active.set(false);
         self.state.mxp_active = false;
+        self.api_state.mxp_active.set(false);
 
         self.plugins.send_to_all(Callback::MxpStop, ());
     }
@@ -100,6 +102,7 @@ impl Client {
         self.plugins.send_to_all(Callback::MxpStart, ());
 
         self.state.mxp_active = true;
+        self.api_state.mxp_active.set(true);
         self.state.pueblo_active = pueblo;
         self.state.mxp_script = false;
         self.state.pre_mode = false;
@@ -607,8 +610,10 @@ impl Client {
             let text = entity.as_bytes().to_vec();
             // if the entity happens to be < & > etc. don't reprocess it
             self.state.mxp_active = false;
+            self.api_state.mxp_active.set(false);
             self.display_msg(text)?;
             self.state.mxp_active = true;
+            self.api_state.mxp_active.set(true);
         }
         Ok(())
     }

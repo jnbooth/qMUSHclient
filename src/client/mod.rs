@@ -18,9 +18,9 @@ use qt_network::QTcpSocket;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::{QLineEdit, QTextBrowser, QWidget};
 
-use crate::api::Api;
+use crate::api::{Api, ApiState};
 use crate::binding::color::Colored;
-use crate::binding::text::{CharFormat, Cursor};
+use crate::binding::text::{CharFormat, Cursor, ScrollBar};
 use crate::binding::{Printable, RColor, RIODevice, RWidget};
 use crate::client::state::Latest;
 use crate::constants::{config, Paths};
@@ -97,6 +97,7 @@ pub struct Client {
     phase: Phase,
     style: Style,
     state: ClientState,
+    api_state: Rc<ApiState>,
     latest: Latest,
     log: Option<BufWriter<File>>,
 }
@@ -121,6 +122,7 @@ impl Client {
     ) -> Self {
         let notepad = Rc::new(RefCell::new(Notepad::new(&world.name)));
         let socket = RIODevice::new(socket);
+        let api_state = Rc::new(ApiState::default());
         // SAFETY: all fields are valid.
         let api = unsafe {
             Api::new(
@@ -128,6 +130,7 @@ impl Client {
                 input,
                 socket.clone(),
                 world.clone(),
+                api_state.clone(),
                 notepad.clone(),
                 Rc::new(RefCell::new(Senders::new())),
                 paths,
@@ -135,7 +138,7 @@ impl Client {
         };
 
         // SAFETY: `output` is valid.
-        let cursor = unsafe { Cursor::get(&output) };
+        let cursor = Cursor::get(&output);
         let charfmt = cursor.format.text.clone();
         let mut this = Self {
             notepad,
@@ -150,6 +153,7 @@ impl Client {
             world,
             phase: Phase::Normal,
             state: ClientState::new(),
+            api_state,
             plugins: PluginHandler::new(api),
             latest: Latest::new(),
             log: None,
@@ -242,6 +246,7 @@ impl Client {
             self.mxp_off(true);
             self.socket.close();
             self.stream.reset();
+            self.api_state.compressing.set(false);
         }
     }
 
@@ -298,10 +303,8 @@ impl Client {
     }
 
     fn scroll_to_bottom(&self) {
-        unsafe {
-            let scrollbar = self.widget.vertical_scroll_bar();
-            scrollbar.set_value(scrollbar.maximum());
-        }
+        let scrollbar = ScrollBar::get_vertical(&self.widget);
+        scrollbar.set_value(scrollbar.maximum());
     }
 
     fn insert_line(&mut self) {
@@ -602,5 +605,6 @@ impl Client {
             self.write_to_log(Log::Output, &data[..data.len() - left.len()]);
         }
         self.stream.start_decompressing(left);
+        self.api_state.compressing.set(true);
     }
 }

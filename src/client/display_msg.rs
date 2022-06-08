@@ -217,6 +217,7 @@ impl Client {
                                 telnet::DONT
                             } else {
                                 self.state.no_echo = true;
+                                self.api_state.no_echo.set(true);
                                 telnet::DO
                             }
                         }
@@ -252,6 +253,7 @@ impl Client {
                     self.phase = Phase::Normal;
                     if !self.world.no_echo_off {
                         self.state.no_echo = false;
+                        self.api_state.no_echo.set(false);
                     }
                     self.send_packet(&[telnet::IAC, telnet::DONT, c])?;
                 }

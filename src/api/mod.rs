@@ -26,6 +26,8 @@ use crate::ui::{Notepad, Pad};
 use crate::world::World;
 
 mod getinfo;
+mod state;
+pub use state::ApiState;
 
 #[derive(TrContext)]
 pub struct Api {
@@ -34,6 +36,7 @@ pub struct Api {
     cursor: Cursor,
     socket: RIODevice<QTcpSocket>,
     world: Rc<World>,
+    state: Rc<ApiState>,
     pub notepad: Rc<RefCell<Notepad>>,
     pub senders: Rc<RefCell<Senders>>,
     custom_colors: HashMap<String, RColorPair>,
@@ -67,6 +70,7 @@ impl Api {
         input: QPtr<QLineEdit>,
         socket: RIODevice<QTcpSocket>,
         world: Rc<World>,
+        state: Rc<ApiState>,
         notepad: Rc<RefCell<Notepad>>,
         senders: Rc<RefCell<Senders>>,
         paths: &'static Paths,
@@ -85,6 +89,7 @@ impl Api {
             notepad,
             custom_colors: world.custom_color_map(),
             world,
+            state,
             senders,
             variables: RefCell::new(HashMap::new()),
             variables_key: String::new(),
@@ -102,6 +107,7 @@ impl Api {
             input: self.input.clone(),
             socket: self.socket.clone(),
             world: self.world.clone(),
+            state: self.state.clone(),
             notepad: self.notepad.clone(),
             senders: self.senders.clone(),
             custom_colors: self.custom_colors.clone(),
