@@ -20,7 +20,7 @@ flate2 = "1.0.22"
 gethostname = "0.2.1"
 hashbrown = { version = "0.11.2", features = ["serde"] }
 iter_chunks = { path = "lib/iter-chunks" }
-libsqlite3-sys = "0.23.2"
+libsqlite3-sys = { version = "0.23.2", features = ["bundled"] }
 luajit-src = ">= 210.1.2, < 220.0.0"
 mlua = { version = "0.7.1", features = ["luajit", "vendored"] }
 once_cell = "1.8.0"
