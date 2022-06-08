@@ -19,12 +19,10 @@ use super::uic;
 use super::worldprefs::WorldPrefs;
 use super::worldtab::{SelectionMode, WorldTab};
 use crate::binding::{RSettings, RWidget};
-use crate::constants::config;
+use crate::constants::{config, Paths};
 use crate::persist;
 use crate::tr::TrContext;
 use crate::world::World;
-
-const SAVE_DIR: &str = "/home/j/Downloads";
 
 const KEY_RECENT: &str = "recent";
 fn only_filename(s: &str) -> &str {
@@ -40,13 +38,13 @@ pub struct App {
     notepad: QBox<QTextEdit>,
     notepad_title: CppBox<QString>,
     blank: QBox<QTextDocument>,
-    save_dir: CppBox<QString>,
     save_filter: CppBox<QString>,
     recent: RefCell<VecDeque<String>>,
     world_tabs: RefCell<Vec<Rc<WorldTab>>>,
     current: Cell<Option<usize>>,
     current_input: RefCell<QPtr<QLineEdit>>,
     settings: RSettings,
+    paths: &'static Paths,
 }
 
 impl App {
@@ -56,6 +54,9 @@ impl App {
             .get_list(KEY_RECENT)
             .unwrap_or_else(|_| VecDeque::new());
 
+        let paths = Paths::new(&settings).expect("error locating home directory");
+        paths.ensure().expect("error creating working directories");
+
         let ui = uic::App::load(NullPtr);
 
         unsafe {
@@ -64,13 +65,13 @@ impl App {
                 ui,
                 notepad: QTextEdit::new(),
                 notepad_title: tr!("World Notebook"),
-                save_dir: QString::from_std_str(SAVE_DIR),
                 save_filter: tr!("World files (*.qmc);;All Files (*.*)"),
                 recent: RefCell::new(recent),
                 world_tabs: RefCell::new(Vec::new()),
                 current: Cell::new(None),
                 current_input: RefCell::new(QPtr::null()),
                 settings,
+                paths: Box::leak(Box::new(paths)),
             });
             this.init();
             this
@@ -211,7 +212,7 @@ impl App {
         let ui = &self.ui;
         let tabname = QString::from_std_str(world.name.replace('&', ""));
         let should_open = world.connect_method.is_some();
-        let worldtab = WorldTab::new(self.widget(), world, filename);
+        let worldtab = WorldTab::new(self.widget(), world, filename, self.paths);
         if should_open {
             worldtab.client.borrow_mut().connect();
         }
@@ -263,7 +264,7 @@ impl App {
                 QFileDialog::get_save_file_name_4a(
                     self.widget(),
                     &tr!("Save as"),
-                    &QString::from_std_str(&format!("{}/{}.qmc", SAVE_DIR, world.name)),
+                    &QString::from_std_str(self.paths.worlds.join(&world.name).to_string_lossy()),
                     &self.save_filter,
                 )
                 .to_std_string()
@@ -396,7 +397,7 @@ impl App {
             QFileDialog::get_open_file_name_4a(
                 self.widget(),
                 &tr!("Open world"),
-                &self.save_dir,
+                &QString::from_std_str(&self.paths.worlds.to_string_lossy()),
                 &self.save_filter,
             )
             .to_std_string()

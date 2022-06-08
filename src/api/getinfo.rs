@@ -87,29 +87,31 @@ impl Api {
             49 => lua!(Callback::MxpSetVariable),
             50 => world!(&beep_sound),
 
-            // strings - calculated at runtime
+            // strings
             51 => world!(&auto_log_file_name),
             52 => lua!(""), // last "immediate" script expression (TODO?)
             53 => lua!(""), // current status line mesage (TODO)
             54 => world!(&world_script),
             55 => world!(&name),
-            56 => lua!(""), // MUSHclient application path name (TODO?)
-            57 => lua!(""), // world files default path (directory) (TODO)
-            58 => lua!(""), // log files default path (directory) (TODO)
-            59 => lua!(""), // script files default path (directory) (TODO)
-            60 => lua!(""), // plugin files default path (directory) (TODO)
-            61 => lua!(""), // world files default path (directory) (TODO)
+            56 => lua!(&self.paths.app),
+            57 => lua!(&self.paths.worlds),
+            58 => lua!(&self.paths.logs),
+            59 => lua!(&self.paths.scripts),
+            60 => lua!(&self.paths.plugins),
+            61 => lua!(&self.paths.worlds),
             62 => lshow!(self.socket.peer().ip()),
             63 => lua!(&gethostname::gethostname()),
             64 => lua!(""), // current directory
             65 => lua!(Callback::WorldSave),
-            66 => lua!(""), // MUSHclient application directory
-            67 => lua!(""), // world file directory
-            68 => lua!(""), // MUSHclient startup (initial) directory
-            69 => lua!(""), // translation file
-            70 => lua!(""), // locale
+            66 => lua!(&self.paths.base), // MUSHclient application directory
+            67 => lua!(""),               // world file directory
+            68 => lua!(&self.paths.base), // MUSHclient startup (initial) directory
+            69 => lua!(""),               // translation file
+            70 => lua!(""),               // locale
             71 => lua!(&RFont::global(StyleHint::Monospace)), // font used for fixed-pitch dialogs
             72 => lua!(branding::VERSION),
+            74 => lua!(&self.paths.sounds),
+            82 => lua!(&self.paths.preferences),
             _ => Ok(Value::Nil),
         }
     }

@@ -23,7 +23,7 @@ use crate::binding::color::Colored;
 use crate::binding::text::{CharFormat, Cursor};
 use crate::binding::{Printable, RColor, RIODevice, RWidget};
 use crate::client::state::Latest;
-use crate::constants::config;
+use crate::constants::{config, Paths};
 use crate::escape::{ansi, telnet};
 use crate::mxp;
 use crate::script::{Callback, PluginHandler, Senders};
@@ -117,6 +117,7 @@ impl Client {
         input: QPtr<QLineEdit>,
         socket: QBox<QTcpSocket>,
         world: Rc<World>,
+        paths: &'static Paths,
     ) -> Self {
         let notepad = Rc::new(RefCell::new(Notepad::new(&world.name)));
         let socket = RIODevice::new(socket);
@@ -129,6 +130,7 @@ impl Client {
                 world.clone(),
                 notepad.clone(),
                 Rc::new(RefCell::new(Senders::new())),
+                paths,
             )
         };
 

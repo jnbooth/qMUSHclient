@@ -19,6 +19,7 @@ use crate::binding::color::{Colored, RColor, RColorPair};
 use crate::binding::text::Cursor;
 use crate::binding::{Printable, RIODevice, RSettings};
 use crate::client::color::Colors;
+use crate::constants::Paths;
 use crate::script::{PluginIndex, PluginMetadata, Reaction, Sender, Senders, Trigger};
 use crate::tr::TrContext;
 use crate::ui::{Notepad, Pad};
@@ -39,6 +40,7 @@ pub struct Api {
     variables: RefCell<HashMap<String, String>>,
     variables_key: String,
     index: PluginIndex,
+    paths: &'static Paths,
 }
 
 impl Drop for Api {
@@ -59,6 +61,7 @@ impl Api {
     /// # Safety
     ///
     /// `output` and `input` must be valid and non-null.
+    #[allow(clippy::too_many_arguments)]
     pub unsafe fn new(
         output: QPtr<QTextBrowser>,
         input: QPtr<QLineEdit>,
@@ -66,6 +69,7 @@ impl Api {
         world: Rc<World>,
         notepad: Rc<RefCell<Notepad>>,
         senders: Rc<RefCell<Senders>>,
+        paths: &'static Paths,
     ) -> Self {
         // SAFETY: `output` is valid.
         let cursor = unsafe { Cursor::get(&output) };
@@ -85,6 +89,7 @@ impl Api {
             variables: RefCell::new(HashMap::new()),
             variables_key: String::new(),
             index: 0,
+            paths,
         }
     }
 
@@ -108,6 +113,7 @@ impl Api {
             ),
             variables_key,
             index,
+            paths: self.paths,
         }
     }
 

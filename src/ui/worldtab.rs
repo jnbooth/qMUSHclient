@@ -22,7 +22,7 @@ use crate::binding::text::Cursor;
 use crate::binding::{Printable, QList, RColor, RWidget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
-use crate::constants::branding;
+use crate::constants::{branding, Paths};
 use crate::mxp::SendTo;
 use crate::script::SendRequest;
 use crate::tr::TrContext;
@@ -100,7 +100,7 @@ pub struct WorldTab {
 }
 
 impl WorldTab {
-    pub fn new<P>(parent: P, world: World, saved: Option<String>) -> Rc<Self>
+    pub fn new<P>(parent: P, world: World, saved: Option<String>, paths: &'static Paths) -> Rc<Self>
     where
         P: CastInto<Ptr<QWidget>>,
     {
@@ -117,6 +117,7 @@ impl WorldTab {
                 ui.input.clone(),
                 socketbox,
                 world.clone(),
+                paths,
             );
             let cursor = Cursor::get(&ui.output);
             let this = Rc::new(Self {

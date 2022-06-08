@@ -56,7 +56,6 @@ impl PadWidget {
             let widget = QTextEdit::new();
             widget.set_read_only(true);
             Self {
-                // SAFETY: `widget` is valid.
                 cursor: Cursor::get(&widget),
                 widget,
                 kind,

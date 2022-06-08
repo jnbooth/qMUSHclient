@@ -2,7 +2,7 @@ use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::ffi::{OsStr, OsString};
 use std::hash::{BuildHasher, Hash};
-use std::path::PathBuf;
+use std::path::{PathBuf, Path};
 use std::rc::Rc;
 use std::str;
 
@@ -58,6 +58,18 @@ impl ScriptArg for &OsStr {
 impl ScriptArg for &OsString {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         self.as_os_str().to_arg(lua)
+    }
+}
+
+impl ScriptArg for &Path {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.as_os_str().to_arg(lua)
+    }
+}
+
+impl ScriptArg for &PathBuf {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.as_path().to_arg(lua)
     }
 }
 
