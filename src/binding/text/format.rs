@@ -22,7 +22,7 @@ fn optional_string(s: CppBox<QString>) -> Option<String> {
 
 #[repr(transparent)]
 pub struct TextFormat {
-    pub(super) inner: QTextFormat
+    pub(super) inner: QTextFormat,
 }
 
 impl TextFormat {
@@ -70,13 +70,17 @@ macro_rules! impl_fmt {
     ($t:ty, $from:ty) => {
         impl $t {
             pub fn new() -> Self {
-                Self { inner: unsafe { <$from>::new() } }
+                Self {
+                    inner: unsafe { <$from>::new() },
+                }
             }
         }
 
         impl Clone for $t {
             fn clone(&self) -> Self {
-                Self { inner: unsafe { <$from>::new_copy(&self.inner) } }
+                Self {
+                    inner: unsafe { <$from>::new_copy(&self.inner) },
+                }
             }
         }
 
@@ -113,7 +117,7 @@ macro_rules! impl_fmt {
 #[derive(Debug)]
 #[repr(transparent)]
 pub struct BlockFormat {
-    pub(super) inner: CppBox<QTextBlockFormat>
+    pub(super) inner: CppBox<QTextBlockFormat>,
 }
 impl_fmt!(BlockFormat, QTextBlockFormat);
 

@@ -144,7 +144,7 @@ impl Notepad {
             Some(pad) => unsafe {
                 pad.widget.clear();
                 pad.insert_header();
-                &pad
+                pad
             },
             None => self.get_or_create(kind),
         };

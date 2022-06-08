@@ -178,7 +178,9 @@ macro_rules! impl_from {
     ($me:ident, $t:ty) => {
         impl From<$t> for RVariant {
             fn from(value: $t) -> Self {
-                Self { inner: unsafe { QVariant::$me(value) } }
+                Self {
+                    inner: unsafe { QVariant::$me(value) },
+                }
             }
         }
     };
@@ -188,12 +190,16 @@ macro_rules! impl_from_ref {
     ($me:ident, $t:ty) => {
         impl From<&CppBox<$t>> for RVariant {
             fn from(value: &CppBox<$t>) -> Self {
-                Self { inner: unsafe { QVariant::$me(value) } }
+                Self {
+                    inner: unsafe { QVariant::$me(value) },
+                }
             }
         }
         impl From<CppBox<$t>> for RVariant {
             fn from(value: CppBox<$t>) -> Self {
-                Self { inner: unsafe { QVariant::$me(&value) } }
+                Self {
+                    inner: unsafe { QVariant::$me(&value) },
+                }
             }
         }
     };
@@ -568,5 +574,7 @@ impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for BTreeMap<String,
 // reaching impossible results. `CppBox`es don't do unexpected things like that, so I'm sticking
 // with them for now.
 fn recast<T: TryFrom<RVariant, Error = Error>>(variant: Ref<QVariant>) -> Result<T, Error> {
-    T::try_from(RVariant { inner: unsafe { QVariant::new_copy(variant) } })
+    T::try_from(RVariant {
+        inner: unsafe { QVariant::new_copy(variant) },
+    })
 }
