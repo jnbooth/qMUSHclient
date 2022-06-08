@@ -323,12 +323,6 @@ impl Client {
         self.insert_text(text);
     }
 
-    pub fn println<S: Printable>(&self, text: S) {
-        self.cursor.insert_block();
-        self.insert_text(text);
-        self.scroll_to_bottom();
-    }
-
     #[cfg(feature = "show-special")]
     pub fn append_to_notepad<S: Printable>(&self, kind: Pad, align: AlignmentFlag, text: S) {
         self.notepad.borrow_mut().append_aligned(kind, align, text);

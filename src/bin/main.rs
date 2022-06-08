@@ -28,12 +28,6 @@ fn main() {
         QCoreApplication::set_organization_domain(&QString::from_std_str("qMUSHclient"));
     }
     QApplication::init(|_| {
-        extern "C" {
-            fn ritual_init_resource_resources();
-        }
-        unsafe {
-            ritual_init_resource_resources();
-        }
         load_translator();
 
         let app = App::new();

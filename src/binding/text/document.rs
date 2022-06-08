@@ -168,24 +168,28 @@ impl Block {
 
 #[derive(Debug)]
 pub struct Layout<'a, T: CppDeletable> {
+    #[allow(dead_code)]
     pub(super) inner: Ptr<QTextLayout>,
     pub(super) _owner: &'a CppBox<T>,
 }
 
 #[derive(Debug)]
 pub struct List<'a, T: CppDeletable> {
+    #[allow(dead_code)]
     pub(super) inner: QPtr<QTextList>,
     pub(super) _owner: &'a CppBox<T>,
 }
 
 #[derive(Debug)]
 pub struct Frame<'a, T: CppDeletable> {
+    #[allow(dead_code)]
     pub(super) inner: QPtr<QTextFrame>,
     pub(super) _owner: &'a CppBox<T>,
 }
 
 #[derive(Debug)]
 pub struct Table<'a, T: CppDeletable> {
+    #[allow(dead_code)]
     pub(super) inner: QPtr<QTextTable>,
     pub(super) _owner: &'a CppBox<T>,
 }
