@@ -1,4 +1,5 @@
 use std::iter::FromIterator;
+use std::path::PathBuf;
 
 use cpp_core::CppBox;
 use qt_core::iter::QIntoIterator;
@@ -15,28 +16,34 @@ pub enum Error {
 }
 
 #[derive(Debug)]
-pub struct RSettings(QBox<QSettings>);
+pub struct RSettings {
+    inner: QBox<QSettings>,
+}
 
 impl Default for RSettings {
     fn default() -> Self {
-        Self(unsafe { QSettings::new() })
+        Self {
+            inner: unsafe { QSettings::new() },
+        }
     }
 }
 
 impl RSettings {
     pub fn new(organization: &str, name: &str) -> Self {
-        Self(unsafe {
-            QSettings::from_2_q_string(
-                &QString::from_std_str(organization),
-                &QString::from_std_str(name),
-            )
-        })
+        Self {
+            inner: unsafe {
+                QSettings::from_2_q_string(
+                    &QString::from_std_str(organization),
+                    &QString::from_std_str(name),
+                )
+            },
+        }
     }
     fn qget(&self, key: &str) -> Result<RVariant, Error> {
         unsafe {
             let key = QString::from_std_str(key);
-            if self.0.contains(&key) {
-                Ok(RVariant::from(self.0.value_1a(&key)))
+            if self.inner.contains(&key) {
+                Ok(RVariant::from(self.inner.value_1a(&key)))
             } else {
                 Err(Error::NotFound)
             }
@@ -55,8 +62,8 @@ impl RSettings {
         RVariant: From<T>,
     {
         unsafe {
-            self.0
-                .set_value(&QString::from_std_str(key), &RVariant::from(val).0);
+            self.inner
+                .set_value(&QString::from_std_str(key), &RVariant::from(val).inner);
         }
     }
 
@@ -80,8 +87,12 @@ impl RSettings {
         unsafe {
             self.set(
                 key,
-                QListOfQVariant::from_iter(iter.into_iter().map(|x| x.into().0)),
+                QListOfQVariant::from_iter(iter.into_iter().map(|x| x.into().inner)),
             );
         }
+    }
+
+    pub fn path(&self) -> PathBuf {
+        unsafe { self.inner.file_name().to_std_string().into() }
     }
 }

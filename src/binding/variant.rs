@@ -119,19 +119,21 @@ pub const fn type_name(ty: Type) -> &'static str {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct RVariant(pub(super) CppBox<QVariant>);
+pub struct RVariant {
+    pub(super) inner: CppBox<QVariant>,
+}
 
 impl_eq_cpp!(RVariant);
 
 impl From<CppBox<QVariant>> for RVariant {
     fn from(value: CppBox<QVariant>) -> Self {
-        Self(value)
+        Self { inner: value }
     }
 }
 
 impl RVariant {
     pub fn qtype(&self) -> Type {
-        Type::from(unsafe { self.0.type_() }.to_int())
+        Type::from(unsafe { self.inner.type_() }.to_int())
     }
 
     fn from_strings<S: AsRef<str>, I: IntoIterator<Item = S>>(iter: I) -> Self {
@@ -151,7 +153,7 @@ impl RVariant {
         unsafe {
             let hashmap = QHashOfQStringQVariant::new();
             for (k, v) in value {
-                hashmap.insert(&QString::from_std_str(k), &v.into().0);
+                hashmap.insert(&QString::from_std_str(k), &v.into().inner);
             }
             RVariant::from(hashmap)
         }
@@ -176,7 +178,7 @@ macro_rules! impl_from {
     ($me:ident, $t:ty) => {
         impl From<$t> for RVariant {
             fn from(value: $t) -> Self {
-                Self(unsafe { QVariant::$me(value) })
+                Self { inner: unsafe { QVariant::$me(value) } }
             }
         }
     };
@@ -186,12 +188,12 @@ macro_rules! impl_from_ref {
     ($me:ident, $t:ty) => {
         impl From<&CppBox<$t>> for RVariant {
             fn from(value: &CppBox<$t>) -> Self {
-                Self(unsafe { QVariant::$me(value) })
+                Self { inner: unsafe { QVariant::$me(value) } }
             }
         }
         impl From<CppBox<$t>> for RVariant {
             fn from(value: CppBox<$t>) -> Self {
-                Self(unsafe { QVariant::$me(&value) })
+                Self { inner: unsafe { QVariant::$me(&value) } }
             }
         }
     };
@@ -273,7 +275,7 @@ macro_rules! impl_try_from {
             fn try_from(value: RVariant) -> Result<Self, Error> {
                 let actual = value.qtype();
                 if (actual == Type::$qt1)$(||(actual == Type::$qt))* {
-                    Ok(unsafe { value.0.$me() })
+                    Ok(unsafe { value.inner.$me() })
                 } else {
                     Err(Error::WrongType { tried: Type::$qt1, actual })
                 }
@@ -566,5 +568,5 @@ impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for BTreeMap<String,
 // reaching impossible results. `CppBox`es don't do unexpected things like that, so I'm sticking
 // with them for now.
 fn recast<T: TryFrom<RVariant, Error = Error>>(variant: Ref<QVariant>) -> Result<T, Error> {
-    T::try_from(RVariant(unsafe { QVariant::new_copy(variant) }))
+    T::try_from(RVariant { inner: unsafe { QVariant::new_copy(variant) } })
 }

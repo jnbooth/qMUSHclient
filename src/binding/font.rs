@@ -42,13 +42,15 @@ const fn display_weight(weight: Weight) -> &'static str {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct RFont(pub(super) CppBox<QFont>);
+pub struct RFont {
+    pub(super) inner: CppBox<QFont>,
+}
 
 impl_eq_cpp!(RFont);
 
 impl From<CppBox<QFont>> for RFont {
     fn from(value: CppBox<QFont>) -> Self {
-        Self(value)
+        Self { inner: value }
     }
 }
 
@@ -69,13 +71,13 @@ impl Display for RFont {
 impl CastFrom<&RFont> for cpp_core::Ref<QFont> {
     #[inline]
     unsafe fn cast_from(value: &RFont) -> Self {
-        unsafe { value.0.as_ref() }
+        unsafe { value.inner.as_ref() }
     }
 }
 
 impl Clone for RFont {
     fn clone(&self) -> Self {
-        Self::from(unsafe { QFont::new_copy(&self.0) })
+        Self::from(unsafe { QFont::new_copy(&self.inner) })
     }
 }
 
@@ -107,39 +109,39 @@ impl RFont {
     }
 
     pub fn family(&self) -> String {
-        unsafe { self.0.family().to_std_string() }
+        unsafe { self.inner.family().to_std_string() }
     }
     pub fn set_family(&self, family: &str) {
         unsafe {
-            self.0.set_family(&QString::from_std_str(family));
+            self.inner.set_family(&QString::from_std_str(family));
         }
     }
 
     pub fn size(&self) -> c_int {
-        unsafe { self.0.point_size() }
+        unsafe { self.inner.point_size() }
     }
     pub fn set_size(&self, size: c_int) {
         unsafe {
-            self.0.set_point_size(size);
+            self.inner.set_point_size(size);
         }
     }
 
     pub fn style_hint(&self) -> StyleHint {
-        unsafe { self.0.style_hint() }
+        unsafe { self.inner.style_hint() }
     }
     pub fn set_style_hint(&self, style_hint: StyleHint) {
         unsafe {
-            let strategy = self.0.style_strategy();
-            self.0.set_style_hint_2a(style_hint, strategy);
+            let strategy = self.inner.style_strategy();
+            self.inner.set_style_hint_2a(style_hint, strategy);
         }
     }
 
     pub fn weight(&self) -> Weight {
-        Weight::from_int(unsafe { self.0.weight() })
+        Weight::from_int(unsafe { self.inner.weight() })
     }
 
     pub fn set_weight(&self, weight: Weight) {
-        unsafe { self.0.set_weight(weight.to_int()) }
+        unsafe { self.inner.set_weight(weight.to_int()) }
     }
 
     qt_field!(style, set_style, Style);
@@ -179,7 +181,7 @@ impl<'de> Deserialize<'de> for RFont {
 
 impl Serialize for RFont {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        unsafe { self.0.to_string() }
+        unsafe { self.inner.to_string() }
             .to_std_string()
             .serialize(serializer)
     }

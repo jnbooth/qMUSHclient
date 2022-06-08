@@ -63,8 +63,9 @@ impl Cursor {
     /// # Safety
     ///
     /// `widget` must be valid and non-null.
-    pub unsafe fn get<T: CastInto<Ptr<QTextEdit>>>(widget: T) -> Self {
-        unsafe { widget.cast_into().text_cursor().into() }
+    pub fn get(widget: &QTextEdit) -> Self {
+        // SAFETY: `widget` has already been dereferenced and `text_cursor` creates a copy
+        unsafe { widget.text_cursor().into() }
     }
     /// Sets the visible cursor.
     ///
@@ -116,22 +117,34 @@ impl Cursor {
     }
     /// Creates and returns a new list with the given `format` and makes the current paragraph the
     /// cursor is in the first list item.
-    pub fn convert_to_list(&self, format: &ListFormat) -> List {
-        List(unsafe { self.inner.create_list_q_text_list_format(&format.0) })
+    pub fn convert_to_list(&self, format: &ListFormat) -> List<QTextCursor> {
+        List {
+            inner: unsafe { self.inner.create_list_q_text_list_format(&format.inner) },
+            _owner: &self.inner,
+        }
     }
     /// Returns a pointer to the current frame. Returns `None` if the cursor is invalid.
-    pub fn current_frame(&self) -> Option<Frame> {
-        unsafe { nonnull(self.inner.current_frame()) }.map(Frame)
+    pub fn current_frame(&self) -> Option<Frame<QTextCursor>> {
+        unsafe { nonnull(self.inner.current_frame()) }.map(|frame| Frame {
+            inner: frame,
+            _owner: &self.inner,
+        })
     }
     /// Returns the current list if the cursor position is inside a block that is part of a list;
     /// otherwise returns `None`.
-    pub fn current_list(&self) -> Option<List> {
-        unsafe { nonnull(self.inner.current_list()) }.map(List)
+    pub fn current_list(&self) -> Option<List<QTextCursor>> {
+        unsafe { nonnull(self.inner.current_list()) }.map(|list| List {
+            inner: list,
+            _owner: &self.inner,
+        })
     }
     /// Returns a pointer to the current table if the cursor position is inside a block that is part
     /// of a table; otherwise returns `None`.
-    pub fn current_table(&self) -> Option<Table> {
-        unsafe { nonnull(self.inner.current_table()) }.map(Table)
+    pub fn current_table(&self) -> Option<Table<QTextCursor>> {
+        unsafe { nonnull(self.inner.current_table()) }.map(|table| Table {
+            inner: table,
+            _owner: &self.inner,
+        })
     }
     /// Deletes the character at the current cursor position.
     pub fn delete_char(&self) {
@@ -143,27 +156,35 @@ impl Cursor {
     }
     /// Returns the document this cursor is associated with.
     pub fn document(&self) -> Document {
-        Document(unsafe { self.inner.document() })
+        Document {
+            inner: unsafe { self.inner.document() },
+        }
     }
     /// Inserts a new empty block at the cursor position with the current [`BlockFormat`].
     pub fn insert_block(&self) {
         unsafe {
             self.inner
-                .insert_block_2a(&self.format.block.0, &self.format.text.0)
+                .insert_block_2a(&self.format.block.inner, &self.format.text.inner)
         }
     }
     /// Inserts a new empty block at the cursor position with the given `format`.
     pub fn insert_block_formatted(&self, format: &BlockFormat) {
-        unsafe { self.inner.insert_block_2a(&format.0, &self.format.text.0) }
+        unsafe {
+            self.inner
+                .insert_block_2a(&format.inner, &self.format.text.inner)
+        }
     }
     /// Inserts the text `fragment` at the current position.
     pub fn insert_fragment(&self, fragment: &Fragment) {
-        unsafe { self.inner.insert_fragment(&fragment.0) }
+        unsafe { self.inner.insert_fragment(&fragment.inner) }
     }
     /// Inserts a frame with the given `format` at the current cursor position, moves the cursor
     /// position inside the frame, and returns the frame.
-    pub fn insert_frame(&self, format: &FrameFormat) -> Frame {
-        Frame(unsafe { self.inner.insert_frame(&format.0) })
+    pub fn insert_frame(&self, format: &FrameFormat) -> Frame<QTextCursor> {
+        Frame {
+            inner: unsafe { self.inner.insert_frame(&format.inner) },
+            _owner: &self.inner,
+        }
     }
     /// Inserts the `text` at the current position. The text is interpreted as HTML.
     pub fn insert_html<S: Printable>(&self, text: S) {
@@ -174,7 +195,7 @@ impl Cursor {
     pub fn insert_image_formatted(&self, format: &ImageFormat, alignment: FramePosition) {
         unsafe {
             self.inner
-                .insert_image_q_text_image_format_position(&format.0, alignment)
+                .insert_image_q_text_image_format_position(&format.inner, alignment)
         }
     }
     /// Convenience method for inserting the image with the given `name` at the current position.
@@ -187,25 +208,36 @@ impl Cursor {
     pub fn insert_image_named<S: Printable>(&self, image: &RImage, name: S) {
         unsafe {
             self.inner
-                .insert_image_q_image_q_string(&image.0, &name.to_print())
+                .insert_image_q_image_q_string(&image.inner, &name.to_print())
         }
     }
     /// Convenience function for inserting the given `image` at the current position.
     pub fn insert_image(&self, image: &RImage) {
-        unsafe { self.inner.insert_image_q_image(&image.0) }
+        unsafe { self.inner.insert_image_q_image(&image.inner) }
     }
     /// Inserts a new block at the current position and makes it the first list item of a newly
     /// created list with the given `format`. Returns the created list.
-    pub fn insert_list(&self, format: &ListFormat) -> List {
-        List(unsafe { self.inner.insert_list_q_text_list_format(&format.0) })
+    pub fn insert_list(&self, format: &ListFormat) -> List<QTextCursor> {
+        List {
+            inner: unsafe { self.inner.insert_list_q_text_list_format(&format.inner) },
+            _owner: &self.inner,
+        }
     }
     /// Creates a new table with the given `format` and the given number of `rows` and `columns`,
     /// inserts it at the current cursor position in the document, and returns the table object. The
     /// cursor is moved to the beginning of the first cell.
     ///
     /// There must be at least one row and one column in the table.
-    pub fn insert_table(&self, rows: c_int, columns: c_int, format: &TableFormat) -> Table {
-        Table(unsafe { self.inner.insert_table_3a(rows, columns, &format.0) })
+    pub fn insert_table(
+        &self,
+        rows: c_int,
+        columns: c_int,
+        format: &TableFormat,
+    ) -> Table<QTextCursor> {
+        Table {
+            inner: unsafe { self.inner.insert_table_3a(rows, columns, &format.inner) },
+            _owner: &self.inner,
+        }
     }
     /// Inserts text at the current position, using the current [`CharFormat`].
     ///
@@ -214,7 +246,7 @@ impl Cursor {
     pub fn insert_text<S: Printable>(&self, text: S) {
         unsafe {
             self.inner
-                .insert_text_2a(&text.to_print(), &self.format.text.0)
+                .insert_text_2a(&text.to_print(), &self.format.text.inner)
         }
     }
     /// Inserts text at the current position, using the given `format`.
@@ -222,7 +254,7 @@ impl Cursor {
     /// Any ASCII linefeed characters `(\n)` in the inserted text are transformed into unicode block
     /// separators, corresponding to [`insert_block`](Self::insert_block) calls.
     pub fn insert_text_formatted<S: Printable>(&self, text: S, format: &CharFormat) {
-        unsafe { self.inner.insert_text_2a(&text.to_print(), &format.0) }
+        unsafe { self.inner.insert_text_2a(&text.to_print(), &format.inner) }
     }
     /// Inserts text at the current position, using the current character format plus text color.
     ///
@@ -234,7 +266,7 @@ impl Cursor {
         B: Borrow<RColor>,
     {
         unsafe {
-            let fmt = QTextCharFormat::new_copy(&self.format.text.0);
+            let fmt = QTextCharFormat::new_copy(&self.format.text.inner);
             if let Some(fg) = fg {
                 fmt.set_foreground_color(fg.borrow());
             }
@@ -282,7 +314,7 @@ impl Cursor {
         unsafe {
             let cursor = QTextCursor::new_copy(&self.inner);
             cursor.select(selection);
-            Selection(cursor)
+            Selection { inner: cursor }
         }
     }
     /// Moves the cursor to the absolute position in the document specified by `pos`. The cursor is

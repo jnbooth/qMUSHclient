@@ -2,7 +2,7 @@ macro_rules! impl_eq_cpp {
     ($t:ty) => {
         impl PartialEq for $t {
             fn eq(&self, other: &Self) -> bool {
-                self.0.eq(unsafe { &other.0.as_ref() })
+                self.inner.eq(unsafe { &other.inner.as_ref() })
             }
         }
 
@@ -13,10 +13,10 @@ macro_rules! impl_eq_cpp {
 macro_rules! qt_field {
     ($get:ident, $set:ident, $t:ty) => {
         pub fn $get(&self) -> $t {
-            unsafe { self.0.$get() }
+            unsafe { self.inner.$get() }
         }
         pub fn $set(&self, $get: $t) {
-            unsafe { self.0.$set($get) }
+            unsafe { self.inner.$set($get) }
         }
     };
 }

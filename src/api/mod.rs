@@ -72,7 +72,7 @@ impl Api {
         paths: &'static Paths,
     ) -> Self {
         // SAFETY: `output` is valid.
-        let cursor = unsafe { Cursor::get(&output) };
+        let cursor = Cursor::get(&output);
         cursor
             .format
             .text
@@ -97,8 +97,7 @@ impl Api {
         let variables_key = format!("vars-{:?}-{:?}", self.world.name, metadata.id);
         let output = self.output.clone();
         Self {
-            // SAFETY: `output` is valid.
-            cursor: unsafe { Cursor::get(&output) },
+            cursor: Cursor::get(&output),
             output,
             input: self.input.clone(),
             socket: self.socket.clone(),

@@ -11,11 +11,15 @@ pub enum TimerKind {
 }
 
 #[derive(Debug)]
-pub struct RTimer(QBox<QTimer>);
+pub struct RTimer {
+    inner: QBox<QTimer>,
+}
 
 impl Default for RTimer {
     fn default() -> Self {
-        Self(unsafe { QTimer::new_1a(QAbstractEventDispatcher::instance_0a()) })
+        Self {
+            inner: unsafe { QTimer::new_1a(QAbstractEventDispatcher::instance_0a()) },
+        }
     }
 }
 
@@ -27,12 +31,12 @@ impl RTimer {
             if kind == TimerKind::Once {
                 timer.set_single_shot(true);
             }
-            Self(timer)
+            Self { inner: timer }
         }
     }
 
     pub fn kind(&self) -> TimerKind {
-        if unsafe { self.0.is_single_shot() } {
+        if unsafe { self.inner.is_single_shot() } {
             TimerKind::Once
         } else {
             TimerKind::Repeating
@@ -41,17 +45,19 @@ impl RTimer {
 
     pub fn connect<F: FnMut() + 'static>(&self, f: F) {
         unsafe {
-            self.0.timeout().connect(&SlotNoArgs::new(&self.0, f));
+            self.inner
+                .timeout()
+                .connect(&SlotNoArgs::new(&self.inner, f));
         }
     }
 
     pub fn disconnect_all(&self) {
         unsafe {
-            self.0.disconnect();
+            self.inner.disconnect();
         }
     }
 
     pub fn start(&self) {
-        unsafe { self.0.start_0a() }
+        unsafe { self.inner.start_0a() }
     }
 }
