@@ -16,7 +16,7 @@ use qt_network::QTcpSocket;
 use qt_widgets::{QLineEdit, QTextBrowser};
 
 use crate::binding::color::{Colored, RColor, RColorPair};
-use crate::binding::text::Cursor;
+use crate::binding::text::{Cursor, ScrollBar};
 use crate::binding::{Printable, RIODevice, RSettings};
 use crate::client::color::Colors;
 use crate::constants::Paths;
@@ -159,10 +159,8 @@ impl Api {
     }
 
     fn scroll_to_bottom(&self) {
-        unsafe {
-            let scrollbar = self.output.vertical_scroll_bar();
-            scrollbar.set_value(scrollbar.maximum());
-        }
+        let scrollbar = ScrollBar::get_vertical(&self.output);
+        scrollbar.set_value(scrollbar.maximum());
     }
 
     pub fn append_to_notepad<S: Printable>(&self, title: String, text: S) {

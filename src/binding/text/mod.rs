@@ -13,6 +13,8 @@ mod format;
 pub use format::{
     BlockFormat, CharFormat, FrameFormat, ImageFormat, ListFormat, TableFormat, TextFormat,
 };
+mod scrollbar;
+pub use scrollbar::ScrollBar;
 
 pub type Position = c_int;
 
