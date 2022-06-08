@@ -360,6 +360,14 @@ macro_rules! impl_ci {
                 Self(s)
             }
         }
+
+        impl<S: ?Sized> CaseFold<S> {
+            pub const fn borrow(s: &S) -> &Self {
+                // SAFETY: #[repr(transparent)]
+                unsafe { &*(s as *const S as *const Self) }
+            }
+        }
+
         impl<S: ?Sized + AsRef<str>> CaseFold<S> {
             pub fn as_str(&self) -> &str {
                 self.0.as_ref()
@@ -369,8 +377,7 @@ macro_rules! impl_ci {
         impl<'a, S: ?Sized> ToCaseFold<&'a CaseFold<S>> for &'a S {
             #[inline]
             fn to_case_fold(self) -> &'a CaseFold<S> {
-                // SAFETY: #[repr(transparent)]
-                unsafe { &*(self as *const S as *const CaseFold<S>) }
+                CaseFold::borrow(self)
             }
         }
         impl<'a, S: ?Sized> From<&'a S> for &'a CaseFold<S> {
@@ -383,7 +390,7 @@ macro_rules! impl_ci {
         impl<S> ToCaseFold<CaseFold<S>> for S {
             #[inline]
             fn to_case_fold(self) -> CaseFold<Self> {
-                CaseFold(self)
+                CaseFold::new(self)
             }
         }
 

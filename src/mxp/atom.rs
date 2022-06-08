@@ -230,9 +230,6 @@ static ALL_ATOMS: Lazy<CaseFoldMap<String, Atom>> = Lazy::new(|| {
             },
         )
     };
-    // FIXME(#51911) give CaseFold<str> its own const fn conversion from str once const derefs
-    // are possible, or just come up with a different way to do this
-    use std::mem::transmute as case;
 
     use Action::*;
     use TagFlag::*;
@@ -245,7 +242,7 @@ static ALL_ATOMS: Lazy<CaseFoldMap<String, Atom>> = Lazy::new(|| {
     add("italic", enums![Open], Italic, &[]);
     add("i", enums![Open], Italic, &[]);
     add("em", enums![Open], Italic, &[]);
-    const COLOR_ARGS: &[&CaseFold<str>] = unsafe { &[case("fore"), case("back")] };
+    const COLOR_ARGS: &[&CaseFold<str>] = &[CaseFold::borrow("fore"), CaseFold::borrow("back")];
     add("color", enums![Open], Color, COLOR_ARGS);
     add("c", enums![Open], Color, COLOR_ARGS);
     add("s", enums![Open, NotImp], Strike, &[]);
@@ -255,10 +252,14 @@ static ALL_ATOMS: Lazy<CaseFoldMap<String, Atom>> = Lazy::new(|| {
     add("tt", enums![Open, NotImp], Tt, &[]);
     add("frame", enums![NotImp], Frame, &[]);
     add("dest", enums![NotImp], Dest, &[]);
-    const IMAGE_ARGS: &[&CaseFold<str>] = unsafe { &[case("url"), case("fname")] };
+    const IMAGE_ARGS: &[&CaseFold<str>] = &[CaseFold::borrow("url"), CaseFold::borrow("fname")];
     add("image", enums![Command, NotImp], Image, IMAGE_ARGS);
     add("filter", enums![NotImp], Filter, &[]);
-    const A_ARGS: &[&CaseFold<str>] = unsafe { &[case("href"), case("xch_cmd"), case("xch_hint")] };
+    const A_ARGS: &[&CaseFold<str>] = &[
+        CaseFold::borrow("href"),
+        CaseFold::borrow("xch_cmd"),
+        CaseFold::borrow("xch_hint"),
+    ];
     add("a", enums![], Hyperlink, A_ARGS);
     add("h1", enums![NotImp], H1, &[]);
     add("h2", enums![NotImp], H2, &[]);
@@ -291,7 +292,7 @@ static ALL_ATOMS: Lazy<CaseFoldMap<String, Atom>> = Lazy::new(|| {
     add("relocate", enums![Command, NotImp], Relocate, &[]);
     add("version", enums![Command], Version, &[]);
     add("reset", enums![Command], Reset, &[]);
-    const MXP_ARGS: &[&CaseFold<str>] = unsafe { &[case("off")] };
+    const MXP_ARGS: &[&CaseFold<str>] = &[CaseFold::borrow("off")];
     add("mxp", enums![Command], Mxp, MXP_ARGS);
     add("support", enums![Command], Support, &[]);
     add("option", enums![Command], SetOption, &[]);
@@ -302,28 +303,24 @@ static ALL_ATOMS: Lazy<CaseFoldMap<String, Atom>> = Lazy::new(|| {
     add("head", enums![Pueblo, NoReset], Head, &[]);
     add("html", enums![Pueblo, NoReset], Html, &[]);
     add("title", enums![Pueblo], Title, &[]);
-    const IMG_ARGS: &[&CaseFold<str>] = unsafe { &[case("src"), case("xch_mode")] };
+    const IMG_ARGS: &[&CaseFold<str>] = &[CaseFold::borrow("src"), CaseFold::borrow("xch_mode")];
     add("img", enums![Pueblo, Command], Img, IMG_ARGS);
     add("xch_page", enums![Pueblo, Command], XchPage, &[]);
     add("xch_pane", enums![Pueblo, Command, NotImp], XchPane, &[]);
-    const FONT_ARGS: &[&CaseFold<str>] = unsafe {
-        &[
-            case("color"),
-            case("back"),
-            case("fgcolor"),
-            case("bgcolor"),
-        ]
-    };
+    const FONT_ARGS: &[&CaseFold<str>] = &[
+        CaseFold::borrow("color"),
+        CaseFold::borrow("back"),
+        CaseFold::borrow("fgcolor"),
+        CaseFold::borrow("bgcolor"),
+    ];
     add("font", enums![Open], Font, FONT_ARGS);
-    const ADD_ARGS: &[&CaseFold<str>] = unsafe {
-        &[
-            case("href"),
-            case("hint"),
-            case("xch_cmd"),
-            case("xch_hint"),
-            case("prompt"),
-        ]
-    };
+    const ADD_ARGS: &[&CaseFold<str>] = &[
+        CaseFold::borrow("href"),
+        CaseFold::borrow("hint"),
+        CaseFold::borrow("xch_cmd"),
+        CaseFold::borrow("xch_hint"),
+        CaseFold::borrow("prompt"),
+    ];
     add("send", enums![], Send, ADD_ARGS);
 
     all
