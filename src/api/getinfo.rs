@@ -1,9 +1,14 @@
+use std::env::consts::OS;
 use std::os::raw::c_int;
+use std::str;
 
+use libsqlite3_sys::SQLITE_VERSION;
 use mlua::{Lua, Result, Value};
 use qt_gui::q_font::StyleHint;
+use qt_network::q_abstract_socket::SocketState;
 
 use super::Api;
+use crate::binding::text::ScrollBar;
 use crate::binding::RFont;
 use crate::constants::branding;
 use crate::script::{Callback, ScriptArg};
@@ -15,6 +20,7 @@ pub fn provide_api<'lua, M: mlua::UserDataMethods<'lua, Api>>(methods: &mut M) {
 //#[api_provider]
 impl Api {
     pub fn get_info<'lua>(&self, lua: &'lua Lua, i: c_int) -> Result<Value<'lua>> {
+        let state = &*self.state;
         let world = &*self.world;
         macro_rules! lua {
             ($e:expr) => {
@@ -32,6 +38,11 @@ impl Api {
             };
             (&$field:ident) => {
                 ScriptArg::to_arg(&world.$field, lua)
+            };
+        }
+        macro_rules! flag {
+            ($field:ident) => {
+                ScriptArg::to_arg(state.$field.get(), lua)
             };
         }
         match i {
@@ -70,7 +81,7 @@ impl Api {
             32 => lua!(Callback::Disconnect),
             33 => lua!(Callback::GetFocus),
             34 => lua!(Callback::LoseFocus),
-            35 => lua!(""), // world script file name
+            35 => Ok(Value::Nil), // world script file name
             36 => world!(&script_prefix),
             37 => world!(&auto_say_string),
             38 => world!(&auto_say_override_prefix),
@@ -110,8 +121,56 @@ impl Api {
             70 => lua!(""),               // locale
             71 => lua!(&RFont::global(StyleHint::Monospace)), // font used for fixed-pitch dialogs
             72 => lua!(branding::VERSION),
+            73 => lua!(""), // compilation date/time (bad idea)
             74 => lua!(&self.paths.sounds),
+            75 => lua!(""), // last telnet subnegotiation string received (TODO)
+            76 => lua!(""), // special font pathname (TODO ?????)
+            77 => lua!(OS), // theoretically Windows version debug string
+            78 => lua!(""), // foreground image name
+            79 => lua!(""), // backgorund image name
+            80 => lua!(""), // libpng version (eg. "1.2.31" TODO)
+            81 => lua!(""), // libpng header (eg. " libpng version 1.2.31 - August 21, 2008") TODO
             82 => lua!(&self.paths.preferences),
+            83 => lua!(str::from_utf8(&SQLITE_VERSION[..SQLITE_VERSION.len() - 1]).unwrap()),
+            84 => lua!(""), // file browsing directory (TODO)
+            85 => lua!(&self.paths.plugin_states),
+            86 => lua!(""), // word under mouse on mouse menu click (TODO)
+            87 => lua!(""), // last command sent to the MUD (TODO)
+
+            // booleans
+            101 => flag!(no_echo),
+            102 => lua!(false), // debug incoming packets
+            103 => flag!(compressing),
+            104 => flag!(mxp_active),
+            105 => flag!(pueblo_active),
+            106 => lua!(self.socket.state() == SocketState::UnconnectedState),
+            107 => lua!(self.socket.state() == SocketState::ConnectingState),
+            108 => lua!(self.socket.state() == SocketState::ConnectedState), // ok to disconnect
+            109 => lua!(false),                                              // trace flag (TODO?)
+            110 => lua!(false), // script file changed (TODO?)
+            111 => lua!(false), // world file is modified (TODO)
+            112 => lua!(false), // automapper active (TODO)
+            113 => lua!(true),  // world is active (TODO PRIORITY)
+            114 => lua!(false), // output window paused (TODO)
+            115 => lua!(false), // localization active (TODO)
+            118 => lua!(false), // variables have changed (TODO?)
+            119 => lua!(true),  // script engine is active (TODO?)
+            120 => lua!(ScrollBar::get_vertical(&self.output).is_displayed()),
+            121 => lua!(true),  // high-resolution timer is available
+            122 => lua!(true),  // sqlite3 library is thread-safe,
+            123 => lua!(false), // are we processing "simulate" function (TODO?)
+            124 => lua!(false), // is the current line being omitted (TODO)
+            125 => lua!(false), // is the client in full-screen mode (TODO)
+
+            239 => lua!(0), // source of current scripted action
+            240 => lua!(unsafe { self.output.font_metrics().average_char_width() }),
+
+            272 => lua!(unsafe { self.input.rect().left() }),
+            273 => lua!(unsafe { self.input.rect().top() }),
+            274 => lua!(unsafe { self.input.rect().right() }),
+            275 => lua!(unsafe { self.input.rect().bottom() }),
+            280 => lua!(unsafe { self.output.width() }),
+            281 => lua!(unsafe { self.output.height() }),
             _ => Ok(Value::Nil),
         }
     }
