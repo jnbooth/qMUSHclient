@@ -3,7 +3,7 @@ use quote::{quote, ToTokens};
 use syn::*;
 
 #[inline]
-pub fn derive_rwidget(input: TokenStream) -> TokenStream {
+pub fn derive_widget(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as ItemStruct);
 
     let name = input.ident;
@@ -26,7 +26,7 @@ pub fn derive_rwidget(input: TokenStream) -> TokenStream {
     };
 
     let expanded = quote! {
-        impl #impl_generics RWidget for #name #ty_generics #where_clause {
+        impl #impl_generics Widget for #name #ty_generics #where_clause {
             fn widget(&self) -> cpp_core::Ptr<qt_widgets::QWidget> {
                 unsafe {
                     use cpp_core::CastFrom;

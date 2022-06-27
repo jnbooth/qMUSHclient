@@ -4,12 +4,12 @@ use std::rc::{Rc, Weak};
 use qt_widgets::*;
 
 use super::PrefPageExt;
-use crate::binding::RWidget;
+use crate::binding::Widget;
 use crate::tr::TrContext;
 use crate::ui::uic;
 use crate::world::World;
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsCommands {
     ui: uic::PrefsCommands,
     world: Weak<RefCell<World>>,

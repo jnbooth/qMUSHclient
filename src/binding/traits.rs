@@ -22,7 +22,7 @@ pub enum Browse {
     Directory,
 }
 
-pub trait RWidget {
+pub trait Widget {
     fn widget(&self) -> Ptr<QWidget>;
 
     fn alert<S: Printable, E: StdError + ?Sized>(&self, icon: Icon, text: S, err: &E) {

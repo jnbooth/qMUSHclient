@@ -1,6 +1,6 @@
 #![windows_subsystem = "windows"]
 
-use qmushclient::{App, RWidget};
+use qmushclient::{App, Widget};
 use qt_core::{ApplicationAttribute, QCoreApplication, QLocale, QString, QTranslator};
 use qt_widgets::QApplication;
 

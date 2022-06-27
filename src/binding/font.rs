@@ -6,7 +6,7 @@ use cpp_core::{CastFrom, CppBox};
 use qt_core::QString;
 use qt_gui::q_font::{Capitalization, Style, StyleHint, Weight};
 use qt_gui::q_font_database::SystemFont;
-use qt_gui::{QFont, QFontDatabase};
+use qt_gui::{QFont, QFontDatabase, QFontMetrics};
 use serde::de::{Error as _, Unexpected};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -184,5 +184,35 @@ impl Serialize for RFont {
         unsafe { self.inner.to_string() }
             .to_std_string()
             .serialize(serializer)
+    }
+}
+
+pub struct RFontMetrics {
+    pub(super) inner: CppBox<QFontMetrics>,
+}
+
+impl_eq_cpp!(RFontMetrics);
+
+impl Clone for RFontMetrics {
+    fn clone(&self) -> Self {
+        unsafe {
+            Self {
+                inner: QFontMetrics::new_copy(&self.inner),
+            }
+        }
+    }
+}
+
+impl RFontMetrics {
+    pub fn new(inner: CppBox<QFontMetrics>) -> Self {
+        Self { inner }
+    }
+
+    pub fn average_char_width(&self) -> i32 {
+        unsafe { self.inner.average_char_width() }
+    }
+
+    pub fn height(&self) -> i32 {
+        unsafe { self.inner.height() }
     }
 }

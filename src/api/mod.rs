@@ -10,13 +10,12 @@ use iter_chunks::IterChunks;
 use mlua::{
     FromLua, Lua, MultiValue, Result, String as LString, ToLua, UserData, UserDataMethods, Value,
 };
-use qt_core::QPtr;
 use qt_gui::q_text_cursor::MoveOperation;
 use qt_network::QTcpSocket;
-use qt_widgets::{QLineEdit, QTextBrowser};
 
 use crate::binding::color::{Colored, RColor, RColorPair};
-use crate::binding::text::{RScrollBar, RTextCursor};
+use crate::binding::text::RTextCursor;
+use crate::binding::widgets::{RLineEdit, RTextBrowser};
 use crate::binding::{Printable, RIODevice, RSettings};
 use crate::client::color::Colors;
 use crate::constants::Paths;
@@ -31,8 +30,8 @@ pub use state::ApiState;
 
 #[derive(TrContext)]
 pub struct Api {
-    output: QPtr<QTextBrowser>,
-    input: QPtr<QLineEdit>,
+    output: RTextBrowser,
+    input: RLineEdit,
     cursor: RTextCursor,
     socket: RIODevice<QTcpSocket>,
     world: Rc<World>,
@@ -65,9 +64,9 @@ impl Api {
     ///
     /// `output` and `input` must be valid and non-null.
     #[allow(clippy::too_many_arguments)]
-    pub unsafe fn new(
-        output: QPtr<QTextBrowser>,
-        input: QPtr<QLineEdit>,
+    pub fn new(
+        output: RTextBrowser,
+        input: RLineEdit,
         socket: RIODevice<QTcpSocket>,
         world: Rc<World>,
         state: Rc<ApiState>,
@@ -75,8 +74,7 @@ impl Api {
         senders: Rc<RefCell<Senders>>,
         paths: &'static Paths,
     ) -> Self {
-        // SAFETY: `output` is valid.
-        let cursor = RTextCursor::get(&output);
+        let cursor = output.text_cursor();
         cursor
             .format
             .text
@@ -102,7 +100,7 @@ impl Api {
         let variables_key = format!("vars-{:?}-{:?}", self.world.name, metadata.id);
         let output = self.output.clone();
         Self {
-            cursor: RTextCursor::get(&output),
+            cursor: output.text_cursor(),
             output,
             input: self.input.clone(),
             socket: self.socket.clone(),
@@ -156,15 +154,13 @@ impl Api {
 
     /// If the [`QLineEdit`] input field if is empty, inserts the given text into it.
     pub fn command<S: Printable>(&self, text: S) {
-        unsafe {
-            if self.input.text().is_empty() {
-                self.input.set_text(&text.to_print());
-            }
+        if self.input.text().is_empty() {
+            self.input.set_text(text);
         }
     }
 
     fn scroll_to_bottom(&self) {
-        let scrollbar = RScrollBar::get_vertical(&self.output);
+        let scrollbar = self.output.vertical_scroll_bar();
         scrollbar.set_value(scrollbar.maximum());
     }
 

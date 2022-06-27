@@ -6,7 +6,7 @@ use qt_core::{QBox, QString};
 use qt_widgets::QTextEdit;
 
 use crate::binding::text::RTextCursor;
-use crate::binding::{Printable, RWidget};
+use crate::binding::{Printable, Widget};
 use crate::script::Event;
 use crate::tr::TrContext;
 
@@ -43,7 +43,7 @@ impl Pad {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 struct PadWidget {
     widget: QBox<QTextEdit>,
     cursor: RTextCursor,

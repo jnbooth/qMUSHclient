@@ -37,7 +37,7 @@ mod script;
 mod ui;
 mod world;
 
-pub use binding::RWidget;
+pub use binding::Widget;
 pub use ui::App;
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

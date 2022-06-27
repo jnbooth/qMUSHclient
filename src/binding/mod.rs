@@ -24,8 +24,6 @@ macro_rules! qt_field {
 pub mod color;
 pub use color::RColor;
 
-pub mod text;
-
 mod font;
 pub use font::RFont;
 
@@ -44,10 +42,14 @@ pub use printable::Printable;
 mod settings;
 pub use settings::RSettings;
 
+pub mod text;
+
 mod time;
 pub use time::{RTimer, TimerKind};
 
 pub mod variant;
 
-mod widgets;
-pub use widgets::{Browse, RForm, RWidget};
+mod traits;
+pub use traits::{Browse, RForm, Widget};
+
+pub mod widgets;

@@ -6,12 +6,12 @@ use qt_widgets::q_dialog_button_box::StandardButton;
 use qt_widgets::*;
 
 use super::PrefPageExt;
-use crate::binding::{Browse, RWidget};
+use crate::binding::{Browse, Widget};
 use crate::tr::TrContext;
 use crate::ui::uic;
 use crate::world::World;
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 struct PrefsProxy {
     ui: uic::PrefsProxy,
     world: Weak<RefCell<World>>,
@@ -33,7 +33,7 @@ impl PrefsProxy {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsAddress {
     ui: uic::PrefsAddress,
     world: Weak<RefCell<World>>,
@@ -85,7 +85,7 @@ impl PrefsAddress {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsConnecting {
     ui: uic::PrefsConnecting,
     world: Weak<RefCell<World>>,
@@ -119,7 +119,7 @@ impl PrefsConnecting {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsLogging {
     ui: uic::PrefsLogging,
     world: Weak<RefCell<World>>,
@@ -215,7 +215,7 @@ impl PrefsLogging {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsChat {
     ui: uic::PrefsChat,
     world: Weak<RefCell<World>>,

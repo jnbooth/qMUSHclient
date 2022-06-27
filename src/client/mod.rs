@@ -11,17 +11,18 @@ use cpp_core::{CastFrom, Ptr};
 use enumeration::Enum;
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
-use qt_core::{QBox, QPtr};
+use qt_core::QBox;
 use qt_gui::q_text_cursor::{MoveOperation, SelectionType};
 use qt_network::q_abstract_socket::SocketState;
 use qt_network::QTcpSocket;
 use qt_widgets::q_message_box::Icon;
-use qt_widgets::{QLineEdit, QTextBrowser, QWidget};
+use qt_widgets::QWidget;
 
 use crate::api::{Api, ApiState};
 use crate::binding::color::Colored;
-use crate::binding::text::{RScrollBar, RTextCharFormat, RTextCursor};
-use crate::binding::{Printable, RColor, RIODevice, RWidget};
+use crate::binding::text::{RTextCharFormat, RTextCursor};
+use crate::binding::widgets::{RLineEdit, RTextBrowser};
+use crate::binding::{Printable, RColor, RIODevice, Widget};
 use crate::client::state::Latest;
 use crate::constants::{config, Paths};
 use crate::escape::{ansi, telnet};
@@ -84,7 +85,7 @@ impl<'a> LogConfig<'a> {
 
 #[derive(TrContext)]
 pub struct Client {
-    widget: QPtr<QTextBrowser>,
+    widget: RTextBrowser,
     cursor: RTextCursor,
     socket: RIODevice<QTcpSocket>,
     stream: MudStream,
@@ -102,10 +103,10 @@ pub struct Client {
     log: Option<BufWriter<File>>,
 }
 
-impl RWidget for Client {
+impl Widget for Client {
     fn widget(&self) -> Ptr<QWidget> {
-        // SAFETY: `widget` is valid.
-        unsafe { Ptr::cast_from(&self.widget) }
+        // SAFETY: self.widget is valid
+        unsafe { Ptr::cast_from(self.widget.widget()) }
     }
 }
 
@@ -114,8 +115,8 @@ impl Client {
     ///
     /// `output` and `input` must be valid and non-null.
     pub unsafe fn new(
-        output: QPtr<QTextBrowser>,
-        input: QPtr<QLineEdit>,
+        output: RTextBrowser,
+        input: RLineEdit,
         socket: QBox<QTcpSocket>,
         world: Rc<World>,
         paths: &'static Paths,
@@ -124,21 +125,18 @@ impl Client {
         let socket = RIODevice::new(socket);
         let api_state = Rc::new(ApiState::default());
         // SAFETY: all fields are valid.
-        let api = unsafe {
-            Api::new(
-                output.clone(),
-                input,
-                socket.clone(),
-                world.clone(),
-                api_state.clone(),
-                notepad.clone(),
-                Rc::new(RefCell::new(Senders::new())),
-                paths,
-            )
-        };
+        let api = Api::new(
+            output.clone(),
+            input,
+            socket.clone(),
+            world.clone(),
+            api_state.clone(),
+            notepad.clone(),
+            Rc::new(RefCell::new(Senders::new())),
+            paths,
+        );
 
-        // SAFETY: `output` is valid.
-        let cursor = RTextCursor::get(&output);
+        let cursor = output.text_cursor();
         let charfmt = cursor.format.text.clone();
         let mut this = Self {
             notepad,
@@ -303,7 +301,7 @@ impl Client {
     }
 
     fn scroll_to_bottom(&self) {
-        let scrollbar = RScrollBar::get_vertical(&self.widget);
+        let scrollbar = self.widget.vertical_scroll_bar();
         scrollbar.set_value(scrollbar.maximum());
     }
 
@@ -565,7 +563,7 @@ impl Client {
 
     pub fn send_window_sizes(&mut self, new_width: u16) -> io::Result<()> {
         let [newhigh, newlow] = new_width.to_be_bytes();
-        let height = unsafe { self.widget.height() / self.widget.font_metrics().height() } as u16;
+        let height = (self.widget.height() / self.widget.font_metrics().height()) as u16;
         let [high, low] = height.to_be_bytes();
         // now tell them our size
         let packet = [

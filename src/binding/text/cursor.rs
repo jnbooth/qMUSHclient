@@ -62,7 +62,7 @@ impl RTextCursor {
     /// # Safety
     ///
     /// `widget` must be valid and non-null.
-    pub fn get(widget: &QTextEdit) -> Self {
+    pub unsafe fn get(widget: &QTextEdit) -> Self {
         // SAFETY: `widget` has already been dereferenced and `text_cursor` creates a copy
         unsafe { widget.text_cursor().into() }
     }
@@ -226,7 +226,7 @@ impl RTextCursor {
     /// inserts it at the current cursor position in the document, and returns the table object. The
     /// cursor is moved to the beginning of the first cell.
     ///
-    /// There must be at least one row and one column in the table.
+    /// There must be at least one row and one column in the tQLineEditable.
     pub fn insert_table(
         &self,
         rows: c_int,

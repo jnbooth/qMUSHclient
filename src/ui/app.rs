@@ -18,7 +18,7 @@ use qt_widgets::*;
 use super::uic;
 use super::worldprefs::WorldPrefs;
 use super::worldtab::{SelectionMode, WorldTab};
-use crate::binding::{RSettings, RWidget};
+use crate::binding::{RSettings, Widget};
 use crate::constants::{config, Paths};
 use crate::persist;
 use crate::tr::TrContext;
@@ -32,7 +32,7 @@ fn only_filename(s: &str) -> &str {
         .unwrap_or("")
 }
 
-#[derive(RWidget, TrContext)]
+#[derive(Widget, TrContext)]
 pub struct App {
     ui: uic::App,
     notepad: QBox<QTextEdit>,

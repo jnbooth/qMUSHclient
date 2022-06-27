@@ -19,7 +19,8 @@ use uuid::Uuid;
 
 use super::uic;
 use crate::binding::text::RTextCursor;
-use crate::binding::{Printable, QList, RColor, RWidget};
+use crate::binding::widgets::{RLineEdit, RTextBrowser};
+use crate::binding::{Printable, QList, RColor, Widget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
 use crate::constants::{branding, Paths};
@@ -86,7 +87,7 @@ impl uic::WorldTab {
     }
 }
 
-#[derive(RWidget, TrContext)]
+#[derive(Widget, TrContext)]
 pub struct WorldTab {
     pub ui: uic::WorldTab,
     pub client: RefCell<Client>,
@@ -113,8 +114,8 @@ impl WorldTab {
             let socketbox = QTcpSocket::new_1a(&ui.widget);
             let socket = socketbox.static_upcast();
             let client = Client::new(
-                ui.output.clone(),
-                ui.input.clone(),
+                RTextBrowser::new(ui.output.clone()),
+                RLineEdit::new(ui.input.clone()),
                 socketbox,
                 world.clone(),
                 paths,

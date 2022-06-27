@@ -20,13 +20,13 @@ use qt_widgets::{QPushButton, QTreeWidget, QTreeWidgetItem, QWidget, SlotOfQTree
 
 use super::{uic, PrefPageExt};
 use crate::binding::color::HasPalette;
-use crate::binding::{Browse, RWidget};
+use crate::binding::{Browse, Widget};
 use crate::script::{Alias, Event, Reaction, SendTo, Sender, Timer, Trigger};
 use crate::tr::TrContext;
 use crate::world::World;
 use crate::DurationExt;
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 struct TriggerEdit {
     ui: uic::TriggerEdit,
 }
@@ -479,7 +479,7 @@ impl<T: TreeItem> TableModel<T> {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsTimers {
     ui: uic::PrefsTimers,
     world: Weak<RefCell<World>>,
@@ -571,7 +571,7 @@ impl PrefsTimers {
         }
     }
 }
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsAliases {
     ui: uic::PrefsAliases,
     world: Weak<RefCell<World>>,
@@ -663,7 +663,7 @@ impl PrefsAliases {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsTriggers {
     ui: uic::PrefsTriggers,
     world: Weak<RefCell<World>>,

@@ -8,7 +8,6 @@ use qt_gui::q_font::StyleHint;
 use qt_network::q_abstract_socket::SocketState;
 
 use super::Api;
-use crate::binding::text::RScrollBar;
 use crate::binding::RFont;
 use crate::constants::branding;
 use crate::script::{Callback, ScriptArg};
@@ -127,7 +126,7 @@ impl Api {
             76 => lua!(""), // special font pathname (TODO ?????)
             77 => lua!(OS), // theoretically Windows version debug string
             78 => lua!(""), // foreground image name
-            79 => lua!(""), // backgorund image name
+            79 => lua!(""), // background image name
             80 => lua!(""), // libpng version (eg. "1.2.31" TODO)
             81 => lua!(""), // libpng header (eg. " libpng version 1.2.31 - August 21, 2008") TODO
             82 => lua!(&self.paths.preferences),
@@ -136,6 +135,8 @@ impl Api {
             85 => lua!(&self.paths.plugin_states),
             86 => lua!(""), // word under mouse on mouse menu click (TODO)
             87 => lua!(""), // last command sent to the MUD (TODO)
+            88 => lua!(""), // window title (TODO)
+            89 => lua!(""), // main window title
 
             // booleans
             101 => flag!(no_echo),
@@ -155,22 +156,25 @@ impl Api {
             115 => lua!(false), // localization active (TODO)
             118 => lua!(false), // variables have changed (TODO?)
             119 => lua!(true),  // script engine is active (TODO?)
-            120 => lua!(RScrollBar::get_vertical(&self.output).is_displayed()),
+            120 => lua!(self.output.vertical_scroll_bar().is_displayed()),
             121 => lua!(true),  // high-resolution timer is available
             122 => lua!(true),  // sqlite3 library is thread-safe,
             123 => lua!(false), // are we processing "simulate" function (TODO?)
             124 => lua!(false), // is the current line being omitted (TODO)
             125 => lua!(false), // is the client in full-screen mode (TODO)
 
-            239 => lua!(0), // source of current scripted action
-            240 => lua!(unsafe { self.output.font_metrics().average_char_width() }),
+            // numbers
+            212 => lua!(self.world.output_font.size()),
 
-            272 => lua!(unsafe { self.input.rect().left() }),
-            273 => lua!(unsafe { self.input.rect().top() }),
-            274 => lua!(unsafe { self.input.rect().right() }),
-            275 => lua!(unsafe { self.input.rect().bottom() }),
-            280 => lua!(unsafe { self.output.width() }),
-            281 => lua!(unsafe { self.output.height() }),
+            239 => lua!(0), // source of current scripted action
+            240 => lua!(self.output.font_metrics().average_char_width()),
+
+            272 => lua!(self.input.rect().left()),
+            273 => lua!(self.input.rect().top()),
+            274 => lua!(self.input.rect().right()),
+            275 => lua!(self.input.rect().bottom()),
+            280 => lua!(self.output.width()),
+            281 => lua!(self.output.height()),
             _ => Ok(Value::Nil),
         }
     }

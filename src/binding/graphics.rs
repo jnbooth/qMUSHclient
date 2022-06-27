@@ -1,3 +1,4 @@
+use std::ops::Add;
 use std::os::raw::{c_double, c_int};
 
 use cpp_core::CppBox;
@@ -6,10 +7,31 @@ use qt_gui::{QImage, QPainter};
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RRect<N> {
-    pub left: N,
-    pub top: N,
-    pub width: N,
-    pub height: N,
+    left: N,
+    top: N,
+    width: N,
+    height: N,
+}
+
+impl<N: Copy + Add<N, Output = N>> RRect<N> {
+    pub fn width(&self) -> N {
+        self.width
+    }
+    pub fn height(&self) -> N {
+        self.height
+    }
+    pub fn left(&self) -> N {
+        self.left
+    }
+    pub fn top(&self) -> N {
+        self.top
+    }
+    pub fn right(&self) -> N {
+        self.left + self.width
+    }
+    pub fn bottom(&self) -> N {
+        self.top + self.height
+    }
 }
 
 impl From<&QRect> for RRect<c_int> {

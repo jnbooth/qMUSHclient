@@ -11,7 +11,7 @@ use rand::RngCore;
 
 use super::PrefPageExt;
 use crate::binding::color::{HasPalette, RColorPair};
-use crate::binding::{RColor, RWidget};
+use crate::binding::{RColor, Widget};
 use crate::client::color::Colors;
 use crate::tr::TrContext;
 use crate::ui::uic;
@@ -20,7 +20,7 @@ use crate::world::World;
 const RATE_RESHADE: c_int = 5;
 const RATE_SATURATE: c_int = 17;
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsOutput {
     ui: uic::PrefsOutput,
     world: Weak<RefCell<World>>,
@@ -69,7 +69,7 @@ impl PrefsOutput {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsMxp {
     ui: uic::PrefsMxp,
     world: Weak<RefCell<World>>,
@@ -100,7 +100,7 @@ impl PrefsMxp {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsColor {
     ui: uic::PrefsColor,
     world: Weak<RefCell<World>>,
@@ -271,7 +271,7 @@ impl PrefsColor {
     }
 }
 
-#[derive(Debug, RWidget, TrContext)]
+#[derive(Debug, Widget, TrContext)]
 pub struct PrefsCustomColor {
     ui: uic::PrefsCustomColor,
     world: Weak<RefCell<World>>,

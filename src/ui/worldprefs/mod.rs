@@ -8,7 +8,7 @@ use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::*;
 
 use super::uic;
-use crate::binding::{RFont, RForm, RWidget};
+use crate::binding::{RFont, RForm, Widget};
 use crate::tr::TrContext;
 use crate::ui::worldprefs::tables::PrefsTimers;
 use crate::world::World;
@@ -81,7 +81,7 @@ trait PrefPage {
 }
 
 /// These methods cannot be part of `PrefPage`, because they would prevent creating `dyn PrefPage`.
-trait PrefPageExt: 'static + PrefPage + RWidget {
+trait PrefPageExt: 'static + PrefPage + Widget {
     fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self>;
 
     /// # Safety
@@ -130,7 +130,7 @@ trait PrefPageExt: 'static + PrefPage + RWidget {
     }
 }
 
-#[derive(RWidget, TrContext)]
+#[derive(Widget, TrContext)]
 pub struct WorldPrefs {
     ui: uic::WorldPrefs,
     world: Weak<RefCell<World>>,
