@@ -2,8 +2,45 @@ use std::ops::Add;
 use std::os::raw::{c_double, c_int};
 
 use cpp_core::CppBox;
-use qt_core::{QRect, QRectF};
+use qt_core::{QPoint, QRect, QRectF};
 use qt_gui::{QImage, QPainter};
+
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct RPoint {
+    x: c_int,
+    y: c_int,
+}
+
+impl From<&QPoint> for RPoint {
+    fn from(value: &QPoint) -> Self {
+        unsafe {
+            Self {
+                x: value.x(),
+                y: value.y(),
+            }
+        }
+    }
+}
+
+impl From<RPoint> for CppBox<QPoint> {
+    fn from(value: RPoint) -> Self {
+        unsafe { QPoint::new_2a(value.x, value.y) }
+    }
+}
+
+impl RPoint {
+    pub fn new(x: c_int, y: c_int) -> Self {
+        Self { x, y }
+    }
+
+    pub fn x(&self) -> c_int {
+        self.x
+    }
+
+    pub fn y(&self) -> c_int {
+        self.y
+    }
+}
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RRect<N> {

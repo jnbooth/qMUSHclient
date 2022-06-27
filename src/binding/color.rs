@@ -139,6 +139,9 @@ impl RColor {
     pub fn from_code(code: c_uint) -> Self {
         Self::from(unsafe { QColor::from_rgba(code) })
     }
+    pub fn code(&self) -> c_uint {
+        self.code
+    }
     pub fn named(name: &str) -> Option<Self> {
         unsafe {
             let color = QColor::from_q_string(&QString::from_std_str(name));

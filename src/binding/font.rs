@@ -144,6 +144,10 @@ impl RFont {
         unsafe { self.inner.set_weight(weight.to_int()) }
     }
 
+    pub fn metrics(&self) -> RFontMetrics {
+        RFontMetrics::new(unsafe { QFontMetrics::new_1a(&self.inner) })
+    }
+
     qt_field!(style, set_style, Style);
 
     qt_field!(italic, set_italic, bool);
@@ -208,11 +212,11 @@ impl RFontMetrics {
         Self { inner }
     }
 
-    pub fn average_char_width(&self) -> i32 {
+    pub fn average_char_width(&self) -> c_int {
         unsafe { self.inner.average_char_width() }
     }
 
-    pub fn height(&self) -> i32 {
+    pub fn height(&self) -> c_int {
         unsafe { self.inner.height() }
     }
 }

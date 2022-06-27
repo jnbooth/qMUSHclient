@@ -14,7 +14,7 @@ use uuid::Uuid;
 
 use super::QList;
 
-const TYPE_NAMES: [&str; 88] = [
+const TYPE_NAMES: &[&str] = &[
     "UnknownType",
     "Bool",
     "Int",

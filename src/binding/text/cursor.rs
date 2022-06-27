@@ -316,6 +316,20 @@ impl RTextCursor {
             Selection { inner: cursor }
         }
     }
+    /// Returns the current selection, if one exists.
+    pub fn selection(&self) -> Option<Selection> {
+        unsafe {
+            if !self.inner.has_selection() {
+                return None;
+            }
+            let start = self.inner.selection_start();
+            let end = self.inner.selection_end();
+            let cursor = QTextCursor::new_copy(&self.inner);
+            cursor.set_position_2a(start, MoveMode::MoveAnchor);
+            cursor.set_position_2a(end, MoveMode::KeepAnchor);
+            Some(Selection { inner: cursor })
+        }
+    }
     /// Moves the cursor to the absolute position in the document specified by `pos`. The cursor is
     /// positioned between characters.
     ///

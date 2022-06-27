@@ -12,7 +12,7 @@ use qt_gui::*;
 use super::format::{RTextBlockFormat, RTextCharFormat};
 use super::{if_valid, nonnull, Position};
 use crate::binding::graphics::{Painter, RRect};
-use crate::binding::text::RTextFrameFormat;
+use crate::binding::text::{RTextCursor, RTextFrameFormat};
 use crate::binding::variant::RVariant;
 use crate::binding::{Printable, RFont};
 
@@ -303,6 +303,24 @@ impl Selection {
     /// `format`.
     pub fn merge_char_format(&self, format: &RTextCharFormat) {
         unsafe { self.inner.merge_char_format(&format.inner) }
+    }
+    /// Returns a cursor placed at the start of the selection. This can be used to measure
+    /// properties such as column position.
+    pub fn start_cursor(&self) -> RTextCursor {
+        unsafe {
+            let cursor = RTextCursor::from(QTextCursor::new_copy(&self.inner));
+            cursor.set_position(self.inner.selection_start());
+            cursor
+        }
+    }
+    /// Returns a cursor placed at the end of the selection. This can be used to measure
+    /// properties such as column position.
+    pub fn end_cursor(&self) -> RTextCursor {
+        unsafe {
+            let cursor = RTextCursor::from(QTextCursor::new_copy(&self.inner));
+            cursor.set_position(self.inner.selection_end());
+            cursor
+        }
     }
 }
 

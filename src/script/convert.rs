@@ -5,12 +5,13 @@ use std::hash::{BuildHasher, Hash};
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::str;
+use std::time::{Duration, SystemTime};
 
 use cpp_core::{CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
 use mlua::{self, FromLuaMulti, LightUserData, Lua, MultiValue, ToLua, ToLuaMulti, Value};
 use qt_core::{QBox, QObject, QPtr, QString};
 
-use crate::binding::RFont;
+use crate::binding::{RColor, RFont};
 
 pub trait ScriptRes: for<'lua> FromLuaMulti<'lua> {}
 impl<T: for<'lua> FromLuaMulti<'lua>> ScriptRes for T {}
@@ -79,6 +80,26 @@ impl ScriptArg for &Option<PathBuf> {
             .and_then(|x| x.to_str())
             .unwrap_or("")
             .to_arg(lua)
+    }
+}
+
+impl ScriptArg for &Duration {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.as_millis().to_arg(lua)
+    }
+}
+
+impl ScriptArg for &SystemTime {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.duration_since(SystemTime::UNIX_EPOCH)
+            .expect("invalid system time")
+            .to_arg(lua)
+    }
+}
+
+impl ScriptArg for &RColor {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        self.code().to_arg(lua)
     }
 }
 

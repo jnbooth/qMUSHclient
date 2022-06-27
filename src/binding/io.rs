@@ -227,9 +227,13 @@ impl<Q: QIO + StaticUpcast<QAbstractSocket>> RIODevice<Q> {
 
     pub fn peer(&self) -> SocketAddr {
         unsafe {
-            let device = self.inner.static_upcast::<QAbstractSocket>();
+            let device = self.socket();
             address_to_std(&device.peer_address(), device.peer_port())
         }
+    }
+
+    pub fn peer_host(&self) -> String {
+        unsafe { self.socket().peer_name().to_std_string() }
     }
 
     pub fn proxy_host(&self) -> String {

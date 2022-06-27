@@ -1,9 +1,14 @@
+use std::os::raw::c_int;
+
 use cpp_core::Ptr;
 use qt_core::QPtr;
+use qt_gui::QCursor;
 use qt_widgets::QWidget;
 
 use super::super::traits::Widget;
+use crate::binding::color::{Colored, RColor};
 use crate::binding::font::RFontMetrics;
+use crate::binding::graphics::RPoint;
 use crate::binding::RRect;
 
 #[repr(transparent)]
@@ -15,6 +20,21 @@ pub struct RWidget {
 impl Widget for RWidget {
     fn widget(&self) -> Ptr<QWidget> {
         unsafe { self.inner.as_ptr() }
+    }
+}
+
+impl Colored for RWidget {
+    fn foreground_color(&self) -> RColor {
+        self.inner.foreground_color()
+    }
+    fn set_foreground_color(&self, color: &RColor) {
+        self.inner.set_foreground_color(color);
+    }
+    fn background_color(&self) -> RColor {
+        self.inner.background_color()
+    }
+    fn set_background_color(&self, color: &RColor) {
+        self.inner.set_background_color(color)
     }
 }
 
@@ -30,15 +50,23 @@ impl RWidget {
         RFontMetrics::new(unsafe { self.inner.font_metrics() })
     }
 
-    pub fn height(&self) -> i32 {
+    pub fn height(&self) -> c_int {
         unsafe { self.inner.height() }
     }
 
-    pub fn rect(&self) -> RRect<i32> {
+    pub fn rect(&self) -> RRect<c_int> {
         RRect::from(unsafe { &*self.inner.rect() })
     }
 
-    pub fn width(&self) -> i32 {
+    pub fn width(&self) -> c_int {
         unsafe { self.inner.width() }
+    }
+
+    /// Finds the coordinates of the mouse relative to the widget.
+    pub fn cursor_position(&self) -> RPoint {
+        unsafe {
+            let point = self.inner.map_from_global(&QCursor::pos_0a());
+            RPoint::from(&*point)
+        }
     }
 }

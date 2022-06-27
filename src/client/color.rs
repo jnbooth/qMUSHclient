@@ -233,7 +233,7 @@ static XTERM_COLORS: Lazy<[RColor; 256]> = Lazy::new(|| {
         RColor::rgb(0, 255, 255),   // cyan
         RColor::rgb(255, 255, 255), // white
     ]);
-    const COLOR_SCALE: [u8; 6] = [
+    const COLOR_SCALE: &[u8] = &[
         0,
         95,
         95 + 40,
@@ -241,9 +241,9 @@ static XTERM_COLORS: Lazy<[RColor; 256]> = Lazy::new(|| {
         95 + 40 + 40 + 40,
         95 + 40 + 40 + 40 + 40,
     ];
-    for &red in &COLOR_SCALE {
-        for &green in &COLOR_SCALE {
-            for &blue in &COLOR_SCALE {
+    for &red in COLOR_SCALE {
+        for &green in COLOR_SCALE {
+            for &blue in COLOR_SCALE {
                 vec.push(RColor::rgb(red, green, blue));
             }
         }
