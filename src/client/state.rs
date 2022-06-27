@@ -137,13 +137,6 @@ impl Default for Latest {
 
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct ClientState {
-    pub linecount: u64,
-
-    pub disconnect_ok: bool,
-    pub total_connect_duration: Duration,
-
-    pub mxp_active: bool,
-    pub pueblo_active: bool,
     pub mxp_script: bool,
     pub pre_mode: bool,
     pub in_paragraph: bool,
@@ -165,14 +158,10 @@ pub struct ClientState {
     pub subnegotiation_data: Vec<u8>,
     pub ttype_sequence: u8,
     pub naws_wanted: bool,
-    pub mccp_ver: Option<Mccp>,
     pub ansi_code: u8,
     pub ansi_red: u8,
     pub ansi_green: u8,
     pub ansi_blue: u8,
-
-    pub supports_mccp_2: bool,
-    pub no_echo: bool,
 
     pub utf8_sequence: Vec<u8>,
 }

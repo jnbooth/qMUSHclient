@@ -170,7 +170,7 @@ impl Client {
                     match c {
                         telnet::EOR | telnet::GA => {
                             self.phase = Phase::Normal;
-                            self.state.last_line_with_iac_ga = self.state.linecount;
+                            self.state.last_line_with_iac_ga = self.api_state.linecount.get();
                             self.plugins.send_to_all(Callback::IacGa, ());
                             if self.world.convert_ga_to_newline {
                                 self.insert_line();
@@ -200,12 +200,12 @@ impl Client {
                     let verb = match c {
                         telnet::COMPRESS | telnet::COMPRESS2 => {
                             if self.world.disable_compression
-                                || (c == telnet::COMPRESS && self.state.supports_mccp_2)
+                                || (c == telnet::COMPRESS && self.api_state.supports_mccp_2.get())
                             {
                                 telnet::DONT
                             } else {
                                 if c == telnet::COMPRESS2 {
-                                    self.state.supports_mccp_2 = true;
+                                    self.api_state.supports_mccp_2.set(true);
                                 }
                                 telnet::DO
                             }
@@ -216,7 +216,6 @@ impl Client {
                             if self.world.no_echo_off {
                                 telnet::DONT
                             } else {
-                                self.state.no_echo = true;
                                 self.api_state.no_echo.set(true);
                                 telnet::DO
                             }
@@ -252,7 +251,6 @@ impl Client {
                     // telnet negotiation : in response to WONT, we say DONT
                     self.phase = Phase::Normal;
                     if !self.world.no_echo_off {
-                        self.state.no_echo = false;
                         self.api_state.no_echo.set(false);
                     }
                     self.send_packet(&[telnet::IAC, telnet::DONT, c])?;
@@ -309,7 +307,7 @@ impl Client {
                 Phase::Dont => {
                     // telnet negotiation : in response to DONT, we say WONT
                     self.phase = Phase::Normal;
-                    let mxp = self.state.mxp_active;
+                    let mxp = self.api_state.mxp_active.get();
                     self.send_packet(&[telnet::IAC, telnet::WONT, c])?;
                     match c {
                         telnet::MXP if mxp => self.mxp_off(true),
@@ -353,7 +351,7 @@ impl Client {
                 Phase::CompressWill => {
                     if c == telnet::SE {
                         // end of subnegotiation
-                        self.state.mccp_ver = Some(Mccp::V1);
+                        self.api_state.mccp_ver.set(Some(Mccp::V1));
                         // special case, can't keep treating the  data as if it was not compressed
                         // skip SE (normaly done at end of loop)
                         iter.next();
@@ -390,7 +388,7 @@ impl Client {
                             // turn MCCP v2 on
                             telnet::COMPRESS2 => {
                                 if !self.world.disable_compression {
-                                    self.state.mccp_ver = Some(Mccp::V2);
+                                    self.api_state.mccp_ver.set(Some(Mccp::V2));
                                     // special case, can't keep treating the  data as if it was not compressed
                                     // skip SE (normaly done at end of loop)
                                     //iter.next();
@@ -635,11 +633,11 @@ impl Client {
                     }
                     b'\r' => (),
                     b'\n' => self.insert_line(),
-                    b'<' if self.state.mxp_active && self.state.mxp_mode.is_mxp() => {
+                    b'<' if self.api_state.mxp_active.get() && self.state.mxp_mode.is_mxp() => {
                         self.state.mxp_string.clear();
                         self.phase = Phase::MxpElement;
                     }
-                    b'&' if self.state.mxp_active && self.state.mxp_mode.is_mxp() => {
+                    b'&' if self.api_state.mxp_active.get() && self.state.mxp_mode.is_mxp() => {
                         self.state.mxp_string.clear();
                         self.phase = Phase::MxpEntity;
                     }

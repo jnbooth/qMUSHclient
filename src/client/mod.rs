@@ -238,9 +238,12 @@ impl Client {
     pub fn disconnect(&mut self) {
         if self.socket.state() != SocketState::UnconnectedState {
             // don't want reconnect on manual disconnect
-            self.state.disconnect_ok = true;
+            self.api_state.disconnect_ok.set(true);
             // work out how long they were connected
-            self.state.total_connect_duration += self.latest.connected.elapsed();
+            let connect_duration = self.api_state.total_connect_duration.get();
+            self.api_state
+                .total_connect_duration
+                .set(connect_duration + self.latest.connected.elapsed());
             self.mxp_off(true);
             self.socket.close();
             self.stream.reset();

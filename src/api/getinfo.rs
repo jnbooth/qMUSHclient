@@ -39,7 +39,7 @@ impl Api {
                 ScriptArg::to_arg(&world.$field, lua)
             };
         }
-        macro_rules! flag {
+        macro_rules! state {
             ($field:ident) => {
                 ScriptArg::to_arg(state.$field.get(), lua)
             };
@@ -139,23 +139,23 @@ impl Api {
             89 => lua!(""), // main window title
 
             // booleans
-            101 => flag!(no_echo),
+            101 => state!(no_echo),
             102 => lua!(false), // debug incoming packets
-            103 => flag!(compressing),
-            104 => flag!(mxp_active),
-            105 => flag!(pueblo_active),
+            103 => state!(compressing),
+            104 => state!(mxp_active),
+            105 => state!(pueblo_active),
             106 => lua!(self.socket.state() == SocketState::UnconnectedState),
             107 => lua!(self.socket.state() == SocketState::ConnectingState),
-            108 => lua!(self.socket.state() == SocketState::ConnectedState), // ok to disconnect
-            109 => lua!(false),                                              // trace flag (TODO?)
-            110 => lua!(false), // script file changed (TODO?)
-            111 => lua!(false), // world file is modified (TODO)
-            112 => lua!(false), // automapper active (TODO)
-            113 => lua!(true),  // world is active (TODO PRIORITY)
-            114 => lua!(false), // output window paused (TODO)
-            115 => lua!(false), // localization active (TODO)
-            118 => lua!(false), // variables have changed (TODO?)
-            119 => lua!(true),  // script engine is active (TODO?)
+            108 => state!(disconnect_ok), // ok to disconnect
+            109 => lua!(false),           // trace flag (TODO?)
+            110 => lua!(false),           // script file changed (TODO?)
+            111 => lua!(false),           // world file is modified (TODO)
+            112 => lua!(false),           // automapper active (TODO)
+            113 => lua!(true),            // world is active (TODO PRIORITY)
+            114 => lua!(false),           // output window paused (TODO)
+            115 => lua!(false),           // localization active (TODO)
+            118 => lua!(false),           // variables have changed (TODO?)
+            119 => lua!(true),            // script engine is active (TODO?)
             120 => lua!(self.output.vertical_scroll_bar().is_displayed()),
             121 => lua!(true),  // high-resolution timer is available
             122 => lua!(true),  // sqlite3 library is thread-safe,

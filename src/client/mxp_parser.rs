@@ -63,7 +63,7 @@ impl Client {
         self.style.reset();
 
         // do nothing else if already off
-        if !self.state.mxp_active {
+        if !self.api_state.mxp_active.get() {
             return;
         }
         // don't close protected tags here
@@ -85,9 +85,7 @@ impl Client {
         if self.phase.is_mxp() {
             self.phase = Phase::Normal;
         }
-        self.state.pueblo_active = false;
         self.api_state.pueblo_active.set(false);
-        self.state.mxp_active = false;
         self.api_state.mxp_active.set(false);
 
         self.plugins.send_to_all(Callback::MxpStop, ());
@@ -95,15 +93,14 @@ impl Client {
 
     pub(super) fn mxp_on(&mut self, pueblo: bool, manual: bool) {
         // do nothing if already on
-        if self.state.mxp_active {
+        if self.api_state.mxp_active.get() {
             return;
         }
 
         self.plugins.send_to_all(Callback::MxpStart, ());
 
-        self.state.mxp_active = true;
         self.api_state.mxp_active.set(true);
-        self.state.pueblo_active = pueblo;
+        self.api_state.pueblo_active.set(pueblo);
         self.state.mxp_script = false;
         self.state.pre_mode = false;
         self.state.last_outstanding_tag_count = 0;
@@ -366,7 +363,7 @@ impl Client {
         // a tag like this: <A XCH_CMD="examine #1">
         // will convert to a SEND tag
         if action == Action::Hyperlink && args.get("xch_cmd").is_some() {
-            self.state.pueblo_active = true; // for correct newline processing
+            self.api_state.pueblo_active.set(true); // for correct newline processing
             action = Action::Send;
         }
         match action {
@@ -561,7 +558,7 @@ impl Client {
             }
             Action::Img | Action::Image => {
                 if let Some(xch_mode) = args.get("xch_mode") {
-                    self.state.pueblo_active = true;
+                    self.api_state.pueblo_active.set(true);
                     if xch_mode.eq_ignore_ascii_case("purehtml") {
                         self.state.suppress_newline = true;
                     } else if xch_mode.eq_ignore_ascii_case("html") {
@@ -578,7 +575,7 @@ impl Client {
                 }
             }
             Action::XchPage => {
-                self.state.pueblo_active = true; // for correct newline processing
+                self.api_state.pueblo_active.set(true); // for correct newline processing
                 self.mxp_off(false);
             }
             Action::Var => {
@@ -609,10 +606,8 @@ impl Client {
         if let Some(entity) = self.state.mxp_entities.get(text)? {
             let text = entity.as_bytes().to_vec();
             // if the entity happens to be < & > etc. don't reprocess it
-            self.state.mxp_active = false;
             self.api_state.mxp_active.set(false);
             self.display_msg(text)?;
-            self.state.mxp_active = true;
             self.api_state.mxp_active.set(true);
         }
         Ok(())
