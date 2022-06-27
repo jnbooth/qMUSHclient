@@ -8,7 +8,7 @@ use qt_gui::q_font::StyleHint;
 use qt_network::q_abstract_socket::SocketState;
 
 use super::Api;
-use crate::binding::text::ScrollBar;
+use crate::binding::text::RScrollBar;
 use crate::binding::RFont;
 use crate::constants::branding;
 use crate::script::{Callback, ScriptArg};
@@ -155,7 +155,7 @@ impl Api {
             115 => lua!(false), // localization active (TODO)
             118 => lua!(false), // variables have changed (TODO?)
             119 => lua!(true),  // script engine is active (TODO?)
-            120 => lua!(ScrollBar::get_vertical(&self.output).is_displayed()),
+            120 => lua!(RScrollBar::get_vertical(&self.output).is_displayed()),
             121 => lua!(true),  // high-resolution timer is available
             122 => lua!(true),  // sqlite3 library is thread-safe,
             123 => lua!(false), // are we processing "simulate" function (TODO?)

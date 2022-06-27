@@ -16,7 +16,7 @@ use qt_network::QTcpSocket;
 use qt_widgets::{QLineEdit, QTextBrowser};
 
 use crate::binding::color::{Colored, RColor, RColorPair};
-use crate::binding::text::{Cursor, ScrollBar};
+use crate::binding::text::{RScrollBar, RTextCursor};
 use crate::binding::{Printable, RIODevice, RSettings};
 use crate::client::color::Colors;
 use crate::constants::Paths;
@@ -33,7 +33,7 @@ pub use state::ApiState;
 pub struct Api {
     output: QPtr<QTextBrowser>,
     input: QPtr<QLineEdit>,
-    cursor: Cursor,
+    cursor: RTextCursor,
     socket: RIODevice<QTcpSocket>,
     world: Rc<World>,
     state: Rc<ApiState>,
@@ -76,7 +76,7 @@ impl Api {
         paths: &'static Paths,
     ) -> Self {
         // SAFETY: `output` is valid.
-        let cursor = Cursor::get(&output);
+        let cursor = RTextCursor::get(&output);
         cursor
             .format
             .text
@@ -102,7 +102,7 @@ impl Api {
         let variables_key = format!("vars-{:?}-{:?}", self.world.name, metadata.id);
         let output = self.output.clone();
         Self {
-            cursor: Cursor::get(&output),
+            cursor: RTextCursor::get(&output),
             output,
             input: self.input.clone(),
             socket: self.socket.clone(),
@@ -164,7 +164,7 @@ impl Api {
     }
 
     fn scroll_to_bottom(&self) {
-        let scrollbar = ScrollBar::get_vertical(&self.output);
+        let scrollbar = RScrollBar::get_vertical(&self.output);
         scrollbar.set_value(scrollbar.maximum());
     }
 

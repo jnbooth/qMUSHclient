@@ -18,7 +18,7 @@ use qt_widgets::*;
 use uuid::Uuid;
 
 use super::uic;
-use crate::binding::text::Cursor;
+use crate::binding::text::RTextCursor;
 use crate::binding::{Printable, QList, RColor, RWidget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
@@ -96,7 +96,7 @@ pub struct WorldTab {
     pub socket: QPtr<QTcpSocket>,
     world: RefCell<Rc<World>>,
     address: RefCell<String>,
-    cursor: Cursor,
+    cursor: RTextCursor,
 }
 
 impl WorldTab {
@@ -119,7 +119,7 @@ impl WorldTab {
                 world.clone(),
                 paths,
             );
-            let cursor = Cursor::get(&ui.output);
+            let cursor = RTextCursor::get(&ui.output);
             let this = Rc::new(Self {
                 client: RefCell::new(client),
                 saved: RefCell::new(saved),

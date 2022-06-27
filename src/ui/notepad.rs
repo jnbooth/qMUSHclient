@@ -5,7 +5,7 @@ use qt_core::AlignmentFlag;
 use qt_core::{QBox, QString};
 use qt_widgets::QTextEdit;
 
-use crate::binding::text::Cursor;
+use crate::binding::text::RTextCursor;
 use crate::binding::{Printable, RWidget};
 use crate::script::Event;
 use crate::tr::TrContext;
@@ -46,7 +46,7 @@ impl Pad {
 #[derive(Debug, RWidget, TrContext)]
 struct PadWidget {
     widget: QBox<QTextEdit>,
-    cursor: Cursor,
+    cursor: RTextCursor,
     kind: Pad,
 }
 
@@ -56,7 +56,7 @@ impl PadWidget {
             let widget = QTextEdit::new();
             widget.set_read_only(true);
             Self {
-                cursor: Cursor::get(&widget),
+                cursor: RTextCursor::get(&widget),
                 widget,
                 kind,
             }

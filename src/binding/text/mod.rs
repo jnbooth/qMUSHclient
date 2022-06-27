@@ -6,15 +6,18 @@ pub use qt_gui::q_text_frame_format::Position as FramePosition;
 pub use qt_gui::q_text_list_format::Style as ListStyle;
 
 mod cursor;
-pub use cursor::{Cursor, Formats};
+pub use cursor::{Formats, RTextCursor};
 mod document;
-pub use document::{Block, Document, Fragment, Frame, Layout, List, Table};
+pub use document::{
+    RTextBlock, RTextDocument, RTextFragment, RTextFrame, RTextLayout, RTextList, RTextTable,
+};
 mod format;
 pub use format::{
-    BlockFormat, CharFormat, FrameFormat, ImageFormat, ListFormat, TableFormat, TextFormat,
+    RTextBlockFormat, RTextCharFormat, RTextFormat, RTextFrameFormat, RTextImageFormat,
+    RTextListFormat, RTextTableFormat,
 };
 mod scrollbar;
-pub use scrollbar::ScrollBar;
+pub use scrollbar::RScrollBar;
 
 pub type Position = c_int;
 

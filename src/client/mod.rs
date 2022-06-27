@@ -20,7 +20,7 @@ use qt_widgets::{QLineEdit, QTextBrowser, QWidget};
 
 use crate::api::{Api, ApiState};
 use crate::binding::color::Colored;
-use crate::binding::text::{CharFormat, Cursor, ScrollBar};
+use crate::binding::text::{RScrollBar, RTextCharFormat, RTextCursor};
 use crate::binding::{Printable, RColor, RIODevice, RWidget};
 use crate::client::state::Latest;
 use crate::constants::{config, Paths};
@@ -85,7 +85,7 @@ impl<'a> LogConfig<'a> {
 #[derive(TrContext)]
 pub struct Client {
     widget: QPtr<QTextBrowser>,
-    cursor: Cursor,
+    cursor: RTextCursor,
     socket: RIODevice<QTcpSocket>,
     stream: MudStream,
     bufinput: [u8; config::SOCKET_BUFFER],
@@ -138,7 +138,7 @@ impl Client {
         };
 
         // SAFETY: `output` is valid.
-        let cursor = Cursor::get(&output);
+        let cursor = RTextCursor::get(&output);
         let charfmt = cursor.format.text.clone();
         let mut this = Self {
             notepad,
@@ -303,7 +303,7 @@ impl Client {
     }
 
     fn scroll_to_bottom(&self) {
-        let scrollbar = ScrollBar::get_vertical(&self.widget);
+        let scrollbar = RScrollBar::get_vertical(&self.widget);
         scrollbar.set_value(scrollbar.maximum());
     }
 
@@ -338,7 +338,7 @@ impl Client {
             self.cursor.select(SelectionType::BlockUnderCursor).delete();
             return Ok(());
         }
-        let format = CharFormat::new();
+        let format = RTextCharFormat::new();
         if let Some(fg) = requests.foreground {
             format.set_foreground_color(&fg);
         }

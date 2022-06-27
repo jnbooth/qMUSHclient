@@ -9,30 +9,30 @@ pub use qt_gui::q_text_frame_format::Position as FramePosition;
 pub use qt_gui::q_text_list_format::Style as ListStyle;
 use qt_gui::*;
 
-use super::format::{BlockFormat, CharFormat};
+use super::format::{RTextBlockFormat, RTextCharFormat};
 use super::{if_valid, nonnull, Position};
-use crate::binding::graphics::{Painter, Rect};
-use crate::binding::text::FrameFormat;
+use crate::binding::graphics::{Painter, RRect};
+use crate::binding::text::RTextFrameFormat;
 use crate::binding::variant::RVariant;
 use crate::binding::{Printable, RFont};
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct Block {
+pub struct RTextBlock {
     pub(super) inner: CppBox<QTextBlock>,
 }
 
-impl_eq_cpp!(Block);
+impl_eq_cpp!(RTextBlock);
 
-impl From<CppBox<QTextBlock>> for Block {
+impl From<CppBox<QTextBlock>> for RTextBlock {
     fn from(value: CppBox<QTextBlock>) -> Self {
         Self { inner: value }
     }
 }
 
-impl Block {
+impl RTextBlock {
     /// Returns the `BlockFormat` that describes block-specific properties.
-    pub fn block_format(&self) -> BlockFormat {
+    pub fn block_format(&self) -> RTextBlockFormat {
         unsafe { self.inner.block_format() }.into()
     }
     /// Returns the number of this block, or `None` if the block is invalid.
@@ -41,7 +41,7 @@ impl Block {
     }
     /// Returns the `CharFormat` that describes the block's character format. The block's character
     /// format is used when inserting text into an empty block.
-    pub fn char_format(&self) -> CharFormat {
+    pub fn char_format(&self) -> RTextCharFormat {
         unsafe { self.inner.char_format() }.into()
     }
     /// Clears the [`Layout`] that is used to lay out and display the block's contents.
@@ -55,8 +55,8 @@ impl Block {
     }
     /// Returns the text document this text block belongs to, or `None` if the text block does not
     /// belong to any document.
-    pub fn document(&self) -> Option<Document> {
-        unsafe { nonnull(self.inner.document()) }.map(|inner| Document { inner })
+    pub fn document(&self) -> Option<RTextDocument> {
+        unsafe { nonnull(self.inner.document()) }.map(|inner| RTextDocument { inner })
     }
     /// Returns the first line number of this block, or `None` if the block is invalid. If the
     /// layout does not support this feature, the line number is identical to the block number.
@@ -72,8 +72,8 @@ impl Block {
         unsafe { self.inner.is_visible() }
     }
     /// Returns the layout that is used to lay out and display the block's contents.
-    pub fn layout(&self) -> Layout<QTextBlock> {
-        Layout {
+    pub fn layout(&self) -> RTextLayout<QTextBlock> {
+        RTextLayout {
             inner: unsafe { self.inner.layout() },
             _owner: &self.inner,
         }
@@ -125,8 +125,8 @@ impl Block {
     }
     /// If the block represents a list item, returns the list that the item belongs to; otherwise
     /// returns `None`.
-    pub fn text_list(&self) -> Option<List<QTextBlock>> {
-        unsafe { nonnull(self.inner.text_list()) }.map(|list| List {
+    pub fn text_list(&self) -> Option<RTextList<QTextBlock>> {
+        unsafe { nonnull(self.inner.text_list()) }.map(|list| RTextList {
             inner: list,
             _owner: &self.inner,
         })
@@ -167,28 +167,28 @@ impl Block {
 }
 
 #[derive(Debug)]
-pub struct Layout<'a, T: CppDeletable> {
+pub struct RTextLayout<'a, T: CppDeletable> {
     #[allow(dead_code)]
     pub(super) inner: Ptr<QTextLayout>,
     pub(super) _owner: &'a CppBox<T>,
 }
 
 #[derive(Debug)]
-pub struct List<'a, T: CppDeletable> {
+pub struct RTextList<'a, T: CppDeletable> {
     #[allow(dead_code)]
     pub(super) inner: QPtr<QTextList>,
     pub(super) _owner: &'a CppBox<T>,
 }
 
 #[derive(Debug)]
-pub struct Frame<'a, T: CppDeletable> {
+pub struct RTextFrame<'a, T: CppDeletable> {
     #[allow(dead_code)]
     pub(super) inner: QPtr<QTextFrame>,
     pub(super) _owner: &'a CppBox<T>,
 }
 
 #[derive(Debug)]
-pub struct Table<'a, T: CppDeletable> {
+pub struct RTextTable<'a, T: CppDeletable> {
     #[allow(dead_code)]
     pub(super) inner: QPtr<QTextTable>,
     pub(super) _owner: &'a CppBox<T>,
@@ -196,13 +196,13 @@ pub struct Table<'a, T: CppDeletable> {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct Fragment {
+pub struct RTextFragment {
     pub(super) inner: CppBox<QTextDocumentFragment>,
 }
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct TextOption {
+pub struct RTextOption {
     pub(super) inner: CppBox<QTextOption>,
 }
 
@@ -251,8 +251,8 @@ impl Selection {
     }
     /// Inserts a frame at the current position with the given `format`, moves the selection inside
     /// the frame, and returns the frame.
-    pub fn insert_frame(&self, format: FrameFormat) -> Frame<QTextCursor> {
-        Frame {
+    pub fn insert_frame(&self, format: RTextFrameFormat) -> RTextFrame<QTextCursor> {
+        RTextFrame {
             inner: unsafe { self.inner.insert_frame(&format.inner) },
             _owner: &self.inner,
         }
@@ -261,7 +261,7 @@ impl Selection {
     ///
     /// Any ASCII linefeed characters `(\n)` in the inserted text are transformed into unicode block
     /// separators, corresponding to [`Cursor::insert_block`] calls.
-    pub fn replace<S: Printable>(&self, text: S, format: CharFormat) {
+    pub fn replace<S: Printable>(&self, text: S, format: RTextCharFormat) {
         unsafe { self.inner.insert_text_2a(&text.to_print(), &format.inner) }
     }
     /// Deletes the content of the selection.
@@ -281,44 +281,44 @@ impl Selection {
     /// selected text (i.e. plain text) use [`text`] instead.
     ///
     /// Note: May include special unicode characters such as [`QChar::ParagraphSeparator`].
-    pub fn fragment(&self) -> Fragment {
-        Fragment {
+    pub fn fragment(&self) -> RTextFragment {
+        RTextFragment {
             inner: unsafe { self.inner.selection() },
         }
     }
     /// Sets the block format of all blocks that are contained in the selection to `format`.
-    pub fn set_block_format(&self, format: &BlockFormat) {
+    pub fn set_block_format(&self, format: &RTextBlockFormat) {
         unsafe { self.inner.set_block_format(&format.inner) }
     }
     /// Sets the char format of all blocks that are contained in the selection to `format`.
-    pub fn set_char_format(&self, format: &CharFormat) {
+    pub fn set_char_format(&self, format: &RTextCharFormat) {
         unsafe { self.inner.set_block_char_format(&format.inner) }
     }
     /// Modifies the block format of all blocks that are contained in the selection with the given
     /// `format`.
-    pub fn merge_block_format(&self, format: &BlockFormat) {
+    pub fn merge_block_format(&self, format: &RTextBlockFormat) {
         unsafe { self.inner.merge_block_format(&format.inner) }
     }
     /// Modifies the char format of all blocks that are contained in the selection with the given
     /// `format`.
-    pub fn merge_char_format(&self, format: &CharFormat) {
+    pub fn merge_char_format(&self, format: &RTextCharFormat) {
         unsafe { self.inner.merge_char_format(&format.inner) }
     }
 }
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct DocumentLayout {
+pub struct RTextDocumentLayout {
     pub(super) inner: QPtr<QAbstractTextDocumentLayout>,
 }
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct Document {
+pub struct RTextDocument {
     pub(super) inner: QPtr<QTextDocument>,
 }
 
-impl Document {
+impl RTextDocument {
     /// Adds a `resource` to the resource cache, using `resource_type` and `name` as identifiers.
     ///
     /// Note: below, `cursor` is a [`Cursor`](super::cursor::Cursor).
@@ -440,24 +440,24 @@ impl Document {
     }
     /// The default text option used on all layout objects in the document. This allows setting
     /// global properties for the document such as the default word wrap mode.
-    pub fn default_text_option(&self) -> TextOption {
-        TextOption {
+    pub fn default_text_option(&self) -> RTextOption {
+        RTextOption {
             inner: unsafe { self.inner.default_text_option() },
         }
     }
     /// Sets the default text `option` used on all layout objects in the document. This allows
     /// setting global properties for the document such as the default word wrap mode.
-    pub fn set_default_text_option(&self, option: &TextOption) {
+    pub fn set_default_text_option(&self, option: &RTextOption) {
         unsafe { self.inner.set_default_text_option(&option.inner) }
     }
     /// Returns the document layout for this document.
-    pub fn layout(&self) -> DocumentLayout {
-        DocumentLayout {
+    pub fn layout(&self) -> RTextDocumentLayout {
+        RTextDocumentLayout {
             inner: unsafe { self.inner.document_layout() },
         }
     }
     /// Sets the document layout for this document. The previous layout is deleted.
-    pub fn set_layout(&self, layout: &DocumentLayout) {
+    pub fn set_layout(&self, layout: &RTextDocumentLayout) {
         unsafe { self.inner.set_document_layout(&layout.inner) }
     }
     /// Draws the content of the document with `painter`.
@@ -465,7 +465,7 @@ impl Document {
         unsafe { self.inner.draw_contents_1a(&painter.inner) }
     }
     /// Draws the content of the document with `painter`, clipped to `rect`.
-    pub fn draw_contents_in(&self, painter: &Painter, rect: Rect<c_double>) {
+    pub fn draw_contents_in(&self, painter: &Painter, rect: RRect<c_double>) {
         unsafe {
             self.inner
                 .draw_contents_2a(&painter.inner, &CppBox::<QRectF>::from(rect))
@@ -473,25 +473,25 @@ impl Document {
     }
     /// Returns the block that contains the `pos`-th character, or `None` if the character is out of
     /// bounds.
-    pub fn block_at(&self, pos: c_int) -> Option<Block> {
+    pub fn block_at(&self, pos: c_int) -> Option<RTextBlock> {
         unsafe {
             let block = self.inner.find_block(pos);
             if block.is_valid() {
-                Some(Block { inner: block })
+                Some(RTextBlock { inner: block })
             } else {
                 None
             }
         }
     }
     /// Returns the document's first text block.
-    pub fn first_block(&self) -> Block {
-        Block {
+    pub fn first_block(&self) -> RTextBlock {
+        RTextBlock {
             inner: unsafe { self.inner.first_block() },
         }
     }
     /// Returns the document's last text block.
-    pub fn last_block(&self) -> Block {
-        Block {
+    pub fn last_block(&self) -> RTextBlock {
+        RTextBlock {
             inner: unsafe { self.inner.last_block() },
         }
     }

@@ -8,8 +8,13 @@ pub use qt_gui::q_text_list_format::Style as ListStyle;
 use qt_gui::*;
 use qt_widgets::QTextEdit;
 
-use super::document::{Block, Document, Fragment, Frame, List, Selection, Table};
-use super::format::{BlockFormat, CharFormat, FrameFormat, ImageFormat, ListFormat, TableFormat};
+use super::document::{
+    RTextBlock, RTextDocument, RTextFragment, RTextFrame, RTextList, RTextTable, Selection,
+};
+use super::format::{
+    RTextBlockFormat, RTextCharFormat, RTextFrameFormat, RTextImageFormat, RTextListFormat,
+    RTextTableFormat,
+};
 use super::{if_valid, nonnull, Position};
 use crate::binding::color::{Colored, RColor};
 use crate::binding::graphics::RImage;
@@ -17,25 +22,19 @@ use crate::binding::printable::Printable;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Formats {
-    pub block: BlockFormat,
-    pub text: CharFormat,
+    pub block: RTextBlockFormat,
+    pub text: RTextCharFormat,
 }
 
 #[derive(Debug)]
-pub struct Cursor {
+pub struct RTextCursor {
     pub(super) inner: CppBox<QTextCursor>,
     pub format: Formats,
 }
 
-impl PartialEq for Cursor {
-    fn eq(&self, other: &Self) -> bool {
-        self.inner.eq(unsafe { &other.inner.as_ref() })
-    }
-}
+impl_eq_cpp!(RTextCursor);
 
-impl Eq for Cursor {}
-
-impl Clone for Cursor {
+impl Clone for RTextCursor {
     fn clone(&self) -> Self {
         Self {
             inner: unsafe { QTextCursor::new_copy(&self.inner) },
@@ -44,19 +43,19 @@ impl Clone for Cursor {
     }
 }
 
-impl From<CppBox<QTextCursor>> for Cursor {
+impl From<CppBox<QTextCursor>> for RTextCursor {
     fn from(inner: CppBox<QTextCursor>) -> Self {
         unsafe {
             let format = Formats {
-                block: BlockFormat::from(inner.block_format()),
-                text: CharFormat::from(inner.char_format()),
+                block: RTextBlockFormat::from(inner.block_format()),
+                text: RTextCharFormat::from(inner.char_format()),
             };
             Self { inner, format }
         }
     }
 }
 
-impl Cursor {
+impl RTextCursor {
     /// Returns a copy of a `QTextEdit`'s [`QTextCursor`] that represents the currently visible
     /// cursor.
     ///
@@ -105,7 +104,7 @@ impl Cursor {
         }
     }
     /// Returns the block that contains the cursor.
-    pub fn block(&self) -> Block {
+    pub fn block(&self) -> RTextBlock {
         unsafe { self.inner.block() }.into()
     }
     /// Returns the position of the cursor within its containing line.
@@ -117,31 +116,31 @@ impl Cursor {
     }
     /// Creates and returns a new list with the given `format` and makes the current paragraph the
     /// cursor is in the first list item.
-    pub fn convert_to_list(&self, format: &ListFormat) -> List<QTextCursor> {
-        List {
+    pub fn convert_to_list(&self, format: &RTextListFormat) -> RTextList<QTextCursor> {
+        RTextList {
             inner: unsafe { self.inner.create_list_q_text_list_format(&format.inner) },
             _owner: &self.inner,
         }
     }
     /// Returns a pointer to the current frame. Returns `None` if the cursor is invalid.
-    pub fn current_frame(&self) -> Option<Frame<QTextCursor>> {
-        unsafe { nonnull(self.inner.current_frame()) }.map(|frame| Frame {
+    pub fn current_frame(&self) -> Option<RTextFrame<QTextCursor>> {
+        unsafe { nonnull(self.inner.current_frame()) }.map(|frame| RTextFrame {
             inner: frame,
             _owner: &self.inner,
         })
     }
     /// Returns the current list if the cursor position is inside a block that is part of a list;
     /// otherwise returns `None`.
-    pub fn current_list(&self) -> Option<List<QTextCursor>> {
-        unsafe { nonnull(self.inner.current_list()) }.map(|list| List {
+    pub fn current_list(&self) -> Option<RTextList<QTextCursor>> {
+        unsafe { nonnull(self.inner.current_list()) }.map(|list| RTextList {
             inner: list,
             _owner: &self.inner,
         })
     }
     /// Returns a pointer to the current table if the cursor position is inside a block that is part
     /// of a table; otherwise returns `None`.
-    pub fn current_table(&self) -> Option<Table<QTextCursor>> {
-        unsafe { nonnull(self.inner.current_table()) }.map(|table| Table {
+    pub fn current_table(&self) -> Option<RTextTable<QTextCursor>> {
+        unsafe { nonnull(self.inner.current_table()) }.map(|table| RTextTable {
             inner: table,
             _owner: &self.inner,
         })
@@ -155,8 +154,8 @@ impl Cursor {
         unsafe { self.inner.delete_previous_char() }
     }
     /// Returns the document this cursor is associated with.
-    pub fn document(&self) -> Document {
-        Document {
+    pub fn document(&self) -> RTextDocument {
+        RTextDocument {
             inner: unsafe { self.inner.document() },
         }
     }
@@ -168,20 +167,20 @@ impl Cursor {
         }
     }
     /// Inserts a new empty block at the cursor position with the given `format`.
-    pub fn insert_block_formatted(&self, format: &BlockFormat) {
+    pub fn insert_block_formatted(&self, format: &RTextBlockFormat) {
         unsafe {
             self.inner
                 .insert_block_2a(&format.inner, &self.format.text.inner)
         }
     }
     /// Inserts the text `fragment` at the current position.
-    pub fn insert_fragment(&self, fragment: &Fragment) {
+    pub fn insert_fragment(&self, fragment: &RTextFragment) {
         unsafe { self.inner.insert_fragment(&fragment.inner) }
     }
     /// Inserts a frame with the given `format` at the current cursor position, moves the cursor
     /// position inside the frame, and returns the frame.
-    pub fn insert_frame(&self, format: &FrameFormat) -> Frame<QTextCursor> {
-        Frame {
+    pub fn insert_frame(&self, format: &RTextFrameFormat) -> RTextFrame<QTextCursor> {
+        RTextFrame {
             inner: unsafe { self.inner.insert_frame(&format.inner) },
             _owner: &self.inner,
         }
@@ -192,7 +191,7 @@ impl Cursor {
     }
     /// Inserts the image defined by the given `format` at the cursor's current position with the
     /// specified `alignment`.
-    pub fn insert_image_formatted(&self, format: &ImageFormat, alignment: FramePosition) {
+    pub fn insert_image_formatted(&self, format: &RTextImageFormat, alignment: FramePosition) {
         unsafe {
             self.inner
                 .insert_image_q_text_image_format_position(&format.inner, alignment)
@@ -217,8 +216,8 @@ impl Cursor {
     }
     /// Inserts a new block at the current position and makes it the first list item of a newly
     /// created list with the given `format`. Returns the created list.
-    pub fn insert_list(&self, format: &ListFormat) -> List<QTextCursor> {
-        List {
+    pub fn insert_list(&self, format: &RTextListFormat) -> RTextList<QTextCursor> {
+        RTextList {
             inner: unsafe { self.inner.insert_list_q_text_list_format(&format.inner) },
             _owner: &self.inner,
         }
@@ -232,9 +231,9 @@ impl Cursor {
         &self,
         rows: c_int,
         columns: c_int,
-        format: &TableFormat,
-    ) -> Table<QTextCursor> {
-        Table {
+        format: &RTextTableFormat,
+    ) -> RTextTable<QTextCursor> {
+        RTextTable {
             inner: unsafe { self.inner.insert_table_3a(rows, columns, &format.inner) },
             _owner: &self.inner,
         }
@@ -253,7 +252,7 @@ impl Cursor {
     ///
     /// Any ASCII linefeed characters `(\n)` in the inserted text are transformed into unicode block
     /// separators, corresponding to [`insert_block`](Self::insert_block) calls.
-    pub fn insert_text_formatted<S: Printable>(&self, text: S, format: &CharFormat) {
+    pub fn insert_text_formatted<S: Printable>(&self, text: S, format: &RTextCharFormat) {
         unsafe { self.inner.insert_text_2a(&text.to_print(), &format.inner) }
     }
     /// Inserts text at the current position, using the current character format plus text color.

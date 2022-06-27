@@ -5,7 +5,7 @@ use cpp_core::CppBox;
 use qt_core::QString;
 
 use super::Client;
-use crate::binding::text::CharFormat;
+use crate::binding::text::RTextCharFormat;
 use crate::binding::Printable;
 use crate::client::color::{Colors, WorldColor};
 use crate::client::state::Phase;
@@ -159,7 +159,7 @@ impl Client {
         let (closed, tag) = self.mxp_findtag(was_secure, name)?;
         if let Some(template) = &tag.anchor_template {
             let select = self.cursor.document().select(tag.text_index..);
-            let fmt = CharFormat::new();
+            let fmt = RTextCharFormat::new();
             let text = select.text();
             let anchor = template.replace("&text;", &text);
             fmt.set_anchor_href(&anchor);

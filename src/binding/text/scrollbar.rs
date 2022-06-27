@@ -4,12 +4,12 @@ use qt_core::{Orientation, QPtr};
 use qt_widgets::q_abstract_slider::SliderAction;
 use qt_widgets::{QAbstractScrollArea, QScrollBar};
 
-pub struct ScrollBar<'a> {
+pub struct RScrollBar<'a> {
     pub(super) inner: QPtr<QScrollBar>,
     pub(super) _owner: &'a QAbstractScrollArea,
 }
 
-impl<'a> ScrollBar<'a> {
+impl<'a> RScrollBar<'a> {
     /// Returns a pointer to a `QAbstractScrollArea`'s horizontal [`QScrollBar`].
     pub fn get_horizontal(widget: &'a QAbstractScrollArea) -> Self {
         Self {

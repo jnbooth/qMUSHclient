@@ -30,7 +30,7 @@ mod font;
 pub use font::RFont;
 
 mod graphics;
-pub use graphics::{RImage, Rect};
+pub use graphics::{RImage, RRect};
 
 mod io;
 pub use io::RIODevice;

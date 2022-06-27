@@ -4,7 +4,7 @@ use std::rc::Rc;
 use enumeration::{Enum, EnumSet};
 
 use crate::binding::color::Colored;
-use crate::binding::text::CharFormat;
+use crate::binding::text::RTextCharFormat;
 use crate::client::color::WorldColor;
 use crate::mxp::{SendTo, Span};
 use crate::world::World;
@@ -18,7 +18,7 @@ pub enum TextStyle {
     Bold,
 }
 
-fn invert(format: &CharFormat) {
+fn invert(format: &RTextCharFormat) {
     let mut colors = format.colors();
     colors.invert();
     format.set_colors(&colors);
@@ -37,7 +37,7 @@ fn set_bold(color: &WorldColor, bold: bool) -> Option<WorldColor> {
 
 #[derive(PartialEq)]
 pub struct Style {
-    format: CharFormat,
+    format: RTextCharFormat,
     foreground: WorldColor,
     background: WorldColor,
     spans: Vec<Span>,
@@ -60,7 +60,7 @@ impl Debug for Style {
 }
 
 impl Style {
-    pub const fn new(format: CharFormat, world: Rc<World>) -> Self {
+    pub const fn new(format: RTextCharFormat, world: Rc<World>) -> Self {
         Self {
             format,
             world,
@@ -72,7 +72,7 @@ impl Style {
         }
     }
 
-    pub const fn format(&self) -> &CharFormat {
+    pub const fn format(&self) -> &RTextCharFormat {
         &self.format
     }
 

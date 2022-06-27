@@ -21,11 +21,11 @@ fn optional_string(s: CppBox<QString>) -> Option<String> {
 }
 
 #[repr(transparent)]
-pub struct TextFormat {
+pub struct RTextFormat {
     pub(super) inner: QTextFormat,
 }
 
-impl TextFormat {
+impl RTextFormat {
     fn new(fmt: &QTextFormat) -> &Self {
         // SAFETY: #[repr(transparent)]
         unsafe { &*(fmt as *const QTextFormat as *const Self) }
@@ -48,7 +48,7 @@ impl TextFormat {
     qt_field!(layout_direction, set_layout_direction, LayoutDirection);
 }
 
-impl Colored for TextFormat {
+impl Colored for RTextFormat {
     fn foreground_color(&self) -> RColor {
         self.inner.foreground_color()
     }
@@ -99,10 +99,10 @@ macro_rules! impl_fmt {
         }
 
         impl Deref for $t {
-            type Target = TextFormat;
+            type Target = RTextFormat;
 
             fn deref(&self) -> &Self::Target {
-                TextFormat::new(self.inner.deref())
+                RTextFormat::new(self.inner.deref())
             }
         }
 
@@ -116,12 +116,12 @@ macro_rules! impl_fmt {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct BlockFormat {
+pub struct RTextBlockFormat {
     pub(super) inner: CppBox<QTextBlockFormat>,
 }
-impl_fmt!(BlockFormat, QTextBlockFormat);
+impl_fmt!(RTextBlockFormat, QTextBlockFormat);
 
-impl BlockFormat {
+impl RTextBlockFormat {
     pub fn alignment(&self) -> QFlags<AlignmentFlag> {
         unsafe { self.inner.alignment() }
     }
@@ -150,12 +150,12 @@ impl BlockFormat {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct CharFormat {
+pub struct RTextCharFormat {
     pub(super) inner: CppBox<QTextCharFormat>,
 }
-impl_fmt!(CharFormat, QTextCharFormat);
+impl_fmt!(RTextCharFormat, QTextCharFormat);
 
-impl CharFormat {
+impl RTextCharFormat {
     pub fn set_font(&self, font: &RFont) {
         unsafe {
             self.inner.set_font_1a(font);
@@ -261,28 +261,28 @@ impl CharFormat {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct ListFormat {
+pub struct RTextListFormat {
     pub(super) inner: CppBox<QTextListFormat>,
 }
-impl_fmt!(ListFormat, QTextListFormat);
+impl_fmt!(RTextListFormat, QTextListFormat);
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct FrameFormat {
+pub struct RTextFrameFormat {
     pub(super) inner: CppBox<QTextFrameFormat>,
 }
-impl_fmt!(FrameFormat, QTextFrameFormat);
+impl_fmt!(RTextFrameFormat, QTextFrameFormat);
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct TableFormat {
+pub struct RTextTableFormat {
     pub(super) inner: CppBox<QTextTableFormat>,
 }
-impl_fmt!(TableFormat, QTextTableFormat);
+impl_fmt!(RTextTableFormat, QTextTableFormat);
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct ImageFormat {
+pub struct RTextImageFormat {
     pub(super) inner: CppBox<QTextImageFormat>,
 }
-impl_fmt!(ImageFormat, QTextImageFormat);
+impl_fmt!(RTextImageFormat, QTextImageFormat);
