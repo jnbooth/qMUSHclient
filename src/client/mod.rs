@@ -7,7 +7,7 @@ use std::rc::Rc;
 use std::time::Instant;
 use std::{mem, str};
 
-use cpp_core::{CastFrom, Ptr};
+use cpp_core::Ptr;
 use enumeration::Enum;
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
@@ -106,7 +106,7 @@ pub struct Client {
 impl Widget for Client {
     fn widget(&self) -> Ptr<QWidget> {
         // SAFETY: self.widget is valid
-        unsafe { Ptr::cast_from(self.widget.widget()) }
+        self.widget.widget()
     }
 }
 
