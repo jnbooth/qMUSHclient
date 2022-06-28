@@ -12,7 +12,7 @@ use qt_gui::q_font_database::SystemFont;
 use qt_gui::QGuiApplication;
 use qt_network::q_abstract_socket::SocketState;
 
-use super::Api;
+use crate::api::Api;
 use crate::binding::color::Colored;
 use crate::binding::{RColor, RFont};
 use crate::client::state::Mccp;
@@ -23,7 +23,7 @@ pub fn provide_api<'lua, M: mlua::UserDataMethods<'lua, Api>>(methods: &mut M) {
     methods.add_method("GetInfo", |lua, this, i| this.get_info(lua, i))
 }
 
-fn input_modifiers() -> i32 {
+fn input_modifiers() -> c_int {
     let mut code = 0;
     let keyboard_mods = unsafe { QGuiApplication::keyboard_modifiers() };
     if keyboard_mods.test_flag(KeyboardModifier::ShiftModifier) {
@@ -48,7 +48,6 @@ fn input_modifiers() -> i32 {
     code
 }
 
-//#[api_provider]
 impl Api {
     pub fn get_info<'lua>(&self, lua: &'lua Lua, i: c_int) -> Result<Value<'lua>> {
         let Api {
