@@ -28,7 +28,7 @@ mod font;
 pub use font::RFont;
 
 mod graphics;
-pub use graphics::{RImage, RRect};
+pub use graphics::{RImage, RRect, RRectF};
 
 mod io;
 pub use io::RIODevice;

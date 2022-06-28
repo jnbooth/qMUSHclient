@@ -54,7 +54,7 @@ impl RWidget {
         unsafe { self.inner.height() }
     }
 
-    pub fn rect(&self) -> RRect<c_int> {
+    pub fn rect(&self) -> RRect {
         RRect::from(unsafe { &*self.inner.rect() })
     }
 

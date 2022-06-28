@@ -43,14 +43,14 @@ impl RPoint {
 }
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct RRect<N> {
+pub struct Rect<N> {
     left: N,
     top: N,
     width: N,
     height: N,
 }
 
-impl<N: Copy + Add<N, Output = N>> RRect<N> {
+impl<N: Copy + Add<N, Output = N>> Rect<N> {
     pub fn width(&self) -> N {
         self.width
     }
@@ -71,7 +71,9 @@ impl<N: Copy + Add<N, Output = N>> RRect<N> {
     }
 }
 
-impl From<&QRect> for RRect<c_int> {
+pub type RRect = Rect<c_int>;
+
+impl From<&QRect> for RRect {
     fn from(value: &QRect) -> Self {
         let mut this = Self::default();
         unsafe {
@@ -86,13 +88,15 @@ impl From<&QRect> for RRect<c_int> {
     }
 }
 
-impl From<RRect<c_int>> for CppBox<QRect> {
-    fn from(value: RRect<c_int>) -> Self {
+impl From<RRect> for CppBox<QRect> {
+    fn from(value: RRect) -> Self {
         unsafe { QRect::from_4_int(value.left, value.top, value.width, value.height) }
     }
 }
 
-impl From<&QRectF> for RRect<c_double> {
+pub type RRectF = Rect<c_double>;
+
+impl From<&QRectF> for RRectF {
     fn from(value: &QRectF) -> Self {
         let mut this = Self::default();
         unsafe {
@@ -107,8 +111,8 @@ impl From<&QRectF> for RRect<c_double> {
     }
 }
 
-impl From<RRect<c_double>> for CppBox<QRectF> {
-    fn from(value: RRect<c_double>) -> Self {
+impl From<RRectF> for CppBox<QRectF> {
+    fn from(value: RRectF) -> Self {
         unsafe { QRectF::from_4_double(value.left, value.top, value.width, value.height) }
     }
 }

@@ -11,10 +11,10 @@ use qt_gui::*;
 
 use super::format::{RTextBlockFormat, RTextCharFormat};
 use super::{if_valid, nonnull, Position};
-use crate::binding::graphics::{Painter, RRect};
+use crate::binding::graphics::Painter;
 use crate::binding::text::{RTextCursor, RTextFrameFormat};
 use crate::binding::variant::RVariant;
-use crate::binding::{Printable, RFont};
+use crate::binding::{Printable, RFont, RRectF};
 
 #[derive(Debug)]
 #[repr(transparent)]
@@ -483,7 +483,7 @@ impl RTextDocument {
         unsafe { self.inner.draw_contents_1a(&painter.inner) }
     }
     /// Draws the content of the document with `painter`, clipped to `rect`.
-    pub fn draw_contents_in(&self, painter: &Painter, rect: RRect<c_double>) {
+    pub fn draw_contents_in(&self, painter: &Painter, rect: RRectF) {
         unsafe {
             self.inner
                 .draw_contents_2a(&painter.inner, &CppBox::<QRectF>::from(rect))
