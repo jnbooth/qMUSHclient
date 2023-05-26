@@ -231,7 +231,7 @@ impl Client {
 
     pub(super) fn mxp_collected_element(&mut self) -> Result<(), ParseError> {
         let tag =
-            *self.state.mxp_string.get(0).ok_or_else(|| {
+            *self.state.mxp_string.first().ok_or_else(|| {
                 mxp::ParseError::new("collected element", mxp::Error::EmptyElement)
             })?;
         let bytestring = mem::take(&mut self.state.mxp_string);

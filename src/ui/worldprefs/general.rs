@@ -174,7 +174,7 @@ impl PrefsLogging {
                 &ui.log_file_browse,
                 &ui.auto_log_file_name,
                 move || QString::from_std_str(
-                    &format!("logs/{}.txt", world.upgrade().unwrap().borrow().name)
+                    format!("logs/{}.txt", world.upgrade().unwrap().borrow().name)
                 ),
                 "Text files (*.txt)",
             );

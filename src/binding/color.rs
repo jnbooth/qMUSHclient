@@ -217,7 +217,7 @@ impl RColorPair {
     }
 
     pub fn stylesheet(&self) -> CppBox<QString> {
-        QString::from_std_str(&format!(
+        QString::from_std_str(format!(
             "color: {}; background-color: {};",
             self.foreground, self.background
         ))

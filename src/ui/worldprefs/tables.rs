@@ -159,11 +159,7 @@ impl TriggerEdit {
                 let hour = ui.every_hour.value();
                 let minute = ui.every_minute.value();
                 let second = ui.every_second.value();
-                Event::Interval(Duration::from_hms(
-                    hour as u64,
-                    minute as u64,
-                    second as f64,
-                ))
+                Event::Interval(Duration::from_hms(hour as u64, minute as u64, second))
             } else {
                 let msecs = ui.time.time().msecs_since_start_of_day() as u32;
                 let secs = msecs / 1_000;
@@ -375,7 +371,7 @@ impl TreeItem for Timer {
     fn show_tree_item(&self, item: &QTreeWidgetItem) {
         unsafe {
             item.set_text(0, &QString::from_std_str(&self.label));
-            item.set_text(2, &QString::from_std_str(&self.event.to_string()));
+            item.set_text(2, &QString::from_std_str(self.event.to_string()));
             item.set_text(3, &QString::from_std_str(&self.text));
         }
     }

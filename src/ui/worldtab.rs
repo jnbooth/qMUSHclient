@@ -302,10 +302,7 @@ impl WorldTab {
 
     #[slot(SlotNoArgs)]
     fn report_bug(&self) {
-        open_link(&QString::from_std_str(&format!(
-            "{}/issues",
-            branding::REPO
-        )));
+        open_link(&QString::from_std_str(format!("{}/issues", branding::REPO)));
     }
 
     #[slot(SlotNoArgs)]

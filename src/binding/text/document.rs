@@ -414,7 +414,7 @@ impl RTextDocument {
             if c == 0 {
                 None
             } else {
-                Some(c as u16)
+                Some(c)
             }
         }
     }

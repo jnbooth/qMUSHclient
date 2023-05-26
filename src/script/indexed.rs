@@ -480,7 +480,6 @@ mod tests {
         fn test_delete_all() {
             let mut senders = Senders::new();
             let mut aliases: Vec<_> = (0..11)
-                .into_iter()
                 .map(|i| {
                     let mut alias = Alias::default();
                     alias.send.one_shot = i % 3 == 0;

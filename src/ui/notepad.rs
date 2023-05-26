@@ -32,7 +32,7 @@ pub enum Pad {
 impl Pad {
     fn title(&self) -> CppBox<QString> {
         match self {
-            Self::Script(s) => QString::from_std_str(&s),
+            Self::Script(s) => QString::from_std_str(s),
             Self::Alias { plugin, label } => tr!("Alias: {} ({})", label, plugin),
             Self::Timer { plugin, event } => tr!("Timer: {} ({})", event, plugin),
             Self::Trigger { plugin, label } => tr!("Trigger: {} ({})", label, plugin),
@@ -89,7 +89,7 @@ pub struct Notepad {
 impl Notepad {
     pub fn new(world: &str) -> Self {
         Self {
-            suffix: QString::from_std_str(&format!(" - {}", world)),
+            suffix: QString::from_std_str(format!(" - {}", world)),
             pads: HashMap::new(),
         }
     }

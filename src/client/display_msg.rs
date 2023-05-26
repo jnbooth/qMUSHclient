@@ -140,7 +140,7 @@ impl Client {
                 | Phase::Background24bgFinish
                 | Phase::Background24bbFinish => {
                     self.flush()?; // style is changing, so be sure to print whatever we've got
-                    if (b'0'..=b'9').contains(&c) {
+                    if c.is_ascii_digit() {
                         self.state.ansi_code = self.state.ansi_code * 10 + (c - b'0');
                     } else if c == b'm' {
                         self.interpret_code();
@@ -408,7 +408,8 @@ impl Client {
                             }
                             // terminal type request
                             telnet::TERMINAL_TYPE => {
-                                if self.state.subnegotiation_data.get(0) == Some(&telnet::TTYPE_SEND)
+                                if self.state.subnegotiation_data.first()
+                                    == Some(&telnet::TTYPE_SEND)
                                 {
                                     // we reply: IAC SB TERMINAL-TYPE IS ... IAC SE
                                     // see: RFC 930 and RFC 1060

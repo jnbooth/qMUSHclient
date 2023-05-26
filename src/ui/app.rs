@@ -397,7 +397,7 @@ impl App {
             QFileDialog::get_open_file_name_4a(
                 self.widget(),
                 &tr!("Open world"),
-                &QString::from_std_str(&self.paths.worlds.to_string_lossy()),
+                &QString::from_std_str(self.paths.worlds.to_string_lossy()),
                 &self.save_filter,
             )
             .to_std_string()
