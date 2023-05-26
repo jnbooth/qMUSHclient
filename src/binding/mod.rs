@@ -21,6 +21,8 @@ macro_rules! qt_field {
     };
 }
 
+pub mod device;
+
 pub mod color;
 pub use color::RColor;
 

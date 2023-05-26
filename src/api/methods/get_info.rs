@@ -9,11 +9,11 @@ use mlua::{Lua, Result, Value};
 use qt_core::{GlobalColor, KeyboardModifier, MouseButton};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;
-use qt_gui::QGuiApplication;
 use qt_network::q_abstract_socket::SocketState;
 
 use crate::api::Api;
 use crate::binding::color::Colored;
+use crate::binding::device::{keyboard_modifiers, mouse_buttons};
 use crate::binding::{RColor, RFont};
 use crate::client::state::Mccp;
 use crate::constants::branding;
@@ -25,7 +25,7 @@ pub fn provide_api<'lua, M: mlua::UserDataMethods<'lua, Api>>(methods: &mut M) {
 
 fn input_modifiers() -> c_int {
     let mut code = 0;
-    let keyboard_mods = unsafe { QGuiApplication::keyboard_modifiers() };
+    let keyboard_mods = keyboard_modifiers();
     if keyboard_mods.test_flag(KeyboardModifier::ShiftModifier) {
         code |= 0x00001 | 0x00008;
     }
@@ -35,7 +35,7 @@ fn input_modifiers() -> c_int {
     if keyboard_mods.test_flag(KeyboardModifier::AltModifier) {
         code |= 0x00004 | 0x00080;
     }
-    let mouse_mods = unsafe { QGuiApplication::mouse_buttons() };
+    let mouse_mods = mouse_buttons();
     if mouse_mods.test_flag(MouseButton::LeftButton) {
         code |= 0x10000;
     }
