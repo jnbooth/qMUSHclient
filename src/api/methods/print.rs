@@ -6,16 +6,19 @@ use crate::client::color::Colors;
 
 #[api_provider]
 impl Api {
+    /// Implements https://www.gammon.com.au/scripts/doc.php?function=AppendToNotepad
     #[api("AppendToNotepad")]
     pub fn append_to_notepad_api(&self, title: String, text: LString) {
         self.append_to_notepad(title, text);
     }
 
+    /// Implements https://www.gammon.com.au/scripts/doc.php?function=Note
     #[api("Note")]
     pub fn note_api(&self, text: LString) {
         self.note(text);
     }
 
+    /// Implements https://www.gammon.com.au/scripts/doc.php?function=ColourNote
     #[api("ColourNote")]
     pub fn color_note_api(&self, lua: &Lua, vals: MultiValue) -> Result<()> {
         for (fg, bg, s) in vals.into_iter().tuples() {
@@ -27,6 +30,7 @@ impl Api {
         Ok(())
     }
 
+    /// Implements https://www.gammon.com.au/scripts/doc.php?function=Send
     #[api("Send")]
     pub fn send_api(&self, text: LString) {
         let mut bytes = text.as_bytes_with_nul().to_vec();

@@ -49,6 +49,7 @@ fn input_modifiers() -> c_int {
 }
 
 impl Api {
+    /// Implements https://www.gammon.com.au/scripts/doc.php?function=GetInfo
     pub fn get_info<'lua>(&self, lua: &'lua Lua, i: c_int) -> Result<Value<'lua>> {
         let Api {
             output,

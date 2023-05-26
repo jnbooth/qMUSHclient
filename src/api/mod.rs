@@ -23,6 +23,7 @@ mod methods;
 mod state;
 pub use state::ApiState;
 
+/// Handles function calls from the Lua API.
 #[derive(TrContext)]
 pub struct Api {
     output: RTextBrowser,
@@ -53,9 +54,6 @@ impl UserData for Api {
 }
 
 impl Api {
-    /// # Safety
-    ///
-    /// `output` and `input` must be valid and non-null.
     #[allow(clippy::too_many_arguments)]
     pub fn new(
         output: RTextBrowser,
@@ -132,7 +130,7 @@ impl Api {
         self.cursor.format.block.set_line_height(spacing);
     }
 
-    /// If the [`QLineEdit`] input field if is empty, inserts the given text into it.
+    /// If the [`QLineEdit`] input field is empty, inserts the given text into it.
     pub fn command<S: Printable>(&self, text: S) {
         if self.input.text().is_empty() {
             self.input.set_text(text);

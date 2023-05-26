@@ -7,6 +7,7 @@ use crate::script::ScriptArg;
 
 #[api_provider]
 impl Api {
+    /// Implements https://www.gammon.com.au/scripts/doc.php?function=WindowInfo
     #[api("WindowInfo")]
     pub fn window_info<'lua>(
         &self,

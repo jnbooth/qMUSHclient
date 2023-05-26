@@ -8,6 +8,7 @@ use crate::script::{Reaction, Sender, Trigger};
 
 #[api_provider]
 impl Api {
+    /// Implements https://www.gammon.com.au/scripts/doc.php?function=AddTrigger
     #[api("AddTrigger")]
     pub fn add_trigger(&self, lua: &Lua, vals: MultiValue) -> Result<()> {
         let mut iter = vals.into_iter();
