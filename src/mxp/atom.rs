@@ -6,8 +6,8 @@ use enumeration::{self, Enum, EnumSet};
 use once_cell::sync::Lazy;
 
 use super::Arguments;
-use crate::caseinsensitive::ascii::{CaseFold, CaseFoldMap};
-use crate::caseinsensitive::ToCaseFold;
+use crate::case_insensitive::ascii::{CaseFold, CaseFoldMap};
+use crate::case_insensitive::ToCaseFold;
 
 /// Outstanding (unclosed) tags.
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

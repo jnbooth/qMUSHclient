@@ -4,7 +4,7 @@ use std::str;
 use enumeration::{Enum, EnumSet};
 
 use crate::binding::RColor;
-use crate::caseinsensitive::ascii::CaseFoldMap;
+use crate::case_insensitive::ascii::CaseFoldMap;
 use crate::client::style::TextStyle;
 use crate::tr::TrContext;
 

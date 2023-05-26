@@ -26,7 +26,7 @@ pub mod tr;
 
 mod api;
 pub mod binding;
-pub mod caseinsensitive;
+pub mod case_insensitive;
 mod client;
 mod constants;
 mod escape;

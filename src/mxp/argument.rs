@@ -7,7 +7,7 @@ use hashbrown::hash_map;
 use mlua::{Lua, Value};
 
 use super::{validate, Error, ParseError, Words};
-use crate::caseinsensitive::ascii::{CaseFold, CaseFoldMap};
+use crate::case_insensitive::ascii::{CaseFold, CaseFoldMap};
 use crate::script::ScriptArg;
 
 pub type Argument = String;
@@ -297,7 +297,7 @@ impl<'a> IntoIterator for &'a mut Arguments {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::caseinsensitive::ToCaseFold;
+    use crate::case_insensitive::ToCaseFold;
 
     #[test]
     fn arguments() {

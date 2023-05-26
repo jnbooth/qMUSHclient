@@ -5,7 +5,7 @@ use enumeration::EnumSet;
 use super::argument::{Arg, Arguments, Keyword};
 use super::error::{validate, Error, ParseError};
 use super::{Atom, Words};
-use crate::caseinsensitive::ascii::CaseFoldMap;
+use crate::case_insensitive::ascii::CaseFoldMap;
 use crate::mxp::TagFlag;
 
 /// List of arguments to an MXP tag.
