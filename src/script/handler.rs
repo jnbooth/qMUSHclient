@@ -185,7 +185,6 @@ impl PluginHandler {
         }
         match request.send_to {
             SendTo::World => {
-                // if this is suppressing output, don't show our response either
                 if !request.omit_from_output {
                     self.api.echo(&request.text);
                 }

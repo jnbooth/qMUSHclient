@@ -8,62 +8,51 @@ use crate::script::ScriptArg;
 #[allow(dead_code)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Callback {
-    // install / remove
     Install,
     Open,
     Close,
     ListChanged,
 
-    // world state
     Connect,
     Disconnect,
 
     SaveState,
     WorldSave,
 
-    // enable / disable
     Enable,
     Disable,
 
-    // the focus
     GetFocus,
     LoseFocus,
 
-    // capture stuff
     Trace,
     PacketDebug,
     Broadcast,
     Screendraw,
     SelectionChanged,
 
-    // sounds
     PlaySound,
 
-    // stuff received/sent
     Send,
     Sent,
     PartialLine,
     LineReceived,
     PacketReceived,
 
-    // telnet negotiation
     TelnetOption,
     TelnetRequest,
     TelnetSubnegotiation,
     IacGa,
 
-    // commands
     Command,
     CommandEntered,
     CommandChanged,
     TabComplete,
 
-    // resizing, ticking, moving, rhythm
     WorldOutputResized,
     Tick,
     MouseMoved,
 
-    // MXP stuff
     MxpStart,
     MxpStop,
     MxpOpenTag,
@@ -72,7 +61,6 @@ pub enum Callback {
     MxpSetEntity,
     MxpError,
 
-    // chat stuff
     ChatAccept,
     ChatMessage,
     ChatMessageOut,
@@ -80,7 +68,6 @@ pub enum Callback {
     ChatNewUser,
     ChatUserDisconnect,
 
-    // drawing
     DrawOutputWindow,
 }
 

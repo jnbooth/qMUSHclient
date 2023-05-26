@@ -19,8 +19,6 @@ macro_rules! rgbtrace {
     ($($t:tt)*) => {};
 }
 
-//#[macro_use]
-//pub mod enums;
 #[macro_use]
 pub mod tr;
 

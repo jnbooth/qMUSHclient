@@ -113,7 +113,7 @@ trait PrefPageExt: 'static + PrefPage + Widget {
         let worldrc = self.get_world().upgrade().unwrap();
         let mut worldref = worldrc.borrow_mut();
         let font = getter(&mut worldref);
-        // SAFETY: all fields are valid.
+        // SAFETY: fields are valid.
         unsafe {
             self.connect_form(
                 sizefield,

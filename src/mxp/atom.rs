@@ -127,7 +127,6 @@ pub enum Action {
     /// expire
     Expire,
 
-    // non-standard yet
     /// close all open tags
     Reset,
     /// MXP command (eg. MXP OFF)
@@ -189,26 +188,22 @@ impl Atom {
                     Some(atom) if atom.flags.contains(TagFlag::NotImp) => {
                         write!(supported, "-{} ", tag).expect(ERR)
                     }
-                    Some(atom) => {
-                        match questions.next() {
-                            None => write!(supported, "+{} ", tag).expect(ERR),
-                            Some("*") => {
-                                // they want list of options for this tag
-                                // now list the sub-items it supports
-                                for atom_arg in atom.args {
-                                    write!(supported, "+{}.{} ", atom.name, atom_arg).expect(ERR);
-                                }
-                            }
-                            Some(subtag) => {
-                                let can = if atom.args.contains(&subtag.to_case_fold()) {
-                                    '+'
-                                } else {
-                                    '-'
-                                };
-                                write!(supported, "{}{}", can, subtag).expect(ERR);
+                    Some(atom) => match questions.next() {
+                        None => write!(supported, "+{} ", tag).expect(ERR),
+                        Some("*") => {
+                            for atom_arg in atom.args {
+                                write!(supported, "+{}.{} ", atom.name, atom_arg).expect(ERR);
                             }
                         }
-                    }
+                        Some(subtag) => {
+                            let can = if atom.args.contains(&subtag.to_case_fold()) {
+                                '+'
+                            } else {
+                                '-'
+                            };
+                            write!(supported, "{}{}", can, subtag).expect(ERR);
+                        }
+                    },
                 }
             }
         }
@@ -280,7 +275,6 @@ static ALL_ATOMS: Lazy<CaseFoldMap<String, Atom>> = Lazy::new(|| {
     add("gauge", enums![NotImp], Gauge, &[]);
     add("stat", enums![NotImp], Stat, &[]);
     add("expire", enums![NotImp], Expire, &[]);
-    // strictly speaking <LI> isn't a command, but few people bother with </li>
     add("li", enums![Command], Li, &[]);
     add("sound", enums![Command, NotImp], Sound, &[]);
     add("music", enums![Command, NotImp], Sound, &[]);

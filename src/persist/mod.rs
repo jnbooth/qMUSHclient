@@ -51,7 +51,6 @@ pub fn load_world(path: &str) -> Result<World, Error> {
     }?;
     match version {
         1 => bincode::deserialize_from(file).map_err(Into::into),
-        //1 => bincode::deserialize_from::<_, v3::World>(file)?.try_into()?,
         _ => Err(Error::NotSave),
     }
 }

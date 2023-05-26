@@ -168,7 +168,7 @@ impl PrefsLogging {
 
             let ui = &self.ui;
             let world = self.world.clone();
-            // SAFETY: all fields are valid.
+            // SAFETY: fields are valid.
             self.connect_browse_button(
                 Browse::Save,
                 &ui.log_file_browse,
@@ -244,7 +244,7 @@ impl PrefsChat {
                 chat_file_save_directory,
             );
             let ui = &self.ui;
-            // SAFETY: all fields are valid.
+            // SAFETY: fields are valid.
             self.connect_browse_button(
                 Browse::Directory,
                 &ui.chat_file_save_directory_browse,

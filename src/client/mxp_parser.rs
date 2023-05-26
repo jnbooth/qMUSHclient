@@ -62,26 +62,25 @@ impl Client {
     pub(super) fn mxp_off(&mut self, completely: bool) {
         self.style.reset();
 
-        // do nothing else if already off
         if !self.api_state.mxp_active.get() {
             return;
         }
-        // don't close protected tags here
+
         let closed = match self.state.mxp_active_tags.iter().rposition(|x| x.no_reset) {
             None => 0,
             Some(i) => i + 1,
         };
         self.mxp_close_tags_from(closed);
         self.state.in_paragraph = false;
-        self.state.mxp_script = false; // cancel scripts
-        self.state.pre_mode = false; // no more preformatted text
-        self.state.list_mode = None; // no more ordered/unordered lists
+        self.state.mxp_script = false;
+        self.state.pre_mode = false;
+        self.state.list_mode = None;
         self.state.list_index = 0;
 
         if !completely {
             return;
         }
-        self.mxp_mode_change(Some(mxp::Mode::OPEN)); // back to open mode
+        self.mxp_mode_change(Some(mxp::Mode::OPEN));
         if self.phase.is_mxp() {
             self.phase = Phase::Normal;
         }
@@ -92,7 +91,6 @@ impl Client {
     }
 
     pub(super) fn mxp_on(&mut self, pueblo: bool, manual: bool) {
-        // do nothing if already on
         if self.api_state.mxp_active.get() {
             return;
         }
@@ -106,12 +104,10 @@ impl Client {
         self.state.last_outstanding_tag_count = 0;
         self.state.list_mode = None;
 
-        // if they turn it on manually we want to leave everything set up
-        // (e.g. they turn it off, they turn it on again)
         if manual {
             return;
         }
-        // make sure we are back to open as default
+
         self.state.mxp_mode_default = mxp::Mode::OPEN;
         self.state.mxp_mode = mxp::Mode::OPEN;
         self.state.mxp_active_tags.clear();
@@ -145,7 +141,7 @@ impl Client {
         self.mxp_restore_mode();
         let mut words = mxp::Words::new(tag_body);
         let name = words.validate_next_or(mxp::Error::InvalidElementName)?;
-        // should just have tag name, not </tag blah blah>
+
         if words.next().is_some() {
             return Err(mxp::ParseError::new(
                 tag_body,
@@ -176,7 +172,7 @@ impl Client {
             ));
         }
         let mut words = mxp::Words::new(tag);
-        // first word (e.g. ELEMENT or ENTITY)
+
         let definition = words.validate_next_or(mxp::Error::InvalidDefinition)?;
         let name = words.validate_next_or(mxp::Error::InvalidElementName)?;
         match definition.to_lowercase().as_str() {
@@ -247,7 +243,7 @@ impl Client {
     }
 
     fn mxp_start_tag(&mut self, tag: &str) -> Result<(), ParseError> {
-        self.flush()?; // probably going to change style or insert HTML
+        self.flush()?;
         let secure = self.state.mxp_mode.is_secure();
         self.mxp_restore_mode();
         let mut words = mxp::Words::new(tag);
@@ -268,7 +264,6 @@ impl Client {
         let argstring = words.as_str();
         let mut args = mxp::Arguments::parse_words(words)?;
 
-        // call script if required for user-defined elements
         if name != "afk"
             && self.plugins.send_to_all_until(
                 Callback::MxpOpenTag,
@@ -280,7 +275,7 @@ impl Client {
         }
 
         if !flags.contains(mxp::TagFlag::Command) {
-            // TODO do nothing?
+            // TODO ???
         }
 
         let mut span = self.style.span().child();
@@ -359,11 +354,8 @@ impl Client {
                 Colors::named(name)
             }
         };
-        // special processing for Pueblo
-        // a tag like this: <A XCH_CMD="examine #1">
-        // will convert to a SEND tag
         if action == Action::Hyperlink && args.get("xch_cmd").is_some() {
-            self.api_state.pueblo_active.set(true); // for correct newline processing
+            self.api_state.pueblo_active.set(true);
             action = Action::Send;
         }
         match action {
@@ -508,13 +500,11 @@ impl Client {
             Action::Reset => {
                 self.mxp_off(false);
             }
-            // MXP options  (MXP OFF, MXP DEFAULT_OPEN, MXP DEFAULT_SECURE etc.
             Action::Mxp => {
                 if args.has_keyword(Keyword::Off) {
                     self.mxp_off(true);
                 }
 
-                // TODO MUSHclient comments out everything below—why?
                 if args.has_keyword(Keyword::DefaultLocked) {
                     self.state.mxp_mode_default = mxp::Mode::LOCKED;
                 } else if args.has_keyword(Keyword::DefaultSecure) {
@@ -575,7 +565,7 @@ impl Client {
                 }
             }
             Action::XchPage => {
-                self.api_state.pueblo_active.set(true); // for correct newline processing
+                self.api_state.pueblo_active.set(true);
                 self.mxp_off(false);
             }
             Action::Var => {
@@ -605,7 +595,6 @@ impl Client {
         mxp::validate(name, mxp::Error::InvalidEntityName)?;
         if let Some(entity) = self.state.mxp_entities.get(text)? {
             let text = entity.as_bytes().to_vec();
-            // if the entity happens to be < & > etc. don't reprocess it
             self.api_state.mxp_active.set(false);
             self.display_msg(text)?;
             self.api_state.mxp_active.set(true);
@@ -618,7 +607,6 @@ impl Client {
         let newmode = newmode.unwrap_or(self.state.mxp_mode_default);
         let closing = oldmode.is_open() && !newmode.is_open();
         if closing {
-            // don't close securely-opened tags here
             let closed = match self.state.mxp_active_tags.iter().rposition(|x| x.secure) {
                 None => 0,
                 Some(i) => i + 1,

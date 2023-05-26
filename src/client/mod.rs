@@ -237,9 +237,7 @@ impl Client {
 
     pub fn disconnect(&mut self) {
         if self.socket.state() != SocketState::UnconnectedState {
-            // don't want reconnect on manual disconnect
             self.api_state.disconnect_ok.set(true);
-            // work out how long they were connected
             let connect_duration = self.api_state.total_connect_duration.get();
             self.api_state
                 .total_connect_duration
@@ -415,7 +413,7 @@ impl Client {
                 log.write_all(cfg.suffix.as_bytes())?;
             }
             #[cfg(debug_assertions)]
-            log.flush()?; // realtime logging
+            log.flush()?;
             Ok(())
         }
         if let Some(log) = self.log.as_mut() {
@@ -467,10 +465,6 @@ impl Client {
     }
 
     // See: https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit
-    /// ESC[ 38:5:<n> m Select foreground color
-    /// ESC[ 48:5:<n> m Select background color
-    /// ESC[ 38;2;<r>;<g>;<b> m Select RGB foreground color
-    /// ESC[ 48;2;<r>;<g>;<b> m Select RGB background color
     fn interpret_256_ansi(&mut self, code: u8) {
         fn build_ansi_color(state: &ClientState) -> WorldColor {
             WorldColor::Plain(RColor::rgb(
@@ -480,36 +474,28 @@ impl Client {
             ))
         }
         match self.phase {
-            // ESC[ 38: (foreground)
             Phase::Foreground256Start => match code {
                 5 => {
-                    // 8-bit color
                     self.state.ansi_code = 0;
                     self.phase = Phase::Foreground256Finish;
                 }
                 2 => {
-                    // 24-bit RGB
                     self.state.ansi_code = 0;
                     self.phase = Phase::Foreground24bFinish;
                 }
                 _ => self.phase = Phase::Normal,
             },
-            // ESC[ 48: (background)
-            Phase::Background256Start => {
-                match code {
-                    5 => {
-                        // 8-bit color
-                        self.state.ansi_code = 0;
-                        self.phase = Phase::Background256Finish;
-                    }
-                    2 => {
-                        // 24-bit RGB
-                        self.state.ansi_code = 0;
-                        self.phase = Phase::Background24bFinish;
-                    }
-                    _ => self.phase = Phase::Normal,
+            Phase::Background256Start => match code {
+                5 => {
+                    self.state.ansi_code = 0;
+                    self.phase = Phase::Background256Finish;
                 }
-            }
+                2 => {
+                    self.state.ansi_code = 0;
+                    self.phase = Phase::Background24bFinish;
+                }
+                _ => self.phase = Phase::Normal,
+            },
             Phase::Foreground256Finish => {
                 self.style
                     .set_foreground(WorldColor::Xterm(self.state.ansi_code));
@@ -568,7 +554,6 @@ impl Client {
         let [newhigh, newlow] = new_width.to_be_bytes();
         let height = (self.widget.height() / self.widget.font_metrics().height()) as u16;
         let [high, low] = height.to_be_bytes();
-        // now tell them our size
         let packet = [
             telnet::IAC,
             telnet::SB,

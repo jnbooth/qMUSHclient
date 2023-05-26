@@ -177,8 +177,6 @@ impl Arguments {
         while let Some(name) = iter.next() {
             if name == "/" {
                 if iter.next().is_none() {
-                    // NB - not implemented yet - we have detected an empty tag.
-                    // e.g. <sound blah blah />
                     return Ok(());
                 } else {
                     return Err(ParseError::new(name, Error::InvalidArgumentName));
@@ -186,7 +184,7 @@ impl Arguments {
             }
             if iter.as_str().starts_with('=') {
                 validate(name, Error::InvalidArgumentName)?;
-                iter.next(); // skip equals sign
+                iter.next();
                 let val = iter
                     .next()
                     .ok_or_else(|| ParseError::new(name, Error::NoArgument))?;

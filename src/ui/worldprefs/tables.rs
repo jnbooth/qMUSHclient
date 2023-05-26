@@ -68,7 +68,7 @@ impl TriggerEdit {
     #[rustfmt::skip]
     fn init(&self) {
         let ui = &self.ui;
-        // SAFETY: all fields are valid.
+        // SAFETY: fields are valid.
         unsafe {
             let ok_button = ui.button_box.button(StandardButton::Ok);
             ok_button.set_enabled(false);
@@ -748,7 +748,7 @@ impl PrefsTriggers {
         let mut world = worldrc.borrow_mut();
         let trigger = &mut world.triggers[pos];
         let dialog = TriggerEdit::new(&self.ui.widget);
-        // SAFETY: all fields are valid.
+        // SAFETY: fields are valid.
         unsafe {
             self.connect_browse_button(
                 Browse::Open,
