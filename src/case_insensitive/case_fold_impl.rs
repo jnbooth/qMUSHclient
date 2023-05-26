@@ -1,4 +1,5 @@
-use super::{AsRefHashMap, ToCaseFold};
+use super::as_ref_hashmap::AsRefHashMap;
+use super::to_case_fold::ToCaseFold;
 
 macro_rules! impl_ci {
     ($t:ty) => {
