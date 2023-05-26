@@ -114,7 +114,7 @@ impl Client {
     /// # Safety
     ///
     /// `output` and `input` must be valid and non-null.
-    pub unsafe fn new(
+    pub fn new(
         output: RTextBrowser,
         input: RLineEdit,
         socket: QBox<QTcpSocket>,

@@ -1,5 +1,6 @@
 use std::{mem, ptr};
-use super::maybe_uninit::MaybeUninit;
+
+use mem::MaybeUninit;
 
 /// Pulls `N` items from `iter` and returns them as an array. If the iterator
 /// yields fewer than `N` items, `None` is returned and all already yielded
@@ -20,16 +21,17 @@ where
         return unsafe { Some(mem::zeroed()) };
     }
 
-    struct Guard<T, const N: usize> {
-        ptr: *mut T,
+    struct Guard<'a, T, const N: usize> {
+        array_mut: &'a mut [MaybeUninit<T>; N],
         initialized: usize,
     }
 
-    impl<T, const N: usize> Drop for Guard<T, N> {
+    impl<T, const N: usize> Drop for Guard<'_, T, N> {
         fn drop(&mut self) {
             debug_assert!(self.initialized <= N);
 
-            let initialized_part = ptr::slice_from_raw_parts_mut(self.ptr, self.initialized);
+            let initialized_part =
+                ptr::slice_from_raw_parts_mut(self.array_mut.as_mut_ptr(), self.initialized);
 
             // SAFETY: this raw slice will contain only initialized objects.
             unsafe {
@@ -38,16 +40,19 @@ where
         }
     }
 
-    let mut array = MaybeUninit::uninit_array::<N>();
-    let mut guard: Guard<_, N> =
-        Guard { ptr: MaybeUninit::slice_as_mut_ptr(&mut array), initialized: 0 };
+    // SAFETY: An uninitialized `[MaybeUninit<I::Item>; N]` is valid.
+    let mut array = unsafe { MaybeUninit::<[MaybeUninit<I::Item>; N]>::uninit().assume_init() };
+    let mut guard = Guard {
+        array_mut: &mut array,
+        initialized: 0,
+    };
 
     while let Some(item) = iter.next() {
         // SAFETY: `guard.initialized` starts at 0, is increased by one in the
         // loop and the loop is aborted once it reaches N (which is
         // `array.len()`).
         unsafe {
-            array.get_unchecked_mut(guard.initialized).write(item);
+            guard.array_mut.get_unchecked_mut(guard.initialized).write(item);
         }
         guard.initialized += 1;
 
@@ -57,7 +62,7 @@ where
 
             // SAFETY: the condition above asserts that all elements are
             // initialized.
-            let out = unsafe { MaybeUninit::array_assume_init(array) };
+            let out = unsafe { (&array as *const _ as *const [I::Item; N]).read() };
             return Some(out);
         }
     }

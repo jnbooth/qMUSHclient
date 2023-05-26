@@ -1,5 +1,4 @@
 mod array;
-mod maybe_uninit;
 use array::collect_into_array;
 
 use std::iter::{ExactSizeIterator, FusedIterator};
