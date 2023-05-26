@@ -1,4 +1,4 @@
-use iter_chunks::IterChunks;
+use itertools::Itertools;
 use mlua::{FromLua, Lua, MultiValue, Result, String as LString};
 
 use crate::api::Api;
@@ -18,7 +18,7 @@ impl Api {
 
     #[api("ColourNote")]
     pub fn color_note_api(&self, lua: &Lua, vals: MultiValue) -> Result<()> {
-        for [fg, bg, s] in vals.into_iter().chunks() {
+        for (fg, bg, s) in vals.into_iter().tuples() {
             let s = String::from_lua(s, lua)?;
             let fg = Colors::from_lua(fg, lua)?;
             let bg = Colors::from_lua(bg, lua)?;
