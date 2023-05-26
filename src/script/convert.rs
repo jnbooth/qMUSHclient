@@ -1,5 +1,5 @@
 use std::borrow::Cow;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 use std::ffi::{OsStr, OsString};
 use std::hash::{BuildHasher, Hash};
 use std::path::{Path, PathBuf};
@@ -212,17 +212,7 @@ impl ScriptArg for [(); 0] {
     }
 }
 
-impl<K: ScriptArg + Eq + Hash, V: ScriptArg, S: BuildHasher> ScriptArg
-    for hashbrown::HashMap<K, V, S>
-{
-    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        create_table(lua, self)
-    }
-}
-
-impl<K: ScriptArg + Eq + Hash, V: ScriptArg, S: BuildHasher> ScriptArg
-    for std::collections::HashMap<K, V, S>
-{
+impl<K: ScriptArg + Eq + Hash, V: ScriptArg, S: BuildHasher> ScriptArg for HashMap<K, V, S> {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         create_table(lua, self)
     }

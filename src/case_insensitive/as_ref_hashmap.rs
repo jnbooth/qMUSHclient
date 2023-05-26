@@ -1,13 +1,12 @@
 use std::borrow::Borrow;
+use std::collections::hash_map::{Entry, HashMap, RandomState};
 use std::fmt::{self, Debug, Formatter};
 use std::hash::{BuildHasher, Hash};
 use std::iter::FromIterator;
 use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
 
-use hashbrown::hash_map::{DefaultHashBuilder, Entry, HashMap, OccupiedError};
-
-pub struct AsRefHashMap<R: ?Sized, K, V, S = DefaultHashBuilder>(HashMap<K, V, S>, PhantomData<R>);
+pub struct AsRefHashMap<R: ?Sized, K, V, S = RandomState>(HashMap<K, V, S>, PhantomData<R>);
 
 impl<R: ?Sized, K: Eq + Hash, V: PartialEq, S: BuildHasher> PartialEq for AsRefHashMap<R, K, V, S> {
     fn eq(&self, other: &Self) -> bool {
@@ -35,21 +34,20 @@ impl<R: ?Sized, K, V, S: Default> Default for AsRefHashMap<R, K, V, S> {
     }
 }
 
-impl<R: ?Sized, K, V> AsRefHashMap<R, K, V, DefaultHashBuilder> {
+impl<R: ?Sized, K, V, S: Default + BuildHasher> AsRefHashMap<R, K, V, S> {
     pub fn new() -> Self {
-        Self(HashMap::new(), PhantomData)
+        Self::default()
     }
 
     pub fn with_capacity(capacity: usize) -> Self {
-        Self(HashMap::with_capacity(capacity), PhantomData)
+        Self(
+            HashMap::with_capacity_and_hasher(capacity, S::default()),
+            PhantomData,
+        )
     }
 }
 
 impl<R: ?Sized, K, V, S> AsRefHashMap<R, K, V, S> {
-    pub const fn with_hasher(hash_builder: S) -> Self {
-        Self(HashMap::with_hasher(hash_builder), PhantomData)
-    }
-
     pub fn with_capacity_and_hasher(capacity: usize, hash_builder: S) -> Self {
         Self(
             HashMap::with_capacity_and_hasher(capacity, hash_builder),
@@ -60,7 +58,7 @@ impl<R: ?Sized, K, V, S> AsRefHashMap<R, K, V, S> {
 
 impl<R: ?Sized + Eq + Hash, K: Eq + Hash + Borrow<R>, V, S: BuildHasher> AsRefHashMap<R, K, V, S> {
     #[inline]
-    pub fn entry<Q>(&mut self, k: Q) -> Entry<K, V, S>
+    pub fn entry<Q>(&mut self, k: Q) -> Entry<K, V>
     where
         Q: Into<K>,
     {
@@ -73,14 +71,6 @@ impl<R: ?Sized + Eq + Hash, K: Eq + Hash + Borrow<R>, V, S: BuildHasher> AsRefHa
         Q: Into<K>,
     {
         self.0.insert(k.into(), v)
-    }
-
-    #[inline]
-    pub fn try_insert<Q>(&mut self, k: Q, v: V) -> Result<&mut V, OccupiedError<K, V, S>>
-    where
-        Q: Into<K>,
-    {
-        self.0.try_insert(k.into(), v)
     }
 
     #[inline]
@@ -105,14 +95,6 @@ impl<R: ?Sized + Eq + Hash, K: Eq + Hash + Borrow<R>, V, S: BuildHasher> AsRefHa
         Q: ?Sized + AsRef<R>,
     {
         self.0.get_key_value(k.as_ref())
-    }
-
-    #[inline]
-    pub fn get_key_value_mut<Q>(&mut self, k: &Q) -> Option<(&K, &mut V)>
-    where
-        Q: ?Sized + AsRef<R>,
-    {
-        self.0.get_key_value_mut(k.as_ref())
     }
 
     #[inline]

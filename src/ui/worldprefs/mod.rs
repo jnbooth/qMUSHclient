@@ -1,8 +1,8 @@
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::rc::{Rc, Weak};
 
 use cpp_core::{CastInto, Ptr, Ref};
-use hashbrown::HashMap;
 use qt_core::{slot, QPtr};
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::*;

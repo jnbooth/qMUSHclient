@@ -437,11 +437,10 @@ pub struct TimerXml<'a> {
 impl From<TimerXml<'_>> for Timer {
     fn from(value: TimerXml) -> Self {
         let event = if value.at_time {
-            Event::Time(NaiveTime::from_hms(
-                value.hour as u32,
-                value.minute as u32,
-                value.second as u32,
-            ))
+            Event::Time(
+                NaiveTime::from_hms_opt(value.hour as u32, value.minute as u32, value.second as u32)
+                    .unwrap(),
+            )
         } else {
             Event::Interval(Duration::from_hms(value.hour, value.minute, value.second))
         };

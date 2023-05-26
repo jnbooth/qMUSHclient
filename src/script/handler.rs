@@ -1,4 +1,6 @@
 use std::cell::RefCell;
+use std::collections::hash_map::Entry;
+use std::collections::HashMap;
 use std::fmt::Write;
 use std::fs::File;
 use std::hash::Hash;
@@ -8,8 +10,6 @@ use std::rc::{Rc, Weak};
 use std::{io, mem, str};
 
 use enumeration::EnumSet;
-use hashbrown::hash_map::Entry;
-use hashbrown::HashMap;
 use mlua::{self, FromLuaMulti, Lua, MetaMethod, ToLuaMulti, UserData, UserDataMethods, Value};
 use uuid::Uuid;
 

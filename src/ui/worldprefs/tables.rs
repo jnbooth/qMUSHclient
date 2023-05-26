@@ -1,4 +1,6 @@
 use std::cell::RefCell;
+use std::collections::hash_map::Entry;
+use std::collections::HashMap;
 use std::marker::PhantomData;
 use std::os::raw::{c_double, c_int};
 use std::path::PathBuf;
@@ -9,8 +11,6 @@ use std::time::Duration;
 use chrono::{NaiveTime, Timelike};
 use cpp_core::{CastInto, CppDeletable, Ptr};
 use enumeration::Enum;
-use hashbrown::hash_map::Entry;
-use hashbrown::HashMap;
 use qt_core::{slot, QPtr, QString, QTime, SlotNoArgs, SlotOfInt, SlotOfQString};
 use qt_gui::q_palette::ColorRole;
 use qt_widgets::q_dialog::DialogCode;
@@ -164,7 +164,8 @@ impl TriggerEdit {
                 let msecs = ui.time.time().msecs_since_start_of_day() as u32;
                 let secs = msecs / 1_000;
                 let nano = (msecs % 1_0000) * 1_000_000;
-                Event::Time(NaiveTime::from_num_seconds_from_midnight(secs, nano))
+                let time = NaiveTime::from_num_seconds_from_midnight_opt(secs, nano);
+                Event::Time(time.unwrap())
             };
             Timer {
                 send: self.sender(),

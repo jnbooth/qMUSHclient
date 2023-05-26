@@ -1,9 +1,8 @@
 use std::borrow::{Borrow, ToOwned};
 use std::cmp::Ordering;
+use std::collections::hash_map::RandomState;
 use std::fmt::{self, Debug, Display, Formatter};
 use std::hash::{Hash, Hasher};
-
-use hashbrown::hash_map::DefaultHashBuilder;
 
 use super::AsRefHashMap;
 
@@ -171,7 +170,7 @@ impl<'a, S: AsRef<str> + ToOwned> Borrow<unicode::CaseFold<str>> for CaseFold<'a
     }
 }
 
-pub type CaseFoldMap<K, V, S = DefaultHashBuilder> =
+pub type CaseFoldMap<K, V, S = RandomState> =
     AsRefHashMap<unicode::CaseFold<str>, CaseFold<'static, K>, V, S>;
 
 macro_rules! impl_ci {

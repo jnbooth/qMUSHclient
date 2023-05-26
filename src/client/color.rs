@@ -1,6 +1,6 @@
 use std::borrow::Cow;
+use std::collections::HashMap;
 
-use hashbrown::HashMap;
 use mlua::{Error as E, FromLua, Lua, Value};
 use once_cell::sync::Lazy;
 use qt_core::GlobalColor;

@@ -1,8 +1,8 @@
+use std::collections::HashMap;
 use std::path::PathBuf;
 
 use chrono::Utc;
 use enumeration::Enum;
-use hashbrown::HashMap;
 use qt_core::{GlobalColor, Key};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;
@@ -528,7 +528,7 @@ impl World {
     }
 
     pub fn world_plugin(&self) -> PluginPack {
-        let today = Utc::today().naive_utc();
+        let today = Utc::now().date_naive();
         let metadata = PluginMetadata {
             name: tr!("World Script: {}", self.name).to_std_string(),
             written: today,

@@ -96,17 +96,16 @@ macro_rules! impl_ci {
             }
         }
 
-        pub type CaseFoldMap<K, V, S = DefaultHashBuilder> =
+        pub type CaseFoldMap<K, V, S = RandomState> =
             super::AsRefHashMap<CaseFold<$t>, CaseFold<K>, V, S>;
     };
 }
 
 pub mod ascii {
+    use std::collections::hash_map::RandomState;
     use std::fmt::{self, Display, Formatter};
     use std::hash::{Hash, Hasher};
     use std::{iter, slice};
-
-    use hashbrown::hash_map::DefaultHashBuilder;
 
     use super::ToCaseFold;
 
@@ -160,12 +159,11 @@ pub mod ascii {
 
 pub mod unicode {
     use std::char::ToLowercase;
+    use std::collections::hash_map::RandomState;
     use std::fmt::{self, Display, Formatter};
     use std::hash::{Hash, Hasher};
     use std::iter;
     use std::str::Chars;
-
-    use hashbrown::hash_map::DefaultHashBuilder;
 
     use super::ToCaseFold;
 

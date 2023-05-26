@@ -1,5 +1,6 @@
+use std::collections::HashMap;
+
 use cpp_core::CppBox;
-use hashbrown::HashMap;
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 use qt_core::{QBox, QString};

@@ -1,10 +1,10 @@
 use std::borrow::Borrow;
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::io;
 use std::os::raw::c_double;
 use std::rc::Rc;
 
-use hashbrown::HashMap;
 use mlua::{UserData, UserDataMethods};
 use qt_gui::q_text_cursor::MoveOperation;
 use qt_network::QTcpSocket;

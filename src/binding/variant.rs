@@ -1,5 +1,4 @@
-use std::collections;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 use std::error::Error as StdError;
 use std::fmt::{self, Display, Formatter};
 use std::iter::FromIterator;
@@ -513,35 +512,17 @@ impl TryFrom<RVariant> for Vec<String> {
     }
 }
 
-impl<K: AsRef<str>> From<&hashbrown::HashMap<K, String>> for RVariant {
-    fn from(value: &hashbrown::HashMap<K, String>) -> Self {
+impl<K: AsRef<str>> From<&HashMap<K, String>> for RVariant {
+    fn from(value: &HashMap<K, String>) -> Self {
         Self::from_map(value)
     }
 }
-impl<K: AsRef<str>, V: Into<RVariant>> From<hashbrown::HashMap<K, V>> for RVariant {
-    fn from(value: hashbrown::HashMap<K, V>) -> Self {
+impl<K: AsRef<str>, V: Into<RVariant>> From<HashMap<K, V>> for RVariant {
+    fn from(value: HashMap<K, V>) -> Self {
         Self::from_map(value)
     }
 }
-impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for hashbrown::HashMap<String, V> {
-    type Error = Error;
-
-    fn try_from(value: RVariant) -> Result<Self, Error> {
-        value.into_map()
-    }
-}
-
-impl<K: AsRef<str>> From<&collections::HashMap<K, String>> for RVariant {
-    fn from(value: &collections::HashMap<K, String>) -> Self {
-        Self::from_map(value)
-    }
-}
-impl<K: AsRef<str>, V: Into<RVariant>> From<collections::HashMap<K, V>> for RVariant {
-    fn from(value: collections::HashMap<K, V>) -> Self {
-        Self::from_map(value)
-    }
-}
-impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for collections::HashMap<String, V> {
+impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for HashMap<String, V> {
     type Error = Error;
 
     fn try_from(value: RVariant) -> Result<Self, Error> {

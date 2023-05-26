@@ -1,9 +1,9 @@
+use std::collections::hash_map;
 use std::iter::{self, Chain, Enumerate, Map};
 use std::ops::{Deref, DerefMut};
 use std::{slice, str};
 
 use enumeration::{Enum, EnumSet};
-use hashbrown::hash_map;
 use mlua::{Lua, Value};
 
 use super::{validate, Error, ParseError, Words};

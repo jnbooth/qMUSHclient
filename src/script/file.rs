@@ -127,7 +127,7 @@ xml_list!(Aliases, AliasXml, "alias");
 xml_list!(Timers, TimerXml, "timer");
 
 fn today() -> NaiveDate {
-    Utc::today().naive_utc()
+    Utc::now().date_naive()
 }
 
 /// World plugins.
@@ -173,8 +173,8 @@ const EMPTY_METADATA: PluginMetadata = PluginMetadata {
     purpose: String::new(),
     description: String::new(),
     id: String::new(),
-    written: chrono::naive::MIN_DATE,
-    modified: chrono::naive::MIN_DATE,
+    written: NaiveDate::MIN,
+    modified: NaiveDate::MIN,
     version: String::new(),
     requires: String::new(),
     sequence: 0,
