@@ -3,14 +3,13 @@ use std::{mem, str};
 
 use enumeration::{Enum, EnumSet};
 use mlua::{self, AnyUserData, FromLuaMulti, Function, Lua, Value};
-use qt_core::QString;
 use qt_widgets::q_message_box::Icon;
-use qt_widgets::QMessageBox;
 
 use super::callback::Callback;
 use super::convert::ScriptArgs;
 use super::{PluginMetadata, PluginPack};
 use crate::api::Api;
+use crate::binding::widgets::RMessageBox;
 use crate::script::{Alias, Timer, Trigger};
 use crate::tr::TrContext;
 
@@ -73,14 +72,12 @@ impl Plugin {
     }
 
     pub fn alert_error(metadata: &PluginMetadata, error: &mlua::Error) {
-        unsafe {
-            // TODO make this more complicated
-            let msgbox = QMessageBox::new();
-            msgbox.set_icon(Icon::Warning);
-            msgbox.set_text(&tr!("Script error in {}", metadata.name));
-            msgbox.set_informative_text(&QString::from_std_str(error.to_string()));
-            msgbox.exec();
-        }
+        // TODO make this more complicated
+        let msgbox = RMessageBox::new();
+        msgbox.set_icon(Icon::Warning);
+        msgbox.set_text(tr!("Script error in {}", metadata.name));
+        msgbox.set_informative_text(error.to_string());
+        msgbox.exec();
     }
 
     pub fn with_api<F: FnOnce(&Api)>(&self, f: F) {
