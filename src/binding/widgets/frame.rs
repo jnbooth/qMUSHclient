@@ -3,7 +3,7 @@ use std::ops::Deref;
 use qt_core::QPtr;
 use qt_widgets::QFrame;
 
-use crate::binding::widgets::widget::WidgetBinding;
+use super::WidgetBinding;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]

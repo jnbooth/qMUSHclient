@@ -4,7 +4,7 @@ use qt_core::QBox;
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::QDialog;
 
-use crate::binding::widgets::widget::WidgetBinding;
+use super::WidgetBinding;
 
 #[repr(transparent)]
 #[derive(Debug)]

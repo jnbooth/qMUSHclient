@@ -1,4 +1,5 @@
 mod abstract_scroll_area;
+use abstract_scroll_area::AbstractScrollAreaBinding;
 pub use abstract_scroll_area::RAbstractScrollArea;
 
 mod dialog;
@@ -17,7 +18,7 @@ mod text_browser;
 pub use text_browser::RTextBrowser;
 
 mod text_edit;
-pub use text_edit::RTextEdit;
+use text_edit::TextEditBinding;
 
 mod widget;
-pub use widget::RWidget;
+use widget::WidgetBinding;

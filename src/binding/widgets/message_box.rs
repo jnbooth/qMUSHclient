@@ -4,7 +4,7 @@ use qt_core::{QBox, QFlags, TextFormat, TextInteractionFlag};
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::QMessageBox;
 
-use crate::binding::widgets::dialog::DialogBinding;
+use super::dialog::DialogBinding;
 use crate::binding::Printable;
 
 #[repr(transparent)]

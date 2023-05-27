@@ -4,8 +4,8 @@ use cpp_core::Ptr;
 use qt_core::QPtr;
 use qt_widgets::{QTextBrowser, QWidget};
 
+use super::TextEditBinding;
 use crate::binding::traits::Widget;
-use crate::binding::widgets::text_edit::TextEditBinding;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]

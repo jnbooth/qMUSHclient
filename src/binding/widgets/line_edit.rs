@@ -3,7 +3,7 @@ use std::ops::Deref;
 use qt_core::QPtr;
 use qt_widgets::QLineEdit;
 
-use crate::binding::widgets::widget::WidgetBinding;
+use super::WidgetBinding;
 use crate::binding::Printable;
 
 #[repr(transparent)]

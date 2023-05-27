@@ -3,22 +3,13 @@ use std::ops::Deref;
 use qt_core::QPtr;
 use qt_widgets::QTextEdit;
 
+use super::AbstractScrollAreaBinding;
 use crate::binding::text::RTextCursor;
-use crate::binding::widgets::abstract_scroll_area::AbstractScrollAreaBinding;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]
 pub struct RTextEdit {
     pub(super) inner: QPtr<QTextEdit>,
-}
-
-impl RTextEdit {
-    /// # Safety
-    ///
-    /// `inner` must be valid and non-null.
-    pub unsafe fn new(inner: QPtr<QTextEdit>) -> Self {
-        Self { inner }
-    }
 }
 
 #[repr(transparent)]

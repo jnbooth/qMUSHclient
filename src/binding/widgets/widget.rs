@@ -6,25 +6,16 @@ use qt_core::QPtr;
 use qt_gui::QCursor;
 use qt_widgets::QWidget;
 
-use super::super::traits::Widget;
 use crate::binding::color::{Colored, RColor};
 use crate::binding::font::RFontMetrics;
 use crate::binding::graphics::RPoint;
+use crate::binding::traits::Widget;
 use crate::binding::RRect;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]
 pub struct RWidget {
     pub(super) inner: QPtr<QWidget>,
-}
-
-impl RWidget {
-    /// # Safety
-    ///
-    /// `inner` must be valid and non-null.
-    pub unsafe fn new(inner: QPtr<QWidget>) -> Self {
-        Self { inner }
-    }
 }
 
 #[repr(transparent)]

@@ -3,8 +3,8 @@ use std::ops::Deref;
 use qt_core::QPtr;
 use qt_widgets::QAbstractScrollArea;
 
+use super::frame::FrameBinding;
 use crate::binding::text::RScrollBar;
-use crate::binding::widgets::frame::FrameBinding;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]
