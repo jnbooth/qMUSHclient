@@ -1,24 +1,16 @@
 use std::ops::Deref;
 
+use cpp_core::Ptr;
 use qt_core::QPtr;
-use qt_widgets::QTextBrowser;
+use qt_widgets::{QTextBrowser, QWidget};
 
-use super::RTextEdit;
-use crate::binding::text::RTextCursor;
+use crate::binding::traits::Widget;
+use crate::binding::widgets::text_edit::TextEditBinding;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]
 pub struct RTextBrowser {
     pub(super) inner: QPtr<QTextBrowser>,
-}
-
-impl Deref for RTextBrowser {
-    type Target = RTextEdit;
-
-    fn deref(&self) -> &Self::Target {
-        // SAFETY: repr(transparent)
-        unsafe { &*(self.inner.deref() as *const QTextBrowser as *const RTextEdit) }
-    }
 }
 
 impl RTextBrowser {
@@ -28,9 +20,38 @@ impl RTextBrowser {
     pub unsafe fn new(inner: QPtr<QTextBrowser>) -> Self {
         Self { inner }
     }
+}
 
-    pub fn text_cursor(&self) -> RTextCursor {
-        // SAFETY: `inner` is valid
-        unsafe { RTextCursor::get(&self.inner) }
+#[repr(transparent)]
+pub struct TextBrowserBinding {
+    inner: QTextBrowser,
+}
+
+impl TextBrowserBinding {
+    pub(super) fn cast(inner: &QTextBrowser) -> &Self {
+        // SAFETY: #[repr(transparent)]
+        unsafe { &*(inner as *const QTextBrowser as *const Self) }
+    }
+}
+
+impl Deref for TextBrowserBinding {
+    type Target = TextEditBinding;
+
+    fn deref(&self) -> &Self::Target {
+        Self::Target::cast(&self.inner)
+    }
+}
+
+impl Deref for RTextBrowser {
+    type Target = TextBrowserBinding;
+
+    fn deref(&self) -> &Self::Target {
+        Self::Target::cast(&self.inner)
+    }
+}
+
+impl Widget for RTextBrowser {
+    fn widget(&self) -> Ptr<QWidget> {
+        unsafe { self.inner.as_ptr().static_upcast() }
     }
 }

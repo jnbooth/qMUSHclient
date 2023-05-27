@@ -58,11 +58,7 @@ impl From<CppBox<QTextCursor>> for RTextCursor {
 impl RTextCursor {
     /// Returns a copy of a `QTextEdit`'s [`QTextCursor`] that represents the currently visible
     /// cursor.
-    ///
-    /// # Safety
-    ///
-    /// `widget` must be valid and non-null.
-    pub unsafe fn get(widget: &QTextEdit) -> Self {
+    pub fn get(widget: &QTextEdit) -> Self {
         // SAFETY: `widget` has already been dereferenced and `text_cursor` creates a copy
         unsafe { widget.text_cursor().into() }
     }

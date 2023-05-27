@@ -3,39 +3,13 @@ use std::ops::Deref;
 use qt_core::QPtr;
 use qt_widgets::QTextEdit;
 
-use super::RAbstractScrollArea;
-use crate::binding::color::Colored;
 use crate::binding::text::RTextCursor;
-use crate::binding::RColor;
+use crate::binding::widgets::abstract_scroll_area::AbstractScrollAreaBinding;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]
 pub struct RTextEdit {
     pub(super) inner: QPtr<QTextEdit>,
-}
-
-impl Deref for RTextEdit {
-    type Target = RAbstractScrollArea;
-
-    fn deref(&self) -> &Self::Target {
-        // SAFETY: repr(transparent)
-        unsafe { &*(self.inner.deref() as *const QTextEdit as *const RAbstractScrollArea) }
-    }
-}
-
-impl Colored for RTextEdit {
-    fn foreground_color(&self) -> RColor {
-        self.inner.foreground_color()
-    }
-    fn set_foreground_color(&self, color: &RColor) {
-        self.inner.set_foreground_color(color);
-    }
-    fn background_color(&self) -> RColor {
-        self.inner.background_color()
-    }
-    fn set_background_color(&self, color: &RColor) {
-        self.inner.set_background_color(color)
-    }
 }
 
 impl RTextEdit {
@@ -45,9 +19,36 @@ impl RTextEdit {
     pub unsafe fn new(inner: QPtr<QTextEdit>) -> Self {
         Self { inner }
     }
+}
+
+#[repr(transparent)]
+pub struct TextEditBinding {
+    inner: QTextEdit,
+}
+
+impl TextEditBinding {
+    pub(super) fn cast(inner: &QTextEdit) -> &Self {
+        // SAFETY: #[repr(transparent)]
+        unsafe { &*(inner as *const QTextEdit as *const Self) }
+    }
 
     pub fn text_cursor(&self) -> RTextCursor {
-        // SAFETY: `inner` is valid
-        unsafe { RTextCursor::get(&self.inner) }
+        RTextCursor::get(&self.inner)
+    }
+}
+
+impl Deref for TextEditBinding {
+    type Target = AbstractScrollAreaBinding;
+
+    fn deref(&self) -> &Self::Target {
+        Self::Target::cast(&self.inner)
+    }
+}
+
+impl Deref for RTextEdit {
+    type Target = TextEditBinding;
+
+    fn deref(&self) -> &Self::Target {
+        Self::Target::cast(&self.inner)
     }
 }
