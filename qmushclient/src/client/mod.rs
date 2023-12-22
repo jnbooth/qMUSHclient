@@ -9,6 +9,10 @@ use std::{mem, str};
 
 use cpp_core::Ptr;
 use enumeration::Enum;
+use qt_bindings::color::Colored;
+use qt_bindings::text::{RTextCharFormat, RTextCursor};
+use qt_bindings::widgets::{RLineEdit, RTextBrowser};
+use qt_bindings::{Printable, RColor, RIODevice, Widget};
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 use qt_core::QBox;
@@ -17,18 +21,14 @@ use qt_network::q_abstract_socket::SocketState;
 use qt_network::QTcpSocket;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::QWidget;
+use tr::TrContext;
 
 use crate::api::{Api, ApiState};
-use crate::binding::color::Colored;
-use crate::binding::text::{RTextCharFormat, RTextCursor};
-use crate::binding::widgets::{RLineEdit, RTextBrowser};
-use crate::binding::{Printable, RColor, RIODevice, Widget};
 use crate::client::state::Latest;
 use crate::constants::{config, Paths};
 use crate::escape::{ansi, telnet};
 use crate::mxp;
 use crate::script::{Callback, PluginHandler, Senders};
-use crate::tr::TrContext;
 use crate::ui::Notepad;
 #[cfg(feature = "show-special")]
 use crate::ui::Pad;

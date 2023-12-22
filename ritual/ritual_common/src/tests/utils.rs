@@ -1,6 +1,8 @@
-use crate::string_utils::{CaseOperations, WordIterator};
-use itertools::Itertools;
 use std::path::PathBuf;
+
+use itertools::Itertools;
+
+use crate::string_utils::{CaseOperations, WordIterator};
 
 #[test]
 fn join() {

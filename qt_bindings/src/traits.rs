@@ -12,8 +12,8 @@ use qt_widgets::q_message_box::Icon;
 use qt_widgets::*;
 
 use super::Printable;
-use crate::binding::color::HasPalette;
-use crate::binding::{RColor, RFont};
+use crate::color::HasPalette;
+use crate::{RColor, RFont};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Browse {

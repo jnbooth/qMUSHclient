@@ -6,15 +6,15 @@ use std::time::SystemTime;
 
 use libsqlite3_sys::{SQLITE_VERSION, SQLITE_VERSION_NUMBER};
 use mlua::{Lua, Result, Value};
+use qt_bindings::color::Colored;
+use qt_bindings::device::{keyboard_modifiers, mouse_buttons};
+use qt_bindings::{RColor, RFont};
 use qt_core::{GlobalColor, KeyboardModifier, MouseButton};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;
 use qt_network::q_abstract_socket::SocketState;
 
 use crate::api::Api;
-use crate::binding::color::Colored;
-use crate::binding::device::{keyboard_modifiers, mouse_buttons};
-use crate::binding::{RColor, RFont};
 use crate::client::state::Mccp;
 use crate::constants::branding;
 use crate::script::{Callback, ScriptArg};

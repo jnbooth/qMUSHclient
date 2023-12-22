@@ -16,9 +16,9 @@ use super::format::{
     RTextTableFormat,
 };
 use super::{if_valid, nonnull, Position};
-use crate::binding::color::{Colored, RColor};
-use crate::binding::graphics::RImage;
-use crate::binding::printable::Printable;
+use crate::color::{Colored, RColor};
+use crate::graphics::RImage;
+use crate::printable::Printable;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Formats {

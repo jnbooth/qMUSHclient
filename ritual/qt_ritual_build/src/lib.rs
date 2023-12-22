@@ -8,6 +8,12 @@
 #![forbid(unsafe_code)]
 #![deny(missing_docs)]
 
+use std::env;
+use std::fs::create_dir_all;
+use std::io::Write;
+use std::path::{Path, PathBuf};
+use std::process::Command;
+
 use itertools::Itertools;
 use qt_ritual_common::get_full_build_config;
 use ritual_build::common::errors::{bail, format_err, FancyUnwrap, Result, ResultExt};
@@ -16,11 +22,6 @@ use ritual_build::common::target;
 use ritual_build::common::utils::{run_command, MapIfOk};
 use ritual_build::Config;
 use semver::Version;
-use std::env;
-use std::fs::create_dir_all;
-use std::io::Write;
-use std::path::{Path, PathBuf};
-use std::process::Command;
 
 #[allow(clippy::op_ref)] // false positive
 fn detect_closest_version(known: &[&str], current: &str) -> Result<Option<String>> {
@@ -145,8 +146,7 @@ pub fn try_add_resources(path: impl AsRef<Path>) -> Result<()> {
         .collect::<String>();
     let project_name = format!("ritual_qt_resources_{}", escaped_base_name);
 
-    let out_dir =
-        PathBuf::from(env::var("OUT_DIR").with_context(|_| "OUT_DIR env var is missing")?);
+    let out_dir = PathBuf::from(env::var("OUT_DIR").with_context(|_| "OUT_DIR env var is missing")?);
     let dir = out_dir.join(&project_name);
     create_dir_all(&dir)?;
 

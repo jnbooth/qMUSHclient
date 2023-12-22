@@ -1,7 +1,8 @@
-use crate::{QCoreApplication, QString};
 use std::iter::once;
 use std::os::raw::{c_char, c_int};
 use std::process;
+
+use crate::{QCoreApplication, QString};
 
 /// A struct providing valid `argc` and `argv` values for Qt application
 /// objects.

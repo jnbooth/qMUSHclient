@@ -5,7 +5,7 @@ use qt_core::QPtr;
 use qt_widgets::{QTextBrowser, QWidget};
 
 use super::TextEditBinding;
-use crate::binding::traits::Widget;
+use crate::traits::Widget;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]

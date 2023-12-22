@@ -4,7 +4,7 @@ use qt_core::QPtr;
 use qt_widgets::QTextEdit;
 
 use super::AbstractScrollAreaBinding;
-use crate::binding::text::RTextCursor;
+use crate::text::RTextCursor;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]

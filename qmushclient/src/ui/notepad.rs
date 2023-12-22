@@ -1,15 +1,15 @@
 use std::collections::HashMap;
 
 use cpp_core::CppBox;
+use qt_bindings::text::RTextCursor;
+use qt_bindings::{Printable, Widget};
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 use qt_core::{QBox, QString};
 use qt_widgets::QTextEdit;
+use tr::TrContext;
 
-use crate::binding::text::RTextCursor;
-use crate::binding::{Printable, Widget};
 use crate::script::Event;
-use crate::tr::TrContext;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, TrContext)]
 pub enum Pad {

@@ -2,11 +2,11 @@ use std::iter::Iterator;
 use std::{io, str};
 
 #[cfg(feature = "show-special")]
+use qt_bindings::Printable;
+#[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 
 use super::Client;
-#[cfg(feature = "show-special")]
-use crate::binding::Printable;
 #[cfg(feature = "show-special")]
 use crate::client::color::WorldColor;
 use crate::client::state::{Mccp, Phase};

@@ -48,19 +48,19 @@ pub trait TrContext {
 macro_rules! tr {
     // simple translation of a string literal
     ($s:literal) => (
-        $crate::tr::translate(Self::CLASS_NAME, $s)
+        tr::translate(Self::CLASS_NAME, $s)
     );
     // translation of a string formatted with arguments
     ($fmt:literal,$($arg:tt)*) => (
-        $crate::tr::fmt(Self::CLASS_NAME, std::format_args!($fmt,$($arg)*))
+        tr::fmt(Self::CLASS_NAME, std::format_args!($fmt,$($arg)*))
     );
     // translation of a string literal with a numerus
     ($n:expr,$s:literal) => (
-        $crate::tr::translate_amount(Self::CLASS_NAME, $s, $n as std::os::raw::c_int)
+        tr::translate_amount(Self::CLASS_NAME, $s, $n as std::os::raw::c_int)
     );
     // translation of a string with a numerus, formatted with arguments
     ($n:expr,$s:literal,$($arg:tt)*) => (
-        $crate::tr::fmt_amount(Self::CLASS_NAME, std::format_args!($s, $($arg)*), $n as std::os::raw::c_int)
+        tr::fmt_amount(Self::CLASS_NAME, std::format_args!($s, $($arg)*), $n as std::os::raw::c_int)
     );
 }
 

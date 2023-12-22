@@ -1,12 +1,12 @@
 use std::ops::{Deref, DerefMut};
 use std::str;
 
+use case_insensitive::ascii::CaseFoldMap;
 use enumeration::{Enum, EnumSet};
+use qt_bindings::RColor;
+use tr::TrContext;
 
-use crate::binding::RColor;
-use crate::case_insensitive::ascii::CaseFoldMap;
 use crate::client::style::TextStyle;
-use crate::tr::TrContext;
 
 mod argument;
 mod atom;

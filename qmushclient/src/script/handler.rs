@@ -11,13 +11,13 @@ use std::{io, mem, str};
 
 use enumeration::EnumSet;
 use mlua::{self, FromLuaMulti, IntoLuaMulti, Lua, UserData, UserDataMethods, Value};
+use qt_bindings::{RColor, RTimer, TimerKind};
 use uuid::Uuid;
 
 use super::callback::Callback;
 use super::convert::{ScriptArgs, ScriptRes};
 use super::PluginPack;
 use crate::api::Api;
-use crate::binding::{RColor, RTimer, TimerKind};
 use crate::script::indexed::{PluginIndex, Senders};
 use crate::script::plugin::API_KEY;
 use crate::script::{Alias, Plugin, SendMatch, SendTo, Sendable, Timer, Trigger};

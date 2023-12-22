@@ -60,8 +60,7 @@ pub unsafe fn shl_qt_core_q_debug_q_widget(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_widgets_ffi_operator__3(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QWidget>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -127,8 +126,7 @@ pub unsafe fn shl_qt_core_q_debug_q_action(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_widgets_ffi_operator__6(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QAction>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -149,8 +147,7 @@ pub unsafe fn shl_qt_core_q_debug_q_gesture(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_widgets_ffi_operator__7(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QGesture>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -171,8 +168,7 @@ pub unsafe fn shl_qt_core_q_debug_q_gesture_event(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_widgets_ffi_operator__8(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QGestureEvent>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -284,8 +280,7 @@ pub unsafe fn shl_qt_core_q_debug_q_graphics_scene_event(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_widgets_ffi_operator__13(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QGraphicsSceneEvent>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -757,10 +752,8 @@ pub unsafe fn shl_qt_core_q_debug_q_list_of_q_table_widget_item(
         crate::__ffi::ctr_qt_widgets_ffi_operator__94(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQTableWidgetItem>>::cast_into(
-                list,
-            )
-            .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQTableWidgetItem>>::cast_into(list)
+                .as_raw_ptr(),
         )
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
@@ -891,10 +884,8 @@ pub unsafe fn shl_qt_core_q_debug_q_map_of_gesture_type_q_widget(
         crate::__ffi::ctr_qt_widgets_ffi_operator__100(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMapOfGestureTypeQWidget>>::cast_into(
-                map,
-            )
-            .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMapOfGestureTypeQWidget>>::cast_into(map)
+                .as_raw_ptr(),
         )
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
@@ -3006,10 +2997,8 @@ pub unsafe fn shl_qt_core_q_data_stream_q_list_of_q_pair_of_double_double(
         crate::__ffi::ctr_qt_widgets_ffi_operator__264(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPairOfDoubleDouble>>::cast_into(
-                l,
-            )
-            .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPairOfDoubleDouble>>::cast_into(l)
+                .as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -3052,8 +3041,7 @@ pub unsafe fn shl_qt_core_q_data_stream_q_list_of_q_rect_f(
         crate::__ffi::ctr_qt_widgets_ffi_operator__266(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQRectF>>::cast_into(l)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQRectF>>::cast_into(l).as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -3228,8 +3216,7 @@ pub unsafe fn shl_qt_core_q_data_stream_q_vector_of_void(
         crate::__ffi::ctr_qt_widgets_ffi_operator__278(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfVoid>>::cast_into(v)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfVoid>>::cast_into(v).as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -3311,10 +3298,8 @@ pub unsafe fn shl_qt_core_q_data_stream_q_map_of_gesture_type_q_widget(
         crate::__ffi::ctr_qt_widgets_ffi_operator__286(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMapOfGestureTypeQWidget>>::cast_into(
-                map,
-            )
-            .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMapOfGestureTypeQWidget>>::cast_into(map)
+                .as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -3404,8 +3389,8 @@ pub unsafe fn shr_q_data_stream_q_size_policy(
         crate::__ffi::ctr_qt_widgets_ffi_operator__1(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSizePolicy>>::cast_into(arg2)
-                .as_raw_ptr() as *mut crate::QSizePolicy,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSizePolicy>>::cast_into(arg2).as_raw_ptr()
+                as *mut crate::QSizePolicy,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -3518,10 +3503,8 @@ pub unsafe fn shr_q_data_stream_q_list_of_q_pair_of_double_q_point_f(
         crate::__ffi::ctr_qt_widgets_ffi_operator__242(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPairOfDoubleQPointF>>::cast_into(
-                l,
-            )
-            .as_raw_ptr() as *mut crate::QListOfQPairOfDoubleQPointF,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfQPairOfDoubleQPointF>>::cast_into(l)
+                .as_raw_ptr() as *mut crate::QListOfQPairOfDoubleQPointF,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")

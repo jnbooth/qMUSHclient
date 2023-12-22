@@ -1,7 +1,8 @@
-use cpp_core::NullPtr;
-use qt_core::{QCoreApplication, QTimer, SlotNoArgs};
 use std::cell::RefCell;
 use std::rc::Rc;
+
+use cpp_core::NullPtr;
+use qt_core::{QCoreApplication, QTimer, SlotNoArgs};
 
 #[test]
 fn timer_quit() {

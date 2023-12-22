@@ -5,6 +5,7 @@ use std::path::Path;
 use std::rc::Rc;
 
 use cpp_core::{CppBox, NullPtr};
+use qt_bindings::{RSettings, Widget};
 use qt_core::{
     slot, FocusReason, QBox, QCoreApplication, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt,
 };
@@ -14,14 +15,13 @@ use qt_network::SlotOfSocketState;
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::*;
+use tr::TrContext;
 
 use super::uic;
 use super::worldprefs::WorldPrefs;
 use super::worldtab::{SelectionMode, WorldTab};
-use crate::binding::{RSettings, Widget};
 use crate::constants::{config, Paths};
 use crate::persist;
-use crate::tr::TrContext;
 use crate::world::World;
 
 const KEY_RECENT: &str = "recent";

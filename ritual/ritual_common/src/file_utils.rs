@@ -1,12 +1,14 @@
 //! Various utilities for working with files
 
-use crate::errors::{bail, err_msg, format_err, Result, ResultExt};
-use log::trace;
 use std::ffi::{OsStr, OsString};
 use std::fs;
 use std::io::{self, BufRead, BufReader, BufWriter, Lines, Read, Write};
 use std::path::{Path, PathBuf};
+
+use log::trace;
 use toml;
+
+use crate::errors::{bail, err_msg, format_err, Result, ResultExt};
 
 /// Move file or directory `src` to `dst` recursively,
 /// overwriting previous contents of `dst`. If corresponding

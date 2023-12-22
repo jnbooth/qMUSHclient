@@ -5,7 +5,7 @@ use qt_widgets::q_message_box::Icon;
 use qt_widgets::QMessageBox;
 
 use super::dialog::DialogBinding;
-use crate::binding::Printable;
+use crate::Printable;
 
 #[repr(transparent)]
 #[derive(Debug)]

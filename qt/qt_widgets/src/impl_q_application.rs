@@ -1,6 +1,8 @@
-use crate::QApplication;
-use qt_core::QCoreApplicationArgs;
 use std::process;
+
+use qt_core::QCoreApplicationArgs;
+
+use crate::QApplication;
 
 impl QApplication {
     /// A convenience function for performing proper initialization and de-initialization of

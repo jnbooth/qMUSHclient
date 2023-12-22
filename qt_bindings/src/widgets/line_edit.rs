@@ -4,7 +4,7 @@ use qt_core::QPtr;
 use qt_widgets::QLineEdit;
 
 use super::WidgetBinding;
-use crate::binding::Printable;
+use crate::Printable;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]

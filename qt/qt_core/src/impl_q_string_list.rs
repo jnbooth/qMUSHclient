@@ -2,8 +2,9 @@ use std::ops::Deref;
 
 use cpp_core::ops::{Begin, BeginMut, End, EndMut};
 use cpp_core::vector_ops::Size;
-use crate::QStringList;
+
 use crate::iter::{TakeFirst, TakeLast};
+use crate::QStringList;
 
 impl Size for QStringList {
     #[inline(always)]

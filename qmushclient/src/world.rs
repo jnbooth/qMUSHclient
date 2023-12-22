@@ -3,17 +3,17 @@ use std::path::PathBuf;
 
 use chrono::Utc;
 use enumeration::Enum;
+use qt_bindings::color::{RColor, RColorPair};
+use qt_bindings::RFont;
 use qt_core::{GlobalColor, Key};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;
 use qt_gui::q_palette::ColorRole;
 use serde::{Deserialize, Serialize};
+use tr::TrContext;
 
-use crate::binding::color::{RColor, RColorPair};
-use crate::binding::RFont;
 use crate::client::color::{Colors, WorldColor};
 use crate::script::{Alias, PluginMetadata, PluginPack, Sender, Timer, Trigger};
-use crate::tr::TrContext;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
 pub enum ProxyType {

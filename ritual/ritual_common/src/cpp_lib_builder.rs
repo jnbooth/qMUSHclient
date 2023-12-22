@@ -1,16 +1,18 @@
 //! Implements building a CMake-based C++ library.
 
+use std::env;
+use std::fmt::Display;
+use std::path::{Path, PathBuf};
+use std::process::Command;
+
+use itertools::Itertools;
+use serde_derive::{Deserialize, Serialize};
+
 use crate::cpp_build_config::{CppBuildConfigData, CppBuildPaths, CppLibraryType};
 use crate::errors::{err_msg, Result};
 use crate::file_utils::{create_dir_all, file_to_string, path_to_str};
 use crate::utils::{run_command, run_command_and_capture_output, CommandOutput, MapIfOk};
 use crate::{env_var_names, target};
-use itertools::Itertools;
-use serde_derive::{Deserialize, Serialize};
-use std::env;
-use std::fmt::Display;
-use std::path::{Path, PathBuf};
-use std::process::Command;
 
 /// A CMake variable with a name and a value.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -210,8 +212,7 @@ impl CppLibBuilder {
         }
 
         let mut capture_output_file = None;
-        let mut make_command = if target::current_env() == target::Env::Msvc && self.capture_output
-        {
+        let mut make_command = if target::current_env() == target::Env::Msvc && self.capture_output {
             let path = self.build_dir.join("nmake_output.txt");
             let mut make_command = Command::new("cmd");
             make_command.arg("/C").arg(format!(

@@ -54,8 +54,7 @@ pub unsafe fn shl_qt_core_q_debug_q_abstract_socket_socket_error(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_network_ffi_operator__2(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             arg2,
         )
     };
@@ -75,8 +74,7 @@ pub unsafe fn shl_qt_core_q_debug_q_abstract_socket_socket_state(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_network_ffi_operator__3(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             arg2,
         )
     };
@@ -141,8 +139,7 @@ pub unsafe fn shl_qt_core_q_debug_q_ssl_error(
         crate::__ffi::ctr_qt_network_ffi_operator__6(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSslError>>::cast_into(error)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSslError>>::cast_into(error).as_raw_ptr(),
         )
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
@@ -182,8 +179,7 @@ pub unsafe fn shl_qt_core_q_debug_q_host_address(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_network_ffi_operator__10(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QHostAddress>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -226,8 +222,7 @@ pub unsafe fn shl_qt_core_q_debug_q_local_socket_local_socket_error(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_network_ffi_operator__17(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             arg2,
         )
     };
@@ -247,8 +242,7 @@ pub unsafe fn shl_qt_core_q_debug_q_local_socket_local_socket_state(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_network_ffi_operator__18(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             arg2,
         )
     };
@@ -268,8 +262,7 @@ pub unsafe fn shl_qt_core_q_debug_q_network_cookie(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_network_ffi_operator__20(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QNetworkCookie>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -670,10 +663,8 @@ pub unsafe fn shl_qt_core_q_debug_q_map_of_q_byte_array_q_variant(
         crate::__ffi::ctr_qt_network_ffi_operator__101(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
                 .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMapOfQByteArrayQVariant>>::cast_into(
-                map,
-            )
-            .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMapOfQByteArrayQVariant>>::cast_into(map)
+                .as_raw_ptr(),
         )
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
@@ -1247,10 +1238,8 @@ pub unsafe fn shl_qt_core_q_data_stream_q_map_of_q_byte_array_q_variant(
         crate::__ffi::ctr_qt_network_ffi_operator__178(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMapOfQByteArrayQVariant>>::cast_into(
-                map,
-            )
-            .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMapOfQByteArrayQVariant>>::cast_into(map)
+                .as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -1400,10 +1389,8 @@ pub unsafe fn shr_q_data_stream_q_hash_of_attribute_q_variant(
         crate::__ffi::ctr_qt_network_ffi_operator__175(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QHashOfAttributeQVariant>>::cast_into(
-                hash,
-            )
-            .as_raw_ptr() as *mut crate::QHashOfAttributeQVariant,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QHashOfAttributeQVariant>>::cast_into(hash)
+                .as_raw_ptr() as *mut crate::QHashOfAttributeQVariant,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -1446,10 +1433,8 @@ pub unsafe fn shr_q_data_stream_q_pair_of_q_byte_array_q_byte_array(
         crate::__ffi::ctr_qt_network_ffi_operator__179(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfQByteArrayQByteArray>>::cast_into(
-                p,
-            )
-            .as_raw_ptr() as *mut crate::QPairOfQByteArrayQByteArray,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfQByteArrayQByteArray>>::cast_into(p)
+                .as_raw_ptr() as *mut crate::QPairOfQByteArrayQByteArray,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")

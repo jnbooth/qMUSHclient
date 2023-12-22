@@ -1,6 +1,8 @@
-use crate::QString;
-use cpp_core::CppBox;
 use std::os::raw::{c_char, c_int};
+
+use cpp_core::CppBox;
+
+use crate::QString;
 
 /// Allows to convert Qt strings to `std` strings
 impl<'a> From<&'a QString> for String {

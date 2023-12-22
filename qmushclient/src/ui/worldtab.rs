@@ -4,6 +4,9 @@ use std::rc::Rc;
 
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
 use enumeration::Enum;
+use qt_bindings::text::RTextCursor;
+use qt_bindings::widgets::{RLineEdit, RTextBrowser};
+use qt_bindings::{Printable, QList, RColor, Widget};
 use qt_core::{
     slot, FocusReason, GlobalColor, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs,
 };
@@ -15,18 +18,15 @@ use qt_network::q_abstract_socket::SocketError;
 use qt_network::{QTcpSocket, SlotOfSocketError};
 use qt_widgets::q_message_box::{ButtonRole, Icon, StandardButton};
 use qt_widgets::*;
+use tr::TrContext;
 use uuid::Uuid;
 
 use super::uic;
-use crate::binding::text::RTextCursor;
-use crate::binding::widgets::{RLineEdit, RTextBrowser};
-use crate::binding::{Printable, QList, RColor, Widget};
 use crate::client::color::WorldColor;
 use crate::client::Client;
 use crate::constants::{branding, Paths};
 use crate::mxp::SendTo;
 use crate::script::SendRequest;
-use crate::tr::TrContext;
 use crate::world::World;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]

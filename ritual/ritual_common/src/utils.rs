@@ -1,8 +1,5 @@
 //! Various utilities.
 
-use crate::errors::{bail, Result, ResultExt};
-use log::trace;
-use serde_derive::{Deserialize, Serialize};
 use std::collections::hash_map::{Entry, HashMap};
 use std::ffi::OsString;
 use std::fmt::{Debug, Display};
@@ -12,6 +9,11 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::sync::{Arc, Mutex};
 use std::{env, iter, process};
+
+use log::trace;
+use serde_derive::{Deserialize, Serialize};
+
+use crate::errors::{bail, Result, ResultExt};
 
 #[cfg(windows)]
 /// Returns proper executable file suffix on current platform.

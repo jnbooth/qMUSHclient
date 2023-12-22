@@ -1,7 +1,8 @@
-use crate::QUiLoader;
 use cpp_core::{CastInto, NullPtr, Ptr};
 use qt_core::{QBox, QBuffer, QByteArray};
 use qt_widgets::QWidget;
+
+use crate::QUiLoader;
 
 impl QUiLoader {
     /// Loads a form from the given UI file data and creates a new widget

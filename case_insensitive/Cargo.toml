@@ -1,0 +1,8 @@
+[package]
+name = "case_insensitive"
+version = "0.0.0"
+authors = ["Joshua Booth <joshua.n.booth@gmail.com>"]
+edition = "2021"
+publish = false
+description = "Case insensitive data types"
+repository = "https://github.com/jnbooth/qmushclient"

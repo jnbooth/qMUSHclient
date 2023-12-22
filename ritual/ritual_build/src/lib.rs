@@ -24,6 +24,10 @@
 
 #![forbid(unsafe_code)]
 
+use std::io::Write;
+use std::path::PathBuf;
+use std::{env, process};
+
 use log::info;
 pub use ritual_common as common;
 use ritual_common::cpp_build_config::{CppBuildConfig, CppBuildPaths, CppLibraryType};
@@ -32,10 +36,6 @@ use ritual_common::errors::{bail, err_msg, FancyUnwrap, Result, ResultExt};
 use ritual_common::file_utils::{create_file, file_to_string, load_json, path_to_str};
 use ritual_common::target::{current_target, LibraryTarget, OS};
 use ritual_common::{env_var_names, BuildScriptData};
-use std::env;
-use std::io::Write;
-use std::path::PathBuf;
-use std::process;
 
 /// Configuration of the build script.
 #[derive(Debug)]

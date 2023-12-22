@@ -20,10 +20,7 @@ mod __ffi {
 
     include!(concat!(env!("OUT_DIR"), "/ffi.rs"));
 }
-pub use ::cpp_core;
-pub use ::qt_core;
-pub use ::qt_gui;
-pub use ::qt_widgets;
+pub use {::cpp_core, ::qt_core, ::qt_gui, ::qt_widgets};
 /// <p>In addition, you can customize or create your own user interface by deriving your own loader class.</p>
 ///
 /// C++ class: <span style='color: green;'>```QUiLoader```</span>.

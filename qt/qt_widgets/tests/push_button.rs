@@ -1,4 +1,5 @@
-use qt_widgets::{qt_core::QString, QApplication, QPushButton};
+use qt_widgets::qt_core::QString;
+use qt_widgets::{QApplication, QPushButton};
 
 #[test]
 fn push_button1() {

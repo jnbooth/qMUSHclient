@@ -3,15 +3,15 @@ use std::{mem, str};
 
 use enumeration::{Enum, EnumSet};
 use mlua::{self, AnyUserData, FromLuaMulti, Function, Lua, Value};
+use qt_bindings::widgets::RMessageBox;
 use qt_widgets::q_message_box::Icon;
+use tr::TrContext;
 
 use super::callback::Callback;
 use super::convert::ScriptArgs;
 use super::{PluginMetadata, PluginPack};
 use crate::api::Api;
-use crate::binding::widgets::RMessageBox;
 use crate::script::{Alias, Timer, Trigger};
-use crate::tr::TrContext;
 
 pub const API_KEY: &str = "__ud";
 

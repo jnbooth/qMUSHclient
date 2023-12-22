@@ -1,3 +1,8 @@
+#[macro_use]
+extern crate enumeration;
+#[macro_use]
+extern crate enumeration_derive;
+
 macro_rules! impl_eq_cpp {
     ($t:ty) => {
         impl PartialEq for $t {

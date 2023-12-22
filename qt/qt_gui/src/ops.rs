@@ -265,8 +265,7 @@ pub unsafe fn shl_q_debug_q_color(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColor>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -328,8 +327,7 @@ pub unsafe fn shl_q_debug_q_region(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__5(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QRegion>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -351,8 +349,7 @@ pub unsafe fn shl_q_data_stream_q_key_sequence(
         crate::__ffi::ctr_qt_gui_ffi_operator__6(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(in_)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QKeySequence>>::cast_into(ks)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QKeySequence>>::cast_into(ks).as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -371,8 +368,7 @@ pub unsafe fn shl_q_debug_q_key_sequence(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__8(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QKeySequence>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -435,8 +431,7 @@ pub unsafe fn shl_q_debug_q_touch_device(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__14(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QTouchDevice>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -457,10 +452,8 @@ pub unsafe fn shl_q_debug_q_event(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__15(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ptr<::qt_core::QEvent>>::cast_into(arg2)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ptr<::qt_core::QEvent>>::cast_into(arg2).as_raw_ptr(),
         )
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
@@ -479,8 +472,7 @@ pub unsafe fn shl_q_debug_touch_point(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__20(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::q_touch_event::TouchPoint>>::cast_into(
                 arg2,
             )
@@ -524,8 +516,7 @@ pub unsafe fn shl_q_debug_q_font(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__23(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QFont>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -545,8 +536,7 @@ pub unsafe fn shl_q_debug_q_polygon(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__24(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPolygon>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -588,8 +578,7 @@ pub unsafe fn shl_q_debug_q_polygon_f(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__27(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPolygonF>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -611,8 +600,7 @@ pub unsafe fn shl_q_data_stream_q_polygon_f(
         crate::__ffi::ctr_qt_gui_ffi_operator__28(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(stream)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPolygonF>>::cast_into(array)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPolygonF>>::cast_into(array).as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -652,8 +640,7 @@ pub unsafe fn shl_q_debug_q_matrix(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__32(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -675,8 +662,7 @@ pub unsafe fn shl_q_data_stream_q_transform(
         crate::__ffi::ctr_qt_gui_ffi_operator__33(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(arg2)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(arg2).as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -695,10 +681,8 @@ pub unsafe fn shl_q_debug_q_transform(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__35(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(arg2)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTransform>>::cast_into(arg2).as_raw_ptr(),
         )
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
@@ -738,8 +722,7 @@ pub unsafe fn shl_q_debug_q_image(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__38(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QImage>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -780,8 +763,7 @@ pub unsafe fn shl_q_debug_q_pixmap(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__41(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPixmap>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -822,8 +804,7 @@ pub unsafe fn shl_q_debug_q_brush(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__44(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QBrush>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -864,8 +845,7 @@ pub unsafe fn shl_q_debug_q_pen(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__47(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPen>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -907,8 +887,7 @@ pub unsafe fn shl_q_debug_q_text_length(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__50(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextLength>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -951,8 +930,7 @@ pub unsafe fn shl_q_debug_q_text_format(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__53(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextFormat>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -994,8 +972,7 @@ pub unsafe fn shl_q_debug_q_palette(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__56(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPalette>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -1057,8 +1034,7 @@ pub unsafe fn shl_q_debug_q_surface_format(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__62(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QSurfaceFormat>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -1141,8 +1117,7 @@ pub unsafe fn shl_q_debug_q_cursor(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__70(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QCursor>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -1162,8 +1137,7 @@ pub unsafe fn shl_q_debug_q_window(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__71(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QWindow>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -1205,8 +1179,7 @@ pub unsafe fn shl_q_debug_q_color_space(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__76(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColorSpace>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -1375,8 +1348,7 @@ pub unsafe fn shl_q_data_stream_q_matrix4_x4(
         crate::__ffi::ctr_qt_gui_ffi_operator__93(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix4X4>>::cast_into(arg2)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QMatrix4X4>>::cast_into(arg2).as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -1632,8 +1604,7 @@ pub unsafe fn shl_q_debug_q_painter_path(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__113(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPainterPath>>::cast_into(arg2)
                 .as_raw_ptr(),
         )
@@ -1675,8 +1646,7 @@ pub unsafe fn shl_q_debug_q_screen(
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
         crate::__ffi::ctr_qt_gui_ffi_operator__116(
-            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(arg1).as_raw_ptr(),
             ::cpp_core::CastInto::<::cpp_core::Ptr<crate::QScreen>>::cast_into(arg2).as_raw_ptr(),
         )
     };
@@ -2073,7 +2043,14 @@ pub unsafe fn shl_q_debug_q_vector_of_q_pair_of_double_q_color(
     vec: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>,
 ) -> ::cpp_core::CppBox<::qt_core::QDebug> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__232(::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug).as_raw_ptr(), ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>::cast_into(vec).as_raw_ptr())
+        crate::__ffi::ctr_qt_gui_ffi_operator__232(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDebug>>::cast_into(debug)
+                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>::cast_into(
+                vec,
+            )
+            .as_raw_ptr(),
+        )
     };
     ::cpp_core::CppBox::from_raw(ffi_result).expect("attempted to construct a null CppBox")
 }
@@ -3990,8 +3967,7 @@ pub unsafe fn shl_q_data_stream_q_list_of_double(
         crate::__ffi::ctr_qt_gui_ffi_operator__380(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfDouble>>::cast_into(l)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QListOfDouble>>::cast_into(l).as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -4231,7 +4207,14 @@ pub unsafe fn shl_q_data_stream_q_vector_of_q_pair_of_double_q_color(
     v: impl ::cpp_core::CastInto<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>,
 ) -> ::cpp_core::Ref<::qt_core::QDataStream> {
     let ffi_result = {
-        crate::__ffi::ctr_qt_gui_ffi_operator__412(::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s).as_raw_ptr() as *mut ::qt_core::QDataStream, ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>::cast_into(v).as_raw_ptr())
+        crate::__ffi::ctr_qt_gui_ffi_operator__412(
+            ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
+                .as_raw_ptr() as *mut ::qt_core::QDataStream,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQPairOfDoubleQColor>>::cast_into(
+                v,
+            )
+            .as_raw_ptr(),
+        )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
 }
@@ -4540,8 +4523,7 @@ pub unsafe fn shl_q_data_stream_q_pair_of_int_int(
         crate::__ffi::ctr_qt_gui_ffi_operator__435(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfIntInt>>::cast_into(p)
-                .as_raw_ptr(),
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPairOfIntInt>>::cast_into(p).as_raw_ptr(),
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -4740,8 +4722,8 @@ pub unsafe fn shr_q_data_stream_q_polygon(
         crate::__ffi::ctr_qt_gui_ffi_operator__26(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(stream)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPolygon>>::cast_into(polygon)
-                .as_raw_ptr() as *mut crate::QPolygon,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QPolygon>>::cast_into(polygon).as_raw_ptr()
+                as *mut crate::QPolygon,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -4916,8 +4898,8 @@ pub unsafe fn shr_q_data_stream_q_text_length(
         crate::__ffi::ctr_qt_gui_ffi_operator__49(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextLength>>::cast_into(arg2)
-                .as_raw_ptr() as *mut crate::QTextLength,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextLength>>::cast_into(arg2).as_raw_ptr()
+                as *mut crate::QTextLength,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -4938,8 +4920,8 @@ pub unsafe fn shr_q_data_stream_q_text_format(
         crate::__ffi::ctr_qt_gui_ffi_operator__52(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextFormat>>::cast_into(arg2)
-                .as_raw_ptr() as *mut crate::QTextFormat,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QTextFormat>>::cast_into(arg2).as_raw_ptr()
+                as *mut crate::QTextFormat,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -5026,8 +5008,8 @@ pub unsafe fn shr_q_data_stream_q_color_space(
         crate::__ffi::ctr_qt_gui_ffi_operator__75(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColorSpace>>::cast_into(arg2)
-                .as_raw_ptr() as *mut crate::QColorSpace,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QColorSpace>>::cast_into(arg2).as_raw_ptr()
+                as *mut crate::QColorSpace,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -5092,8 +5074,8 @@ pub unsafe fn shr_q_data_stream_q_quaternion(
         crate::__ffi::ctr_qt_gui_ffi_operator__91(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(arg1)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QQuaternion>>::cast_into(arg2)
-                .as_raw_ptr() as *mut crate::QQuaternion,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QQuaternion>>::cast_into(arg2).as_raw_ptr()
+                as *mut crate::QQuaternion,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -5358,8 +5340,8 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_rect(
         crate::__ffi::ctr_qt_gui_ffi_operator__398(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRect>>::cast_into(v)
-                .as_raw_ptr() as *mut crate::QVectorOfQRect,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQRect>>::cast_into(v).as_raw_ptr()
+                as *mut crate::QVectorOfQRect,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -5468,8 +5450,8 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_size(
         crate::__ffi::ctr_qt_gui_ffi_operator__405(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQSize>>::cast_into(v)
-                .as_raw_ptr() as *mut crate::QVectorOfQSize,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQSize>>::cast_into(v).as_raw_ptr()
+                as *mut crate::QVectorOfQSize,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -5490,8 +5472,8 @@ pub unsafe fn shr_q_data_stream_q_vector_of_float(
         crate::__ffi::ctr_qt_gui_ffi_operator__406(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfFloat>>::cast_into(v)
-                .as_raw_ptr() as *mut crate::QVectorOfFloat,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfFloat>>::cast_into(v).as_raw_ptr()
+                as *mut crate::QVectorOfFloat,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")
@@ -5534,8 +5516,8 @@ pub unsafe fn shr_q_data_stream_q_vector_of_q_line(
         crate::__ffi::ctr_qt_gui_ffi_operator__409(
             ::cpp_core::CastInto::<::cpp_core::Ref<::qt_core::QDataStream>>::cast_into(s)
                 .as_raw_ptr() as *mut ::qt_core::QDataStream,
-            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLine>>::cast_into(v)
-                .as_raw_ptr() as *mut crate::QVectorOfQLine,
+            ::cpp_core::CastInto::<::cpp_core::Ref<crate::QVectorOfQLine>>::cast_into(v).as_raw_ptr()
+                as *mut crate::QVectorOfQLine,
         )
     };
     ::cpp_core::Ref::from_raw(ffi_result).expect("attempted to construct a null Ref")

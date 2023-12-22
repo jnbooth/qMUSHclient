@@ -1,10 +1,10 @@
-use crate::{QBox, QObject, QPtr};
-use cpp_core::{
-    cmp::{Ge, Gt, Le, Lt},
-    CppDeletable, StaticUpcast,
-};
 use std::cmp::{Ordering, PartialEq, PartialOrd};
 use std::ops::{Add, BitAnd, BitOr, BitXor, Div, Mul, Rem, Shl, Shr, Sub};
+
+use cpp_core::cmp::{Ge, Gt, Le, Lt};
+use cpp_core::{CppDeletable, StaticUpcast};
+
+use crate::{QBox, QObject, QPtr};
 
 macro_rules! define_op {
     ($trait1:ident, $func:ident) => {

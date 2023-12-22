@@ -243,8 +243,7 @@ where
 /// `Begin::Output` implements `Key`, `Value`, and `Increment`. If `End::Output` is the same as
 /// `Begin::Output` and implements `Decrement`, then the `QEntryIterator` produced implements
 /// `DoubleEndedIterator`.
-pub trait QEntryIterable
-{
+pub trait QEntryIterable {
     type Iter: CppDeletable + Key + Value;
 
     /// Constructs a Rust-style iterator from a list-like Qt object that  yields (key, value)

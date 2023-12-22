@@ -1,13 +1,18 @@
 [workspace]
 resolver = "2"
 members = [
+  "case_insensitive",
   "qmushclient",
-  "qmushclient-derive",
+  "qmushclient_derive",
   "qt/qt_core",
   "qt/qt_gui",
   "qt/qt_network",
   "qt/qt_ui_tools",
   "qt/qt_widgets",
+  "qt_bindings",
+  "qt_bindings_derive",
+  "tr",
+  "tr_derive",
   "ritual/qt_ritual_build",
   "ritual/qt_ritual_common",
   "ritual/ritual_build",

@@ -1,9 +1,11 @@
-use crate::{QBox, QObject, QPointerOfQObject};
+use std::fmt;
+use std::ops::Deref;
+
 use cpp_core::{
     CastFrom, CastInto, CppBox, CppDeletable, DynamicCast, Ptr, Ref, StaticDowncast, StaticUpcast,
 };
-use std::fmt;
-use std::ops::Deref;
+
+use crate::{QBox, QObject, QPointerOfQObject};
 
 /// A smart pointer that automatically sets to null when the object is deleted.
 ///

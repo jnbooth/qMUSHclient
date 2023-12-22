@@ -11,18 +11,18 @@ use std::time::Duration;
 use chrono::{NaiveTime, Timelike};
 use cpp_core::{CastInto, CppDeletable, Ptr};
 use enumeration::Enum;
+use qt_bindings::color::HasPalette;
+use qt_bindings::{Browse, Widget};
 use qt_core::{slot, QPtr, QString, QTime, SlotNoArgs, SlotOfInt, SlotOfQString};
 use qt_gui::q_palette::ColorRole;
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::q_dialog_button_box::StandardButton;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::{QPushButton, QTreeWidget, QTreeWidgetItem, QWidget, SlotOfQTreeWidgetItem};
+use tr::TrContext;
 
 use super::{uic, PrefPageExt};
-use crate::binding::color::HasPalette;
-use crate::binding::{Browse, Widget};
 use crate::script::{Alias, Event, Reaction, SendTo, Sender, Timer, Trigger};
-use crate::tr::TrContext;
 use crate::world::World;
 use crate::DurationExt;
 

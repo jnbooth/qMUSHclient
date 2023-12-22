@@ -1,10 +1,10 @@
 //! Error handling types based on `failure` crate.
 
-use itertools::Itertools;
-use log::{log, log_enabled, Level};
 use std::env;
 
 pub use failure::{bail, ensure, err_msg, format_err, Error, ResultExt};
+use itertools::Itertools;
+use log::{log, log_enabled, Level};
 
 pub type Result<T> = std::result::Result<T, failure::Error>;
 

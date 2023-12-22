@@ -1,3 +1,5 @@
+use std::convert::Infallible;
+use std::fmt::{self, Display, Formatter};
 use std::iter::FromIterator;
 use std::path::PathBuf;
 
@@ -8,11 +10,40 @@ use qt_core::*;
 use super::list::QList;
 use super::variant::{self, RVariant};
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq, Error)]
+#[derive(Debug)]
 pub enum Error {
-    #[error(display = "key not found in settings")]
     NotFound,
     TypeError(variant::Error),
+}
+
+impl Display for Error {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::NotFound => f.write_str("key not found in settings"),
+            Self::TypeError(e) => Display::fmt(&e, f),
+        }
+    }
+}
+
+impl std::error::Error for Error {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Self::NotFound => None,
+            Self::TypeError(e) => Some(e),
+        }
+    }
+}
+
+impl From<Infallible> for Error {
+    fn from(e: Infallible) -> Self {
+        match e {}
+    }
+}
+
+impl From<variant::Error> for Error {
+    fn from(e: variant::Error) -> Self {
+        Self::TypeError(e)
+    }
 }
 
 #[derive(Debug)]

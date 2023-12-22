@@ -4,7 +4,7 @@ use qt_core::QPtr;
 use qt_widgets::QAbstractScrollArea;
 
 use super::frame::FrameBinding;
-use crate::binding::text::RScrollBar;
+use crate::text::RScrollBar;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]

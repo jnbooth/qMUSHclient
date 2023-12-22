@@ -3,9 +3,17 @@
 #![warn(unsafe_op_in_unsafe_fn)]
 
 #[macro_use]
+extern crate enumeration;
+#[macro_use]
+extern crate enumeration_derive;
+#[macro_use]
 extern crate qmushclient_derive;
 #[macro_use]
-extern crate enumeration;
+extern crate qt_bindings_derive;
+#[macro_use]
+extern crate tr;
+#[macro_use]
+extern crate tr_derive;
 
 extern crate libsqlite3_sys;
 extern crate luajit_src;
@@ -19,12 +27,7 @@ macro_rules! rgbtrace {
     ($($t:tt)*) => {};
 }
 
-#[macro_use]
-pub mod tr;
-
 mod api;
-pub mod binding;
-pub mod case_insensitive;
 mod client;
 mod constants;
 mod escape;
@@ -35,7 +38,7 @@ mod script;
 mod ui;
 mod world;
 
-pub use binding::Widget;
+pub use qt_bindings::Widget;
 pub use ui::App;
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

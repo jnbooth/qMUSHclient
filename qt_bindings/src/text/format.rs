@@ -9,8 +9,8 @@ pub use qt_gui::q_text_frame_format::Position as FramePosition;
 pub use qt_gui::q_text_list_format::Style as ListStyle;
 use qt_gui::*;
 
-use crate::binding::color::{Colored, RColor};
-use crate::binding::{Printable, QList, RFont};
+use crate::color::{Colored, RColor};
+use crate::{Printable, QList, RFont};
 
 fn optional_string(s: CppBox<QString>) -> Option<String> {
     if unsafe { s.is_empty() } {

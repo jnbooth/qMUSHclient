@@ -6,16 +6,16 @@ use std::os::raw::c_double;
 use std::rc::Rc;
 
 use mlua::{UserData, UserDataMethods};
+use qt_bindings::color::{Colored, RColor, RColorPair};
+use qt_bindings::text::RTextCursor;
+use qt_bindings::widgets::{RLineEdit, RTextBrowser};
+use qt_bindings::{Printable, RIODevice, RSettings};
 use qt_gui::q_text_cursor::MoveOperation;
 use qt_network::QTcpSocket;
+use tr::TrContext;
 
-use crate::binding::color::{Colored, RColor, RColorPair};
-use crate::binding::text::RTextCursor;
-use crate::binding::widgets::{RLineEdit, RTextBrowser};
-use crate::binding::{Printable, RIODevice, RSettings};
 use crate::constants::Paths;
 use crate::script::{PluginIndex, PluginMetadata, Senders};
-use crate::tr::TrContext;
 use crate::ui::{Notepad, Pad};
 use crate::world::World;
 

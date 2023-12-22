@@ -2,9 +2,9 @@ use std::fmt::{self, Debug, Formatter};
 use std::rc::Rc;
 
 use enumeration::{Enum, EnumSet};
+use qt_bindings::color::Colored;
+use qt_bindings::text::RTextCharFormat;
 
-use crate::binding::color::Colored;
-use crate::binding::text::RTextCharFormat;
 use crate::client::color::WorldColor;
 use crate::mxp::{SendTo, Span};
 use crate::world::World;

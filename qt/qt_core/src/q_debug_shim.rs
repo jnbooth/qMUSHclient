@@ -1,6 +1,7 @@
-use crate::{QDebug, QString};
 use std::fmt;
 use std::ops::Shl;
+
+use crate::{QDebug, QString};
 
 /// Provides a `std::fmt::Debug` implementation for types with a `QDebug` operator.
 ///

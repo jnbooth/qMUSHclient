@@ -1,9 +1,9 @@
 use std::io::{self, BufReader, Cursor, IoSliceMut, Read};
 use std::mem;
 
+use qt_bindings::RIODevice;
 use qt_network::QTcpSocket;
 
-use crate::binding::RIODevice;
 use crate::constants::config;
 
 type Decompress<T> = flate2::bufread::ZlibDecoder<T>;

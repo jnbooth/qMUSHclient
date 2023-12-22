@@ -1,0 +1,15 @@
+[package]
+name = "tr"
+version = "0.0.0"
+authors = ["Joshua Booth <joshua.n.booth@gmail.com>"]
+edition = "2021"
+publish = false
+description = "Translate macros for Qt"
+repository = "https://github.com/jnbooth/qmushclient"
+
+[features]
+show-special = []
+
+[dependencies]
+cpp_core = "0.6.0"
+qt_core = { path = "../qt/qt_core" }

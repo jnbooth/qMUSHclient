@@ -1,6 +1,8 @@
-use crate::QGuiApplication;
-use qt_core::QCoreApplicationArgs;
 use std::process;
+
+use qt_core::QCoreApplicationArgs;
+
+use crate::QGuiApplication;
 
 impl QGuiApplication {
     /// A convenience function for performing proper initialization and de-initialization of

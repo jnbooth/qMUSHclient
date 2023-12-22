@@ -5,11 +5,11 @@ use std::time::Duration;
 
 use chrono::{NaiveTime, Timelike};
 use enumeration::Enum;
+use qt_bindings::RColor;
 use qt_gui::q_palette::ColorRole;
 use serde::{Deserialize, Serialize};
 
 use super::Regex;
-use crate::binding::RColor;
 use crate::constants::config;
 use crate::DurationExt;
 

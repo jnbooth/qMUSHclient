@@ -6,11 +6,11 @@ use qt_core::QPtr;
 use qt_gui::QCursor;
 use qt_widgets::QWidget;
 
-use crate::binding::color::{Colored, RColor};
-use crate::binding::font::RFontMetrics;
-use crate::binding::graphics::RPoint;
-use crate::binding::traits::Widget;
-use crate::binding::RRect;
+use crate::color::{Colored, RColor};
+use crate::font::RFontMetrics;
+use crate::graphics::RPoint;
+use crate::traits::Widget;
+use crate::RRect;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]

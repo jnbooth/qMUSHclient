@@ -1,9 +1,10 @@
 //! Types for configuring build script behavior.
 
+use serde_derive::{Deserialize, Serialize};
+
 use crate::cpp_lib_builder::CMakeVar;
 use crate::errors::{bail, Result};
 use crate::target::{Condition, Target};
-use serde_derive::{Deserialize, Serialize};
 
 /// Information required to build the C++ wrapper library
 /// on every supported platform. it contains list of linked
@@ -159,8 +160,9 @@ impl CppBuildConfig {
     }
 }
 
-use crate::env_var_names;
 use std::path::PathBuf;
+
+use crate::env_var_names;
 
 /// Machine-specific information required to build the C++ wrapper library.
 /// This type holds configuration properties that cannot be determined

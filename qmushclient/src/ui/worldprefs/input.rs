@@ -1,11 +1,11 @@
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
+use qt_bindings::Widget;
 use qt_widgets::*;
+use tr::TrContext;
 
 use super::PrefPageExt;
-use crate::binding::Widget;
-use crate::tr::TrContext;
 use crate::ui::uic;
 use crate::world::World;
 

@@ -3,11 +3,11 @@ use std::iter::{self, Chain, Enumerate, Map};
 use std::ops::{Deref, DerefMut};
 use std::{slice, str};
 
+use case_insensitive::ascii::{CaseFold, CaseFoldMap};
 use enumeration::{Enum, EnumSet};
 use mlua::{Lua, Value};
 
 use super::{validate, Error, ParseError, Words};
-use crate::case_insensitive::ascii::{CaseFold, CaseFoldMap};
 use crate::script::ScriptArg;
 
 pub type Argument = String;
@@ -294,8 +294,9 @@ impl<'a> IntoIterator for &'a mut Arguments {
 
 #[cfg(test)]
 mod tests {
+    use case_insensitive::ToCaseFold;
+
     use super::*;
-    use crate::case_insensitive::ToCaseFold;
 
     #[test]
     fn arguments() {

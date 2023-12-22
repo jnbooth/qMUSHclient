@@ -6,8 +6,9 @@
 #![forbid(unsafe_code)]
 #![allow(clippy::cognitive_complexity)]
 
-use crate::target::LibraryTarget;
 use serde_derive::{Deserialize, Serialize};
+
+use crate::target::LibraryTarget;
 
 pub mod cpp_build_config;
 pub mod cpp_lib_builder;
@@ -19,6 +20,7 @@ pub mod target;
 pub mod utils;
 
 use std::ops::Deref;
+
 pub use toml;
 
 /// This type contains data serialized by the generator and placed to the

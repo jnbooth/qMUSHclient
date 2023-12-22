@@ -1,8 +1,11 @@
-use crate::{q_meta_object::Connection, ConnectionType, QBox, QObject, QPtr};
-use cpp_core::{CastInto, CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
 use std::ffi::CStr;
 use std::fmt;
 use std::marker::PhantomData;
+
+use cpp_core::{CastInto, CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
+
+use crate::q_meta_object::Connection;
+use crate::{ConnectionType, QBox, QObject, QPtr};
 
 /// Argument types compatible for signal connection.
 ///

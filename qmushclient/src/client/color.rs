@@ -3,11 +3,11 @@ use std::collections::HashMap;
 
 use mlua::{Error as E, FromLua, Lua, Value};
 use once_cell::sync::Lazy;
+use qt_bindings::color::RColorPair;
+use qt_bindings::RColor;
 use qt_core::GlobalColor;
 use serde::{Deserialize, Serialize};
 
-use crate::binding::color::RColorPair;
-use crate::binding::RColor;
 use crate::escape::ansi;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize)]

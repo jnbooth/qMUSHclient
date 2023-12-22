@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use std::{env, fs, io};
 
-use crate::binding::RSettings;
+use qt_bindings::RSettings;
 
 pub mod branding {
     pub const VERSION: &str = env!("CARGO_PKG_VERSION");

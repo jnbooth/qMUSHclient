@@ -1,9 +1,11 @@
-use crate::{QObject, QPtr};
+use std::ops::Deref;
+use std::{fmt, mem};
+
 use cpp_core::{
     CastFrom, CastInto, CppBox, CppDeletable, DynamicCast, Ptr, Ref, StaticDowncast, StaticUpcast,
 };
-use std::ops::Deref;
-use std::{fmt, mem};
+
+use crate::{QObject, QPtr};
 
 /// An owning pointer for `QObject`-based objects.
 ///

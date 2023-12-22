@@ -11,10 +11,10 @@ use qt_gui::*;
 
 use super::format::{RTextBlockFormat, RTextCharFormat};
 use super::{if_valid, nonnull, Position};
-use crate::binding::graphics::Painter;
-use crate::binding::text::{RTextCursor, RTextFrameFormat};
-use crate::binding::variant::RVariant;
-use crate::binding::{Printable, RFont, RRectF};
+use crate::graphics::Painter;
+use crate::text::{RTextCursor, RTextFrameFormat};
+use crate::variant::RVariant;
+use crate::{Printable, RFont, RRectF};
 
 #[derive(Debug)]
 #[repr(transparent)]

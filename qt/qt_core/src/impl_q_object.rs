@@ -1,7 +1,9 @@
-use crate::{QObject, QPtr, QString};
-use cpp_core::{DynamicCast, StaticUpcast};
 use std::error::Error;
 use std::fmt;
+
+use cpp_core::{DynamicCast, StaticUpcast};
+
+use crate::{QObject, QPtr, QString};
 
 /// An error returned by `QObject::find_child`.
 pub struct FindChildError(FindChildErrorInner);

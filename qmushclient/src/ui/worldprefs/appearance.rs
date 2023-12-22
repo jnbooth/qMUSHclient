@@ -4,16 +4,16 @@ use std::os::raw::c_int;
 use std::rc::{Rc, Weak};
 
 use cpp_core::{CastInto, Ptr};
+use qt_bindings::color::{HasPalette, RColorPair};
+use qt_bindings::{RColor, Widget};
 use qt_core::{slot, QPtr, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
 use qt_widgets::*;
 use rand::RngCore;
+use tr::TrContext;
 
 use super::PrefPageExt;
-use crate::binding::color::{HasPalette, RColorPair};
-use crate::binding::{RColor, Widget};
 use crate::client::color::Colors;
-use crate::tr::TrContext;
 use crate::ui::uic;
 use crate::world::World;
 

@@ -33,10 +33,7 @@ impl<T1, T2, T3, T4, T5, T6> ArgumentsCompatible<(T1,)> for (T1, T2, T3, T4, T5,
 impl<T1, T2, T3, T4, T5, T6> ArgumentsCompatible<(T1, T2)> for (T1, T2, T3, T4, T5, T6) {}
 impl<T1, T2, T3, T4, T5, T6> ArgumentsCompatible<(T1, T2, T3)> for (T1, T2, T3, T4, T5, T6) {}
 impl<T1, T2, T3, T4, T5, T6> ArgumentsCompatible<(T1, T2, T3, T4)> for (T1, T2, T3, T4, T5, T6) {}
-impl<T1, T2, T3, T4, T5, T6> ArgumentsCompatible<(T1, T2, T3, T4, T5)>
-    for (T1, T2, T3, T4, T5, T6)
-{
-}
+impl<T1, T2, T3, T4, T5, T6> ArgumentsCompatible<(T1, T2, T3, T4, T5)> for (T1, T2, T3, T4, T5, T6) {}
 impl<T1, T2, T3, T4, T5, T6> ArgumentsCompatible<(T1, T2, T3, T4, T5, T6)>
     for (T1, T2, T3, T4, T5, T6)
 {
@@ -45,10 +42,7 @@ impl<T1, T2, T3, T4, T5, T6> ArgumentsCompatible<(T1, T2, T3, T4, T5, T6)>
 impl<T1, T2, T3, T4, T5, T6, T7> ArgumentsCompatible<()> for (T1, T2, T3, T4, T5, T6, T7) {}
 impl<T1, T2, T3, T4, T5, T6, T7> ArgumentsCompatible<(T1,)> for (T1, T2, T3, T4, T5, T6, T7) {}
 impl<T1, T2, T3, T4, T5, T6, T7> ArgumentsCompatible<(T1, T2)> for (T1, T2, T3, T4, T5, T6, T7) {}
-impl<T1, T2, T3, T4, T5, T6, T7> ArgumentsCompatible<(T1, T2, T3)>
-    for (T1, T2, T3, T4, T5, T6, T7)
-{
-}
+impl<T1, T2, T3, T4, T5, T6, T7> ArgumentsCompatible<(T1, T2, T3)> for (T1, T2, T3, T4, T5, T6, T7) {}
 impl<T1, T2, T3, T4, T5, T6, T7> ArgumentsCompatible<(T1, T2, T3, T4)>
     for (T1, T2, T3, T4, T5, T6, T7)
 {
@@ -265,8 +259,7 @@ impl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ArgumentsCompatible<(T1,
     for (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12)
 {
 }
-impl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
-    ArgumentsCompatible<(T1, T2, T3, T4, T5, T6)>
+impl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ArgumentsCompatible<(T1, T2, T3, T4, T5, T6)>
     for (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12)
 {
 }

@@ -1,13 +1,13 @@
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
+use qt_bindings::{Browse, Widget};
 use qt_core::{slot, QString, SlotNoArgs};
 use qt_widgets::q_dialog_button_box::StandardButton;
 use qt_widgets::*;
+use tr::TrContext;
 
 use super::PrefPageExt;
-use crate::binding::{Browse, Widget};
-use crate::tr::TrContext;
 use crate::ui::uic;
 use crate::world::World;
 

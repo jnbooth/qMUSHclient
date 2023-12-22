@@ -3,7 +3,7 @@ use proc_macro2::Span;
 use quote::quote;
 use syn::*;
 
-#[inline]
+#[proc_macro_derive(TrContext)]
 pub fn derive_trcontext(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as Item);
     let (name, generics) = match input {

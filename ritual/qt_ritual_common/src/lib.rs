@@ -4,6 +4,9 @@
 
 #![forbid(unsafe_code)]
 
+use std::path::PathBuf;
+use std::process::Command;
+
 use log::debug;
 use ritual_common::cpp_build_config::{
     CppBuildConfig, CppBuildConfigData, CppBuildPaths, CppLibraryType,
@@ -13,8 +16,6 @@ use ritual_common::errors::{bail, Result};
 use ritual_common::string_utils::CaseOperations;
 use ritual_common::target;
 use ritual_common::utils::get_command_output;
-use std::path::PathBuf;
-use std::process::Command;
 
 /// Makes a query to `qmake`.
 fn run_qmake_string_query(property: &str, qmake_path: Option<&str>) -> Result<String> {
@@ -108,10 +109,7 @@ pub struct FullBuildConfig {
     pub cpp_build_paths: CppBuildPaths,
 }
 
-pub fn get_full_build_config(
-    crate_name: &str,
-    qmake_path: Option<&str>,
-) -> Result<FullBuildConfig> {
+pub fn get_full_build_config(crate_name: &str, qmake_path: Option<&str>) -> Result<FullBuildConfig> {
     let installation_data = get_installation_data(crate_name, qmake_path)?;
     let mut cpp_build_paths = CppBuildPaths::new();
     let mut cpp_build_config_data = CppBuildConfigData::new();
