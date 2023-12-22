@@ -1,17 +1,17 @@
 [features]
-ritual_rustdoc = ["qt_core/ritual_rustdoc", "qt_gui/ritual_rustdoc"]
-ritual_rustdoc_nightly = ["qt_core/ritual_rustdoc_nightly", "qt_gui/ritual_rustdoc_nightly"]
+ritual_rustdoc = ["qt_core/ritual_rustdoc", "qt_gui/ritual_rustdoc", "qt_widgets/ritual_rustdoc"]
+ritual_rustdoc_nightly = ["qt_core/ritual_rustdoc_nightly", "qt_gui/ritual_rustdoc_nightly", "qt_widgets/ritual_rustdoc_nightly"]
 
 [package]
 authors = ["Pavel Strakhov <ri@idzaaus.org>"]
 build = "build.rs"
 categories = ["external-ffi-bindings", "gui"]
-description = "Bindings for QtWidgets C++ library"
-documentation = "https://docs.rs/qt_widgets"
+description = "Bindings for QtUiTools C++ library"
+documentation = "https://docs.rs/qt_ui_tools"
 edition = "2018"
 keywords = ["gui", "ffi", "qt", "ritual"]
 license = "MIT OR Apache-2.0"
-name = "qt_widgets"
+name = "qt_ui_tools"
 repository = "https://github.com/rust-qt/ritual"
 version = "0.5.1"
 [package.metadata.docs.rs]
@@ -21,6 +21,8 @@ features = ["ritual_rustdoc", "ritual_rustdoc_nightly"]
 cpp_core = "0.6.0"
 qt_core = { path = "../qt_core" }
 qt_gui = { path = "../qt_gui" }
+qt_macros = "0.1.1"
+qt_widgets = { path = "../qt_widgets" }
 
 [build-dependencies]
-qt_ritual_build = { path = "../ritual/qt_ritual_build" }
+qt_ritual_build = { path = "../../ritual/qt_ritual_build" }

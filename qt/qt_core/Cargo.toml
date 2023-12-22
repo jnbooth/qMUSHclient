@@ -22,4 +22,4 @@ cpp_core = "0.6.0"
 qt_macros = "0.1.1"
 
 [build-dependencies]
-qt_ritual_build = { path = "../ritual/qt_ritual_build" }
+qt_ritual_build = { path = "../../ritual/qt_ritual_build" }

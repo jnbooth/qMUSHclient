@@ -6,12 +6,12 @@ ritual_rustdoc_nightly = ["qt_core/ritual_rustdoc_nightly"]
 authors = ["Pavel Strakhov <ri@idzaaus.org>"]
 build = "build.rs"
 categories = ["external-ffi-bindings", "gui"]
-description = "Bindings for QtGui C++ library"
-documentation = "https://docs.rs/qt_gui"
+description = "Bindings for QtNetwork C++ library"
+documentation = "https://docs.rs/qt_network"
 edition = "2018"
 keywords = ["gui", "ffi", "qt", "ritual"]
 license = "MIT OR Apache-2.0"
-name = "qt_gui"
+name = "qt_network"
 repository = "https://github.com/rust-qt/ritual"
 version = "0.5.1"
 [package.metadata.docs.rs]
@@ -22,4 +22,4 @@ cpp_core = "0.6.0"
 qt_core = { path = "../qt_core" }
 
 [build-dependencies]
-qt_ritual_build = { path = "../ritual/qt_ritual_build" }
+qt_ritual_build = { path = "../../ritual/qt_ritual_build" }
