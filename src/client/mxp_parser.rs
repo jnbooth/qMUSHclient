@@ -407,7 +407,7 @@ impl Client {
                 };
                 span.action = Some(Link::new(action, hint, sendto));
                 if action.contains(SPECIAL_LINK) {
-                    if let Some(mut tag) = self.state.mxp_active_tags.last_mut() {
+                    if let Some(tag) = self.state.mxp_active_tags.last_mut() {
                         let template = if args.has_keyword(Keyword::Prompt) {
                             ["echo:", action].concat()
                         } else {
@@ -426,7 +426,7 @@ impl Client {
                 }
                 span.action = Some(Link::new(action, None, SendTo::Internet));
                 if action.contains(SPECIAL_LINK) {
-                    if let Some(mut tag) = self.state.mxp_active_tags.last_mut() {
+                    if let Some(tag) = self.state.mxp_active_tags.last_mut() {
                         tag.anchor_template = Some(action.to_owned());
                     }
                 }

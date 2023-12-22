@@ -97,7 +97,7 @@ impl QList for QListOfQString {
     }
     fn reserve(&self, size: c_int) {
         unsafe {
-            self.deref().reserve(size);
+            self.reserve(size);
         }
     }
     unsafe fn push(&self, item: Self::Item) {
@@ -120,7 +120,7 @@ impl QList for QListOfInt {
     }
     fn reserve(&self, size: c_int) {
         unsafe {
-            self.deref().reserve(size);
+            self.reserve(size);
         }
     }
     unsafe fn push(&self, item: Self::Item) {
@@ -143,7 +143,7 @@ impl QList for QListOfQVariant {
     }
     fn reserve(&self, size: c_int) {
         unsafe {
-            self.deref().reserve(size);
+            self.reserve(size);
         }
     }
     unsafe fn push(&self, item: Self::Item) {
@@ -166,7 +166,7 @@ impl QList for QListOfQTreeWidgetItem {
     }
     fn reserve(&self, size: c_int) {
         unsafe {
-            self.deref().reserve(size);
+            self.reserve(size);
         }
     }
     unsafe fn push(&self, item: Self::Item) {
