@@ -10,7 +10,7 @@ use std::rc::{Rc, Weak};
 use std::{io, mem, str};
 
 use enumeration::EnumSet;
-use mlua::{self, FromLuaMulti, Lua, MetaMethod, ToLuaMulti, UserData, UserDataMethods, Value};
+use mlua::{self, FromLuaMulti, IntoLuaMulti, Lua, UserData, UserDataMethods, Value};
 use uuid::Uuid;
 
 use super::callback::Callback;
@@ -47,85 +47,69 @@ impl MethodGatherer {
 }
 
 impl<'lua, T: UserData> UserDataMethods<'lua, T> for MethodGatherer {
-    fn add_method<S, A, R, M>(&mut self, name: &S, _: M)
+    fn add_method<M, A, R>(&mut self, name: impl AsRef<str>, _: M)
     where
-        S: ?Sized + AsRef<[u8]>,
+        M: Fn(&'lua Lua, &T, A) -> mlua::Result<R> + 'static,
         A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        M: 'static + Fn(&'lua Lua, &T, A) -> mlua::Result<R>,
+        R: IntoLuaMulti<'lua>,
     {
-        self.0.push(
-            str::from_utf8(name.as_ref())
-                .expect("UserData method name is invalid UTF-8")
-                .to_owned(),
-        );
+        self.0.push(name.as_ref().to_owned());
     }
 
-    fn add_method_mut<S, A, R, M>(&mut self, name: &S, _: M)
+    fn add_method_mut<M, A, R>(&mut self, name: impl AsRef<str>, _: M)
     where
-        S: ?Sized + AsRef<[u8]>,
+        M: FnMut(&'lua Lua, &mut T, A) -> mlua::Result<R> + 'static,
         A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        M: 'static + FnMut(&'lua Lua, &mut T, A) -> mlua::Result<R>,
+        R: IntoLuaMulti<'lua>,
     {
-        self.0.push(
-            str::from_utf8(name.as_ref())
-                .expect("UserData method name is invalid UTF-8")
-                .to_owned(),
-        );
+        self.0.push(name.as_ref().to_owned());
     }
 
-    fn add_function<S, A, R, F>(&mut self, _: &S, _: F)
+    fn add_function<F, A, R>(&mut self, _: impl AsRef<str>, _: F)
     where
-        S: ?Sized + AsRef<[u8]>,
+        F: Fn(&'lua Lua, A) -> mlua::Result<R> + 'static,
         A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        F: 'static + Fn(&'lua Lua, A) -> mlua::Result<R>,
+        R: IntoLuaMulti<'lua>,
     {
     }
 
-    fn add_function_mut<S, A, R, F>(&mut self, _: &S, _: F)
+    fn add_function_mut<F, A, R>(&mut self, _: impl AsRef<str>, _: F)
     where
-        S: ?Sized + AsRef<[u8]>,
+        F: FnMut(&'lua Lua, A) -> mlua::Result<R> + 'static,
         A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        F: 'static + FnMut(&'lua Lua, A) -> mlua::Result<R>,
+        R: IntoLuaMulti<'lua>,
     {
     }
 
-    fn add_meta_method<S, A, R, M>(&mut self, _: S, _: M)
+    fn add_meta_method<M, A, R>(&mut self, _: impl AsRef<str>, _: M)
     where
-        S: Into<MetaMethod>,
+        M: Fn(&'lua Lua, &T, A) -> mlua::Result<R> + 'static,
         A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        M: 'static + Fn(&'lua Lua, &T, A) -> mlua::Result<R>,
+        R: IntoLuaMulti<'lua>,
     {
     }
 
-    fn add_meta_method_mut<S, A, R, M>(&mut self, _: S, _: M)
+    fn add_meta_method_mut<M, A, R>(&mut self, _: impl AsRef<str>, _: M)
     where
-        S: Into<MetaMethod>,
+        M: FnMut(&'lua Lua, &mut T, A) -> mlua::Result<R> + 'static,
         A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        M: 'static + FnMut(&'lua Lua, &mut T, A) -> mlua::Result<R>,
+        R: IntoLuaMulti<'lua>,
     {
     }
 
-    fn add_meta_function<S, A, R, F>(&mut self, _: S, _: F)
+    fn add_meta_function<F, A, R>(&mut self, _: impl AsRef<str>, _: F)
     where
-        S: Into<MetaMethod>,
+        F: Fn(&'lua Lua, A) -> mlua::Result<R> + 'static,
         A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        F: 'static + Fn(&'lua Lua, A) -> mlua::Result<R>,
+        R: IntoLuaMulti<'lua>,
     {
     }
 
-    fn add_meta_function_mut<S, A, R, F>(&mut self, _: S, _: F)
+    fn add_meta_function_mut<F, A, R>(&mut self, _: impl AsRef<str>, _: F)
     where
-        S: Into<MetaMethod>,
+        F: FnMut(&'lua Lua, A) -> mlua::Result<R> + 'static,
         A: FromLuaMulti<'lua>,
-        R: ToLuaMulti<'lua>,
-        F: 'static + FnMut(&'lua Lua, A) -> mlua::Result<R>,
+        R: IntoLuaMulti<'lua>,
     {
     }
 }

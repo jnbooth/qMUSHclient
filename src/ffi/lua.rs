@@ -2,7 +2,7 @@ use std::os::raw::c_int;
 
 use mlua::{self, lua_CFunction, lua_State, Lua, LuaOptions};
 
-extern "C" {
+extern "C-unwind" {
     fn luaopen_bc(L: *mut lua_State) -> c_int;
     fn luaopen_lpeg(L: *mut lua_State) -> c_int;
     fn luaopen_rex_pcre2(L: *mut lua_State) -> c_int;

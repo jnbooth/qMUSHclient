@@ -1,4 +1,4 @@
-use mlua::{Lua, Result, ToLua, Value};
+use mlua::{IntoLua, Lua, Result, Value};
 
 use crate::api::Api;
 
@@ -8,7 +8,7 @@ impl Api {
     #[api("GetVariable")]
     pub fn get_variable<'lua>(&self, lua: &'lua Lua, key: String) -> Result<Value<'lua>> {
         match self.variables.borrow().get(&key) {
-            Some(val) => val.as_str().to_lua(lua),
+            Some(val) => val.as_str().into_lua(lua),
             None => Ok(Value::Nil),
         }
     }

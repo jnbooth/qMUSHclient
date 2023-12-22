@@ -8,7 +8,7 @@ use std::str;
 use std::time::{Duration, SystemTime};
 
 use cpp_core::{CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
-use mlua::{self, FromLuaMulti, LightUserData, Lua, MultiValue, ToLua, ToLuaMulti, Value};
+use mlua::{self, FromLuaMulti, IntoLua, IntoLuaMulti, LightUserData, Lua, MultiValue, Value};
 use qt_core::{QBox, QObject, QPtr, QString};
 
 use crate::binding::{RColor, RFont};
@@ -114,7 +114,7 @@ macro_rules! impl_arg {
         impl ScriptArg for $t {
             #[inline]
             fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-                ToLua::to_lua(self, lua)
+                IntoLua::into_lua(self, lua)
             }
         }
     };
@@ -236,7 +236,7 @@ impl ScriptArgs for () {
 
 impl<T: ScriptArg> ScriptArgs for T {
     fn to_args(self, lua: &Lua) -> mlua::Result<MultiValue> {
-        ToLuaMulti::to_lua_multi(self.to_arg(lua), lua)
+        IntoLuaMulti::into_lua_multi(self.to_arg(lua), lua)
     }
 }
 
@@ -254,7 +254,7 @@ macro_rules! impl_args {
             fn to_args(self, lua: &Lua) -> mlua::Result<MultiValue> {
                 let ($($name,)*) = self;
 
-                ToLuaMulti::to_lua_multi((
+                IntoLuaMulti::into_lua_multi((
                     $(ScriptArg::to_arg($name, lua)?,)*
                 ), lua)
             }
