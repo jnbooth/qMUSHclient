@@ -4,7 +4,15 @@ extern crate enumeration;
 #[macro_use]
 extern crate enumeration_derive;
 
-pub use qt_core::{ApplicationAttribute, GlobalColor, Key, KeyboardModifier, MouseButton};
+pub use qt_core::{
+    AlignmentFlag, ApplicationAttribute, GlobalColor, Key, KeyboardModifier, MouseButton,
+};
+pub use qt_gui::q_font::StyleHint;
+pub use qt_gui::q_font_database::SystemFont;
+pub use qt_gui::q_palette::ColorRole;
+pub use qt_gui::q_text_cursor::{MoveOperation, SelectionType};
+pub use qt_network::q_abstract_socket::SocketState;
+pub use qt_widgets::q_message_box::Icon as MessageBoxIcon;
 
 macro_rules! impl_deref_binding {
     ($t:ty, $inner:ty) => {

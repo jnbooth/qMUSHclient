@@ -7,10 +7,9 @@ use std::rc::Rc;
 
 use mlua::{UserData, UserDataMethods};
 use qt::{
-    Colored, Printable, QColor, QColorPair, QIODevice, QLineEdit, QSettings, QTextBrowser,
-    QTextCursor,
+    Colored, MoveOperation, Printable, QColor, QColorPair, QIODevice, QLineEdit, QSettings,
+    QTextBrowser, QTextCursor,
 };
-use qt_gui::q_text_cursor::MoveOperation;
 use qt_network::QTcpSocket;
 use tr::TrContext;
 

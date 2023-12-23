@@ -3,10 +3,7 @@ use std::path::PathBuf;
 
 use chrono::Utc;
 use enumeration::Enum;
-use qt::{GlobalColor, Key, QColor, QColorPair, QFont};
-use qt_gui::q_font::StyleHint;
-use qt_gui::q_font_database::SystemFont;
-use qt_gui::q_palette::ColorRole;
+use qt::{ColorRole, GlobalColor, Key, QColor, QColorPair, QFont, StyleHint, SystemFont};
 use serde::{Deserialize, Serialize};
 use tr::TrContext;
 
