@@ -2,7 +2,8 @@ use std::os::raw::c_int;
 use std::time::Duration;
 
 use enumeration::Enum;
-use qt_core::{QAbstractEventDispatcher, QBox, QTimer, SlotNoArgs};
+use qt_core as q;
+use qt_core::{QBox, SlotNoArgs};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum TimerKind {
@@ -11,22 +12,22 @@ pub enum TimerKind {
 }
 
 #[derive(Debug)]
-pub struct RTimer {
-    inner: QBox<QTimer>,
+pub struct QTimer {
+    inner: QBox<q::QTimer>,
 }
 
-impl Default for RTimer {
+impl Default for QTimer {
     fn default() -> Self {
         Self {
-            inner: unsafe { QTimer::new_1a(QAbstractEventDispatcher::instance_0a()) },
+            inner: unsafe { q::QTimer::new_1a(q::QAbstractEventDispatcher::instance_0a()) },
         }
     }
 }
 
-impl RTimer {
+impl QTimer {
     pub fn new(kind: TimerKind, interval: Duration) -> Self {
         unsafe {
-            let timer = QTimer::new_1a(QAbstractEventDispatcher::instance_0a());
+            let timer = q::QTimer::new_1a(q::QAbstractEventDispatcher::instance_0a());
             timer.set_interval(interval.subsec_millis() as c_int);
             if kind == TimerKind::Once {
                 timer.set_single_shot(true);

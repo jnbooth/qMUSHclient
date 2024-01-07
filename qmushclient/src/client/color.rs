@@ -3,8 +3,7 @@ use std::collections::HashMap;
 
 use mlua::{Error as E, FromLua, Lua, Value};
 use once_cell::sync::Lazy;
-use qt::color::RColorPair;
-use qt::RColor;
+use qt::{QColor, QColorPair};
 use qt_core::GlobalColor;
 use serde::{Deserialize, Serialize};
 
@@ -16,7 +15,7 @@ pub enum WorldColor {
     CustomFg(usize),
     CustomBg(usize),
     Xterm(u8),
-    Plain(RColor),
+    Plain(QColor),
 }
 
 #[allow(unused)]
@@ -57,7 +56,7 @@ impl WorldColor {
     }
 }
 
-static NAMED_COLORS: Lazy<HashMap<String, RColor>> = Lazy::new(|| {
+static NAMED_COLORS: Lazy<HashMap<String, QColor>> = Lazy::new(|| {
     [
         ("aliceblue", 0xF0F8FF),
         ("antiquewhite", 0xFAEBD7),
@@ -209,29 +208,29 @@ static NAMED_COLORS: Lazy<HashMap<String, RColor>> = Lazy::new(|| {
         ("yellowgreen", 0x9ACD32),
     ]
     .iter()
-    .map(|&(s, code)| (s.to_owned(), RColor::from(code)))
+    .map(|&(s, code)| (s.to_owned(), QColor::from(code)))
     .collect()
 });
 
-static XTERM_COLORS: Lazy<[RColor; 256]> = Lazy::new(|| {
+static XTERM_COLORS: Lazy<[QColor; 256]> = Lazy::new(|| {
     let mut vec = Vec::with_capacity(256);
     vec.extend_from_slice(&[
-        RColor::rgb(0, 0, 0),       // black
-        RColor::rgb(128, 0, 0),     // maroon
-        RColor::rgb(0, 128, 0),     // green
-        RColor::rgb(128, 128, 0),   // olive
-        RColor::rgb(0, 0, 128),     // navy
-        RColor::rgb(128, 0, 128),   // purple
-        RColor::rgb(0, 128, 128),   // teal
-        RColor::rgb(192, 192, 192), // silver
-        RColor::rgb(128, 128, 128), // gray
-        RColor::rgb(255, 0, 0),     // red
-        RColor::rgb(0, 255, 0),     // lime
-        RColor::rgb(255, 255, 0),   // yellow
-        RColor::rgb(0, 0, 255),     // blue
-        RColor::rgb(255, 0, 255),   // magenta
-        RColor::rgb(0, 255, 255),   // cyan
-        RColor::rgb(255, 255, 255), // white
+        QColor::rgb(0, 0, 0),       // black
+        QColor::rgb(128, 0, 0),     // maroon
+        QColor::rgb(0, 128, 0),     // green
+        QColor::rgb(128, 128, 0),   // olive
+        QColor::rgb(0, 0, 128),     // navy
+        QColor::rgb(128, 0, 128),   // purple
+        QColor::rgb(0, 128, 128),   // teal
+        QColor::rgb(192, 192, 192), // silver
+        QColor::rgb(128, 128, 128), // gray
+        QColor::rgb(255, 0, 0),     // red
+        QColor::rgb(0, 255, 0),     // lime
+        QColor::rgb(255, 255, 0),   // yellow
+        QColor::rgb(0, 0, 255),     // blue
+        QColor::rgb(255, 0, 255),   // magenta
+        QColor::rgb(0, 255, 255),   // cyan
+        QColor::rgb(255, 255, 255), // white
     ]);
     const COLOR_SCALE: &[u8] = &[
         0,
@@ -244,12 +243,12 @@ static XTERM_COLORS: Lazy<[RColor; 256]> = Lazy::new(|| {
     for &red in COLOR_SCALE {
         for &green in COLOR_SCALE {
             for &blue in COLOR_SCALE {
-                vec.push(RColor::rgb(red, green, blue));
+                vec.push(QColor::rgb(red, green, blue));
             }
         }
     }
     for gray in (8..248).step_by(10) {
-        vec.push(RColor::rgb(gray, gray, gray));
+        vec.push(QColor::rgb(gray, gray, gray));
     }
     vec.try_into().unwrap()
 });
@@ -257,19 +256,19 @@ static XTERM_COLORS: Lazy<[RColor; 256]> = Lazy::new(|| {
 pub struct Colors;
 
 impl Colors {
-    pub fn named(name: &str) -> Option<Cow<'static, RColor>> {
+    pub fn named(name: &str) -> Option<Cow<'static, QColor>> {
         match NAMED_COLORS.get(name) {
             Some(named) => Some(Cow::Borrowed(named)),
-            None => RColor::named(name).map(Cow::Owned),
+            None => QColor::named(name).map(Cow::Owned),
         }
     }
-    pub fn xterm(code: u8) -> &'static RColor {
+    pub fn xterm(code: u8) -> &'static QColor {
         &XTERM_COLORS[code as usize]
     }
     pub fn from_lua<'lua>(
         x: Value<'lua>,
         lua: &'lua Lua,
-    ) -> Result<Option<Cow<'static, RColor>>, E> {
+    ) -> Result<Option<Cow<'static, QColor>>, E> {
         fn color_err(ty: &'static str) -> E {
             E::FromLuaConversionError {
                 from: ty,
@@ -287,29 +286,29 @@ impl Colors {
             Err(color_err(ty))
         }
     }
-    pub fn ansi16() -> [RColor; 16] {
-        let colors: &[RColor; 16] = XTERM_COLORS[..16].try_into().unwrap();
+    pub fn ansi16() -> [QColor; 16] {
+        let colors: &[QColor; 16] = XTERM_COLORS[..16].try_into().unwrap();
         colors.to_owned()
     }
 
-    pub fn default_custom() -> [RColorPair; 16] {
+    pub fn default_custom() -> [QColorPair; 16] {
         [
-            RColorPair::new(0xFF8080, GlobalColor::Transparent),
-            RColorPair::new(0xFFFF80, GlobalColor::Transparent),
-            RColorPair::new(0x80FF80, GlobalColor::Transparent),
-            RColorPair::new(0x80FFFF, GlobalColor::Transparent),
-            RColorPair::new(0x0080FF, GlobalColor::Transparent),
-            RColorPair::new(0xFF80C0, GlobalColor::Transparent),
-            RColorPair::new(0xFF0000, GlobalColor::Transparent),
-            RColorPair::new(0x0080C0, GlobalColor::Transparent),
-            RColorPair::new(0x804040, GlobalColor::Transparent),
-            RColorPair::new(0xFF8040, GlobalColor::Transparent),
-            RColorPair::new(0x008080, GlobalColor::Transparent),
-            RColorPair::new(0x004080, GlobalColor::Transparent),
-            RColorPair::new(0xFF0080, GlobalColor::Transparent),
-            RColorPair::new(0x008000, GlobalColor::Transparent),
-            RColorPair::new(0x0000FF, GlobalColor::Transparent),
-            RColorPair::new(0x686868, GlobalColor::Transparent),
+            QColorPair::new(0xFF8080, GlobalColor::Transparent),
+            QColorPair::new(0xFFFF80, GlobalColor::Transparent),
+            QColorPair::new(0x80FF80, GlobalColor::Transparent),
+            QColorPair::new(0x80FFFF, GlobalColor::Transparent),
+            QColorPair::new(0x0080FF, GlobalColor::Transparent),
+            QColorPair::new(0xFF80C0, GlobalColor::Transparent),
+            QColorPair::new(0xFF0000, GlobalColor::Transparent),
+            QColorPair::new(0x0080C0, GlobalColor::Transparent),
+            QColorPair::new(0x804040, GlobalColor::Transparent),
+            QColorPair::new(0xFF8040, GlobalColor::Transparent),
+            QColorPair::new(0x008080, GlobalColor::Transparent),
+            QColorPair::new(0x004080, GlobalColor::Transparent),
+            QColorPair::new(0xFF0080, GlobalColor::Transparent),
+            QColorPair::new(0x008000, GlobalColor::Transparent),
+            QColorPair::new(0x0000FF, GlobalColor::Transparent),
+            QColorPair::new(0x686868, GlobalColor::Transparent),
         ]
     }
 }

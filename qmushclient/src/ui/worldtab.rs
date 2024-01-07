@@ -4,9 +4,7 @@ use std::rc::Rc;
 
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
 use enumeration::Enum;
-use qt::text::RTextCursor;
-use qt::widgets::{RLineEdit, RTextBrowser};
-use qt::{Printable, QList, RColor, Widget};
+use qt::{Printable, QColor, QLineEdit, QList, QTextBrowser, QTextCursor, Widget};
 use qt_core::{
     slot, FocusReason, GlobalColor, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs,
 };
@@ -37,7 +35,10 @@ pub enum SelectionMode {
 }
 
 impl SelectionMode {
-    fn get_current(input: &QPtr<QLineEdit>, output: &QPtr<QTextBrowser>) -> Self {
+    fn get_current(
+        input: &QPtr<qt_widgets::QLineEdit>,
+        output: &QPtr<qt_widgets::QTextBrowser>,
+    ) -> Self {
         unsafe {
             if input.has_selected_text() {
                 Self::Input
@@ -97,7 +98,7 @@ pub struct WorldTab {
     pub socket: QPtr<QTcpSocket>,
     world: RefCell<Rc<World>>,
     address: RefCell<String>,
-    cursor: RTextCursor,
+    cursor: QTextCursor,
 }
 
 impl WorldTab {
@@ -114,13 +115,13 @@ impl WorldTab {
             let socketbox = QTcpSocket::new_1a(&ui.widget);
             let socket = socketbox.static_upcast();
             let client = Client::new(
-                RTextBrowser::new(ui.output.clone()),
-                RLineEdit::new(ui.input.clone()),
+                QTextBrowser::new(ui.output.clone()),
+                QLineEdit::new(ui.input.clone()),
                 socketbox,
                 world.clone(),
                 paths,
             );
-            let cursor = RTextCursor::get(&ui.output);
+            let cursor = QTextCursor::get(&ui.output);
             let this = Rc::new(Self {
                 client: RefCell::new(client),
                 saved: RefCell::new(saved),
@@ -235,7 +236,7 @@ impl WorldTab {
         }
     }
 
-    pub fn notify<S: Printable, Fg: Into<RColor>>(&self, text: S, fg: Fg) {
+    pub fn notify<S: Printable, Fg: Into<QColor>>(&self, text: S, fg: Fg) {
         if !self.cursor.at_block_start() {
             self.cursor.insert_block();
         }

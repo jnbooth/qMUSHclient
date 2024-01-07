@@ -7,13 +7,13 @@ use cpp_core::{CppBox, Ptr, StaticUpcast};
 use enumeration::Enum;
 use qt_core::{q_event, Key, QFlags, QObject, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt};
 use qt_gui::q_palette::ColorRole;
-use qt_gui::{QFont, QKeyEvent, SlotOfQFont};
+use qt_gui::{QKeyEvent, SlotOfQFont};
+use qt_widgets as q;
 use qt_widgets::q_message_box::Icon;
-use qt_widgets::*;
 
 use super::Printable;
 use crate::color::HasPalette;
-use crate::{RColor, RFont};
+use crate::{QColor, QFont};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Browse {
@@ -23,11 +23,11 @@ pub enum Browse {
 }
 
 pub trait Widget {
-    fn widget(&self) -> Ptr<QWidget>;
+    fn widget(&self) -> Ptr<q::QWidget>;
 
     fn alert<S: Printable, E: StdError + ?Sized>(&self, icon: Icon, text: S, err: &E) {
         unsafe {
-            let alert = QMessageBox::from_q_widget(self.widget());
+            let alert = q::QMessageBox::from_q_widget(self.widget());
             alert.set_icon(icon);
             alert.set_text(&text.to_print());
             alert.set_informative_text(&err.to_string().to_print());
@@ -42,16 +42,16 @@ pub trait Widget {
         &self,
         browse: Browse,
         button: &QPtr<T>,
-        field: &QPtr<QLineEdit>,
+        field: &QPtr<q::QLineEdit>,
         suggest: F,
         ext: &str,
     ) where
-        T: StaticUpcast<QObject> + StaticUpcast<QAbstractButton>,
+        T: StaticUpcast<QObject> + StaticUpcast<q::QAbstractButton>,
         F: 'static + Fn() -> CppBox<QString>,
     {
         unsafe {
             let caption = QString::new();
-            let button: QPtr<QAbstractButton> = button.static_upcast();
+            let button: QPtr<q::QAbstractButton> = button.static_upcast();
             let field = field.to_owned();
             let widget = self.widget();
             let filter = QString::from_std_str(ext);
@@ -67,13 +67,13 @@ pub trait Widget {
                 }
                 let filename = match browse {
                     Browse::Open => {
-                        QFileDialog::get_open_file_name_4a(widget, &caption, &suggested, &filter)
+                        q::QFileDialog::get_open_file_name_4a(widget, &caption, &suggested, &filter)
                     }
                     Browse::Save => {
-                        QFileDialog::get_save_file_name_4a(widget, &caption, &suggested, &filter)
+                        q::QFileDialog::get_save_file_name_4a(widget, &caption, &suggested, &filter)
                     }
                     Browse::Directory => {
-                        QFileDialog::get_existing_directory_3a(widget, &caption, &suggested)
+                        q::QFileDialog::get_existing_directory_3a(widget, &caption, &suggested)
                     }
                 };
                 if !filename.is_empty() {
@@ -89,12 +89,12 @@ pub trait Widget {
     /// `field` must be valid.
     unsafe fn connect_form<T, Q, W, F>(&self, field: &Q, initial: &T, weak: rc::Weak<W>, mut set: F)
     where
-        Q: RForm<T>,
+        Q: QForm<T>,
         W: 'static,
         F: 'static + Clone + FnMut(&W, T),
     {
         unsafe {
-            RForm::connect(field, self.widget(), initial, move |val| {
+            QForm::connect(field, self.widget(), initial, move |val| {
                 if let Some(strong) = weak.upgrade() {
                     set(&strong, val)
                 }
@@ -103,17 +103,17 @@ pub trait Widget {
     }
 }
 
-pub trait RForm<T> {
+pub trait QForm<T> {
     /// # Safety
     ///
     /// `self` must be valid.
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &T, set: F)
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &T, set: F)
     where
         F: 'static + Clone + FnMut(T);
 }
 
-impl RForm<Option<PathBuf>> for QPtr<QLineEdit> {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &Option<PathBuf>, mut set: F)
+impl QForm<Option<PathBuf>> for QPtr<q::QLineEdit> {
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &Option<PathBuf>, mut set: F)
     where
         F: 'static + Clone + FnMut(Option<PathBuf>),
     {
@@ -135,8 +135,8 @@ impl RForm<Option<PathBuf>> for QPtr<QLineEdit> {
     }
 }
 
-impl RForm<String> for QPtr<QLineEdit> {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &String, mut set: F)
+impl QForm<String> for QPtr<q::QLineEdit> {
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &String, mut set: F)
     where
         F: 'static + Clone + FnMut(String),
     {
@@ -151,8 +151,8 @@ impl RForm<String> for QPtr<QLineEdit> {
     }
 }
 
-impl RForm<String> for QPtr<QPlainTextEdit> {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &String, mut set: F)
+impl QForm<String> for QPtr<q::QPlainTextEdit> {
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &String, mut set: F)
     where
         F: 'static + Clone + FnMut(String),
     {
@@ -167,8 +167,8 @@ impl RForm<String> for QPtr<QPlainTextEdit> {
     }
 }
 
-impl RForm<bool> for QPtr<QCheckBox> {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &bool, set: F)
+impl QForm<bool> for QPtr<q::QCheckBox> {
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &bool, set: F)
     where
         F: 'static + Clone + FnMut(bool),
     {
@@ -179,8 +179,8 @@ impl RForm<bool> for QPtr<QCheckBox> {
     }
 }
 
-impl RForm<bool> for QPtr<QRadioButton> {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &bool, set: F)
+impl QForm<bool> for QPtr<q::QRadioButton> {
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &bool, set: F)
     where
         F: 'static + Clone + FnMut(bool),
     {
@@ -191,8 +191,8 @@ impl RForm<bool> for QPtr<QRadioButton> {
     }
 }
 
-impl<E: Enum> RForm<E> for QPtr<QComboBox> {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &E, mut set: F)
+impl<E: Enum> QForm<E> for QPtr<q::QComboBox> {
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &E, mut set: F)
     where
         F: 'static + Clone + FnMut(E),
     {
@@ -209,8 +209,8 @@ impl<E: Enum> RForm<E> for QPtr<QComboBox> {
     }
 }
 
-impl<E: Enum + 'static, const N: usize> RForm<E> for [QPtr<QRadioButton>; N] {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &E, set: F)
+impl<E: Enum + 'static, const N: usize> QForm<E> for [QPtr<q::QRadioButton>; N] {
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &E, set: F)
     where
         F: 'static + Clone + FnMut(E),
     {
@@ -231,25 +231,25 @@ impl<E: Enum + 'static, const N: usize> RForm<E> for [QPtr<QRadioButton>; N] {
     }
 }
 
-impl RForm<RFont> for QPtr<QFontComboBox> {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &RFont, mut set: F)
+impl QForm<QFont> for QPtr<q::QFontComboBox> {
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &QFont, mut set: F)
     where
-        F: 'static + Clone + FnMut(RFont),
+        F: 'static + Clone + FnMut(QFont),
     {
         unsafe {
             self.set_current_font(initial);
             self.current_font_changed()
                 .connect(&SlotOfQFont::new(parent, move |font| {
-                    set(RFont::from(QFont::new_copy(font)));
+                    set(QFont::from(qt_gui::QFont::new_copy(font)));
                 }));
         }
     }
 }
 
-impl RForm<RColor> for QPtr<QPushButton> {
-    unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &RColor, mut set: F)
+impl QForm<QColor> for QPtr<q::QPushButton> {
+    unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &QColor, mut set: F)
     where
-        F: 'static + Clone + FnMut(RColor),
+        F: 'static + Clone + FnMut(QColor),
     {
         unsafe {
             self.set_maximum_width(self.height());
@@ -267,8 +267,8 @@ impl RForm<RColor> for QPtr<QPushButton> {
 
 macro_rules! impl_int {
     ($t:ty) => {
-        impl RForm<$t> for QPtr<QSpinBox> {
-            unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &$t, mut set: F)
+        impl QForm<$t> for QPtr<q::QSpinBox> {
+            unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &$t, mut set: F)
             where
                 F: 'static + Clone + FnMut($t),
             {
@@ -285,8 +285,8 @@ macro_rules! impl_int {
             }
         }
 
-        impl RForm<$t> for QPtr<QDoubleSpinBox> {
-            unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &$t, mut set: F)
+        impl QForm<$t> for QPtr<q::QDoubleSpinBox> {
+            unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &$t, mut set: F)
             where
                 F: 'static + Clone + FnMut($t),
             {
@@ -305,8 +305,8 @@ macro_rules! impl_int {
 
 macro_rules! impl_float {
     ($t:ty) => {
-        impl RForm<$t> for QPtr<QDoubleSpinBox> {
-            unsafe fn connect<F>(&self, parent: Ptr<QWidget>, initial: &$t, mut set: F)
+        impl QForm<$t> for QPtr<q::QDoubleSpinBox> {
+            unsafe fn connect<F>(&self, parent: Ptr<q::QWidget>, initial: &$t, mut set: F)
             where
                 F: 'static + Clone + FnMut($t),
             {

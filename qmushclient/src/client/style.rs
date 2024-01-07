@@ -2,8 +2,7 @@ use std::fmt::{self, Debug, Formatter};
 use std::rc::Rc;
 
 use enumeration::{Enum, EnumSet};
-use qt::color::Colored;
-use qt::text::RTextCharFormat;
+use qt::{Colored, QTextCharFormat};
 
 use crate::client::color::WorldColor;
 use crate::mxp::{SendTo, Span};
@@ -18,7 +17,7 @@ pub enum TextStyle {
     Bold,
 }
 
-fn invert(format: &RTextCharFormat) {
+fn invert(format: &QTextCharFormat) {
     let mut colors = format.colors();
     colors.invert();
     format.set_colors(&colors);
@@ -37,7 +36,7 @@ fn set_bold(color: &WorldColor, bold: bool) -> Option<WorldColor> {
 
 #[derive(PartialEq)]
 pub struct Style {
-    format: RTextCharFormat,
+    format: QTextCharFormat,
     foreground: WorldColor,
     background: WorldColor,
     spans: Vec<Span>,
@@ -60,7 +59,7 @@ impl Debug for Style {
 }
 
 impl Style {
-    pub const fn new(format: RTextCharFormat, world: Rc<World>) -> Self {
+    pub const fn new(format: QTextCharFormat, world: Rc<World>) -> Self {
         Self {
             format,
             world,
@@ -72,7 +71,7 @@ impl Style {
         }
     }
 
-    pub const fn format(&self) -> &RTextCharFormat {
+    pub const fn format(&self) -> &QTextCharFormat {
         &self.format
     }
 

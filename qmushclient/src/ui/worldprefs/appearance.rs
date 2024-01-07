@@ -4,8 +4,7 @@ use std::os::raw::c_int;
 use std::rc::{Rc, Weak};
 
 use cpp_core::{CastInto, Ptr};
-use qt::color::{HasPalette, RColorPair};
-use qt::{RColor, Widget};
+use qt::{HasPalette, QColor, QColorPair, Widget};
 use qt_core::{slot, QPtr, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
 use qt_widgets::*;
@@ -169,7 +168,7 @@ impl PrefsColor {
         }
     }
 
-    fn setcolors(&self, colors: &[RColor]) {
+    fn setcolors(&self, colors: &[QColor]) {
         for (field, color) in self.colorfields.iter().zip(colors.iter()) {
             field.set_palette_color(ColorRole::Button, color);
         }
@@ -178,9 +177,9 @@ impl PrefsColor {
     fn recolor<Idx, F>(&self, index: Idx, mut adjust: F)
     where
         Idx: Clone,
-        [RColor]: IndexMut<Idx, Output = [RColor]>,
+        [QColor]: IndexMut<Idx, Output = [QColor]>,
         [QPtr<QPushButton>]: Index<Idx, Output = [QPtr<QPushButton>]>,
-        F: FnMut(&RColor) -> RColor,
+        F: FnMut(&QColor) -> QColor,
     {
         for (field, color) in self.colorfields[index.clone()]
             .iter()
@@ -221,7 +220,7 @@ impl PrefsColor {
         rand::thread_rng().fill_bytes(&mut randoms);
         let mut byte = randoms.iter();
         self.recolor(.., |color| {
-            RColor::rgba(
+            QColor::rgba(
                 *byte.next().unwrap(),
                 *byte.next().unwrap(),
                 *byte.next().unwrap(),
@@ -382,7 +381,7 @@ impl PrefsCustomColor {
         }
     }
 
-    fn setcolors(&self, colors: &[RColorPair]) {
+    fn setcolors(&self, colors: &[QColorPair]) {
         for ((fgfield, bgfield), color) in self
             .fgfields
             .iter()
@@ -403,7 +402,7 @@ impl PrefsCustomColor {
 
     fn recolor<F>(&self, mut adjust: F)
     where
-        F: FnMut(&RColor) -> RColor,
+        F: FnMut(&QColor) -> QColor,
     {
         for ((fgfield, bgfield), color) in self.fgfields.iter().zip(self.bgfields.iter()).zip(
             self.world
@@ -417,7 +416,7 @@ impl PrefsCustomColor {
             fgfield.set_palette_color(ColorRole::Button, &foreground);
             let background = adjust(&color.background);
             bgfield.set_palette_color(ColorRole::Button, &background);
-            *color = RColorPair {
+            *color = QColorPair {
                 foreground,
                 background,
             };
@@ -435,7 +434,7 @@ impl PrefsCustomColor {
         rand::thread_rng().fill_bytes(&mut randoms);
         let mut byte = randoms.iter();
         self.recolor(|color| {
-            RColor::rgba(
+            QColor::rgba(
                 *byte.next().unwrap(),
                 *byte.next().unwrap(),
                 *byte.next().unwrap(),

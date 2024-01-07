@@ -3,14 +3,14 @@ use std::os::raw::{c_double, c_int};
 
 use cpp_core::CppBox;
 use qt_core::{AlignmentFlag, LayoutDirection, QFlags, QString, QStringList};
+use qt_gui as q;
 use qt_gui::q_font::Weight;
 use qt_gui::q_text_block_format::LineHeightTypes;
 pub use qt_gui::q_text_frame_format::Position as FramePosition;
 pub use qt_gui::q_text_list_format::Style as ListStyle;
-use qt_gui::*;
 
-use crate::color::{Colored, RColor};
-use crate::{Printable, QList, RFont};
+use crate::color::{Colored, QColor};
+use crate::{Printable, QFont, QList};
 
 fn optional_string(s: CppBox<QString>) -> Option<String> {
     if unsafe { s.is_empty() } {
@@ -21,14 +21,14 @@ fn optional_string(s: CppBox<QString>) -> Option<String> {
 }
 
 #[repr(transparent)]
-pub struct RTextFormat {
-    pub(super) inner: QTextFormat,
+pub struct QTextFormat {
+    pub(crate) inner: q::QTextFormat,
 }
 
-impl RTextFormat {
-    fn new(fmt: &QTextFormat) -> &Self {
+impl QTextFormat {
+    fn new(fmt: &q::QTextFormat) -> &Self {
         // SAFETY: #[repr(transparent)]
-        unsafe { &*(fmt as *const QTextFormat as *const Self) }
+        unsafe { &*(fmt as *const q::QTextFormat as *const Self) }
     }
 
     /// Clears the brush used to paint the document's foreground. The default brush will be used.
@@ -48,20 +48,20 @@ impl RTextFormat {
     qt_field!(layout_direction, set_layout_direction, LayoutDirection);
 }
 
-impl Colored for RTextFormat {
-    fn foreground_color(&self) -> RColor {
+impl Colored for QTextFormat {
+    fn foreground_color(&self) -> QColor {
         self.inner.foreground_color()
     }
 
-    fn set_foreground_color(&self, color: &RColor) {
+    fn set_foreground_color(&self, color: &QColor) {
         self.inner.set_foreground_color(color)
     }
 
-    fn background_color(&self) -> RColor {
+    fn background_color(&self) -> QColor {
         self.inner.background_color()
     }
 
-    fn set_background_color(&self, color: &RColor) {
+    fn set_background_color(&self, color: &QColor) {
         self.inner.set_background_color(color)
     }
 }
@@ -99,10 +99,10 @@ macro_rules! impl_fmt {
         }
 
         impl Deref for $t {
-            type Target = RTextFormat;
+            type Target = QTextFormat;
 
             fn deref(&self) -> &Self::Target {
-                RTextFormat::new(self.inner.deref())
+                QTextFormat::new(self.inner.deref())
             }
         }
 
@@ -116,12 +116,12 @@ macro_rules! impl_fmt {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct RTextBlockFormat {
-    pub(super) inner: CppBox<QTextBlockFormat>,
+pub struct QTextBlockFormat {
+    pub(crate) inner: CppBox<q::QTextBlockFormat>,
 }
-impl_fmt!(RTextBlockFormat, QTextBlockFormat);
+impl_fmt!(QTextBlockFormat, q::QTextBlockFormat);
 
-impl RTextBlockFormat {
+impl QTextBlockFormat {
     pub fn alignment(&self) -> QFlags<AlignmentFlag> {
         unsafe { self.inner.alignment() }
     }
@@ -150,13 +150,13 @@ impl RTextBlockFormat {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct RTextCharFormat {
-    pub(super) inner: CppBox<QTextCharFormat>,
+pub struct QTextCharFormat {
+    pub(crate) inner: CppBox<q::QTextCharFormat>,
 }
-impl_fmt!(RTextCharFormat, QTextCharFormat);
+impl_fmt!(QTextCharFormat, q::QTextCharFormat);
 
-impl RTextCharFormat {
-    pub fn set_font(&self, font: &RFont) {
+impl QTextCharFormat {
+    pub fn set_font(&self, font: &QFont) {
         unsafe {
             self.inner.set_font_1a(font);
         }
@@ -261,28 +261,28 @@ impl RTextCharFormat {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct RTextListFormat {
-    pub(super) inner: CppBox<QTextListFormat>,
+pub struct QTextListFormat {
+    pub(crate) inner: CppBox<q::QTextListFormat>,
 }
-impl_fmt!(RTextListFormat, QTextListFormat);
+impl_fmt!(QTextListFormat, q::QTextListFormat);
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct RTextFrameFormat {
-    pub(super) inner: CppBox<QTextFrameFormat>,
+pub struct QTextFrameFormat {
+    pub(crate) inner: CppBox<q::QTextFrameFormat>,
 }
-impl_fmt!(RTextFrameFormat, QTextFrameFormat);
+impl_fmt!(QTextFrameFormat, q::QTextFrameFormat);
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct RTextTableFormat {
-    pub(super) inner: CppBox<QTextTableFormat>,
+pub struct QTextTableFormat {
+    pub(crate) inner: CppBox<q::QTextTableFormat>,
 }
-impl_fmt!(RTextTableFormat, QTextTableFormat);
+impl_fmt!(QTextTableFormat, q::QTextTableFormat);
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct RTextImageFormat {
-    pub(super) inner: CppBox<QTextImageFormat>,
+pub struct QTextImageFormat {
+    pub(crate) inner: CppBox<q::QTextImageFormat>,
 }
-impl_fmt!(RTextImageFormat, QTextImageFormat);
+impl_fmt!(QTextImageFormat, q::QTextImageFormat);

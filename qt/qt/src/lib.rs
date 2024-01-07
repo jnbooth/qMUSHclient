@@ -73,17 +73,17 @@ macro_rules! qt_field {
 mod application;
 pub use application::{QApplication, QCoreApplication, QGuiApplication};
 
-pub mod color;
-pub use color::{Colored, RColor};
+mod color;
+pub use color::{Colored, HasPalette, QColor, QColorPair};
 
 mod font;
-pub use font::RFont;
+pub use font::QFont;
 
 mod graphics;
-pub use graphics::{RImage, RRect, RRectF};
+pub use graphics::QImage;
 
 mod io;
-pub use io::RIODevice;
+pub use io::QIODevice;
 
 mod list;
 pub use list::QList;
@@ -97,16 +97,26 @@ mod printable;
 pub use printable::Printable;
 
 mod settings;
-pub use settings::RSettings;
+pub use settings::QSettings;
+
+mod shapes;
+pub use shapes::{QRect, QRectF};
 
 pub mod text;
+pub use text::{
+    QScrollBar, QTextBlock, QTextBlockFormat, QTextCharFormat, QTextCursor, QTextDocument,
+    QTextFormat, QTextFragment, QTextFrame, QTextFrameFormat, QTextImageFormat, QTextLayout,
+    QTextList, QTextListFormat, QTextTable, QTextTableFormat,
+};
 
 mod time;
-pub use time::{RTimer, TimerKind};
+pub use time::{QTimer, TimerKind};
 
 pub mod variant;
+pub use variant::QVariant;
 
 mod traits;
-pub use traits::{Browse, RForm, Widget};
+pub use traits::{Browse, QForm, Widget};
 
-pub mod widgets;
+mod widgets;
+pub use widgets::{QAbstractScrollArea, QDialog, QFrame, QLineEdit, QMessageBox, QTextBrowser};

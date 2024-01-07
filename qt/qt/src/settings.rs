@@ -4,11 +4,12 @@ use std::iter::FromIterator;
 use std::path::PathBuf;
 
 use cpp_core::CppBox;
+use qt_core as q;
 use qt_core::iter::QIntoIterator;
-use qt_core::*;
+use qt_core::{QBox, QString};
 
 use super::list::QList;
-use super::variant::{self, RVariant};
+use super::variant::{self, QVariant};
 
 #[derive(Debug)]
 pub enum Error {
@@ -47,34 +48,34 @@ impl From<variant::Error> for Error {
 }
 
 #[derive(Debug)]
-pub struct RSettings {
-    inner: QBox<QSettings>,
+pub struct QSettings {
+    inner: QBox<q::QSettings>,
 }
 
-impl Default for RSettings {
+impl Default for QSettings {
     fn default() -> Self {
         Self {
-            inner: unsafe { QSettings::new() },
+            inner: unsafe { q::QSettings::new() },
         }
     }
 }
 
-impl RSettings {
+impl QSettings {
     pub fn new(organization: &str, name: &str) -> Self {
         Self {
             inner: unsafe {
-                QSettings::from_2_q_string(
+                q::QSettings::from_2_q_string(
                     &QString::from_std_str(organization),
                     &QString::from_std_str(name),
                 )
             },
         }
     }
-    fn qget(&self, key: &str) -> Result<RVariant, Error> {
+    fn qget(&self, key: &str) -> Result<QVariant, Error> {
         unsafe {
             let key = QString::from_std_str(key);
             if self.inner.contains(&key) {
-                Ok(RVariant::from(self.inner.value_1a(&key)))
+                Ok(QVariant::from(self.inner.value_1a(&key)))
             } else {
                 Err(Error::NotFound)
             }
@@ -82,7 +83,7 @@ impl RSettings {
     }
     pub fn get<T>(&self, key: &str) -> Result<T, Error>
     where
-        T: TryFrom<RVariant>,
+        T: TryFrom<QVariant>,
         Error: From<T::Error>,
     {
         Ok(T::try_from(self.qget(key)?)?)
@@ -90,35 +91,35 @@ impl RSettings {
 
     pub fn set<T>(&self, key: &str, val: T)
     where
-        RVariant: From<T>,
+        QVariant: From<T>,
     {
         unsafe {
             self.inner
-                .set_value(&QString::from_std_str(key), &RVariant::from(val).inner);
+                .set_value(&QString::from_std_str(key), &QVariant::from(val).inner);
         }
     }
 
     pub fn get_list<T>(&self, key: &str) -> Result<T, Error>
     where
         T: IntoIterator + FromIterator<T::Item>,
-        T::Item: TryFrom<RVariant>,
-        Error: From<<T::Item as TryFrom<RVariant>>::Error>,
+        T::Item: TryFrom<QVariant>,
+        Error: From<<T::Item as TryFrom<QVariant>>::Error>,
     {
-        let list = CppBox::<QListOfQVariant>::try_from(self.qget(key)?)?;
+        let list = CppBox::<q::QListOfQVariant>::try_from(self.qget(key)?)?;
         let vec: Result<_, _> = unsafe { list.into_iter() }
-            .map(|x| T::Item::try_from(RVariant::from(x)))
+            .map(|x| T::Item::try_from(QVariant::from(x)))
             .collect();
         Ok(vec?)
     }
 
     pub fn set_list<T: IntoIterator>(&self, key: &str, iter: T)
     where
-        T::Item: Into<RVariant>,
+        T::Item: Into<QVariant>,
     {
         unsafe {
             self.set(
                 key,
-                QListOfQVariant::from_iter(iter.into_iter().map(|x| x.into().inner)),
+                q::QListOfQVariant::from_iter(iter.into_iter().map(|x| x.into().inner)),
             );
         }
     }

@@ -1,17 +1,17 @@
 use std::os::raw::c_int;
 
 use qt_core::{Orientation, QPtr};
+use qt_widgets as q;
 use qt_widgets::q_abstract_slider::SliderAction;
-use qt_widgets::{QAbstractScrollArea, QScrollBar};
 
-pub struct RScrollBar<'a> {
-    pub(super) inner: QPtr<QScrollBar>,
-    pub(super) _owner: &'a QAbstractScrollArea,
+pub struct QScrollBar<'a> {
+    pub(crate) inner: QPtr<q::QScrollBar>,
+    pub(crate) _owner: &'a q::QAbstractScrollArea,
 }
 
-impl<'a> RScrollBar<'a> {
+impl<'a> QScrollBar<'a> {
     /// Returns a pointer to a `QAbstractScrollArea`'s horizontal [`QScrollBar`].
-    pub fn get_horizontal(widget: &'a QAbstractScrollArea) -> Self {
+    pub fn get_horizontal(widget: &'a q::QAbstractScrollArea) -> Self {
         Self {
             // SAFETY: `_owner` restricts `self` to the lifetime of the parent widget
             inner: unsafe { widget.horizontal_scroll_bar() },
@@ -19,7 +19,7 @@ impl<'a> RScrollBar<'a> {
         }
     }
     /// Returns a pointer to a `QAbstractScrollArea`'s horizontal [`QScrollBar`].
-    pub fn get_vertical(widget: &'a QAbstractScrollArea) -> Self {
+    pub fn get_vertical(widget: &'a q::QAbstractScrollArea) -> Self {
         Self {
             // SAFETY: `_owner` restricts `self` to the lifetime of the parent widget
             inner: unsafe { widget.vertical_scroll_bar() },

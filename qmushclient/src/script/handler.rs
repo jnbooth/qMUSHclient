@@ -11,7 +11,7 @@ use std::{io, mem, str};
 
 use enumeration::EnumSet;
 use mlua::{self, FromLuaMulti, IntoLuaMulti, Lua, UserData, UserDataMethods, Value};
-use qt::{RColor, RTimer, TimerKind};
+use qt::{QColor, QTimer, TimerKind};
 use uuid::Uuid;
 
 use super::callback::Callback;
@@ -139,8 +139,8 @@ pub struct SendRequest<'a> {
 #[derive(Clone, Debug, Default)]
 pub struct TriggerEffects {
     pub hide: bool,
-    pub foreground: Option<RColor>,
-    pub background: Option<RColor>,
+    pub foreground: Option<QColor>,
+    pub background: Option<QColor>,
     pub sounds: Vec<PathBuf>,
     pub make_bold: bool,
     pub make_italic: bool,
@@ -153,7 +153,7 @@ pub struct PluginHandler {
     initialize: String,
     plugins: Vec<Plugin>,
     senders: Rc<RefCell<Senders>>,
-    timers: HashMap<Uuid, RTimer>,
+    timers: HashMap<Uuid, QTimer>,
 }
 
 impl PluginHandler {
@@ -335,7 +335,7 @@ impl PluginHandler {
 
     fn start_timer(
         event_handler: Weak<WorldTab>,
-        timers: &mut HashMap<Uuid, RTimer>,
+        timers: &mut HashMap<Uuid, QTimer>,
         plugin_index: PluginIndex,
         plugin_name: String,
         timer: &Timer,
@@ -349,7 +349,7 @@ impl PluginHandler {
         } else {
             TimerKind::Repeating
         };
-        let rtimer = RTimer::new(kind, duration);
+        let rtimer = QTimer::new(kind, duration);
         let id = Uuid::new_v4();
         let request = SendRequest {
             plugin: plugin_index,

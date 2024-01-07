@@ -6,9 +6,16 @@ use std::os::raw::*;
 
 use chrono::{Datelike, NaiveDate, NaiveDateTime, NaiveTime, Timelike};
 use cpp_core::{CppBox, Ref};
+use qt_core as q;
 use qt_core::iter::{QEntryIterable, QIntoIterator};
 use qt_core::q_meta_type::Type;
-use qt_core::*;
+use qt_core::{
+    QBitArray, QByteArray, QChar, QDate, QDateTime, QEasingCurve, QHashOfQStringQVariant,
+    QJsonArray, QJsonDocument, QJsonObject, QJsonValue, QLatin1String, QLine, QLineF,
+    QListOfQVariant, QLocale, QMapOfQStringQVariant, QModelIndex, QPersistentModelIndex, QPoint,
+    QPointF, QRect, QRectF, QRegExp, QRegularExpression, QSize, QSizeF, QString, QStringList, QTime,
+    QUrl, QUuid,
+};
 use uuid::Uuid;
 
 use super::QList;
@@ -118,26 +125,26 @@ pub const fn type_name(ty: Type) -> &'static str {
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct RVariant {
-    pub(super) inner: CppBox<QVariant>,
+pub struct QVariant {
+    pub(crate) inner: CppBox<q::QVariant>,
 }
 
-impl_eq_cpp!(RVariant);
+impl_eq_cpp!(QVariant);
 
-impl From<CppBox<QVariant>> for RVariant {
-    fn from(value: CppBox<QVariant>) -> Self {
+impl From<CppBox<q::QVariant>> for QVariant {
+    fn from(value: CppBox<q::QVariant>) -> Self {
         Self { inner: value }
     }
 }
 
-impl RVariant {
+impl QVariant {
     pub fn qtype(&self) -> Type {
         Type::from(unsafe { self.inner.type_() }.to_int())
     }
 
     fn from_strings<S: AsRef<str>, I: IntoIterator<Item = S>>(iter: I) -> Self {
         unsafe {
-            RVariant::from(QStringList::from_iter(
+            QVariant::from(QStringList::from_iter(
                 iter.into_iter().map(|x| QString::from_std_str(x.as_ref())),
             ))
         }
@@ -146,7 +153,7 @@ impl RVariant {
     fn from_map<K, V, T>(value: T) -> Self
     where
         K: AsRef<str>,
-        V: Into<RVariant>,
+        V: Into<QVariant>,
         T: IntoIterator<Item = (K, V)>,
     {
         unsafe {
@@ -154,13 +161,13 @@ impl RVariant {
             for (k, v) in value {
                 hashmap.insert(&QString::from_std_str(k), &v.into().inner);
             }
-            RVariant::from(hashmap)
+            QVariant::from(hashmap)
         }
     }
 
     fn into_map<V, T>(self) -> Result<T, Error>
     where
-        V: TryFrom<RVariant, Error = Error>,
+        V: TryFrom<QVariant, Error = Error>,
         T: FromIterator<(String, V)>,
     {
         let hashmap = CppBox::<QHashOfQStringQVariant>::try_from(self)?;
@@ -175,10 +182,10 @@ impl RVariant {
 
 macro_rules! impl_from {
     ($me:ident, $t:ty) => {
-        impl From<$t> for RVariant {
+        impl From<$t> for QVariant {
             fn from(value: $t) -> Self {
                 Self {
-                    inner: unsafe { QVariant::$me(value) },
+                    inner: unsafe { q::QVariant::$me(value) },
                 }
             }
         }
@@ -187,17 +194,17 @@ macro_rules! impl_from {
 
 macro_rules! impl_from_ref {
     ($me:ident, $t:ty) => {
-        impl From<&CppBox<$t>> for RVariant {
+        impl From<&CppBox<$t>> for QVariant {
             fn from(value: &CppBox<$t>) -> Self {
                 Self {
-                    inner: unsafe { QVariant::$me(value) },
+                    inner: unsafe { q::QVariant::$me(value) },
                 }
             }
         }
-        impl From<CppBox<$t>> for RVariant {
+        impl From<CppBox<$t>> for QVariant {
             fn from(value: CppBox<$t>) -> Self {
                 Self {
-                    inner: unsafe { QVariant::$me(&value) },
+                    inner: unsafe { q::QVariant::$me(&value) },
                 }
             }
         }
@@ -274,10 +281,10 @@ impl StdError for Error {}
 
 macro_rules! impl_try_from {
     ($me:ident, $t:ty, $qt1:ident$(, $qt:ident)*) => {
-        impl TryFrom<RVariant> for $t {
+        impl TryFrom<QVariant> for $t {
             type Error = Error;
 
-            fn try_from(value: RVariant) -> Result<Self, Error> {
+            fn try_from(value: QVariant) -> Result<Self, Error> {
                 let actual = value.qtype();
                 if (actual == Type::$qt1)$(||(actual == Type::$qt))* {
                     Ok(unsafe { value.inner.$me() })
@@ -336,16 +343,16 @@ impl_try_from!(to_u_long_long_0a, u64, ULongLong);
 impl_try_box!(to_url, QUrl);
 impl_try_box!(to_uuid, QUuid);
 
-impl From<char> for RVariant {
+impl From<char> for QVariant {
     fn from(value: char) -> Self {
-        RVariant::from(value as u64)
+        QVariant::from(value as u64)
     }
 }
 
-impl TryFrom<RVariant> for char {
+impl TryFrom<QVariant> for char {
     type Error = Error;
 
-    fn try_from(value: RVariant) -> Result<Self, Error> {
+    fn try_from(value: QVariant) -> Result<Self, Error> {
         let try64 = u64::try_from(value)?;
         let try32 = u32::try_from(try64).map_err(|_| Error::WrongType {
             tried: Type::ULong,
@@ -358,18 +365,18 @@ impl TryFrom<RVariant> for char {
     }
 }
 
-impl From<NaiveDate> for RVariant {
+impl From<NaiveDate> for QVariant {
     fn from(value: NaiveDate) -> Self {
-        RVariant::from(unsafe {
+        QVariant::from(unsafe {
             QDate::new_3a(value.year(), value.month() as c_int, value.day() as c_int)
         })
     }
 }
 
-impl TryFrom<RVariant> for NaiveDate {
+impl TryFrom<QVariant> for NaiveDate {
     type Error = Error;
 
-    fn try_from(value: RVariant) -> Result<Self, Error> {
+    fn try_from(value: QVariant) -> Result<Self, Error> {
         let date = CppBox::<QDate>::try_from(value)?;
         unsafe {
             let year = date.year_0a();
@@ -386,19 +393,19 @@ impl TryFrom<RVariant> for NaiveDate {
 const MILLI: u32 = 1_000;
 const NANO: u32 = 1_000_000;
 
-impl From<NaiveTime> for RVariant {
+impl From<NaiveTime> for QVariant {
     fn from(value: NaiveTime) -> Self {
         let secs = value.num_seconds_from_midnight();
         let nano = value.nanosecond();
         let milli = secs * MILLI + nano / NANO;
-        RVariant::from(unsafe { QTime::from_m_secs_since_start_of_day(milli as c_int) })
+        QVariant::from(unsafe { QTime::from_m_secs_since_start_of_day(milli as c_int) })
     }
 }
 
-impl TryFrom<RVariant> for NaiveTime {
+impl TryFrom<QVariant> for NaiveTime {
     type Error = Error;
 
-    fn try_from(value: RVariant) -> Result<Self, Error> {
+    fn try_from(value: QVariant) -> Result<Self, Error> {
         let time = CppBox::<QTime>::try_from(value)?;
         let msecs = unsafe { time.msecs_since_start_of_day() } as u32;
         let secs = msecs / MILLI;
@@ -411,16 +418,16 @@ impl TryFrom<RVariant> for NaiveTime {
     }
 }
 
-impl From<NaiveDateTime> for RVariant {
+impl From<NaiveDateTime> for QVariant {
     fn from(value: NaiveDateTime) -> Self {
-        RVariant::from(unsafe { QDateTime::from_m_secs_since_epoch_i64(value.timestamp_millis()) })
+        QVariant::from(unsafe { QDateTime::from_m_secs_since_epoch_i64(value.timestamp_millis()) })
     }
 }
 
-impl TryFrom<RVariant> for NaiveDateTime {
+impl TryFrom<QVariant> for NaiveDateTime {
     type Error = Error;
 
-    fn try_from(value: RVariant) -> Result<Self, Error> {
+    fn try_from(value: QVariant) -> Result<Self, Error> {
         let datetime = CppBox::<QDateTime>::try_from(value)?;
         let msecs = unsafe { datetime.to_m_secs_since_epoch() };
         let secs = msecs / MILLI as i64;
@@ -433,76 +440,76 @@ impl TryFrom<RVariant> for NaiveDateTime {
     }
 }
 
-impl From<Uuid> for RVariant {
+impl From<Uuid> for QVariant {
     fn from(value: Uuid) -> Self {
-        RVariant::from(unsafe { QUuid::from_rfc4122(&QByteArray::from_slice(value.as_bytes())) })
+        QVariant::from(unsafe { QUuid::from_rfc4122(&QByteArray::from_slice(value.as_bytes())) })
     }
 }
 
-impl TryFrom<RVariant> for Uuid {
+impl TryFrom<QVariant> for Uuid {
     type Error = Error;
 
-    fn try_from(value: RVariant) -> Result<Self, Error> {
+    fn try_from(value: QVariant) -> Result<Self, Error> {
         let quuid = CppBox::<QUuid>::try_from(value)?;
         let array = unsafe { quuid.to_rfc4122() };
         Ok(Uuid::from_slice(&array.to_vec()).unwrap())
     }
 }
 
-impl From<String> for RVariant {
+impl From<String> for QVariant {
     fn from(value: String) -> Self {
-        RVariant::from(QString::from_std_str(value))
+        QVariant::from(QString::from_std_str(value))
     }
 }
 
-impl TryFrom<RVariant> for String {
+impl TryFrom<QVariant> for String {
     type Error = Error;
 
-    fn try_from(value: RVariant) -> Result<Self, Error> {
+    fn try_from(value: QVariant) -> Result<Self, Error> {
         Ok(CppBox::<QString>::try_from(value)?.to_std_string())
     }
 }
 
-impl From<&str> for RVariant {
+impl From<&str> for QVariant {
     fn from(value: &str) -> Self {
-        RVariant::from(QString::from_std_str(value))
+        QVariant::from(QString::from_std_str(value))
     }
 }
 
-impl From<&String> for RVariant {
+impl From<&String> for QVariant {
     fn from(value: &String) -> Self {
-        RVariant::from(QString::from_std_str(value))
+        QVariant::from(QString::from_std_str(value))
     }
 }
 
-impl From<Vec<String>> for RVariant {
+impl From<Vec<String>> for QVariant {
     fn from(value: Vec<String>) -> Self {
         Self::from_strings(value)
     }
 }
 
-impl From<&[String]> for RVariant {
+impl From<&[String]> for QVariant {
     fn from(value: &[String]) -> Self {
         Self::from_strings(value)
     }
 }
 
-impl From<Vec<&str>> for RVariant {
+impl From<Vec<&str>> for QVariant {
     fn from(value: Vec<&str>) -> Self {
         Self::from_strings(value)
     }
 }
 
-impl From<&[&str]> for RVariant {
+impl From<&[&str]> for QVariant {
     fn from(value: &[&str]) -> Self {
         Self::from_strings(value)
     }
 }
 
-impl TryFrom<RVariant> for Vec<String> {
+impl TryFrom<QVariant> for Vec<String> {
     type Error = Error;
 
-    fn try_from(value: RVariant) -> Result<Self, Error> {
+    fn try_from(value: QVariant) -> Result<Self, Error> {
         unsafe {
             Ok(CppBox::<QStringList>::try_from(value)?
                 .into_iter()
@@ -512,38 +519,38 @@ impl TryFrom<RVariant> for Vec<String> {
     }
 }
 
-impl<K: AsRef<str>> From<&HashMap<K, String>> for RVariant {
+impl<K: AsRef<str>> From<&HashMap<K, String>> for QVariant {
     fn from(value: &HashMap<K, String>) -> Self {
         Self::from_map(value)
     }
 }
-impl<K: AsRef<str>, V: Into<RVariant>> From<HashMap<K, V>> for RVariant {
+impl<K: AsRef<str>, V: Into<QVariant>> From<HashMap<K, V>> for QVariant {
     fn from(value: HashMap<K, V>) -> Self {
         Self::from_map(value)
     }
 }
-impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for HashMap<String, V> {
+impl<V: TryFrom<QVariant, Error = Error>> TryFrom<QVariant> for HashMap<String, V> {
     type Error = Error;
 
-    fn try_from(value: RVariant) -> Result<Self, Error> {
+    fn try_from(value: QVariant) -> Result<Self, Error> {
         value.into_map()
     }
 }
 
-impl<K: AsRef<str>> From<&BTreeMap<K, String>> for RVariant {
+impl<K: AsRef<str>> From<&BTreeMap<K, String>> for QVariant {
     fn from(value: &BTreeMap<K, String>) -> Self {
         Self::from_map(value)
     }
 }
-impl<K: AsRef<str>, V: Into<RVariant>> From<BTreeMap<K, V>> for RVariant {
+impl<K: AsRef<str>, V: Into<QVariant>> From<BTreeMap<K, V>> for QVariant {
     fn from(value: BTreeMap<K, V>) -> Self {
         Self::from_map(value)
     }
 }
-impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for BTreeMap<String, V> {
+impl<V: TryFrom<QVariant, Error = Error>> TryFrom<QVariant> for BTreeMap<String, V> {
     type Error = Error;
 
-    fn try_from(value: RVariant) -> Result<Self, Error> {
+    fn try_from(value: QVariant) -> Result<Self, Error> {
         value.into_map()
     }
 }
@@ -554,8 +561,8 @@ impl<V: TryFrom<RVariant, Error = Error>> TryFrom<RVariant> for BTreeMap<String,
 // like it worked and then later everything crashed due to Qt's atomic counters apparently
 // reaching impossible results. `CppBox`es don't do unexpected things like that, so I'm sticking
 // with them for now.
-fn recast<T: TryFrom<RVariant, Error = Error>>(variant: Ref<QVariant>) -> Result<T, Error> {
-    T::try_from(RVariant {
-        inner: unsafe { QVariant::new_copy(variant) },
+fn recast<T: TryFrom<QVariant, Error = Error>>(variant: Ref<q::QVariant>) -> Result<T, Error> {
+    T::try_from(QVariant {
+        inner: unsafe { q::QVariant::new_copy(variant) },
     })
 }

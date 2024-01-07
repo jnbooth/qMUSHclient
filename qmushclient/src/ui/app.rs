@@ -5,7 +5,7 @@ use std::path::Path;
 use std::rc::Rc;
 
 use cpp_core::{CppBox, NullPtr};
-use qt::{RSettings, Widget};
+use qt::{QSettings, Widget};
 use qt_core::{
     slot, FocusReason, QBox, QCoreApplication, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt,
 };
@@ -43,13 +43,13 @@ pub struct App {
     world_tabs: RefCell<Vec<Rc<WorldTab>>>,
     current: Cell<Option<usize>>,
     current_input: RefCell<QPtr<QLineEdit>>,
-    settings: RSettings,
+    settings: QSettings,
     paths: &'static Paths,
 }
 
 impl App {
     pub fn new() -> Rc<Self> {
-        let settings = RSettings::default();
+        let settings = QSettings::default();
         let recent = settings
             .get_list(KEY_RECENT)
             .unwrap_or_else(|_| VecDeque::new());

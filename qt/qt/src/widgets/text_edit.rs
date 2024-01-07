@@ -1,30 +1,30 @@
 use std::ops::Deref;
 
 use qt_core::QPtr;
-use qt_widgets::QTextEdit;
+use qt_widgets as q;
 
 use super::AbstractScrollAreaBinding;
-use crate::text::RTextCursor;
+use crate::text::QTextCursor;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]
-pub struct RTextEdit {
-    pub(super) inner: QPtr<QTextEdit>,
+pub struct QTextEdit {
+    pub(super) inner: QPtr<q::QTextEdit>,
 }
 
 #[repr(transparent)]
 pub struct TextEditBinding {
-    inner: QTextEdit,
+    inner: q::QTextEdit,
 }
 
 impl TextEditBinding {
-    pub(super) fn cast(inner: &QTextEdit) -> &Self {
+    pub(super) fn cast(inner: &q::QTextEdit) -> &Self {
         // SAFETY: #[repr(transparent)]
-        unsafe { &*(inner as *const QTextEdit as *const Self) }
+        unsafe { &*(inner as *const q::QTextEdit as *const Self) }
     }
 
-    pub fn text_cursor(&self) -> RTextCursor {
-        RTextCursor::get(&self.inner)
+    pub fn text_cursor(&self) -> QTextCursor {
+        QTextCursor::get(&self.inner)
     }
 }
 
@@ -36,7 +36,7 @@ impl Deref for TextEditBinding {
     }
 }
 
-impl Deref for RTextEdit {
+impl Deref for QTextEdit {
     type Target = TextEditBinding;
 
     fn deref(&self) -> &Self::Target {

@@ -94,11 +94,11 @@ impl QList for QListOfQString {
 
     fn new() -> CppBox<Self> {
         unsafe { Self::new() }
-    }
-    fn reserve(&self, size: c_int) {
-        unsafe {
-            self.reserve(size);
-        }
+            }
+            fn reserve(&self, size: c_int) {
+                unsafe {
+                    self.reserve(size);
+                }
     }
     unsafe fn push(&self, item: Self::Item) {
         unsafe {

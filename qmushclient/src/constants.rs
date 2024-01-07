@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use std::{env, fs, io};
 
-use qt::RSettings;
+use qt::QSettings;
 
 pub mod branding {
     pub const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -30,7 +30,7 @@ pub struct Paths {
 }
 
 impl Paths {
-    pub fn new(settings: &RSettings) -> io::Result<Self> {
+    pub fn new(settings: &QSettings) -> io::Result<Self> {
         let app = env::current_exe()?;
         let base = app.parent().unwrap().to_path_buf();
         let plugins = base.join("plugins");

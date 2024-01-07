@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::rc::{Rc, Weak};
 
 use cpp_core::{CastInto, Ptr, Ref};
-use qt::{RFont, RForm, Widget};
+use qt::{QFont, QForm, Widget};
 use qt_core::{slot, QPtr};
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::*;
@@ -90,7 +90,7 @@ trait PrefPageExt: 'static + PrefPage + Widget {
     unsafe fn connect<T, Q, F>(self: &Rc<Self>, world: &mut World, field: &Q, getter: F)
     where
         T: 'static,
-        Q: 'static + RForm<T>,
+        Q: 'static + QForm<T>,
         F: 'static + Clone + Fn(&mut World) -> &mut T,
     {
         // SAFETY: `field` is valid.
@@ -108,7 +108,7 @@ trait PrefPageExt: 'static + PrefPage + Widget {
         self: &Rc<Self>,
         fontfield: &QPtr<QFontComboBox>,
         sizefield: &QPtr<QSpinBox>,
-        getter: fn(&mut World) -> &mut RFont,
+        getter: fn(&mut World) -> &mut QFont,
     ) {
         let worldrc = self.get_world().upgrade().unwrap();
         let mut worldref = worldrc.borrow_mut();

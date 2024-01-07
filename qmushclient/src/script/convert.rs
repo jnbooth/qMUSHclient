@@ -9,7 +9,7 @@ use std::time::{Duration, SystemTime};
 
 use cpp_core::{CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
 use mlua::{self, FromLuaMulti, IntoLua, IntoLuaMulti, LightUserData, Lua, MultiValue, Value};
-use qt::{RColor, RFont};
+use qt::{QColor, QFont};
 use qt_core::{QBox, QObject, QPtr, QString};
 
 pub trait ScriptRes: for<'lua> FromLuaMulti<'lua> {}
@@ -96,13 +96,13 @@ impl ScriptArg for &SystemTime {
     }
 }
 
-impl ScriptArg for &RColor {
+impl ScriptArg for &QColor {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         self.code().to_arg(lua)
     }
 }
 
-impl ScriptArg for &RFont {
+impl ScriptArg for &QFont {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         self.family().to_arg(lua)
     }

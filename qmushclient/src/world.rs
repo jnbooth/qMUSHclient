@@ -3,9 +3,7 @@ use std::path::PathBuf;
 
 use chrono::Utc;
 use enumeration::Enum;
-use qt::color::{RColor, RColorPair};
-use qt::RFont;
-use qt_core::{GlobalColor, Key};
+use qt::{GlobalColor, Key, QColor, QColorPair, QFont};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;
 use qt_gui::q_palette::ColorRole;
@@ -136,7 +134,7 @@ pub struct World {
     pub accept_chat_connections: bool,
     pub chat_port: u16,
     pub validate_incoming_chat_calls: bool,
-    pub chat_colors: RColorPair,
+    pub chat_colors: QColorPair,
     pub ignore_chat_colors: bool,
     pub chat_message_prefix: String,
     pub chat_max_lines_per_message: usize,
@@ -151,7 +149,7 @@ pub struct World {
     pub beep_sound: Option<PathBuf>,
     pub pixel_offset: i16,
     pub line_spacing: f32,
-    pub output_font: RFont,
+    pub output_font: QFont,
     pub use_default_output_font: bool,
     pub show_bold: bool,
     pub show_italic: bool,
@@ -180,7 +178,7 @@ pub struct World {
     // MXP / Pueblo
     pub use_mxp: UseMxp,
     pub detect_pueblo: bool,
-    pub hyperlink_color: RColor,
+    pub hyperlink_color: QColor,
     pub use_custom_link_color: bool,
     pub mud_can_change_link_color: bool,
     pub underline_hyperlinks: bool,
@@ -193,11 +191,11 @@ pub struct World {
 
     // ANSI Color
     pub use_default_colors: bool,
-    pub ansi_colors: [RColor; 16],
+    pub ansi_colors: [QColor; 16],
 
     // Custom Color
     pub custom_names: [String; 16],
-    pub custom_colors: [RColorPair; 16],
+    pub custom_colors: [QColorPair; 16],
 
     // Triggers
     #[serde(serialize_with = "skip_temporary")]
@@ -208,15 +206,15 @@ pub struct World {
 
     // Commands
     pub display_my_input: bool,
-    pub echo_colors: RColorPair,
+    pub echo_colors: QColorPair,
     pub enable_speed_walk: bool,
     pub speed_walk_prefix: String,
     pub speed_walk_filler: String,
     pub speed_walk_delay: u32,
     pub enable_command_stack: bool,
     pub command_stack_character: String,
-    pub input_colors: RColorPair,
-    pub input_font: RFont,
+    pub input_colors: QColorPair,
+    pub input_font: QFont,
     pub use_default_input_font: bool,
     pub enable_spam_prevention: bool,
     pub spam_line_count: usize,
@@ -291,7 +289,7 @@ pub struct World {
     pub script_editor: String,
     pub script_reload_option: ScriptRecompile,
     pub script_errors_to_output_window: bool,
-    pub note_text_color: RColor,
+    pub note_text_color: QColor,
 
     // Hidden
     pub plugins: Vec<PathBuf>,
@@ -350,7 +348,7 @@ impl World {
             accept_chat_connections: false,
             chat_port: 4050,
             validate_incoming_chat_calls: false,
-            chat_colors: RColorPair::new(GlobalColor::Red, GlobalColor::Transparent),
+            chat_colors: QColorPair::new(GlobalColor::Red, GlobalColor::Transparent),
             ignore_chat_colors: false,
             chat_message_prefix: String::new(),
             chat_max_lines_per_message: 0,
@@ -365,7 +363,7 @@ impl World {
             beep_sound: None,
             pixel_offset: 0,
             line_spacing: 1.0,
-            output_font: RFont::global(StyleHint::Monospace),
+            output_font: QFont::global(StyleHint::Monospace),
             use_default_output_font: true,
             show_bold: true,
             show_italic: true,
@@ -394,7 +392,7 @@ impl World {
             // MXP / Pueblo
             use_mxp: UseMxp::Command,
             detect_pueblo: true,
-            hyperlink_color: RColor::from(ColorRole::Link),
+            hyperlink_color: QColor::from(ColorRole::Link),
             use_custom_link_color: false,
             mud_can_change_link_color: true,
             underline_hyperlinks: true,
@@ -419,15 +417,15 @@ impl World {
 
             // Commands
             display_my_input: true,
-            echo_colors: RColorPair::new(ColorRole::Text, GlobalColor::Transparent),
+            echo_colors: QColorPair::new(ColorRole::Text, GlobalColor::Transparent),
             enable_speed_walk: false,
             speed_walk_prefix: "#".to_owned(),
             speed_walk_filler: "a".to_owned(),
             speed_walk_delay: 20,
             enable_command_stack: false,
             command_stack_character: "#".to_owned(),
-            input_colors: RColorPair::new(ColorRole::Text, ColorRole::Base),
-            input_font: RFont::from(SystemFont::FixedFont),
+            input_colors: QColorPair::new(ColorRole::Text, ColorRole::Base),
+            input_font: QFont::from(SystemFont::FixedFont),
             use_default_input_font: true,
             enable_spam_prevention: false,
             spam_line_count: 20,
@@ -500,14 +498,14 @@ impl World {
             script_editor: "notepad".to_owned(),
             script_reload_option: ScriptRecompile::Confirm,
             script_errors_to_output_window: false,
-            note_text_color: RColor::rgb(0, 128, 255),
+            note_text_color: QColor::rgb(0, 128, 255),
 
             // Hidden
             plugins: Vec::new(),
         }
     }
 
-    pub fn color<'a, 'b>(&'a self, col: &'b WorldColor) -> &'b RColor
+    pub fn color<'a, 'b>(&'a self, col: &'b WorldColor) -> &'b QColor
     where
         'a: 'b,
     {
@@ -521,7 +519,7 @@ impl World {
     }
 
     // Each plugin has one of these.
-    pub fn custom_color_map(&self) -> HashMap<String, RColorPair> {
+    pub fn custom_color_map(&self) -> HashMap<String, QColorPair> {
         let custom_names = self.custom_names.iter().map(ToOwned::to_owned);
         let custom_colors = self.custom_colors.iter().map(ToOwned::to_owned);
         custom_names.zip(custom_colors).collect()

@@ -3,7 +3,7 @@ use std::{mem, str};
 
 use enumeration::{Enum, EnumSet};
 use mlua::{self, AnyUserData, FromLuaMulti, Function, Lua, Value};
-use qt::widgets::RMessageBox;
+use qt::QMessageBox;
 use qt_widgets::q_message_box::Icon;
 use tr::TrContext;
 
@@ -73,7 +73,7 @@ impl Plugin {
 
     pub fn alert_error(metadata: &PluginMetadata, error: &mlua::Error) {
         // TODO make this more complicated
-        let msgbox = RMessageBox::new();
+        let msgbox = QMessageBox::new();
         msgbox.set_icon(Icon::Warning);
         msgbox.set_text(tr!("Script error in {}", metadata.name));
         msgbox.set_informative_text(error.to_string());

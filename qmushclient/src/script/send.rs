@@ -5,7 +5,7 @@ use std::time::Duration;
 
 use chrono::{NaiveTime, Timelike};
 use enumeration::Enum;
-use qt::RColor;
+use qt::QColor;
 use qt_gui::q_palette::ColorRole;
 use serde::{Deserialize, Serialize};
 
@@ -260,9 +260,9 @@ pub struct Trigger {
     // Note: this is at the top for Ord-deriving purposes.
     pub reaction: Reaction,
     pub change_foreground: bool,
-    pub foreground: RColor,
+    pub foreground: QColor,
     pub change_background: bool,
-    pub background: RColor,
+    pub background: QColor,
     pub make_bold: bool,
     pub make_italic: bool,
     pub make_underline: bool,
@@ -288,9 +288,9 @@ impl Trigger {
         Self {
             reaction: Reaction::default(),
             change_foreground: false,
-            foreground: RColor::from(ColorRole::Text),
+            foreground: QColor::from(ColorRole::Text),
             change_background: false,
-            background: RColor::from(ColorRole::Base),
+            background: QColor::from(ColorRole::Base),
             make_bold: false,
             make_italic: false,
             make_underline: false,
@@ -694,18 +694,18 @@ impl TriggerXml<'_> {
             ..Default::default()
         }
     }
-    fn try_change_color(&self, change: Change, color: &Option<String>) -> Option<RColor> {
+    fn try_change_color(&self, change: Change, color: &Option<String>) -> Option<QColor> {
         if change.member(self.colour_change_type) {
-            RColor::named(color.as_ref()?.as_str())
+            QColor::named(color.as_ref()?.as_str())
         } else {
             None
         }
     }
 
-    fn change_color(&self, not: Change, color: &Option<String>, def: ColorRole) -> (bool, RColor) {
+    fn change_color(&self, not: Change, color: &Option<String>, def: ColorRole) -> (bool, QColor) {
         match self.try_change_color(not, color) {
             Some(color) => (true, color),
-            None => (false, RColor::from(def)),
+            None => (false, QColor::from(def)),
         }
     }
 }

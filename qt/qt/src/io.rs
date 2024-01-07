@@ -6,11 +6,10 @@ use std::os::raw::c_char;
 use std::rc::Rc;
 
 use cpp_core::{CppDeletable, StaticUpcast};
+use qt_core as q;
 use qt_core::q_file_device::FileError;
 use qt_core::q_process::ProcessError;
-use qt_core::{
-    QBox, QBuffer, QFile, QFileDevice, QIODevice, QObject, QProcess, QPtr, QSaveFile, QString,
-};
+use qt_core::{QBox, QObject, QPtr, QString};
 use qt_network::q_abstract_socket::{NetworkLayerProtocol, SocketError, SocketState};
 use qt_network::q_local_socket::LocalSocketError;
 use qt_network::q_network_reply::NetworkError;
@@ -19,14 +18,14 @@ use qt_network::{
     QTcpSocket, QUdpSocket,
 };
 
-pub struct RIODevice<Q: QIO> {
+pub struct QIODevice<Q: QIO> {
     dropper: Rc<QBox<Q>>,
     inner: QPtr<Q>,
-    device: QPtr<QIODevice>,
+    device: QPtr<q::QIODevice>,
 }
 
 // Manually implemented in order to avoid a Q: Debug bound.
-impl<Q: QIO> Debug for RIODevice<Q> {
+impl<Q: QIO> Debug for QIODevice<Q> {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         f.debug_struct("RIODevice")
             .field("dropper", &self.dropper)
@@ -37,7 +36,7 @@ impl<Q: QIO> Debug for RIODevice<Q> {
 }
 
 // Manually implemented in order to avoid a Q: Clone bound.
-impl<Q: QIO> Clone for RIODevice<Q> {
+impl<Q: QIO> Clone for QIODevice<Q> {
     fn clone(&self) -> Self {
         Self {
             dropper: self.dropper.clone(),
@@ -47,7 +46,7 @@ impl<Q: QIO> Clone for RIODevice<Q> {
     }
 }
 
-impl<Q: QIO> Drop for RIODevice<Q> {
+impl<Q: QIO> Drop for QIODevice<Q> {
     fn drop(&mut self) {
         if Rc::strong_count(&self.dropper) == 1 {
             self.close(); // this is the last one
@@ -55,7 +54,7 @@ impl<Q: QIO> Drop for RIODevice<Q> {
     }
 }
 
-impl<Q: QIO> RIODevice<Q> {
+impl<Q: QIO> QIODevice<Q> {
     pub fn new(inner: QBox<Q>) -> Self {
         unsafe {
             Self {
@@ -138,35 +137,35 @@ impl<Q: QIO> RIODevice<Q> {
     }
 }
 
-impl<Q: QIO> Read for RIODevice<Q> {
+impl<Q: QIO> Read for QIODevice<Q> {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
-        RIODevice::read(self, buf)
+        QIODevice::read(self, buf)
     }
 }
 
-impl<Q: QIO> Read for &RIODevice<Q> {
+impl<Q: QIO> Read for &QIODevice<Q> {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
-        RIODevice::read(self, buf)
+        QIODevice::read(self, buf)
     }
 }
 
-impl<Q: QIO> Write for RIODevice<Q> {
+impl<Q: QIO> Write for QIODevice<Q> {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        RIODevice::write(self, buf)
+        QIODevice::write(self, buf)
     }
 
     fn flush(&mut self) -> io::Result<()> {
-        RIODevice::flush(self)
+        QIODevice::flush(self)
     }
 }
 
-impl<Q: QIO> Write for &RIODevice<Q> {
+impl<Q: QIO> Write for &QIODevice<Q> {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        RIODevice::write(self, buf)
+        QIODevice::write(self, buf)
     }
 
     fn flush(&mut self) -> io::Result<()> {
-        RIODevice::flush(self)
+        QIODevice::flush(self)
     }
 }
 
@@ -205,7 +204,7 @@ fn address_to_std(address: &QHostAddress, port: u16) -> SocketAddr {
     }
 }
 
-impl<Q: QIO + StaticUpcast<QAbstractSocket>> RIODevice<Q> {
+impl<Q: QIO + StaticUpcast<QAbstractSocket>> QIODevice<Q> {
     #[inline]
     fn socket(&self) -> QPtr<QAbstractSocket> {
         unsafe { self.inner.static_upcast() }
@@ -335,12 +334,12 @@ impl QIOError for ProcessError {
 }
 
 #[allow(clippy::upper_case_acronyms)]
-pub trait QIO: CppDeletable + StaticUpcast<QIODevice> + StaticUpcast<QObject> {
+pub trait QIO: CppDeletable + StaticUpcast<q::QIODevice> + StaticUpcast<QObject> {
     unsafe fn io_error(&self) -> io::ErrorKind;
     unsafe fn io_flush(&self) -> io::Result<()>;
 }
 
-impl QIO for QBuffer {
+impl QIO for q::QBuffer {
     unsafe fn io_error(&self) -> io::ErrorKind {
         io::ErrorKind::Other
     }
@@ -411,7 +410,7 @@ impl QIO for QLocalSocket {
     }
 }
 
-impl QIO for QFileDevice {
+impl QIO for q::QFileDevice {
     unsafe fn io_error(&self) -> io::ErrorKind {
         unsafe { self.error().to_io_error() }
     }
@@ -423,7 +422,7 @@ impl QIO for QFileDevice {
         Ok(())
     }
 }
-impl QIO for QFile {
+impl QIO for q::QFile {
     unsafe fn io_error(&self) -> io::ErrorKind {
         unsafe { self.error().to_io_error() }
     }
@@ -435,7 +434,7 @@ impl QIO for QFile {
         Ok(())
     }
 }
-impl QIO for QSaveFile {
+impl QIO for q::QSaveFile {
     unsafe fn io_error(&self) -> io::ErrorKind {
         unsafe { self.error().to_io_error() }
     }
@@ -458,7 +457,7 @@ impl QIO for QNetworkReply {
     }
 }
 
-impl QIO for QProcess {
+impl QIO for q::QProcess {
     unsafe fn io_error(&self) -> io::ErrorKind {
         unsafe { self.error2().to_io_error() }
     }
@@ -468,7 +467,7 @@ impl QIO for QProcess {
     }
 }
 
-impl<Q: QIO + Deref<Target = QAbstractSocket>> RIODevice<Q> {
+impl<Q: QIO + Deref<Target = QAbstractSocket>> QIODevice<Q> {
     pub fn state(&self) -> SocketState {
         unsafe { self.inner.deref().state() }
     }

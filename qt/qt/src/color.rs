@@ -6,54 +6,54 @@ use std::os::raw::{c_int, c_uint};
 
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
 use qt_core::{GlobalColor, QString};
+use qt_gui as q;
 use qt_gui::q_palette::ColorRole;
-use qt_gui::{QBrush, QColor, QGuiApplication, QTextFormat};
 use qt_widgets::q_color_dialog::ColorDialogOption;
 use qt_widgets::q_dialog::DialogCode;
-use qt_widgets::{QColorDialog, QTextEdit, QWidget};
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-pub struct RColor {
-    pub(super) inner: CppBox<QBrush>,
+pub struct QColor {
+    pub(crate) inner: CppBox<q::QBrush>,
     code: c_uint,
     transparent: bool,
 }
 
-// SAFETY: RColor is immutable.
-unsafe impl Send for RColor {}
-unsafe impl Sync for RColor {}
+// SAFETY: QColor is immutable.
+unsafe impl Send for QColor {}
+unsafe impl Sync for QColor {}
 
-impl PartialEq for RColor {
+impl PartialEq for QColor {
     fn eq(&self, other: &Self) -> bool {
         self.code == other.code
     }
 }
-impl Eq for RColor {}
-impl PartialOrd for RColor {
+impl Eq for QColor {}
+impl PartialOrd for QColor {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         self.code.partial_cmp(&other.code)
     }
 }
-impl Ord for RColor {
+impl Ord for QColor {
     fn cmp(&self, other: &Self) -> Ordering {
         self.code.cmp(&other.code)
     }
 }
-impl Hash for RColor {
+impl Hash for QColor {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.code.hash(state);
     }
 }
-impl Clone for RColor {
+impl Clone for QColor {
     fn clone(&self) -> Self {
         Self {
-            inner: unsafe { QBrush::new_copy(&self.inner) },
+            inner: unsafe { q::QBrush::new_copy(&self.inner) },
             code: self.code,
             transparent: self.transparent,
         }
     }
 }
-impl Debug for RColor {
+impl Debug for QColor {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         f.debug_struct("RColor")
             .field("code", &format_args!("#{:08X}", self.code))
@@ -61,48 +61,48 @@ impl Debug for RColor {
             .finish()
     }
 }
-impl Display for RColor {
+impl Display for QColor {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(f, "#{:08X}", self.code)
     }
 }
 
-impl From<CppBox<QColor>> for RColor {
-    fn from(value: CppBox<QColor>) -> Self {
+impl From<CppBox<q::QColor>> for QColor {
+    fn from(value: CppBox<q::QColor>) -> Self {
         Self::of(&value)
     }
 }
-impl From<CppBox<QBrush>> for RColor {
-    fn from(value: CppBox<QBrush>) -> Self {
+impl From<CppBox<q::QBrush>> for QColor {
+    fn from(value: CppBox<q::QBrush>) -> Self {
         Self::of(unsafe { value.color() })
     }
 }
-impl From<ColorRole> for RColor {
+impl From<ColorRole> for QColor {
     fn from(value: ColorRole) -> Self {
-        Self::of(unsafe { QGuiApplication::palette().color_1a(value) })
+        Self::of(unsafe { q::QGuiApplication::palette().color_1a(value) })
     }
 }
 
-impl From<GlobalColor> for RColor {
+impl From<GlobalColor> for QColor {
     fn from(value: GlobalColor) -> Self {
-        Self::of(unsafe { &QColor::from_global_color(value) })
+        Self::of(unsafe { &q::QColor::from_global_color(value) })
     }
 }
 
-impl From<c_uint> for RColor {
+impl From<c_uint> for QColor {
     fn from(value: c_uint) -> Self {
         Self::from_code(value | 0xFF000000)
     }
 }
 
-impl Default for RColor {
+impl Default for QColor {
     fn default() -> Self {
-        Self::from(unsafe { QBrush::new() })
+        Self::from(unsafe { q::QBrush::new() })
     }
 }
 
-impl RColor {
-    fn color(&self) -> Ref<QColor> {
+impl QColor {
+    fn color(&self) -> Ref<q::QColor> {
         unsafe { self.inner.color() }
     }
 
@@ -119,32 +119,32 @@ impl RColor {
         unsafe { self.color().alpha() as u8 }
     }
 
-    pub fn of<R: CastInto<Ref<QColor>>>(color: R) -> Self {
+    pub fn of<R: CastInto<Ref<q::QColor>>>(color: R) -> Self {
         unsafe {
             let color = color.cast_into();
             Self {
                 code: color.rgba(),
                 transparent: color.alpha() == 0,
-                inner: QBrush::from_q_color(color),
+                inner: q::QBrush::from_q_color(color),
             }
         }
     }
 
     pub fn rgb(r: u8, g: u8, b: u8) -> Self {
-        Self::from(unsafe { QColor::from_rgb_3a(r as c_int, g as c_int, b as c_int) })
+        Self::from(unsafe { q::QColor::from_rgb_3a(r as c_int, g as c_int, b as c_int) })
     }
     pub fn rgba(r: u8, g: u8, b: u8, a: u8) -> Self {
-        Self::from(unsafe { QColor::from_rgb_4a(r as c_int, g as c_int, b as c_int, a as c_int) })
+        Self::from(unsafe { q::QColor::from_rgb_4a(r as c_int, g as c_int, b as c_int, a as c_int) })
     }
     pub fn from_code(code: c_uint) -> Self {
-        Self::from(unsafe { QColor::from_rgba(code) })
+        Self::from(unsafe { q::QColor::from_rgba(code) })
     }
     pub fn code(&self) -> c_uint {
         self.code
     }
     pub fn named(name: &str) -> Option<Self> {
         unsafe {
-            let color = QColor::from_q_string(&QString::from_std_str(name));
+            let color = q::QColor::from_q_string(&QString::from_std_str(name));
             if color.is_valid() {
                 Some(Self::from(color))
             } else {
@@ -167,7 +167,7 @@ impl RColor {
                 .get_hsl_4a(&mut h, &mut s, &mut l, &mut a);
         }
         adjust(&mut h, &mut s, &mut l, &mut a);
-        Self::from(unsafe { QColor::from_hsl_4a(h, s, l, a) })
+        Self::from(unsafe { q::QColor::from_hsl_4a(h, s, l, a) })
     }
 
     pub fn reshade(&self, adjust: c_int) -> Self {
@@ -185,9 +185,9 @@ impl RColor {
         })
     }
 
-    pub fn pick<P: CastInto<Ptr<QWidget>>>(&self, parent: P) -> Option<Self> {
+    pub fn pick<P: CastInto<Ptr<qt_widgets::QWidget>>>(&self, parent: P) -> Option<Self> {
         unsafe {
-            let dlg = QColorDialog::from_q_color_q_widget(self.color(), parent);
+            let dlg = qt_widgets::QColorDialog::from_q_color_q_widget(self.color(), parent);
             dlg.set_option_2a(ColorDialogOption::ShowAlphaChannel, true);
             if dlg.exec() == DialogCode::Accepted.to_int() {
                 Some(Self::from(dlg.selected_color()))
@@ -198,14 +198,16 @@ impl RColor {
     }
 }
 
-#[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-pub struct RColorPair {
-    pub foreground: RColor,
-    pub background: RColor,
+#[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg(feature = "serde")]
+#[derive(Serialize, Deserialize)]
+pub struct QColorPair {
+    pub foreground: QColor,
+    pub background: QColor,
 }
 
-impl RColorPair {
-    pub fn new<Fg: Into<RColor>, Bg: Into<RColor>>(foreground: Fg, background: Bg) -> Self {
+impl QColorPair {
+    pub fn new<Fg: Into<QColor>, Bg: Into<QColor>>(foreground: Fg, background: Bg) -> Self {
         Self {
             foreground: foreground.into(),
             background: background.into(),
@@ -225,16 +227,16 @@ impl RColorPair {
 }
 
 pub trait HasPalette {
-    fn palette_color(&self, role: ColorRole) -> RColor;
-    fn set_palette_color(&self, role: ColorRole, color: &RColor);
+    fn palette_color(&self, role: ColorRole) -> QColor;
+    fn set_palette_color(&self, role: ColorRole, color: &QColor);
 }
 
-impl HasPalette for QWidget {
-    fn palette_color(&self, role: ColorRole) -> RColor {
-        RColor::of(unsafe { self.palette().color_1a(role) })
+impl HasPalette for qt_widgets::QWidget {
+    fn palette_color(&self, role: ColorRole) -> QColor {
+        QColor::of(unsafe { self.palette().color_1a(role) })
     }
 
-    fn set_palette_color(&self, role: ColorRole, color: &RColor) {
+    fn set_palette_color(&self, role: ColorRole, color: &QColor) {
         unsafe {
             let palette = self.palette();
             palette.set_brush_2a(role, &color.inner);
@@ -245,36 +247,36 @@ impl HasPalette for QWidget {
 }
 
 pub trait Colored {
-    fn foreground_color(&self) -> RColor;
-    fn set_foreground_color(&self, color: &RColor);
-    fn background_color(&self) -> RColor;
-    fn set_background_color(&self, color: &RColor);
+    fn foreground_color(&self) -> QColor;
+    fn set_foreground_color(&self, color: &QColor);
+    fn background_color(&self) -> QColor;
+    fn set_background_color(&self, color: &QColor);
 
-    fn colors(&self) -> RColorPair {
-        RColorPair {
+    fn colors(&self) -> QColorPair {
+        QColorPair {
             foreground: self.foreground_color(),
             background: self.background_color(),
         }
     }
-    fn set_colors(&self, colors: &RColorPair) {
+    fn set_colors(&self, colors: &QColorPair) {
         self.set_foreground_color(&colors.foreground);
         self.set_background_color(&colors.background);
     }
 }
 
-impl Colored for QTextFormat {
-    fn foreground_color(&self) -> RColor {
-        RColor::from(unsafe { self.foreground() })
+impl Colored for q::QTextFormat {
+    fn foreground_color(&self) -> QColor {
+        QColor::from(unsafe { self.foreground() })
     }
-    fn background_color(&self) -> RColor {
-        RColor::from(unsafe { self.background() })
+    fn background_color(&self) -> QColor {
+        QColor::from(unsafe { self.background() })
     }
-    fn set_foreground_color(&self, color: &RColor) {
+    fn set_foreground_color(&self, color: &QColor) {
         unsafe {
             self.set_foreground(&color.inner);
         }
     }
-    fn set_background_color(&self, color: &RColor) {
+    fn set_background_color(&self, color: &QColor) {
         unsafe {
             if color.transparent {
                 self.clear_background();
@@ -285,37 +287,37 @@ impl Colored for QTextFormat {
     }
 }
 
-impl Colored for QTextEdit {
-    fn foreground_color(&self) -> RColor {
-        unsafe { RColor::from(self.text_color()) }
+impl Colored for qt_widgets::QTextEdit {
+    fn foreground_color(&self) -> QColor {
+        unsafe { QColor::from(self.text_color()) }
     }
-    fn background_color(&self) -> RColor {
+    fn background_color(&self) -> QColor {
         self.palette_color(ColorRole::Base)
     }
-    fn set_foreground_color(&self, color: &RColor) {
+    fn set_foreground_color(&self, color: &QColor) {
         unsafe {
             self.set_text_color(color.color());
         }
     }
-    fn set_background_color(&self, color: &RColor) {
+    fn set_background_color(&self, color: &QColor) {
         self.set_palette_color(ColorRole::Base, color);
     }
 }
 
-impl Colored for QWidget {
-    fn foreground_color(&self) -> RColor {
+impl Colored for qt_widgets::QWidget {
+    fn foreground_color(&self) -> QColor {
         self.palette_color(unsafe { self.foreground_role() })
     }
-    fn background_color(&self) -> RColor {
+    fn background_color(&self) -> QColor {
         self.palette_color(unsafe { self.background_role() })
     }
-    fn set_foreground_color(&self, color: &RColor) {
+    fn set_foreground_color(&self, color: &QColor) {
         self.set_palette_color(unsafe { self.foreground_role() }, color);
     }
-    fn set_background_color(&self, color: &RColor) {
+    fn set_background_color(&self, color: &QColor) {
         self.set_palette_color(unsafe { self.background_role() }, color);
     }
-    fn set_colors(&self, colors: &RColorPair) {
+    fn set_colors(&self, colors: &QColorPair) {
         unsafe {
             let palette = self.palette();
             palette.set_brush_2a(self.foreground_role(), &colors.foreground.inner);
@@ -325,13 +327,15 @@ impl Colored for QWidget {
     }
 }
 
-impl<'de> Deserialize<'de> for RColor {
+#[cfg(feature = "serde")]
+impl<'de> Deserialize<'de> for QColor {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         Ok(Self::from_code(c_uint::deserialize(deserializer)?))
     }
 }
 
-impl Serialize for RColor {
+#[cfg(feature = "serde")]
+impl Serialize for QColor {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
         self.code.serialize(serializer)
     }

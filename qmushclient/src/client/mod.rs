@@ -9,10 +9,10 @@ use std::{mem, str};
 
 use cpp_core::Ptr;
 use enumeration::Enum;
-use qt::color::Colored;
-use qt::text::{RTextCharFormat, RTextCursor};
-use qt::widgets::{RLineEdit, RTextBrowser};
-use qt::{Printable, RColor, RIODevice, Widget};
+use qt::{
+    Colored, Printable, QColor, QIODevice, QLineEdit, QTextBrowser, QTextCharFormat, QTextCursor,
+    Widget,
+};
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 use qt_core::QBox;
@@ -85,9 +85,9 @@ impl<'a> LogConfig<'a> {
 
 #[derive(TrContext)]
 pub struct Client {
-    widget: RTextBrowser,
-    cursor: RTextCursor,
-    socket: RIODevice<QTcpSocket>,
+    widget: QTextBrowser,
+    cursor: QTextCursor,
+    socket: QIODevice<QTcpSocket>,
     stream: MudStream,
     bufinput: [u8; config::SOCKET_BUFFER],
     bufoutput: Vec<u8>,
@@ -115,14 +115,14 @@ impl Client {
     ///
     /// `output` and `input` must be valid and non-null.
     pub fn new(
-        output: RTextBrowser,
-        input: RLineEdit,
+        output: QTextBrowser,
+        input: QLineEdit,
         socket: QBox<QTcpSocket>,
         world: Rc<World>,
         paths: &'static Paths,
     ) -> Self {
         let notepad = Rc::new(RefCell::new(Notepad::new(&world.name)));
-        let socket = RIODevice::new(socket);
+        let socket = QIODevice::new(socket);
         let api_state = Rc::new(ApiState::default());
         // SAFETY: all fields are valid.
         let api = Api::new(
@@ -337,7 +337,7 @@ impl Client {
             self.cursor.select(SelectionType::BlockUnderCursor).delete();
             return Ok(());
         }
-        let format = RTextCharFormat::new();
+        let format = QTextCharFormat::new();
         if let Some(fg) = requests.foreground {
             format.set_foreground_color(&fg);
         }
@@ -467,7 +467,7 @@ impl Client {
     // See: https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit
     fn interpret_256_ansi(&mut self, code: u8) {
         fn build_ansi_color(state: &ClientState) -> WorldColor {
-            WorldColor::Plain(RColor::rgb(
+            WorldColor::Plain(QColor::rgb(
                 state.ansi_red,
                 state.ansi_green,
                 state.ansi_blue,

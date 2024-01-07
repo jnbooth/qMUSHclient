@@ -2,8 +2,7 @@ use std::iter::Iterator;
 use std::{io, mem, str};
 
 use cpp_core::CppBox;
-use qt::text::RTextCharFormat;
-use qt::Printable;
+use qt::{Printable, QTextCharFormat};
 use qt_core::QString;
 
 use super::Client;
@@ -152,7 +151,7 @@ impl Client {
         let (closed, tag) = self.mxp_findtag(was_secure, name)?;
         if let Some(template) = &tag.anchor_template {
             let select = self.cursor.document().select(tag.text_index..);
-            let fmt = RTextCharFormat::new();
+            let fmt = QTextCharFormat::new();
             let text = select.text();
             let anchor = template.replace("&text;", &text);
             fmt.set_anchor_href(&anchor);

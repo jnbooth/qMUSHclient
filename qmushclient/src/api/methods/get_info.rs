@@ -6,7 +6,7 @@ use std::time::SystemTime;
 
 use libsqlite3_sys::{SQLITE_VERSION, SQLITE_VERSION_NUMBER};
 use mlua::{Lua, Result, Value};
-use qt::{Colored, QGuiApplication, RColor, RFont};
+use qt::{Colored, QColor, QFont, QGuiApplication};
 use qt_core::{GlobalColor, KeyboardModifier, MouseButton};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;
@@ -136,7 +136,7 @@ impl Api {
             68 => lua!(&paths.base), // MUSHclient startup (initial) directory
             69 => lua!(""),          // translation file
             70 => lua!(""),          // locale
-            71 => lua!(&RFont::global(StyleHint::Monospace)), // font used for fixed-pitch dialogs
+            71 => lua!(&QFont::global(StyleHint::Monospace)), // font used for fixed-pitch dialogs
             72 => lua!(branding::VERSION),
             73 => lua!(""), // compilation date/time (bad idea)
             74 => lua!(&paths.sounds),
@@ -251,7 +251,7 @@ impl Api {
             240 => lua!(output.font_metrics().average_char_width()),
             241 => lua!(output.font_metrics().height()),
             242 => lua!(0), // count of lines that had bad UTF-8 sequences in them (TODO)
-            243 => lua!(RFont::from(SystemFont::FixedFont).size()),
+            243 => lua!(QFont::from(SystemFont::FixedFont).size()),
             244 => lua!(0), // count of number of triggers that were evaluated (TODO)
             245 => lua!(0), // count of number of triggers that matched (TODO)
             246 => lua!(0), // count of number of aliases that were evaluated (TODO)
@@ -291,7 +291,7 @@ impl Api {
             279 => lua!(0),                    // text rectangle outside style
             280 => lua!(output.height()),      // output window client height
             281 => lua!(output.width()),       // output window client width
-            282 => lua!(&RColor::from(GlobalColor::Transparent)), // text rectangle border color
+            282 => lua!(&QColor::from(GlobalColor::Transparent)), // text rectangle border color
             283 => lua!(output.cursor_position().x()),
             284 => lua!(output.cursor_position().y()),
 

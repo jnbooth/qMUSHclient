@@ -3,7 +3,7 @@ use std::str;
 
 use case_insensitive::ascii::CaseFoldMap;
 use enumeration::{Enum, EnumSet};
-use qt::RColor;
+use qt::QColor;
 use tr::TrContext;
 
 use crate::client::style::TextStyle;
@@ -145,8 +145,8 @@ pub enum InList {
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Span {
     pub flags: EnumSet<TextStyle>,
-    pub foreground: Option<RColor>,
-    pub background: Option<RColor>,
+    pub foreground: Option<QColor>,
+    pub background: Option<QColor>,
     pub action: Option<Link>,
     /// Which variable to set (FLAG in MXP).
     pub variable: Option<String>,

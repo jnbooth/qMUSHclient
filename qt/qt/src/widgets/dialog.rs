@@ -1,26 +1,26 @@
 use std::ops::Deref;
 
 use qt_core::QBox;
+use qt_widgets as q;
 use qt_widgets::q_dialog::DialogCode;
-use qt_widgets::QDialog;
 
 use super::WidgetBinding;
 
 #[repr(transparent)]
 #[derive(Debug)]
-pub struct RDialog {
-    pub(super) inner: QBox<QDialog>,
+pub struct QDialog {
+    pub(super) inner: QBox<q::QDialog>,
 }
 
 #[repr(transparent)]
 pub struct DialogBinding {
-    inner: QDialog,
+    inner: q::QDialog,
 }
 
 impl DialogBinding {
-    pub(super) fn cast(inner: &QDialog) -> &Self {
+    pub(super) fn cast(inner: &q::QDialog) -> &Self {
         // SAFETY: #[repr(transparent)]
-        unsafe { &*(inner as *const QDialog as *const Self) }
+        unsafe { &*(inner as *const q::QDialog as *const Self) }
     }
 
     /// Shows the dialog as a modal dialog, blocking until the user closes it.
@@ -37,7 +37,7 @@ impl Deref for DialogBinding {
     }
 }
 
-impl Deref for RDialog {
+impl Deref for QDialog {
     type Target = DialogBinding;
 
     fn deref(&self) -> &Self::Target {

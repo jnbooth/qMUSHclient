@@ -1,35 +1,35 @@
 use std::ops::Deref;
 
 use qt_core::QPtr;
-use qt_widgets::QLineEdit;
+use qt_widgets as q;
 
 use super::WidgetBinding;
 use crate::Printable;
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]
-pub struct RLineEdit {
-    pub(super) inner: QPtr<QLineEdit>,
+pub struct QLineEdit {
+    pub(super) inner: QPtr<q::QLineEdit>,
 }
 
-impl RLineEdit {
+impl QLineEdit {
     /// # Safety
     ///
     /// `inner` must be valid and non-null.
-    pub unsafe fn new(inner: QPtr<QLineEdit>) -> Self {
+    pub unsafe fn new(inner: QPtr<q::QLineEdit>) -> Self {
         Self { inner }
     }
 }
 
 #[repr(transparent)]
 pub struct LineEditBinding {
-    inner: QLineEdit,
+    inner: q::QLineEdit,
 }
 
 impl LineEditBinding {
-    pub(super) fn cast(inner: &QLineEdit) -> &Self {
+    pub(super) fn cast(inner: &q::QLineEdit) -> &Self {
         // SAFETY: #[repr(transparent)]
-        unsafe { &*(inner as *const QLineEdit as *const Self) }
+        unsafe { &*(inner as *const q::QLineEdit as *const Self) }
     }
 
     pub fn text(&self) -> String {
@@ -49,7 +49,7 @@ impl Deref for LineEditBinding {
     }
 }
 
-impl Deref for RLineEdit {
+impl Deref for QLineEdit {
     type Target = LineEditBinding;
 
     fn deref(&self) -> &Self::Target {

@@ -1,8 +1,7 @@
 use std::collections::HashMap;
 
 use cpp_core::CppBox;
-use qt::text::RTextCursor;
-use qt::{Printable, Widget};
+use qt::{Printable, QTextCursor, Widget};
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 use qt_core::{QBox, QString};
@@ -47,7 +46,7 @@ impl Pad {
 #[derive(Debug, Widget, TrContext)]
 struct PadWidget {
     widget: QBox<QTextEdit>,
-    cursor: RTextCursor,
+    cursor: QTextCursor,
     kind: Pad,
 }
 
@@ -57,7 +56,7 @@ impl PadWidget {
             let widget = QTextEdit::new();
             widget.set_read_only(true);
             Self {
-                cursor: RTextCursor::get(&widget),
+                cursor: QTextCursor::get(&widget),
                 widget,
                 kind,
             }

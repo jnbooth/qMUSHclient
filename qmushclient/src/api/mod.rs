@@ -6,10 +6,10 @@ use std::os::raw::c_double;
 use std::rc::Rc;
 
 use mlua::{UserData, UserDataMethods};
-use qt::color::{Colored, RColor, RColorPair};
-use qt::text::RTextCursor;
-use qt::widgets::{RLineEdit, RTextBrowser};
-use qt::{Printable, RIODevice, RSettings};
+use qt::{
+    Colored, Printable, QColor, QColorPair, QIODevice, QLineEdit, QSettings, QTextBrowser,
+    QTextCursor,
+};
 use qt_gui::q_text_cursor::MoveOperation;
 use qt_network::QTcpSocket;
 use tr::TrContext;
@@ -26,15 +26,15 @@ pub use state::ApiState;
 /// Handles function calls from the Lua API.
 #[derive(TrContext)]
 pub struct Api {
-    output: RTextBrowser,
-    input: RLineEdit,
-    cursor: RTextCursor,
-    socket: RIODevice<QTcpSocket>,
+    output: QTextBrowser,
+    input: QLineEdit,
+    cursor: QTextCursor,
+    socket: QIODevice<QTcpSocket>,
     world: Rc<World>,
     state: Rc<ApiState>,
     pub notepad: Rc<RefCell<Notepad>>,
     pub senders: Rc<RefCell<Senders>>,
-    custom_colors: HashMap<String, RColorPair>,
+    custom_colors: HashMap<String, QColorPair>,
     variables: RefCell<HashMap<String, String>>,
     variables_key: String,
     index: PluginIndex,
@@ -56,9 +56,9 @@ impl UserData for Api {
 impl Api {
     #[allow(clippy::too_many_arguments)]
     pub fn new(
-        output: RTextBrowser,
-        input: RLineEdit,
-        socket: RIODevice<QTcpSocket>,
+        output: QTextBrowser,
+        input: QLineEdit,
+        socket: QIODevice<QTcpSocket>,
         world: Rc<World>,
         state: Rc<ApiState>,
         notepad: Rc<RefCell<Notepad>>,
@@ -101,7 +101,7 @@ impl Api {
             senders: self.senders.clone(),
             custom_colors: self.custom_colors.clone(),
             variables: RefCell::new(
-                RSettings::default()
+                QSettings::default()
                     .get(&variables_key)
                     .unwrap_or_else(|_| HashMap::new()),
             ),
@@ -117,7 +117,7 @@ impl Api {
 
     pub fn save_variables(&mut self) {
         if !self.variables_key.is_empty() {
-            RSettings::default().set(&self.variables_key, &*self.variables.borrow());
+            QSettings::default().set(&self.variables_key, &*self.variables.borrow());
         }
     }
 
@@ -173,7 +173,7 @@ impl Api {
     pub fn color_note<S, B>(&self, text: S, fg: Option<B>, bg: Option<B>)
     where
         S: Printable,
-        B: Borrow<RColor>,
+        B: Borrow<QColor>,
     {
         self.cursor.move_position(MoveOperation::End, 1);
         self.cursor.insert_block();
