@@ -36,12 +36,6 @@ impl From<QBox<q::QTranslator>> for QTranslator {
 }
 
 impl QTranslator {
-    pub fn get_translator(&self) -> &QBox<q::QTranslator> {
-        &self.inner
-    }
-}
-
-impl QTranslator {
     pub fn new() -> Self {
         Self {
             inner: unsafe { q::QTranslator::new_0a() },
