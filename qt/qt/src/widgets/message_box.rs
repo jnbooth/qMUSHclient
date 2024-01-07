@@ -1,42 +1,16 @@
-use std::ops::Deref;
-
 use qt_core::{QBox, QFlags, TextFormat, TextInteractionFlag};
 use qt_widgets as q;
 use qt_widgets::q_message_box::Icon;
 
-use super::dialog::DialogBinding;
 use crate::Printable;
 
-#[repr(transparent)]
-#[derive(Debug)]
-pub struct QMessageBox {
-    pub(super) inner: QBox<q::QMessageBox>,
-}
-
-impl Default for QMessageBox {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl QMessageBox {
-    pub fn new() -> Self {
-        let inner = unsafe { q::QMessageBox::new() };
-        Self { inner }
-    }
-}
-
-#[repr(transparent)]
-pub struct MessageBoxBinding {
-    inner: q::QMessageBox,
-}
+qt_binding!(
+    MessageBoxBinding,
+    q::QMessageBox,
+    super::dialog::DialogBinding
+);
 
 impl MessageBoxBinding {
-    pub(super) fn cast(inner: &q::QMessageBox) -> &Self {
-        // SAFETY: #[repr(transparent)]
-        unsafe { &*(inner as *const q::QMessageBox as *const Self) }
-    }
-
     /// Text displayed in the details area.
     pub fn detailed_text(&self) -> String {
         unsafe { self.inner.detailed_text().to_std_string() }
@@ -103,18 +77,23 @@ impl MessageBoxBinding {
     }
 }
 
-impl Deref for MessageBoxBinding {
-    type Target = DialogBinding;
+#[repr(transparent)]
+#[derive(Debug)]
+pub struct QMessageBox {
+    pub(crate) inner: QBox<q::QMessageBox>,
+}
 
-    fn deref(&self) -> &Self::Target {
-        Self::Target::cast(&self.inner)
+impl_deref_binding!(QMessageBox, MessageBoxBinding);
+
+impl Default for QMessageBox {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
-impl Deref for QMessageBox {
-    type Target = MessageBoxBinding;
-
-    fn deref(&self) -> &Self::Target {
-        Self::Target::cast(&self.inner)
+impl QMessageBox {
+    pub fn new() -> Self {
+        let inner = unsafe { q::QMessageBox::new() };
+        Self { inner }
     }
 }

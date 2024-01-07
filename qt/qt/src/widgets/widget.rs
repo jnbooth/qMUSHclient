@@ -1,33 +1,20 @@
-use std::ops::Deref;
 use std::os::raw::c_int;
 
 use cpp_core::Ptr;
-use qt_core::QPtr;
+use qt_core::QBox;
 use qt_gui::QCursor;
 use qt_widgets as q;
 
 use crate::color::{Colored, QColor};
 use crate::font::QFontMetrics;
-use crate::shapes::{QPoint, QRect};
+use crate::object::ObjectBinding;
+use crate::shapes::QPoint;
 use crate::traits::Widget;
+use crate::QRect;
 
-#[repr(transparent)]
-#[derive(Clone, Debug)]
-pub struct QWidget {
-    pub(super) inner: QPtr<q::QWidget>,
-}
-
-#[repr(transparent)]
-pub struct WidgetBinding {
-    inner: q::QWidget,
-}
+qt_binding!(WidgetBinding, q::QWidget, ObjectBinding);
 
 impl WidgetBinding {
-    pub(super) fn cast(inner: &q::QWidget) -> &Self {
-        // SAFETY: #[repr(transparent)]
-        unsafe { &*(inner as *const q::QWidget as *const WidgetBinding) }
-    }
-
     pub fn font_metrics(&self) -> QFontMetrics {
         QFontMetrics::new(unsafe { self.inner.font_metrics() })
     }
@@ -68,13 +55,13 @@ impl Colored for WidgetBinding {
     }
 }
 
-impl Deref for QWidget {
-    type Target = WidgetBinding;
-
-    fn deref(&self) -> &Self::Target {
-        Self::Target::cast(&self.inner)
-    }
+#[repr(transparent)]
+#[derive(Debug)]
+pub struct QWidget {
+    pub(crate) inner: QBox<q::QWidget>,
 }
+
+impl_deref_binding!(QWidget, WidgetBinding);
 
 impl Widget for QWidget {
     fn widget(&self) -> Ptr<q::QWidget> {
