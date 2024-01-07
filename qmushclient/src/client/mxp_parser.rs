@@ -1,9 +1,7 @@
 use std::iter::Iterator;
 use std::{io, mem, str};
 
-use cpp_core::CppBox;
-use qt::{Printable, QTextCharFormat};
-use qt_core::QString;
+use qt::QTextCharFormat;
 
 use super::Client;
 use crate::client::color::{Colors, WorldColor};
@@ -14,20 +12,39 @@ use crate::mxp;
 use crate::script::Callback;
 use crate::world::AutoConnect;
 
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 enum Fragment {
-    Html(CppBox<QString>),
-    Text(CppBox<QString>),
+    Hr,
+    Html(String),
+    ListBullet,
+    ListNumber(u32),
     Break,
 }
 
 impl Fragment {
-    pub fn html<S: Printable>(text: S) -> Self {
-        Self::Html(text.to_print())
-    }
-
-    pub fn text<S: Printable>(text: S) -> Self {
-        Self::Text(text.to_print())
+    fn insert_into(&self, client: &mut Client) -> io::Result<()> {
+        match self {
+            Fragment::Break => {
+                client.insert_line();
+            }
+            Fragment::Hr => {
+                client.flush()?;
+                client.insert_html("<hr>");
+            }
+            Fragment::Html(text) => {
+                client.flush()?;
+                client.insert_html(text);
+            }
+            Fragment::ListBullet => {
+                client.insert_line();
+                client.insert_text(" • ");
+            }
+            Fragment::ListNumber(n) => {
+                client.insert_line();
+                client.insert_text(format!(" {}. ", n));
+            }
+        }
+        Ok(())
     }
 }
 
@@ -318,19 +335,7 @@ impl Client {
         }
 
         for fragment in fragments {
-            match fragment {
-                Fragment::Html(text) => {
-                    self.flush()?;
-                    self.insert_html(text);
-                }
-                Fragment::Text(text) => {
-                    self.flush()?;
-                    self.insert_text(text);
-                }
-                Fragment::Break => {
-                    self.insert_line();
-                }
-            }
+            fragment.insert_into(self)?;
         }
 
         Ok(())
@@ -522,7 +527,7 @@ impl Client {
                 self.state.mxp_script = true;
             }
             Action::Hr => {
-                fragments.push(Fragment::html("<hr>"));
+                fragments.push(Fragment::Hr);
             }
             Action::Pre => {
                 self.state.pre_mode = true;
@@ -535,12 +540,11 @@ impl Client {
             }
             Action::Li => {
                 if let Some(list) = span.list.as_mut() {
-                    fragments.push(Fragment::Break);
                     fragments.push(match list {
-                        InList::Unordered => Fragment::text(" • "),
+                        InList::Unordered => Fragment::ListBullet,
                         InList::Ordered(i) => {
                             *i += 1;
-                            Fragment::text(format!(" {}. ", *i))
+                            Fragment::ListNumber(*i)
                         }
                     });
                 }
@@ -556,7 +560,7 @@ impl Client {
                 }
                 if let Some(url) = args.get("url").or_else(|| args.get("src")) {
                     // TODO setting on MXP page to enable or disable images
-                    fragments.push(Fragment::html(format!(
+                    fragments.push(Fragment::Html(format!(
                         "<img src={}{}>",
                         url,
                         args.get("fname").unwrap_or(""),
