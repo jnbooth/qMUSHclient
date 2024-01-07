@@ -12,7 +12,7 @@ pub use qt_gui::q_text_list_format::Style as ListStyle;
 use crate::color::{Colored, QColor};
 use crate::{Printable, QFont, QList};
 
-fn optional_string(s: CppBox<QString>) -> Option<String> {
+unsafe fn optional_string(s: CppBox<QString>) -> Option<String> {
     if unsafe { s.is_empty() } {
         None
     } else {
@@ -204,7 +204,7 @@ impl QTextCharFormat {
     }
 
     pub fn anchor_href(&self) -> Option<String> {
-        optional_string(unsafe { self.inner.anchor_href() })
+        unsafe { optional_string(self.inner.anchor_href()) }
     }
 
     pub fn set_anchor_href(&self, href: &str) {
@@ -243,15 +243,11 @@ impl QTextCharFormat {
     }
 
     pub fn tooltip(&self) -> Option<String> {
-        optional_string(unsafe { self.inner.tool_tip() })
+        unsafe { optional_string(self.inner.tool_tip()) }
     }
-
     pub fn set_tooltip<S: Printable>(&self, tooltip: S) {
-        unsafe {
-            self.inner.set_tool_tip(&tooltip.to_print());
-        }
+        unsafe { self.inner.set_tool_tip(tooltip.to_print()) }
     }
-
     pub fn clear_tooltip(&self) {
         unsafe {
             self.inner.set_tool_tip(&QString::new()); // TODO does this actually work?
