@@ -1,9 +1,8 @@
 #![windows_subsystem = "windows"]
 
 use qmushclient::{App, Widget};
-use qt::{QCoreApplication, QLocale, QTranslator};
+use qt::{QApplication, QCoreApplication, QLocale, QTranslator};
 use qt_core::ApplicationAttribute;
-use qt_widgets::QApplication;
 
 fn load_translator() {
     let locale = QLocale::new();
