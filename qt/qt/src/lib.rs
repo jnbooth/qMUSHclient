@@ -1,7 +1,10 @@
+#![warn(unsafe_op_in_unsafe_fn)]
 #[macro_use]
 extern crate enumeration;
 #[macro_use]
 extern crate enumeration_derive;
+
+pub use qt_core::{ApplicationAttribute, GlobalColor, Key, KeyboardModifier, MouseButton};
 
 macro_rules! impl_deref_binding {
     ($t:ty, $inner:ty) => {
@@ -70,10 +73,8 @@ macro_rules! qt_field {
 mod application;
 pub use application::{QApplication, QCoreApplication, QGuiApplication};
 
-pub mod device;
-
 pub mod color;
-pub use color::RColor;
+pub use color::{Colored, RColor};
 
 mod font;
 pub use font::RFont;

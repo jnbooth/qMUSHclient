@@ -6,9 +6,7 @@ use std::time::SystemTime;
 
 use libsqlite3_sys::{SQLITE_VERSION, SQLITE_VERSION_NUMBER};
 use mlua::{Lua, Result, Value};
-use qt::color::Colored;
-use qt::device::{keyboard_modifiers, mouse_buttons};
-use qt::{RColor, RFont};
+use qt::{Colored, QGuiApplication, RColor, RFont};
 use qt_core::{GlobalColor, KeyboardModifier, MouseButton};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;
@@ -25,7 +23,7 @@ pub fn provide_api<'lua, M: mlua::UserDataMethods<'lua, Api>>(methods: &mut M) {
 
 fn input_modifiers() -> c_int {
     let mut code = 0;
-    let keyboard_mods = keyboard_modifiers();
+    let keyboard_mods = QGuiApplication::keyboard_modifiers();
     if keyboard_mods.test_flag(KeyboardModifier::ShiftModifier) {
         code |= 0x00001 | 0x00008;
     }
@@ -35,7 +33,7 @@ fn input_modifiers() -> c_int {
     if keyboard_mods.test_flag(KeyboardModifier::AltModifier) {
         code |= 0x00004 | 0x00080;
     }
-    let mouse_mods = mouse_buttons();
+    let mouse_mods = QGuiApplication::mouse_buttons();
     if mouse_mods.test_flag(MouseButton::LeftButton) {
         code |= 0x10000;
     }
