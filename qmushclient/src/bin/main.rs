@@ -1,22 +1,17 @@
 #![windows_subsystem = "windows"]
 
 use qmushclient::{App, Widget};
-use qt_core::{ApplicationAttribute, QCoreApplication, QLocale, QString, QTranslator};
+use qt::{QLocale, QTranslator};
+use qt_core::{ApplicationAttribute, QCoreApplication, QString};
 use qt_widgets::QApplication;
 
 fn load_translator() {
     unsafe {
         let locale = QLocale::new();
-        let translator = QTranslator::new_0a();
-        let translate = translator.load_q_locale4_q_string(
-            &locale,
-            &QString::from_std_str("app"),
-            &QString::from_std_str("_"),
-            &QString::from_std_str(":/translations"),
-            &QString::from_std_str(".qm"),
-        );
+        let translator = QTranslator::new();
+        let translate = translator.load(&locale, "app", "_", ":/translations", ".qm");
         if translate {
-            QCoreApplication::install_translator(&translator);
+            QCoreApplication::install_translator(translator.get_translator());
         }
     }
 }
