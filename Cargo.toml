@@ -9,7 +9,7 @@ members = [
   "qt/qt_network",
   "qt/qt_ui_tools",
   "qt/qt_widgets",
-  "qt_bindings",
+  "qt/qt",
   "qt_bindings_derive",
   "tr",
   "tr_derive",

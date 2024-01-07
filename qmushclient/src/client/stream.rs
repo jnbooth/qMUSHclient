@@ -1,7 +1,7 @@
 use std::io::{self, BufReader, Cursor, IoSliceMut, Read};
 use std::mem;
 
-use qt_bindings::RIODevice;
+use qt::RIODevice;
 use qt_network::QTcpSocket;
 
 use crate::constants::config;

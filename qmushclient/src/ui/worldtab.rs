@@ -4,9 +4,9 @@ use std::rc::Rc;
 
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
 use enumeration::Enum;
-use qt_bindings::text::RTextCursor;
-use qt_bindings::widgets::{RLineEdit, RTextBrowser};
-use qt_bindings::{Printable, QList, RColor, Widget};
+use qt::text::RTextCursor;
+use qt::widgets::{RLineEdit, RTextBrowser};
+use qt::{Printable, QList, RColor, Widget};
 use qt_core::{
     slot, FocusReason, GlobalColor, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs,
 };

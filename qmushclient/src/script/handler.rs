@@ -11,7 +11,7 @@ use std::{io, mem, str};
 
 use enumeration::EnumSet;
 use mlua::{self, FromLuaMulti, IntoLuaMulti, Lua, UserData, UserDataMethods, Value};
-use qt_bindings::{RColor, RTimer, TimerKind};
+use qt::{RColor, RTimer, TimerKind};
 use uuid::Uuid;
 
 use super::callback::Callback;

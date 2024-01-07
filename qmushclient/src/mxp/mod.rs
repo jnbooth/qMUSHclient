@@ -3,7 +3,7 @@ use std::str;
 
 use case_insensitive::ascii::CaseFoldMap;
 use enumeration::{Enum, EnumSet};
-use qt_bindings::RColor;
+use qt::RColor;
 use tr::TrContext;
 
 use crate::client::style::TextStyle;

@@ -13,7 +13,7 @@ ritual*.json
 **/*.rs.bk
 
 # VSCode configuration
-/.vscode/
+.vscode/
 
 # From lsqlite3
 test.db

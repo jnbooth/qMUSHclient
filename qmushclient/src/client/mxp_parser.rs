@@ -2,8 +2,8 @@ use std::iter::Iterator;
 use std::{io, mem, str};
 
 use cpp_core::CppBox;
-use qt_bindings::text::RTextCharFormat;
-use qt_bindings::Printable;
+use qt::text::RTextCharFormat;
+use qt::Printable;
 use qt_core::QString;
 
 use super::Client;

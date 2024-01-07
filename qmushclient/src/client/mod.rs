@@ -9,10 +9,10 @@ use std::{mem, str};
 
 use cpp_core::Ptr;
 use enumeration::Enum;
-use qt_bindings::color::Colored;
-use qt_bindings::text::{RTextCharFormat, RTextCursor};
-use qt_bindings::widgets::{RLineEdit, RTextBrowser};
-use qt_bindings::{Printable, RColor, RIODevice, Widget};
+use qt::color::Colored;
+use qt::text::{RTextCharFormat, RTextCursor};
+use qt::widgets::{RLineEdit, RTextBrowser};
+use qt::{Printable, RColor, RIODevice, Widget};
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 use qt_core::QBox;

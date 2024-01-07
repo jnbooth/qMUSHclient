@@ -3,8 +3,8 @@ use std::collections::HashMap;
 
 use mlua::{Error as E, FromLua, Lua, Value};
 use once_cell::sync::Lazy;
-use qt_bindings::color::RColorPair;
-use qt_bindings::RColor;
+use qt::color::RColorPair;
+use qt::RColor;
 use qt_core::GlobalColor;
 use serde::{Deserialize, Serialize};
 

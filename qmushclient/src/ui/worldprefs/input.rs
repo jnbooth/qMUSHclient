@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
-use qt_bindings::Widget;
+use qt::Widget;
 use qt_widgets::*;
 use tr::TrContext;
 

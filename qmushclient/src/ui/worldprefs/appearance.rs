@@ -4,8 +4,8 @@ use std::os::raw::c_int;
 use std::rc::{Rc, Weak};
 
 use cpp_core::{CastInto, Ptr};
-use qt_bindings::color::{HasPalette, RColorPair};
-use qt_bindings::{RColor, Widget};
+use qt::color::{HasPalette, RColorPair};
+use qt::{RColor, Widget};
 use qt_core::{slot, QPtr, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
 use qt_widgets::*;

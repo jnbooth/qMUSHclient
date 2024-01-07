@@ -3,8 +3,8 @@ use std::path::PathBuf;
 
 use chrono::Utc;
 use enumeration::Enum;
-use qt_bindings::color::{RColor, RColorPair};
-use qt_bindings::RFont;
+use qt::color::{RColor, RColorPair};
+use qt::RFont;
 use qt_core::{GlobalColor, Key};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;

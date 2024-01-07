@@ -6,10 +6,10 @@ use std::os::raw::c_double;
 use std::rc::Rc;
 
 use mlua::{UserData, UserDataMethods};
-use qt_bindings::color::{Colored, RColor, RColorPair};
-use qt_bindings::text::RTextCursor;
-use qt_bindings::widgets::{RLineEdit, RTextBrowser};
-use qt_bindings::{Printable, RIODevice, RSettings};
+use qt::color::{Colored, RColor, RColorPair};
+use qt::text::RTextCursor;
+use qt::widgets::{RLineEdit, RTextBrowser};
+use qt::{Printable, RIODevice, RSettings};
 use qt_gui::q_text_cursor::MoveOperation;
 use qt_network::QTcpSocket;
 use tr::TrContext;

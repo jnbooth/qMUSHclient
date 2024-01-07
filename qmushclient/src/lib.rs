@@ -38,7 +38,7 @@ mod script;
 mod ui;
 mod world;
 
-pub use qt_bindings::Widget;
+pub use qt::Widget;
 pub use ui::App;
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

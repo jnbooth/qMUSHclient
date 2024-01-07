@@ -6,9 +6,9 @@ use std::time::SystemTime;
 
 use libsqlite3_sys::{SQLITE_VERSION, SQLITE_VERSION_NUMBER};
 use mlua::{Lua, Result, Value};
-use qt_bindings::color::Colored;
-use qt_bindings::device::{keyboard_modifiers, mouse_buttons};
-use qt_bindings::{RColor, RFont};
+use qt::color::Colored;
+use qt::device::{keyboard_modifiers, mouse_buttons};
+use qt::{RColor, RFont};
 use qt_core::{GlobalColor, KeyboardModifier, MouseButton};
 use qt_gui::q_font::StyleHint;
 use qt_gui::q_font_database::SystemFont;

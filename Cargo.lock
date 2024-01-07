@@ -615,7 +615,7 @@ dependencies = [
  "once_cell",
  "pcre2-sys",
  "qmushclient_derive",
- "qt_bindings",
+ "qt",
  "qt_bindings_derive",
  "qt_core",
  "qt_gui",
@@ -642,7 +642,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "qt_bindings"
+name = "qt"
 version = "0.0.0"
 dependencies = [
  "chrono",

@@ -2,7 +2,7 @@ use std::iter::Iterator;
 use std::{io, str};
 
 #[cfg(feature = "show-special")]
-use qt_bindings::Printable;
+use qt::Printable;
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 
