@@ -89,74 +89,46 @@ impl QList for QStringList {
     }
 }
 
-impl QList for QListOfQString {
-    type Item = CppBox<QString>;
+macro_rules! impl_qlist {
+    ($t:ty, $item:ty, $append_one:ident, $append_multi:ident) => {
+        impl QList for $t {
+            type Item = $item;
 
-    fn new() -> CppBox<Self> {
-        unsafe { Self::new() }
+            fn new() -> CppBox<Self> {
+                unsafe { Self::new() }
             }
             fn reserve(&self, size: c_int) {
                 unsafe {
                     self.reserve(size);
                 }
-    }
-    unsafe fn push(&self, item: Self::Item) {
-        unsafe {
-            self.append_q_string(&item);
+            }
+            unsafe fn push(&self, item: Self::Item) {
+                unsafe {
+                    self.$append_one(&item);
+                }
+            }
+            unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
+                unsafe {
+                    self.$append_multi(other.cast_into());
+                }
+            }
         }
-    }
-    unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        unsafe {
-            self.append_q_list_of_q_string(other.cast_into());
-        }
-    }
+    };
 }
 
-impl QList for QListOfInt {
-    type Item = c_int;
-
-    fn new() -> CppBox<Self> {
-        unsafe { Self::new() }
-    }
-    fn reserve(&self, size: c_int) {
-        unsafe {
-            self.reserve(size);
-        }
-    }
-    unsafe fn push(&self, item: Self::Item) {
-        unsafe {
-            self.append_int(&item);
-        }
-    }
-    unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        unsafe {
-            self.append_q_list_of_int(other);
-        }
-    }
-}
-
-impl QList for QListOfQVariant {
-    type Item = CppBox<QVariant>;
-
-    fn new() -> CppBox<Self> {
-        unsafe { Self::new() }
-    }
-    fn reserve(&self, size: c_int) {
-        unsafe {
-            self.reserve(size);
-        }
-    }
-    unsafe fn push(&self, item: Self::Item) {
-        unsafe {
-            self.append_q_variant(&item);
-        }
-    }
-    unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        unsafe {
-            self.append_q_list_of_q_variant(other);
-        }
-    }
-}
+impl_qlist!(
+    QListOfQString,
+    CppBox<QString>,
+    append_q_string,
+    append_q_list_of_q_string
+);
+impl_qlist!(QListOfInt, c_int, append_int, append_q_list_of_int);
+impl_qlist!(
+    QListOfQVariant,
+    CppBox<QVariant>,
+    append_q_variant,
+    append_q_list_of_q_variant
+);
 
 impl QList for QListOfQTreeWidgetItem {
     type Item = *const *mut QTreeWidgetItem;
