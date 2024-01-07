@@ -70,7 +70,8 @@ impl uic::WorldTab {
             // QLineEdit requires a little coaxing to enable transparency
             self.input
                 .set_frame(world.input_colors.background.alpha() == 255);
-            self.input.set_style_sheet(&world.input_colors.stylesheet());
+            self.input
+                .set_style_sheet(&QString::from_std_str(&world.input_colors.stylesheet()));
         }
     }
 

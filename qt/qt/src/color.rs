@@ -218,11 +218,11 @@ impl QColorPair {
         mem::swap(&mut self.foreground, &mut self.background);
     }
 
-    pub fn stylesheet(&self) -> CppBox<QString> {
-        QString::from_std_str(format!(
+    pub fn stylesheet(&self) -> String {
+        format!(
             "color: {}; background-color: {};",
             self.foreground, self.background
-        ))
+        )
     }
 }
 
