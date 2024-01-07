@@ -2,7 +2,7 @@ use proc_macro::TokenStream;
 use quote::{quote, ToTokens};
 use syn::*;
 
-#[inline]
+#[proc_macro_derive(Widget)]
 pub fn derive_widget(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as ItemStruct);
 

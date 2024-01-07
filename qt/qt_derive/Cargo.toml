@@ -1,5 +1,5 @@
 [package]
-name = "qt_bindings_derive"
+name = "qt_derive"
 version = "0.1.0"
 authors = ["Joshua Booth <joshua.n.booth@gmail.com>"]
 edition = "2018"

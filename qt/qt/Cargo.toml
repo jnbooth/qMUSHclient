@@ -8,7 +8,7 @@ description = "Wrapper around Qt"
 repository = "https://github.com/jnbooth/qmushclient"
 
 [features]
-show-special = []
+serde = ['dep:serde']
 
 [dependencies]
 chrono = { version = "0.4.31", features = ["serde"] }
@@ -20,5 +20,5 @@ qt_core = { path = "../qt_core" }
 qt_gui = { path = "../qt_gui" }
 qt_network = { path = "../qt_network" }
 qt_widgets = { path = "../qt_widgets" }
-serde = { version = "1.0.193", features = ["derive"] }
+serde = { version = "1.0.193", features = ["derive"], optional = true }
 uuid = { version = "1.6.1", features = ["v4"] }

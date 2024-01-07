@@ -616,8 +616,8 @@ dependencies = [
  "pcre2-sys",
  "qmushclient_derive",
  "qt",
- "qt_bindings_derive",
  "qt_core",
+ "qt_derive",
  "qt_gui",
  "qt_network",
  "qt_ritual_build",
@@ -659,21 +659,21 @@ dependencies = [
 ]
 
 [[package]]
-name = "qt_bindings_derive"
-version = "0.1.0"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 1.0.84",
-]
-
-[[package]]
 name = "qt_core"
 version = "0.5.1"
 dependencies = [
  "cpp_core",
  "qt_macros",
  "qt_ritual_build",
+]
+
+[[package]]
+name = "qt_derive"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 1.0.84",
 ]
 
 [[package]]
