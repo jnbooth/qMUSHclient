@@ -236,9 +236,9 @@ impl QTextCharFormat {
         }
     }
 
-    pub fn set_anchor_names<T: AsRef<str>>(&self, names: &[T]) {
+    pub fn set_anchor_names<S: Printable, I: IntoIterator<Item = S>>(&self, names: I) {
         unsafe {
-            let list = QStringList::from_iter(names.iter().map(QString::from_std_str));
+            let list = QStringList::from_iter(names);
             self.inner.set_anchor_names(&list);
         }
     }

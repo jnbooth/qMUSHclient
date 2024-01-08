@@ -1,154 +1,90 @@
-use std::ops::Deref;
-use std::os::raw::c_int;
+use std::os::raw::{c_double, c_int};
 
-use cpp_core::{CastInto, CppBox, CppDeletable, Ref};
+use cpp_core::{CppBox, CppDeletable};
 use qt_core::*;
+use qt_gui::QListOfDouble;
 use qt_widgets::*;
 
-pub trait QList: CppDeletable {
-    type Item;
+use crate::Printable;
 
-    fn new() -> CppBox<Self>;
-    fn reserve(&self, size: c_int);
-    /// # Safety
-    ///
-    /// `item` must be valid.
-    unsafe fn push(&self, item: Self::Item);
-    /// # Safety
-    ///
-    /// `other` must be valid.
-    unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R);
-    /// # Safety
-    ///
-    /// `item` must be valid.
-    unsafe fn repeat(&self, item: Self::Item, size: c_int) -> CppBox<Self>
-    where
-        Self::Item: Copy,
-    {
-        let this = Self::new();
-        this.reserve(size);
-        unsafe {
-            for _ in 0..size {
-                this.push(item);
-            }
-        }
-        this
-    }
-    /// # Safety
-    ///
-    /// `items` must be valid.
-    unsafe fn from_array<const N: usize>(items: [Self::Item; N]) -> CppBox<Self>
-    where
-        Self::Item: Copy,
-    {
-        let this = Self::new();
-        this.reserve(N as c_int);
-        unsafe {
-            for item in &items {
-                this.push(*item);
-            }
-        }
-        this
-    }
+pub trait QList<T>: CppDeletable {
     /// # Safety
     ///
     /// All items produced by `iter` must be valid
-    unsafe fn from_iter<I: IntoIterator<Item = Self::Item>>(iter: I) -> CppBox<Self> {
-        let iter = iter.into_iter();
-        let this = Self::new();
-        this.reserve(iter.size_hint().0 as c_int);
-        unsafe {
-            for item in iter {
-                this.push(item);
-            }
-        }
-        this
-    }
-}
-
-impl QList for QStringList {
-    type Item = CppBox<QString>;
-
-    fn new() -> CppBox<Self> {
-        unsafe { Self::new() }
-    }
-    fn reserve(&self, size: c_int) {
-        unsafe {
-            self.deref().reserve(size);
-        }
-    }
-    unsafe fn push(&self, item: Self::Item) {
-        unsafe {
-            self.append_q_string(&item);
-        }
-    }
-    unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        unsafe {
-            self.append_q_list_of_q_string(other.cast_into());
-        }
-    }
+    unsafe fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> CppBox<Self>;
 }
 
 macro_rules! impl_qlist {
-    ($t:ty, $item:ty, $append_one:ident, $append_multi:ident) => {
-        impl QList for $t {
-            type Item = $item;
-
-            fn new() -> CppBox<Self> {
-                unsafe { Self::new() }
-            }
-            fn reserve(&self, size: c_int) {
-                unsafe {
-                    self.reserve(size);
+    ($item:ty, $append:ident) => {
+        unsafe fn from_iter<I: IntoIterator<Item = $item>>(iter: I) -> CppBox<Self> {
+            let it = iter.into_iter();
+            unsafe {
+                let this = Self::new();
+                this.reserve(it.size_hint().0 as c_int);
+                for item in it {
+                    this.$append(item);
                 }
-            }
-            unsafe fn push(&self, item: Self::Item) {
-                unsafe {
-                    self.$append_one(&item);
-                }
-            }
-            unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-                unsafe {
-                    self.$append_multi(other.cast_into());
-                }
+                this
             }
         }
     };
 }
 
-impl_qlist!(
-    QListOfQString,
-    CppBox<QString>,
-    append_q_string,
-    append_q_list_of_q_string
-);
-impl_qlist!(QListOfInt, c_int, append_int, append_q_list_of_int);
-impl_qlist!(
-    QListOfQVariant,
-    CppBox<QVariant>,
-    append_q_variant,
-    append_q_list_of_q_variant
-);
+macro_rules! impl_qlist_borrow {
+    ($item:ty, $append:ident) => {
+        unsafe fn from_iter<I: IntoIterator<Item = $item>>(iter: I) -> CppBox<Self> {
+            let it = iter.into_iter();
+            unsafe {
+                let this = Self::new();
+                this.reserve(it.size_hint().0 as c_int);
+                for item in it {
+                    this.$append(&item);
+                }
+                this
+            }
+        }
+    };
+}
 
-impl QList for QListOfQTreeWidgetItem {
-    type Item = *const *mut QTreeWidgetItem;
+macro_rules! impl_qlist_printable {
+    ($t:ty, $append:ident) => {
+        unsafe fn from_iter<I: IntoIterator<Item = $t>>(iter: I) -> CppBox<Self> {
+            let it = iter.into_iter();
+            unsafe {
+                let this = Self::new();
+                this.reserve(it.size_hint().0 as c_int);
+                for item in it {
+                    this.$append(&item.to_print());
+                }
+                this
+            }
+        }
+    };
+}
 
-    fn new() -> CppBox<Self> {
-        unsafe { Self::new() }
-    }
-    fn reserve(&self, size: c_int) {
-        unsafe {
-            self.reserve(size);
-        }
-    }
-    unsafe fn push(&self, item: Self::Item) {
-        unsafe {
-            self.append_q_tree_widget_item(item.as_ref().unwrap());
-        }
-    }
-    unsafe fn append<R: CastInto<Ref<Self>>>(&self, other: R) {
-        unsafe {
-            self.append_q_list_of_q_tree_widget_item(other);
-        }
-    }
+impl QList<c_double> for QListOfDouble {
+    impl_qlist_borrow!(c_double, append_double);
+}
+
+impl QList<c_int> for QListOfInt {
+    impl_qlist_borrow!(c_int, append_int);
+}
+
+impl<S: Printable> QList<S> for QListOfQString {
+    impl_qlist_printable!(S, append_q_string);
+}
+
+impl QList<*const *mut QTreeWidgetItem> for QListOfQTreeWidgetItem {
+    impl_qlist!(*const *mut QTreeWidgetItem, append_q_tree_widget_item);
+}
+
+impl QList<CppBox<QVariant>> for QListOfQVariant {
+    impl_qlist_borrow!(CppBox<QVariant>, append_q_variant);
+}
+impl<'a> QList<&'a CppBox<QVariant>> for QListOfQVariant {
+    impl_qlist!(&'a CppBox<QVariant>, append_q_variant);
+}
+
+impl<S: Printable> QList<S> for QStringList {
+    impl_qlist_printable!(S, append_q_string);
 }

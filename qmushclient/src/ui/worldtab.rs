@@ -151,7 +151,7 @@ impl WorldTab {
         unsafe {
             let ui = &self.ui;
             ui.widget.set_focus_proxy(&ui.input);
-            ui.widget.set_sizes(&QListOfInt::from_array([1, 30]));
+            ui.widget.set_sizes(&QListOfInt::from_iter([1, 30]));
             let handle = ui.widget.handle(1);
             handle.set_background_role(ColorRole::Button);
             handle.set_auto_fill_background(true);
