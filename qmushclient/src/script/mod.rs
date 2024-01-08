@@ -1,18 +1,26 @@
 mod callback;
-mod convert;
-mod file;
-mod handler;
-mod indexed;
-mod plugin;
-mod regex;
-mod send;
-
 pub use callback::Callback;
-pub use convert::{ScriptArg, ScriptArgs, ScriptRes};
-pub use file::{PluginMetadata, PluginPack};
-pub use handler::{PluginHandler, SendRequest};
-pub use indexed::{PluginIndex, SendMatch, Sendable, Senders};
-pub use plugin::Plugin;
-pub use send::{Alias, Event, Reaction, SendTo, Sender, Timer, Trigger};
 
+mod convert;
+pub use convert::{ScriptArg, ScriptArgs, ScriptRes};
+
+mod engine;
+pub use engine::{PluginEngine, SendRequest};
+
+mod file;
+pub use file::{PluginMetadata, PluginPack};
+
+mod handler;
+pub use handler::PluginHandler;
+
+mod indexed;
+pub use indexed::{PluginIndex, SendMatch, Sendable, Senders};
+
+mod plugin;
+pub use plugin::Plugin;
+
+mod regex;
 pub use self::regex::Regex;
+
+mod send;
+pub use send::{Alias, Event, Reaction, SendTo, Sender, Timer, Trigger};

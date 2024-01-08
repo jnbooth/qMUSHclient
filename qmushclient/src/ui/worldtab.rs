@@ -28,7 +28,7 @@ use crate::client::color::WorldColor;
 use crate::client::Client;
 use crate::constants::{branding, Paths};
 use crate::mxp::SendTo;
-use crate::script::SendRequest;
+use crate::script::{PluginEngine, SendRequest};
 use crate::world::World;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
@@ -96,7 +96,7 @@ impl uic::WorldTab {
 #[derive(TrContext)]
 pub struct WorldTab {
     pub ui: uic::WorldTab,
-    pub client: RefCell<Client>,
+    pub client: RefCell<Client<PluginEngine>>,
     pub saved: RefCell<Option<String>>,
     pub notepad: QBox<QTextDocument>,
     pub notepad_title: CppBox<QString>,

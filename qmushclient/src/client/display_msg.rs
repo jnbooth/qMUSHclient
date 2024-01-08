@@ -11,7 +11,7 @@ use crate::client::state::{Mccp, Phase};
 use crate::client::Log;
 use crate::escape::telnet;
 use crate::mxp;
-use crate::script::Callback;
+use crate::script::{Callback, PluginHandler};
 #[cfg(feature = "show-special")]
 use crate::ui::Pad;
 use crate::world::{LogFormat, UseMxp};
@@ -25,7 +25,7 @@ fn left<T>(xs: &[T], amt: usize) -> &[T] {
     }
 }
 
-impl Client {
+impl<P: PluginHandler> Client<P> {
     fn telnet_callbacks(&mut self, c: u8, verb: &str, confirm: &str) -> bool {
         let stop_on_true = enums![true];
         if self

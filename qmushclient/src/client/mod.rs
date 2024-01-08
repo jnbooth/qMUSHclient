@@ -77,7 +77,7 @@ impl<'a> LogConfig<'a> {
 }
 
 #[derive(TrContext)]
-pub struct Client {
+pub struct Client<P: PluginHandler> {
     widget: QTextBrowser,
     cursor: QTextCursor,
     socket: QTcpSocket,
@@ -85,7 +85,7 @@ pub struct Client {
     bufinput: [u8; config::SOCKET_BUFFER],
     bufoutput: Vec<u8>,
     line: Vec<u8>,
-    pub plugins: PluginHandler,
+    pub plugins: P,
     world: Rc<World>,
     notepad: Rc<RefCell<Notepad>>,
     phase: Phase,
@@ -96,7 +96,7 @@ pub struct Client {
     log: Option<BufWriter<File>>,
 }
 
-impl Client {
+impl<P: PluginHandler<PluginApi = Api>> Client<P> {
     /// # Safety
     ///
     /// `output` and `input` must be valid and non-null.
@@ -137,7 +137,7 @@ impl Client {
             phase: Phase::Normal,
             state: ClientState::new(),
             api_state,
-            plugins: PluginHandler::new(api),
+            plugins: P::new(api),
             latest: Latest::new(),
             log: None,
         };
@@ -146,6 +146,40 @@ impl Client {
         this
     }
 
+    pub fn on_save(&mut self) {
+        self.plugins.alter_userdata(|api| api.save_variables());
+    }
+
+    pub fn set_spacing(&mut self, spacing: c_double) {
+        self.cursor.format.block.set_line_height(spacing);
+        self.plugins.alter_userdata(|api| api.set_spacing(spacing));
+    }
+}
+
+impl<P: PluginHandler<PluginApi = Api, PluginWorld = World>> Client<P> {
+    pub fn set_world(&mut self, world: Rc<World>) {
+        let reload_log = self.world.auto_log_file_name != world.auto_log_file_name;
+        let reload_plugins = self.world.plugins != world.plugins;
+        self.style.set_world(world.clone());
+        if !reload_plugins {
+            if let Err(e) = self.plugins.update_world_plugin(&self.world, &world) {
+                self.warn(tr!("Couldn't compile world script"), &e);
+            }
+            self.plugins
+                .alter_userdata(|api| api.set_world(world.clone()));
+        }
+        self.world = world;
+        if reload_plugins {
+            self.plugins.clear();
+            self.load_plugins();
+        }
+        if reload_log {
+            self.open_log();
+        }
+    }
+}
+
+impl<P: PluginHandler> Client<P> {
     fn warn<S: Printable, E: std::error::Error + ?Sized>(&self, text: S, err: &E) {
         self.widget.alert(MessageBoxIcon::Warning, text, err)
     }
@@ -180,36 +214,6 @@ impl Client {
                 Ok(file) => self.log = Some(BufWriter::with_capacity(config::LOG_BUFFER, file)),
             }
         }
-    }
-
-    pub fn on_save(&mut self) {
-        self.plugins.alter_userdata(|api| api.save_variables());
-    }
-
-    pub fn set_world(&mut self, world: Rc<World>) {
-        let reload_log = self.world.auto_log_file_name != world.auto_log_file_name;
-        let reload_plugins = self.world.plugins != world.plugins;
-        self.style.set_world(world.clone());
-        if !reload_plugins {
-            if let Err(e) = self.plugins.update_world_plugin(&self.world, &world) {
-                self.warn(tr!("Couldn't compile world script"), &e);
-            }
-            self.plugins
-                .alter_userdata(|api| api.set_world(world.clone()));
-        }
-        self.world = world;
-        if reload_plugins {
-            self.plugins.clear();
-            self.load_plugins();
-        }
-        if reload_log {
-            self.open_log();
-        }
-    }
-
-    pub fn set_spacing(&mut self, spacing: c_double) {
-        self.cursor.format.block.set_line_height(spacing);
-        self.plugins.alter_userdata(|api| api.set_spacing(spacing));
     }
 
     pub fn retitle(&mut self, name: &str) {

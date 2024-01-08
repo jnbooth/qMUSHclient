@@ -9,7 +9,7 @@ use crate::client::state::Phase;
 use crate::client::style::TextStyle;
 use crate::constants::branding;
 use crate::mxp;
-use crate::script::Callback;
+use crate::script::{Callback, PluginHandler};
 use crate::world::AutoConnect;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -22,7 +22,7 @@ enum Fragment {
 }
 
 impl Fragment {
-    fn insert_into(&self, client: &mut Client) -> io::Result<()> {
+    fn insert_into<P: PluginHandler>(&self, client: &mut Client<P>) -> io::Result<()> {
         match self {
             Fragment::Break => {
                 client.insert_line();
@@ -54,7 +54,7 @@ pub enum ParseError {
     Io(io::Error),
 }
 
-impl Client {
+impl<P: PluginHandler> Client<P> {
     pub(super) fn handle_mxp_error(&self, err: mxp::ParseError) {
         eprintln!("MXP Error: {}", err);
     }
