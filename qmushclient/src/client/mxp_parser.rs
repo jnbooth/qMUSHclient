@@ -15,7 +15,7 @@ use crate::world::AutoConnect;
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 enum Fragment {
     Hr,
-    Html(String),
+    Image(String),
     ListBullet,
     ListNumber(u32),
     Break,
@@ -31,7 +31,7 @@ impl Fragment {
                 client.flush()?;
                 client.insert_html("<hr>");
             }
-            Fragment::Html(text) => {
+            Fragment::Image(text) => {
                 client.flush()?;
                 client.insert_html(text);
             }
@@ -560,7 +560,7 @@ impl Client {
                 }
                 if let Some(url) = args.get("url").or_else(|| args.get("src")) {
                     // TODO setting on MXP page to enable or disable images
-                    fragments.push(Fragment::Html(format!(
+                    fragments.push(Fragment::Image(format!(
                         "<img src={}{}>",
                         url,
                         args.get("fname").unwrap_or(""),
