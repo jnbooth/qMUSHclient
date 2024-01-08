@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use chrono::Utc;
 use enumeration::Enum;
 use qt::core::{GlobalColor, Key};
-use qt::gui::{ColorRole, QColor, QColorPair, QFont, StyleHint, SystemFont};
+use qt::gui::{ColorRole, QColor, QColorPair, QFont, SystemFont};
 use serde::{Deserialize, Serialize};
 use tr::TrContext;
 
@@ -361,7 +361,10 @@ impl World {
             beep_sound: None,
             pixel_offset: 0,
             line_spacing: 1.0,
-            output_font: QFont::global(StyleHint::Monospace),
+            #[cfg(test)]
+            output_font: QFont::default(),
+            #[cfg(not(test))]
+            output_font: QFont::global(qt::gui::StyleHint::Monospace),
             use_default_output_font: true,
             show_bold: true,
             show_italic: true,

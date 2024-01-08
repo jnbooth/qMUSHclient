@@ -1,4 +1,3 @@
-use std::error::Error as StdError;
 use std::fmt::{self, Display, Formatter};
 use std::str;
 
@@ -34,7 +33,7 @@ impl Display for ParseError {
         write!(f, "{:?}: \"{}\"", self.error, self.target)
     }
 }
-impl StdError for ParseError {}
+impl std::error::Error for ParseError {}
 
 impl ParseError {
     pub fn new(target: &str, error: Error) -> Self {

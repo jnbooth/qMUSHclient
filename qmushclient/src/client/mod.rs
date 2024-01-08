@@ -9,12 +9,12 @@ use std::{mem, str};
 
 use cpp_core::Ptr;
 use enumeration::Enum;
+#[cfg(feature = "show-special")]
+use qt::core::AlignmentFlag;
 use qt::gui::{MoveOperation, QColor, QTextCharFormat, QTextCursor, SelectionType};
 use qt::network::{QTcpSocket, SocketState};
 use qt::traits::{Colored, Printable, Widget};
 use qt::widgets::{MessageBoxIcon, QLineEdit, QTextBrowser};
-#[cfg(feature = "show-special")]
-use qt::AlignmentFlag;
 use qt_widgets::QWidget;
 use tr::TrContext;
 

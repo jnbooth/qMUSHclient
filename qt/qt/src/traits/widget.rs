@@ -1,4 +1,3 @@
-use std::error::Error as StdError;
 use std::rc;
 
 use cpp_core::{Ptr, StaticUpcast};
@@ -20,7 +19,7 @@ pub enum Browse {
 pub trait Widget {
     fn widget(&self) -> Ptr<q::QWidget>;
 
-    fn alert<S: Printable, E: StdError + ?Sized>(&self, icon: Icon, text: S, err: &E) {
+    fn alert<S: Printable, E: std::error::Error + ?Sized>(&self, icon: Icon, text: S, err: &E) {
         unsafe {
             let alert = q::QMessageBox::from_q_widget(self.widget());
             alert.set_icon(icon);

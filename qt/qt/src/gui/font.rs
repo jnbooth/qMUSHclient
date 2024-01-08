@@ -7,9 +7,10 @@ use qt_gui as q;
 use qt_gui::q_font::{Capitalization, Style, StyleHint, Weight};
 use qt_gui::q_font_database::SystemFont;
 #[cfg(feature = "serde")]
-use serde::de::{Error as _, Unexpected};
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{
+    de::{Error as _, Unexpected},
+    Deserialize, Deserializer, Serialize, Serializer,
+};
 
 const fn display_style(style: Style) -> &'static str {
     match style {
@@ -95,7 +96,6 @@ impl From<SystemFont> for QFont {
 }
 
 impl QFont {
-    #[cfg(not(test))]
     pub fn global(hint: StyleHint) -> Self {
         unsafe {
             let font = q::QFont::new();
@@ -103,10 +103,6 @@ impl QFont {
             font.set_family(&font.default_family());
             Self::from(font)
         }
-    }
-    #[cfg(test)] // font database may not be initialized
-    pub fn global(_: StyleHint) -> Self {
-        Self::default()
     }
 
     pub fn capitalization(&self) -> Capitalization {

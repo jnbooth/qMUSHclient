@@ -1,5 +1,4 @@
 use std::collections::{BTreeMap, HashMap};
-use std::error::Error as StdError;
 use std::fmt::{self, Display, Formatter};
 use std::iter::FromIterator;
 use std::os::raw::*;
@@ -277,7 +276,7 @@ impl Display for Error {
     }
 }
 
-impl StdError for Error {}
+impl std::error::Error for Error {}
 
 macro_rules! impl_try_from {
     ($me:ident, $t:ty, $qt1:ident$(, $qt:ident)*) => {

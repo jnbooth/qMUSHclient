@@ -38,7 +38,6 @@ mod script;
 mod ui;
 mod world;
 
-pub use qt::traits::Widget;
 pub use ui::App;
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
