@@ -68,8 +68,18 @@ impl WidgetBinding {
         unsafe { self.inner.height() }
     }
 
+    /// Hides the widget and its child widgets.
+    pub fn hide(&self) {
+        unsafe { self.inner.hide() }
+    }
+
     pub fn rect(&self) -> QRect {
         QRect::from(unsafe { &*self.inner.rect() })
+    }
+
+    /// Shows the widget and its child widgets.
+    pub fn show(&self) {
+        unsafe { self.inner.show() }
     }
 
     pub fn width(&self) -> c_int {
@@ -84,6 +94,7 @@ impl Colored for WidgetBinding {
     fn set_foreground_color(&self, color: &QColor) {
         self.inner.set_foreground_color(color);
     }
+
     fn background_color(&self) -> QColor {
         self.inner.background_color()
     }
