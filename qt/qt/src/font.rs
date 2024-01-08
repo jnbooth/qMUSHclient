@@ -1,4 +1,3 @@
-use std::borrow::Cow;
 use std::fmt::{self, Debug, Display, Formatter};
 use std::os::raw::c_int;
 
@@ -166,7 +165,7 @@ impl QFont {
 #[cfg(feature = "serde")]
 impl<'de> Deserialize<'de> for QFont {
     fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        let s = Cow::<'de, str>::deserialize(deserializer)?;
+        let s = std::borrow::Cow::<'de, str>::deserialize(deserializer)?;
         if s.starts_with(',') {
             // means it's an unspecified font
             Ok(Self::default())

@@ -199,8 +199,7 @@ impl QColor {
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg(feature = "serde")]
-#[derive(Serialize, Deserialize)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct QColorPair {
     pub foreground: QColor,
     pub background: QColor,
