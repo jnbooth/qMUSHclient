@@ -131,13 +131,14 @@ trait PrefPageExt: 'static + PrefPage + Widget {
     }
 }
 
-#[derive(Widget, TrContext)]
+#[derive(TrContext)]
 pub struct WorldPrefs {
     ui: uic::WorldPrefs,
     world: Weak<RefCell<World>>,
     pages: HashMap<&'static str, Rc<dyn PrefPage>>,
     current: RefCell<Option<Ref<QWidget>>>,
 }
+impl_widget!(WorldPrefs);
 
 impl WorldPrefs {
     pub fn new<P: CastInto<Ptr<QWidget>>>(parent: P, world: Weak<RefCell<World>>) -> Rc<Self> {

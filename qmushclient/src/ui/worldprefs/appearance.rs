@@ -5,7 +5,7 @@ use std::rc::{Rc, Weak};
 
 use cpp_core::{CastInto, Ptr};
 use qt::gui::{QColor, QColorPair};
-use qt::traits::{HasPalette, Widget};
+use qt::traits::HasPalette;
 use qt_core::{slot, QPtr, SlotNoArgs};
 use qt_gui::q_palette::ColorRole;
 use qt_widgets::*;
@@ -20,11 +20,12 @@ use crate::world::World;
 const RATE_RESHADE: c_int = 5;
 const RATE_SATURATE: c_int = 17;
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsOutput {
     ui: uic::PrefsOutput,
     world: Weak<RefCell<World>>,
 }
+impl_widget!(PrefsOutput);
 impl_prefpage!(PrefsOutput);
 impl_prefpageext!(PrefsOutput);
 
@@ -69,11 +70,12 @@ impl PrefsOutput {
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsMxp {
     ui: uic::PrefsMxp,
     world: Weak<RefCell<World>>,
 }
+impl_widget!(PrefsMxp);
 impl_prefpage!(PrefsMxp);
 impl_prefpageext!(PrefsMxp);
 
@@ -100,12 +102,13 @@ impl PrefsMxp {
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsColor {
     ui: uic::PrefsColor,
     world: Weak<RefCell<World>>,
     colorfields: [QPtr<QPushButton>; 16],
 }
+impl_widget!(PrefsColor);
 impl_prefpage!(PrefsColor);
 
 impl PrefPageExt for PrefsColor {
@@ -271,7 +274,7 @@ impl PrefsColor {
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsCustomColor {
     ui: uic::PrefsCustomColor,
     world: Weak<RefCell<World>>,
@@ -279,6 +282,7 @@ pub struct PrefsCustomColor {
     fgfields: [QPtr<QPushButton>; 16],
     bgfields: [QPtr<QPushButton>; 16],
 }
+impl_widget!(PrefsCustomColor);
 impl_prefpage!(PrefsCustomColor);
 
 impl PrefPageExt for PrefsCustomColor {

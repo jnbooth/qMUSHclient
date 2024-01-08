@@ -13,6 +13,7 @@ use qt_core::{
 use qt_gui::QTextDocument;
 use qt_network::q_abstract_socket::SocketState;
 use qt_network::SlotOfSocketState;
+use qt_widgets as q;
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::q_message_box::Icon;
 use qt_widgets::*;
@@ -33,20 +34,22 @@ fn only_filename(s: &str) -> &str {
         .unwrap_or("")
 }
 
-#[derive(Widget, TrContext)]
+#[derive(TrContext)]
 pub struct App {
     ui: uic::App,
-    notepad: QBox<QTextEdit>,
+    notepad: QBox<q::QTextEdit>,
     notepad_title: CppBox<QString>,
     blank: QBox<QTextDocument>,
     save_filter: CppBox<QString>,
     recent: RefCell<VecDeque<String>>,
     world_tabs: RefCell<Vec<Rc<WorldTab>>>,
     current: Cell<Option<usize>>,
-    current_input: RefCell<QPtr<QLineEdit>>,
+    current_input: RefCell<QPtr<q::QLineEdit>>,
     settings: QSettings,
     paths: &'static Paths,
 }
+
+impl_widget!(App);
 
 impl App {
     pub fn new() -> Rc<Self> {
@@ -64,7 +67,7 @@ impl App {
             let this = Rc::new(App {
                 blank: QTextDocument::from_q_object(&ui.widget),
                 ui,
-                notepad: QTextEdit::new(),
+                notepad: q::QTextEdit::new(),
                 notepad_title: tr!("World Notebook"),
                 save_filter: tr!("World files (*.qmc);;All Files (*.*)"),
                 recent: RefCell::new(recent),
@@ -115,6 +118,11 @@ impl App {
         }
     }
 
+    pub fn show(&self) {
+        // SAFETY: widget is valid and non-null
+        unsafe { self.ui.widget.show() }
+    }
+
     fn title_from_file(&self, path: &str) {
         unsafe {
             self.ui
@@ -145,7 +153,7 @@ impl App {
                 button.disconnect();
                 button
                     .triggered()
-                    .connect(&SlotNoArgs::new(self.widget(), move || {
+                    .connect(&SlotNoArgs::new(&self.ui.widget, move || {
                         if let Some(this) = this.upgrade() {
                             this.open_world_file(&path);
                         }
@@ -213,7 +221,7 @@ impl App {
         let ui = &self.ui;
         let tabname = QString::from_std_str(world.name.replace('&', ""));
         let should_open = world.connect_method.is_some();
-        let worldtab = WorldTab::new(self.widget(), world, filename, self.paths);
+        let worldtab = WorldTab::new(&self.ui.widget, world, filename, self.paths);
         if should_open {
             worldtab.client.borrow_mut().connect();
         }
@@ -232,7 +240,6 @@ impl App {
                     }
                 }));
         }
-        let tab = worldtab.widget();
         let inputfield = worldtab.ui.input.clone();
         let this = Rc::downgrade(self);
         worldtab.connect_selection_changed(move |mode| {
@@ -240,12 +247,12 @@ impl App {
                 this.selection_changed(mode);
             }
         });
-        self.world_tabs.borrow_mut().push(worldtab);
         unsafe {
-            ui.world_tabs.add_tab_2a(tab, &tabname);
+            ui.world_tabs.add_tab_2a(&worldtab.ui.widget, &tabname);
             ui.world_tabs.set_current_index(new_index as c_int);
             inputfield.set_focus_1a(FocusReason::ActiveWindowFocusReason);
         }
+        self.world_tabs.borrow_mut().push(worldtab);
     }
 
     fn current_tab(&self) -> Option<Rc<WorldTab>> {
@@ -262,8 +269,8 @@ impl App {
         let save_as = match &*tab.saved.borrow() {
             Some(save_as) if !force_different => save_as.to_owned(),
             _ => unsafe {
-                QFileDialog::get_save_file_name_4a(
-                    self.widget(),
+                q::QFileDialog::get_save_file_name_4a(
+                    &self.ui.widget,
                     &tr!("Save as"),
                     &QString::from_std_str(self.paths.worlds.join(&world.name).to_string_lossy()),
                     &self.save_filter,
@@ -299,7 +306,7 @@ impl App {
         tab.client.borrow_mut().on_save();
     }
 
-    unsafe fn with_input<O: Default>(&self, f: unsafe fn(&QLineEdit) -> O) -> O {
+    unsafe fn with_input<O: Default>(&self, f: unsafe fn(&q::QLineEdit) -> O) -> O {
         unsafe {
             match self.current_input.borrow().as_raw_ref() {
                 Some(input) => f(input),
@@ -386,7 +393,7 @@ impl App {
         let mut world = World::new();
         world.chat_name = "Name-not-set".to_string();
         let world = Rc::new(RefCell::new(world));
-        let prefs = WorldPrefs::new(self.widget(), Rc::downgrade(&world));
+        let prefs = WorldPrefs::new(&self.ui.widget, Rc::downgrade(&world));
         if prefs.exec() == DialogCode::Accepted {
             self.start_world(Rc::try_unwrap(world).unwrap().into_inner(), None);
         }
@@ -395,8 +402,8 @@ impl App {
     #[slot(SlotNoArgs)]
     fn open_world(self: &Rc<Self>) {
         let filename = unsafe {
-            QFileDialog::get_open_file_name_4a(
-                self.widget(),
+            q::QFileDialog::get_open_file_name_4a(
+                &self.ui.widget,
                 &tr!("Open world"),
                 &QString::from_std_str(self.paths.worlds.to_string_lossy()),
                 &self.save_filter,
@@ -456,7 +463,7 @@ impl App {
         // that would involve a lot of unnecessary cloning.
         let world: World = tab.borrow_world().as_ref().clone();
         let worldcell = Rc::new(RefCell::new(world));
-        let prefs = WorldPrefs::new(self.widget(), Rc::downgrade(&worldcell));
+        let prefs = WorldPrefs::new(&self.ui.widget, Rc::downgrade(&worldcell));
         if prefs.exec() == DialogCode::Accepted {
             tab.set_world(Rc::try_unwrap(worldcell).unwrap().into_inner());
             unsafe {
@@ -487,7 +494,7 @@ impl App {
     }
     #[slot(SlotNoArgs)]
     fn cut(&self) {
-        unsafe { self.with_input(QLineEdit::cut) }
+        unsafe { self.with_input(q::QLineEdit::cut) }
     }
     #[slot(SlotNoArgs)]
     fn copy(&self) {
@@ -500,11 +507,11 @@ impl App {
     }
     #[slot(SlotNoArgs)]
     fn paste(&self) {
-        unsafe { self.with_input(QLineEdit::paste) }
+        unsafe { self.with_input(q::QLineEdit::paste) }
     }
     #[slot(SlotNoArgs)]
     fn select_all(&self) {
-        unsafe { self.with_input(QLineEdit::select_all) }
+        unsafe { self.with_input(q::QLineEdit::select_all) }
     }
 
     #[slot(SlotOfBool)]

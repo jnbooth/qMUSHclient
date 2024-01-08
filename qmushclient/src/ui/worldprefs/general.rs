@@ -11,11 +11,12 @@ use super::PrefPageExt;
 use crate::ui::uic;
 use crate::world::World;
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 struct PrefsProxy {
     ui: uic::PrefsProxy,
     world: Weak<RefCell<World>>,
 }
+impl_widget!(PrefsProxy);
 impl_prefpage!(PrefsProxy);
 impl_prefpageext!(PrefsProxy);
 
@@ -33,11 +34,12 @@ impl PrefsProxy {
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsAddress {
     ui: uic::PrefsAddress,
     world: Weak<RefCell<World>>,
 }
+impl_widget!(PrefsAddress);
 impl_prefpage!(PrefsAddress);
 impl_prefpageext!(PrefsAddress);
 
@@ -78,18 +80,19 @@ impl PrefsAddress {
 
     #[slot(SlotNoArgs)]
     fn open_proxy_settings(&self) {
-        let page = PrefsProxy::new(self.widget(), self.world.clone());
+        let page = PrefsProxy::new(&self.ui.widget, self.world.clone());
         unsafe {
             page.ui.widget.exec();
         }
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsConnecting {
     ui: uic::PrefsConnecting,
     world: Weak<RefCell<World>>,
 }
+impl_widget!(PrefsConnecting);
 impl_prefpage!(PrefsConnecting);
 impl_prefpageext!(PrefsConnecting);
 
@@ -119,11 +122,12 @@ impl PrefsConnecting {
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsLogging {
     ui: uic::PrefsLogging,
     world: Weak<RefCell<World>>,
 }
+impl_widget!(PrefsLogging);
 impl_prefpage!(PrefsLogging);
 impl_prefpageext!(PrefsLogging);
 
@@ -197,7 +201,7 @@ impl PrefsLogging {
     #[slot(SlotNoArgs)]
     fn show_help(&self) {
         unsafe {
-            uic::SpecialHelp::load(self.widget()).widget.exec();
+            uic::SpecialHelp::load(&self.ui.widget).widget.exec();
         }
     }
 
@@ -213,11 +217,12 @@ impl PrefsLogging {
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsChat {
     ui: uic::PrefsChat,
     world: Weak<RefCell<World>>,
 }
+impl_widget!(PrefsChat);
 impl_prefpage!(PrefsChat);
 impl_prefpageext!(PrefsChat);
 

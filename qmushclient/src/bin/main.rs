@@ -1,6 +1,6 @@
 #![windows_subsystem = "windows"]
 
-use qmushclient::{App, Widget};
+use qmushclient::App;
 use qt::core::{ApplicationAttribute, QCoreApplication, QLocale, QTranslator};
 use qt::widgets::QApplication;
 
@@ -22,9 +22,7 @@ fn main() {
         load_translator();
 
         let app = App::new();
-        unsafe {
-            app.widget().show();
-        }
+        app.show();
         QApplication::exec()
     })
 }

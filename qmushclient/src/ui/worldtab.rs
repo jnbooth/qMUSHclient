@@ -6,7 +6,7 @@ use cpp_core::{CastInto, CppBox, Ptr, Ref};
 use enumeration::Enum;
 use qt::gui::{QColor, QTextCursor};
 use qt::network::QTcpSocket;
-use qt::traits::{Printable, QList, Widget};
+use qt::traits::{Printable, QList};
 use qt::widgets::{QLineEdit, QTextBrowser};
 use qt_core::{
     slot, FocusReason, GlobalColor, QBox, QListOfInt, QPoint, QPtr, QString, QUrl, SlotNoArgs,
@@ -93,7 +93,7 @@ impl uic::WorldTab {
     }
 }
 
-#[derive(Widget, TrContext)]
+#[derive(TrContext)]
 pub struct WorldTab {
     pub ui: uic::WorldTab,
     pub client: RefCell<Client>,
@@ -105,6 +105,8 @@ pub struct WorldTab {
     address: RefCell<String>,
     cursor: QTextCursor,
 }
+
+impl_widget!(WorldTab);
 
 impl WorldTab {
     pub fn new<P>(parent: P, world: World, saved: Option<String>, paths: &'static Paths) -> Rc<Self>
@@ -193,7 +195,7 @@ impl WorldTab {
         let output = ui.output.clone();
         let mut mode = SelectionMode::get_current(&input, &output);
         unsafe {
-            let slot = SlotNoArgs::new(self.widget(), move || {
+            let slot = SlotNoArgs::new(&self.ui.widget, move || {
                 let new_mode = SelectionMode::get_current(&input, &output);
                 if new_mode != mode {
                     f(new_mode);
@@ -289,7 +291,7 @@ impl WorldTab {
                 tr!("Received an invalid response from the proxy server.")
             }
             _ => unsafe {
-                let msgbox = QMessageBox::from_q_widget(self.widget());
+                let msgbox = QMessageBox::from_q_widget(&self.ui.widget);
                 msgbox.set_icon(Icon::Critical);
                 msgbox.set_text(&tr!("Encountered an unexpected network error!"));
                 msgbox.set_text(&tr!("Error code: {}", error.to_int()));

@@ -6,7 +6,6 @@ members = [
   "qmushclient_derive",
   "qt/qt",
   "qt/qt_core",
-  "qt/qt_derive",
   "qt/qt_gui",
   "qt/qt_network",
   "qt/qt_ui_tools",

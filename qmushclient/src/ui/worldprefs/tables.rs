@@ -25,10 +25,11 @@ use crate::script::{Alias, Event, Reaction, SendTo, Sender, Timer, Trigger};
 use crate::world::World;
 use crate::DurationExt;
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 struct TriggerEdit {
     ui: uic::TriggerEdit,
 }
+impl_widget!(TriggerEdit);
 
 impl TriggerEdit {
     pub fn new<P: CastInto<Ptr<QWidget>>>(parent: P) -> Self {
@@ -475,12 +476,13 @@ impl<T: TreeItem> TableModel<T> {
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsTimers {
     ui: uic::PrefsTimers,
     world: Weak<RefCell<World>>,
     model: TableModel<Timer>,
 }
+impl_widget!(PrefsTimers);
 impl_prefpage!(PrefsTimers);
 
 impl PrefPageExt for PrefsTimers {
@@ -567,12 +569,13 @@ impl PrefsTimers {
         }
     }
 }
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsAliases {
     ui: uic::PrefsAliases,
     world: Weak<RefCell<World>>,
     model: TableModel<Alias>,
 }
+impl_widget!(PrefsAliases);
 impl_prefpage!(PrefsAliases);
 
 impl PrefPageExt for PrefsAliases {
@@ -659,12 +662,13 @@ impl PrefsAliases {
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsTriggers {
     ui: uic::PrefsTriggers,
     world: Weak<RefCell<World>>,
     model: TableModel<Trigger>,
 }
+impl_widget!(PrefsTriggers);
 impl_prefpage!(PrefsTriggers);
 
 impl PrefPageExt for PrefsTriggers {

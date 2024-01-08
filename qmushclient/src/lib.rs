@@ -9,8 +9,6 @@ extern crate enumeration_derive;
 #[macro_use]
 extern crate qmushclient_derive;
 #[macro_use]
-extern crate qt_derive;
-#[macro_use]
 extern crate tr;
 #[macro_use]
 extern crate tr_derive;

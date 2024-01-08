@@ -1,10 +1,10 @@
 use std::collections::HashMap;
 
 use cpp_core::CppBox;
-use qt::gui::QTextCursor;
-use qt::traits::{Printable, Widget};
 #[cfg(feature = "show-special")]
-use qt_core::AlignmentFlag;
+use qt::core::AlignmentFlag;
+use qt::gui::QTextCursor;
+use qt::traits::Printable;
 use qt_core::{QBox, QString};
 use qt_widgets::QTextEdit;
 use tr::TrContext;
@@ -44,7 +44,7 @@ impl Pad {
     }
 }
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 struct PadWidget {
     widget: QBox<QTextEdit>,
     cursor: QTextCursor,

@@ -1,7 +1,6 @@
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
-use qt::traits::Widget;
 use qt_widgets::*;
 use tr::TrContext;
 
@@ -9,11 +8,12 @@ use super::PrefPageExt;
 use crate::ui::uic;
 use crate::world::World;
 
-#[derive(Debug, Widget, TrContext)]
+#[derive(Debug, TrContext)]
 pub struct PrefsCommands {
     ui: uic::PrefsCommands,
     world: Weak<RefCell<World>>,
 }
+impl_widget!(PrefsCommands);
 impl_prefpage!(PrefsCommands);
 impl_prefpageext!(PrefsCommands);
 

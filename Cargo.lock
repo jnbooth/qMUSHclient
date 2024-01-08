@@ -617,7 +617,6 @@ dependencies = [
  "qmushclient_derive",
  "qt",
  "qt_core",
- "qt_derive",
  "qt_gui",
  "qt_network",
  "qt_ritual_build",
@@ -665,15 +664,6 @@ dependencies = [
  "cpp_core",
  "qt_macros",
  "qt_ritual_build",
-]
-
-[[package]]
-name = "qt_derive"
-version = "0.1.0"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 1.0.84",
 ]
 
 [[package]]

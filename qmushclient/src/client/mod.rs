@@ -7,7 +7,6 @@ use std::rc::Rc;
 use std::time::Instant;
 use std::{mem, str};
 
-use cpp_core::Ptr;
 use enumeration::Enum;
 #[cfg(feature = "show-special")]
 use qt::core::AlignmentFlag;
@@ -15,7 +14,6 @@ use qt::gui::{MoveOperation, QColor, QTextCharFormat, QTextCursor, SelectionType
 use qt::network::{QTcpSocket, SocketState};
 use qt::traits::{Colored, Printable, Widget};
 use qt::widgets::{MessageBoxIcon, QLineEdit, QTextBrowser};
-use qt_widgets::QWidget;
 use tr::TrContext;
 
 use crate::api::{Api, ApiState};
@@ -98,13 +96,6 @@ pub struct Client {
     log: Option<BufWriter<File>>,
 }
 
-impl Widget for Client {
-    fn widget(&self) -> Ptr<QWidget> {
-        // SAFETY: self.widget is valid
-        self.widget.widget()
-    }
-}
-
 impl Client {
     /// # Safety
     ///
@@ -155,22 +146,21 @@ impl Client {
         this
     }
 
+    fn warn<S: Printable, E: std::error::Error + ?Sized>(&self, text: S, err: &E) {
+        self.widget.alert(MessageBoxIcon::Warning, text, err)
+    }
+
     fn load_plugins(&mut self) {
         for path in &self.world.plugins {
             if let Err(e) = self.plugins.load_plugin_file(path) {
-                self.alert(
-                    MessageBoxIcon::Warning,
+                self.warn(
                     tr!("Couldn't load plugin at {}", path.to_string_lossy()),
                     &e,
                 );
             }
         }
         if let Err(e) = self.plugins.load_plugin(self.world.world_plugin()) {
-            self.alert(
-                MessageBoxIcon::Warning,
-                tr!("Couldn't compile world script"),
-                &e,
-            );
+            self.warn(tr!("Couldn't compile world script"), &e);
         }
         self.plugins.sort();
     }
@@ -185,7 +175,7 @@ impl Client {
                 .create(true)
                 .open(file)
             {
-                Err(e) => self.alert(MessageBoxIcon::Warning, tr!("Unable to open log file"), &e),
+                Err(e) => self.warn(tr!("Unable to open log file"), &e),
                 Ok(..) if world.log_format == LogFormat::Html => self.log = None,
                 Ok(file) => self.log = Some(BufWriter::with_capacity(config::LOG_BUFFER, file)),
             }
@@ -202,11 +192,7 @@ impl Client {
         self.style.set_world(world.clone());
         if !reload_plugins {
             if let Err(e) = self.plugins.update_world_plugin(&self.world, &world) {
-                self.alert(
-                    MessageBoxIcon::Warning,
-                    tr!("Couldn't compile world script"),
-                    &e,
-                );
+                self.warn(tr!("Couldn't compile world script"), &e);
             }
             self.plugins
                 .alter_userdata(|api| api.set_world(world.clone()));
@@ -424,7 +410,7 @@ impl Client {
                 return;
             }
             if let Err(e) = try_write(log, cfg, buf) {
-                self.alert(MessageBoxIcon::Warning, "Couldn't write to log", &e);
+                self.warn("Couldn't write to log", &e);
                 self.log = None;
             }
         }
