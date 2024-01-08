@@ -1,10 +1,10 @@
 use std::path::PathBuf;
 
 use mlua::{FromLua, Lua, MultiValue, Result};
+use qmushclient_scripting::{Reaction, Sender, Trigger};
 
 use crate::api::Api;
 use crate::client::color::Colors;
-use crate::script::{Reaction, Sender, Trigger};
 
 #[api_provider]
 impl Api {

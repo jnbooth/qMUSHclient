@@ -3,13 +3,13 @@ use std::path::PathBuf;
 
 use chrono::Utc;
 use enumeration::Enum;
+use qmushclient_scripting::{Alias, PluginMetadata, PluginPack, Sender, Timer, Trigger};
 use qt::core::{GlobalColor, Key};
 use qt::gui::{ColorRole, QColor, QColorPair, QFont, SystemFont};
 use serde::{Deserialize, Serialize};
 use tr::TrContext;
 
 use crate::client::color::{Colors, WorldColor};
-use crate::script::{Alias, PluginMetadata, PluginPack, Sender, Timer, Trigger};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize, Enum)]
 pub enum ProxyType {

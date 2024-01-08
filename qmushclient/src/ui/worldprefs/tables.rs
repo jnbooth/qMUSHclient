@@ -11,6 +11,7 @@ use std::time::Duration;
 use chrono::{NaiveTime, Timelike};
 use cpp_core::{CastInto, CppDeletable, Ptr};
 use enumeration::Enum;
+use qmushclient_scripting::{Alias, Event, Reaction, RegexError, SendTo, Sender, Timer, Trigger};
 use qt::traits::{Browse, HasPalette, Widget};
 use qt_core::{slot, QPtr, QString, QTime, SlotNoArgs, SlotOfInt, SlotOfQString};
 use qt_gui::q_palette::ColorRole;
@@ -21,7 +22,6 @@ use qt_widgets::{QPushButton, QTreeWidget, QTreeWidgetItem, QWidget, SlotOfQTree
 use tr::TrContext;
 
 use super::{uic, PrefPageExt};
-use crate::script::{Alias, Event, Reaction, SendTo, Sender, Timer, Trigger};
 use crate::world::World;
 use crate::DurationExt;
 
@@ -133,7 +133,7 @@ impl TriggerEdit {
         }
     }
 
-    pub fn reaction(&self) -> Result<Reaction, fancy_regex::Error> {
+    pub fn reaction(&self) -> Result<Reaction, RegexError> {
         let ui = &self.ui;
         unsafe {
             let pattern = ui.pattern.text().to_std_string();
@@ -175,7 +175,7 @@ impl TriggerEdit {
         }
     }
 
-    pub fn try_until<T>(&self, f: fn(&Self) -> Result<T, fancy_regex::Error>) -> Option<T> {
+    pub fn try_until<T>(&self, f: fn(&Self) -> Result<T, RegexError>) -> Option<T> {
         loop {
             if !self.exec() {
                 return None;
@@ -187,7 +187,7 @@ impl TriggerEdit {
         }
     }
 
-    pub fn alias(&self) -> Result<Alias, fancy_regex::Error> {
+    pub fn alias(&self) -> Result<Alias, RegexError> {
         let ui = &self.ui;
         unsafe {
             Ok(Alias {
@@ -199,7 +199,7 @@ impl TriggerEdit {
         }
     }
 
-    pub fn trigger(&self) -> Result<Trigger, fancy_regex::Error> {
+    pub fn trigger(&self) -> Result<Trigger, RegexError> {
         let ui = &self.ui;
         unsafe {
             let soundfile = ui.sound.text().trimmed().to_std_string();
@@ -378,15 +378,28 @@ impl TreeItem for Timer {
     }
 }
 
-impl<T: AsRef<Reaction> + AsRef<Sender>> TreeItem for T {
+fn show_reaction_tree_item<T: AsRef<Reaction> + AsRef<Sender>>(
+    reaction: &T,
+    item: &QTreeWidgetItem,
+) {
+    let subject: &Reaction = reaction.as_ref();
+    unsafe {
+        item.set_text(0, &QString::from_std_str(&subject.label));
+        item.set_text(1, &QString::number_int(subject.sequence as c_int));
+        item.set_text(2, &QString::from_std_str(&subject.pattern));
+        item.set_text(3, &QString::from_std_str(&subject.text));
+    }
+}
+
+impl TreeItem for Alias {
     fn show_tree_item(&self, item: &QTreeWidgetItem) {
-        let subject: &Reaction = self.as_ref();
-        unsafe {
-            item.set_text(0, &QString::from_std_str(&subject.label));
-            item.set_text(1, &QString::number_int(subject.sequence as c_int));
-            item.set_text(2, &QString::from_std_str(&subject.pattern));
-            item.set_text(3, &QString::from_std_str(&subject.text));
-        }
+        show_reaction_tree_item(self, item)
+    }
+}
+
+impl TreeItem for Trigger {
+    fn show_tree_item(&self, item: &QTreeWidgetItem) {
+        show_reaction_tree_item(self, item)
     }
 }
 

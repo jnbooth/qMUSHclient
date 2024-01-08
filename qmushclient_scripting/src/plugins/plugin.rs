@@ -6,13 +6,10 @@ use mlua::{self, AnyUserData, FromLuaMulti, Function, Lua, Value};
 use qt::widgets::{MessageBoxIcon, QMessageBox};
 use tr::TrContext;
 
-use super::callback::Callback;
-use super::convert::ScriptArgs;
 use super::{PluginMetadata, PluginPack};
-use crate::api::Api;
-use crate::script::{Alias, Timer, Trigger};
-
-pub const API_KEY: &str = "__ud";
+use crate::callback::Callback;
+use crate::convert::ScriptArgs;
+use crate::send::{Alias, Timer, Trigger};
 
 #[derive(TrContext)]
 pub struct Plugin {
@@ -78,20 +75,24 @@ impl Plugin {
         msgbox.exec();
     }
 
-    pub fn with_api<F: FnOnce(&Api)>(&self, f: F) {
-        if let Ok(apiref) = self.engine.globals().raw_get::<_, AnyUserData>(API_KEY) {
-            if let Ok(api) = apiref.borrow() {
-                f(&api);
-            }
-        }
+    pub fn with_userdata<T, R, F>(&self, key: &str, f: F) -> mlua::Result<R>
+    where
+        T: 'static,
+        F: FnOnce(&T) -> R,
+    {
+        let global_ref = self.engine.globals().raw_get::<_, AnyUserData>(key)?;
+        let global_val = global_ref.borrow()?;
+        Ok(f(&global_val))
     }
 
-    pub fn with_api_mut<F: FnOnce(&mut Api)>(&self, f: F) {
-        if let Ok(apiref) = self.engine.globals().raw_get::<_, AnyUserData>(API_KEY) {
-            if let Ok(mut api) = apiref.borrow_mut() {
-                f(&mut api);
-            }
-        }
+    pub fn with_userdata_mut<T, R, F>(&self, key: &str, f: F) -> mlua::Result<R>
+    where
+        T: 'static,
+        F: FnOnce(&mut T) -> R,
+    {
+        let global_ref = self.engine.globals().raw_get::<_, AnyUserData>(key)?;
+        let mut global_val = global_ref.borrow_mut()?;
+        Ok(f(&mut global_val))
     }
 
     fn try_invoke<'lua, A, R>(&'lua self, fn_name: &str, args: A) -> mlua::Result<R>

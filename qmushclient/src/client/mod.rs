@@ -8,6 +8,9 @@ use std::time::Instant;
 use std::{mem, str};
 
 use enumeration::Enum;
+use qmushclient_scripting::{Callback, PluginHandler, Senders};
+#[cfg(feature = "show-special")]
+use qmushlient_scripting::Pad;
 #[cfg(feature = "show-special")]
 use qt::core::AlignmentFlag;
 use qt::gui::{MoveOperation, QColor, QTextCharFormat, QTextCursor, SelectionType};
@@ -16,15 +19,11 @@ use qt::traits::{Colored, Printable, Widget};
 use qt::widgets::{MessageBoxIcon, QLineEdit, QTextBrowser};
 use tr::TrContext;
 
-use crate::api::{Api, ApiState};
+use crate::api::{Api, ApiState, Notepad};
 use crate::client::state::Latest;
 use crate::constants::{config, Paths};
 use crate::escape::{ansi, telnet};
 use crate::mxp;
-use crate::script::{Callback, PluginHandler, Senders};
-use crate::ui::Notepad;
-#[cfg(feature = "show-special")]
-use crate::ui::Pad;
 use crate::world::{LogFormat, LogMode, World};
 
 pub mod color;
@@ -96,7 +95,7 @@ pub struct Client<P: PluginHandler> {
     log: Option<BufWriter<File>>,
 }
 
-impl<P: PluginHandler<PluginApi = Api>> Client<P> {
+impl<P: PluginHandler<Userdata = Api>> Client<P> {
     /// # Safety
     ///
     /// `output` and `input` must be valid and non-null.
@@ -156,7 +155,7 @@ impl<P: PluginHandler<PluginApi = Api>> Client<P> {
     }
 }
 
-impl<P: PluginHandler<PluginApi = Api, PluginWorld = World>> Client<P> {
+impl<P: PluginHandler<Userdata = Api, PluginWorld = World>> Client<P> {
     pub fn set_world(&mut self, world: Rc<World>) {
         let reload_log = self.world.auto_log_file_name != world.auto_log_file_name;
         let reload_plugins = self.world.plugins != world.plugins;

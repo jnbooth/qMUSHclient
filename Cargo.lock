@@ -600,21 +600,18 @@ version = "0.0.0"
 dependencies = [
  "bincode",
  "case_insensitive",
- "cc",
  "chrono",
  "cpp_core",
  "enumeration",
  "enumeration_derive",
- "fancy-regex",
  "flate2",
  "gethostname",
  "itertools 0.12.0",
  "libsqlite3-sys",
- "luajit-src",
  "mlua",
  "once_cell",
- "pcre2-sys",
  "qmushclient_derive",
+ "qmushclient_scripting",
  "qt",
  "qt_core",
  "qt_gui",
@@ -622,7 +619,6 @@ dependencies = [
  "qt_ritual_build",
  "qt_ui_tools",
  "qt_widgets",
- "quick-xml",
  "rand",
  "serde",
  "serde_json",
@@ -638,6 +634,27 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.84",
+]
+
+[[package]]
+name = "qmushclient_scripting"
+version = "0.0.0"
+dependencies = [
+ "cc",
+ "chrono",
+ "cpp_core",
+ "enumeration",
+ "enumeration_derive",
+ "fancy-regex",
+ "libsqlite3-sys",
+ "luajit-src",
+ "mlua",
+ "pcre2-sys",
+ "qt",
+ "quick-xml",
+ "serde",
+ "tr",
+ "tr_derive",
 ]
 
 [[package]]

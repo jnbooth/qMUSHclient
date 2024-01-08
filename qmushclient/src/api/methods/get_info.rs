@@ -6,6 +6,7 @@ use std::time::SystemTime;
 
 use libsqlite3_sys::{SQLITE_VERSION, SQLITE_VERSION_NUMBER};
 use mlua::{Lua, Result, Value};
+use qmushclient_scripting::{Callback, ScriptArg};
 use qt::core::{GlobalColor, KeyboardModifier, MouseButton};
 use qt::gui::{QColor, QFont, QGuiApplication, StyleHint, SystemFont};
 use qt::network::SocketState;
@@ -14,7 +15,6 @@ use qt::traits::Colored;
 use crate::api::Api;
 use crate::client::state::Mccp;
 use crate::constants::branding;
-use crate::script::{Callback, ScriptArg};
 
 pub fn provide_api<'lua, M: mlua::UserDataMethods<'lua, Api>>(methods: &mut M) {
     methods.add_method("GetInfo", |lua, this, i| this.get_info(lua, i))

@@ -1,3 +1,5 @@
+use std::convert::Infallible;
+use std::fmt::{self, Display, Formatter};
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::{io, str};
@@ -6,15 +8,59 @@ use enumeration::EnumSet;
 use mlua;
 use qt::gui::QColor;
 
-use super::callback::Callback;
-use super::convert::{ScriptArgs, ScriptRes};
-use super::PluginPack;
+use super::file::PluginPack;
+use crate::callback::Callback;
+use crate::convert::{ScriptArgs, ScriptRes};
 
-#[derive(Debug, Error)]
+#[derive(Debug)]
 pub enum LoadError {
     File(io::Error),
     Xml(quick_xml::DeError),
     Script(mlua::Error),
+}
+
+impl Display for LoadError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::File(e) => Display::fmt(&e, f),
+            Self::Xml(e) => Display::fmt(&e, f),
+            Self::Script(e) => Display::fmt(&e, f),
+        }
+    }
+}
+
+impl std::error::Error for LoadError {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Self::File(e) => Some(e),
+            Self::Xml(e) => Some(e),
+            Self::Script(e) => Some(e),
+        }
+    }
+}
+
+impl From<Infallible> for LoadError {
+    fn from(e: Infallible) -> Self {
+        match e {}
+    }
+}
+
+impl From<io::Error> for LoadError {
+    fn from(e: io::Error) -> Self {
+        Self::File(e)
+    }
+}
+
+impl From<quick_xml::DeError> for LoadError {
+    fn from(e: quick_xml::DeError) -> Self {
+        Self::Xml(e)
+    }
+}
+
+impl From<mlua::Error> for LoadError {
+    fn from(e: mlua::Error) -> Self {
+        Self::Script(e)
+    }
 }
 
 #[derive(Clone, Debug, Default)]
@@ -29,10 +75,10 @@ pub struct TriggerEffects {
 }
 
 pub trait PluginHandler {
-    type PluginApi;
     type PluginWorld;
+    type Userdata;
 
-    fn new(api: Self::PluginApi) -> Self;
+    fn new(api: Self::Userdata) -> Self;
 
     fn clear(&mut self);
 
@@ -42,7 +88,7 @@ pub trait PluginHandler {
 
     fn sort(&mut self);
 
-    fn alter_userdata<F: FnMut(&mut Self::PluginApi)>(&mut self, f: F);
+    fn alter_userdata<F: FnMut(&mut Self::Userdata)>(&mut self, f: F);
 
     fn update_world_plugin(
         &mut self,

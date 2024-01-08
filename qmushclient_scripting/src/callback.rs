@@ -3,7 +3,7 @@ use std::str;
 use enumeration::Enum;
 use mlua::{Lua, Value};
 
-use crate::script::ScriptArg;
+use crate::convert::ScriptArg;
 
 #[allow(dead_code)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]

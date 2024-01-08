@@ -3,9 +3,9 @@ use std::str;
 
 use enumeration::Enum;
 use mlua::{self, Lua, Value};
+use qmushclient_scripting::ScriptArg;
 
 use crate::client::state::Phase;
-use crate::script::ScriptArg;
 
 pub fn is_valid(target: &str) -> bool {
     let s: &[u8] = target.as_ref();

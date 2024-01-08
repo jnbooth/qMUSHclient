@@ -59,7 +59,6 @@ impl Mode {
     }
 }
 
-/// Not to be confused with [`trigger::SendTo`](crate::script::trigger::SendTo).
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum SendTo {
     World,

@@ -5,10 +5,10 @@ use std::{iter, slice, str, vec};
 
 use fancy_regex::{CaptureMatches, Captures, Replacer};
 
-use super::Plugin;
-use crate::script::send::Reaction;
-use crate::script::{Alias, PluginMetadata, Sender, Timer, Trigger};
-use crate::ui::Pad;
+use super::file::PluginMetadata;
+use super::pad::Pad;
+use super::plugin::Plugin;
+use crate::send::{Alias, Reaction, Sender, Timer, Trigger};
 
 pub type PluginIndex = usize;
 
@@ -406,12 +406,10 @@ mod tests {
         use super::*;
 
         fn default_sendmatch() -> SendMatch<'static, 'static, Alias> {
-            use once_cell::sync::Lazy;
-            static ALIAS: Lazy<Alias> = Lazy::new(Alias::default);
             SendMatch {
                 plugin: 0,
                 pos: 0,
-                sender: &ALIAS,
+                sender: Box::leak(Box::new(Alias::default())),
                 text: Cow::Borrowed(""),
                 wildcards: Vec::new(),
             }

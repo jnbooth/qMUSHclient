@@ -4,6 +4,7 @@ members = [
   "case_insensitive",
   "qmushclient",
   "qmushclient_derive",
+  "qmushclient_scripting",
   "qt/qt",
   "qt/qt_core",
   "qt/qt_gui",

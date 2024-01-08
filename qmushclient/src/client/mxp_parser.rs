@@ -1,6 +1,7 @@
 use std::iter::Iterator;
 use std::{io, mem, str};
 
+use qmushclient_scripting::{Callback, PluginHandler};
 use qt::gui::QTextCharFormat;
 
 use super::Client;
@@ -9,7 +10,6 @@ use crate::client::state::Phase;
 use crate::client::style::TextStyle;
 use crate::constants::branding;
 use crate::mxp;
-use crate::script::{Callback, PluginHandler};
 use crate::world::AutoConnect;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]

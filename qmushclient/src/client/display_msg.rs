@@ -2,6 +2,9 @@ use std::iter::Iterator;
 use std::{io, str};
 
 #[cfg(feature = "show-special")]
+use qmushclient_scripting::Pad;
+use qmushclient_scripting::{Callback, PluginHandler};
+#[cfg(feature = "show-special")]
 use qt::core::AlignmentFlag;
 
 use super::Client;
@@ -11,9 +14,6 @@ use crate::client::state::{Mccp, Phase};
 use crate::client::Log;
 use crate::escape::telnet;
 use crate::mxp;
-use crate::script::{Callback, PluginHandler};
-#[cfg(feature = "show-special")]
-use crate::ui::Pad;
 use crate::world::{LogFormat, UseMxp};
 
 #[inline]

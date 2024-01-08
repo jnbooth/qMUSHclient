@@ -14,7 +14,6 @@ pub mod config {
     pub const COMPRESS_BUFFER: usize = 1024 * 20;
     pub const SOCKET_BUFFER: usize = 1024 * 16; // needs to be <= COMPRESS_BUFFER
     pub const LOG_BUFFER: usize = 1024 * 9;
-    pub const DEFAULT_SEQUENCE: i16 = 100;
 }
 
 pub struct Paths {

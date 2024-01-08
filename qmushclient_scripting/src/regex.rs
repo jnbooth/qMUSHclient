@@ -11,6 +11,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone)]
 pub struct Regex(fancy_regex::Regex);
 
+pub type RegexError = fancy_regex::Error;
+
 impl Deref for Regex {
     type Target = fancy_regex::Regex;
 
@@ -74,7 +76,7 @@ impl<'de> Deserialize<'de> for Regex {
 }
 
 impl FromStr for Regex {
-    type Err = fancy_regex::Error;
+    type Err = RegexError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         fancy_regex::Regex::from_str(s).map(Self)
@@ -86,7 +88,7 @@ impl Regex {
     /// to search, split or replace text in a string.
     ///
     /// If an invalid expression is given, then an error is returned.
-    pub fn new(re: &str) -> Result<Self, fancy_regex::Error> {
+    pub fn new(re: &str) -> Result<Self, RegexError> {
         fancy_regex::Regex::new(re).map(Self)
     }
 }

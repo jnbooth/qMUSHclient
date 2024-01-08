@@ -14,8 +14,6 @@ extern crate tr;
 extern crate tr_derive;
 
 extern crate libsqlite3_sys;
-extern crate luajit_src;
-extern crate pcre2_sys;
 
 #[cfg(debug_assertions)]
 #[macro_use]
@@ -29,7 +27,6 @@ mod api;
 mod client;
 mod constants;
 mod escape;
-mod ffi;
 mod mxp;
 mod persist;
 mod script;

@@ -171,7 +171,7 @@ impl_arg_deref!(QPtr, StaticUpcast<QObject>);
 impl_arg_deref!(Rc);
 impl_arg_deref!(Ref);
 
-pub fn create_table<K, V, I>(lua: &Lua, cont: I) -> mlua::Result<Value>
+fn create_table<K, V, I>(lua: &Lua, cont: I) -> mlua::Result<Value>
 where
     K: ScriptArg,
     V: ScriptArg,
@@ -184,7 +184,7 @@ where
     lua.create_table_from(args?).map(Value::Table)
 }
 
-pub fn create_sequence<T, I>(lua: &Lua, cont: I) -> mlua::Result<Value>
+fn create_sequence<T, I>(lua: &Lua, cont: I) -> mlua::Result<Value>
 where
     T: ScriptArg,
     I: IntoIterator<Item = T>,

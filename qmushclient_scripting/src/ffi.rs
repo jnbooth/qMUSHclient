@@ -51,16 +51,16 @@ mod tests {
 
     #[test]
     fn test_lbc() {
-        test_lib(include_bytes!("../../tests/lbc.lua"));
+        test_lib(include_bytes!("../tests/lbc.lua"));
     }
 
     #[test]
     fn test_lpeg() {
-        test_lib(include_bytes!("../../tests/lpeg.lua"));
+        test_lib(include_bytes!("../tests/lpeg.lua"));
     }
 
     #[test]
     fn test_lsqlite3() {
-        test_lib(include_bytes!("../../tests/lsqlite3.lua"));
+        test_lib(include_bytes!("../tests/lsqlite3.lua"));
     }
 }

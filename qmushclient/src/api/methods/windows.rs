@@ -1,9 +1,9 @@
 use std::os::raw::c_int;
 
 use mlua::{Lua, Result, Value};
+use qmushclient_scripting::ScriptArg;
 
 use crate::api::Api;
-use crate::script::ScriptArg;
 
 #[api_provider]
 impl Api {

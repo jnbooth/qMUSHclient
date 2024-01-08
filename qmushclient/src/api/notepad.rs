@@ -1,51 +1,12 @@
 use std::collections::HashMap;
 
+use qmushclient_scripting::Pad;
 #[cfg(feature = "show-special")]
 use qt::core::AlignmentFlag;
 use qt::gui::QTextCursor;
 use qt::traits::Printable;
 use qt::widgets::QTextEdit;
 use tr::TrContext;
-
-use crate::script::Event;
-
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, TrContext)]
-pub enum Pad {
-    Script(String),
-    Alias {
-        plugin: String,
-        label: String,
-    },
-    Timer {
-        plugin: String,
-        event: Event,
-    },
-    Trigger {
-        plugin: String,
-        label: String,
-    },
-    #[cfg(feature = "show-special")]
-    PacketDebug,
-}
-
-impl Pad {
-    fn title(&self, pad_name: &str) -> String {
-        match self {
-            Self::Script(s) => format!("{} - {}", s, pad_name),
-            Self::Alias { plugin, label } => {
-                tr!("Alias: {} ({}) - {}", label, plugin, pad_name).to_std_string()
-            }
-            Self::Timer { plugin, event } => {
-                tr!("Timer: {} ({}) - {}", event, plugin, pad_name).to_std_string()
-            }
-            Self::Trigger { plugin, label } => {
-                tr!("Trigger: {} ({}) - {}", label, plugin, pad_name).to_std_string()
-            }
-            #[cfg(feature = "show-special")]
-            Self::PacketDebug => tr!("Packet debug - {}", pad_name).to_std_string(),
-        }
-    }
-}
 
 #[derive(Debug, TrContext)]
 struct PadWidget {

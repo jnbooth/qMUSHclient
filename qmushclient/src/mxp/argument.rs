@@ -6,9 +6,9 @@ use std::{slice, str};
 use case_insensitive::ascii::{CaseFold, CaseFoldMap};
 use enumeration::{Enum, EnumSet};
 use mlua::{Lua, Value};
+use qmushclient_scripting::ScriptArg;
 
 use super::{validate, Error, ParseError, Words};
-use crate::script::ScriptArg;
 
 pub type Argument = String;
 pub type Arg = str;

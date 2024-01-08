@@ -6,6 +6,7 @@ use std::os::raw::c_double;
 use std::rc::Rc;
 
 use mlua::{UserData, UserDataMethods};
+use qmushclient_scripting::{Pad, PluginIndex, PluginMetadata, Senders};
 use qt::core::QSettings;
 use qt::gui::{MoveOperation, QColor, QColorPair, QTextCursor};
 use qt::network::QTcpSocket;
@@ -14,11 +15,13 @@ use qt::widgets::{QLineEdit, QTextBrowser};
 use tr::TrContext;
 
 use crate::constants::Paths;
-use crate::script::{PluginIndex, PluginMetadata, Senders};
-use crate::ui::{Notepad, Pad};
 use crate::world::World;
 
 mod methods;
+
+mod notepad;
+pub use notepad::Notepad;
+
 mod state;
 pub use state::ApiState;
 

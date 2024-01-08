@@ -11,21 +11,19 @@ use std::{io, mem, str};
 
 use enumeration::EnumSet;
 use mlua::{self, UserData, Value};
+use qmushclient_scripting::{
+    Alias, Callback, Event, LoadError, Pad, Plugin, PluginHandler, PluginIndex, PluginPack,
+    ScriptArgs, ScriptRes, SendMatch, SendTo, Sendable, Senders, Timer, Trigger, TriggerEffects,
+};
 use qt::core::{QTimer, TimerKind};
 use uuid::Uuid;
 
-use super::super::callback::Callback;
-use super::super::convert::{ScriptArgs, ScriptRes};
-use super::super::handler::{LoadError, PluginHandler, TriggerEffects};
-use super::super::send::Event;
-use super::super::PluginPack;
 use super::method_gatherer::MethodGatherer;
 use crate::api::Api;
-use crate::script::indexed::{PluginIndex, Senders};
-use crate::script::plugin::API_KEY;
-use crate::script::{Alias, Plugin, SendMatch, SendTo, Sendable, Timer, Trigger};
-use crate::ui::{Pad, WorldTab};
+use crate::ui::WorldTab;
 use crate::world::World;
+
+const API_KEY: &str = "__ud";
 
 const fn truthy(value: &Value) -> bool {
     match *value {
@@ -48,6 +46,25 @@ pub struct SendRequest<'a> {
     pub variable: String,
     pub text: String,
     pub omit_from_output: bool,
+}
+
+trait PluginWithApi {
+    fn with_api<F: FnOnce(&Api)>(&self, f: F);
+    fn with_api_mut<F: FnOnce(&mut Api)>(&self, f: F);
+}
+
+impl PluginWithApi for Plugin {
+    fn with_api<F: FnOnce(&Api)>(&self, f: F) {
+        if let Err(e) = self.with_userdata(API_KEY, f) {
+            Plugin::alert_error(&self.metadata, &e);
+        }
+    }
+
+    fn with_api_mut<F: FnOnce(&mut Api)>(&self, f: F) {
+        if let Err(e) = self.with_userdata_mut(API_KEY, f) {
+            Plugin::alert_error(&self.metadata, &e);
+        }
+    }
 }
 
 pub struct PluginEngine {
@@ -129,7 +146,7 @@ impl PluginEngine {
     }
 
     fn init_plugin(&self, pack: PluginPack) -> mlua::Result<Plugin> {
-        let engine = crate::ffi::lua::new_lua()?;
+        let engine = qmushclient_scripting::new_lua()?;
 
         engine.globals().set(
             API_KEY,
@@ -199,8 +216,8 @@ impl PluginEngine {
 }
 
 impl PluginHandler for PluginEngine {
-    type PluginApi = Api;
     type PluginWorld = World;
+    type Userdata = Api;
 
     fn new(api: Api) -> Self {
         let mut gatherer = MethodGatherer::new();
@@ -231,7 +248,7 @@ impl PluginHandler for PluginEngine {
 
     fn load_plugin_file(&mut self, path: &Path) -> Result<(), LoadError> {
         let file = File::open(path)?;
-        let pack: PluginPack = quick_xml::de::from_reader(BufReader::new(file))?;
+        let pack = PluginPack::from_xml(BufReader::new(file))?;
         self.load_plugin(pack)?;
         Ok(())
     }

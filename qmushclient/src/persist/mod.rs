@@ -57,10 +57,10 @@ pub fn load_world(path: &str) -> Result<World, Error> {
 
 #[cfg(test)]
 mod tests {
+    use qmushclient_scripting::{Alias, Timer, Trigger};
     use qt::core::Key;
 
     use super::*;
-    use crate::script::{Alias, Timer, Trigger};
 
     #[test]
     pub fn test_world_roundtrip() {
