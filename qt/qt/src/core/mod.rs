@@ -1,5 +1,6 @@
 pub use qt_core::{
-    AlignmentFlag, ApplicationAttribute, GlobalColor, Key, KeyboardModifier, MouseButton,
+    AlignmentFlag, ApplicationAttribute, GlobalColor, Key, KeyboardModifier, MouseButton, QBox,
+    QObject, QPtr, QString,
 };
 
 mod core_application;

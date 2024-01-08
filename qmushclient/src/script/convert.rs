@@ -9,8 +9,8 @@ use std::time::{Duration, SystemTime};
 
 use cpp_core::{CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
 use mlua::{self, FromLuaMulti, IntoLua, IntoLuaMulti, LightUserData, Lua, MultiValue, Value};
+use qt::core::{QBox, QObject, QPtr, QString};
 use qt::gui::{QColor, QFont};
-use qt_core::{QBox, QObject, QPtr, QString};
 
 pub trait ScriptRes: for<'lua> FromLuaMulti<'lua> {}
 impl<T: for<'lua> FromLuaMulti<'lua>> ScriptRes for T {}
