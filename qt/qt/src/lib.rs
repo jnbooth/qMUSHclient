@@ -28,6 +28,33 @@ macro_rules! impl_eq_cpp {
     };
 }
 
+macro_rules! qio_binding {
+    ($t:ident) => {
+        #[derive(Clone, Debug)]
+        #[repr(transparent)]
+        pub struct $t {
+            #[allow(dead_code)]
+            device: crate::io::QIODevice<q::$t>,
+        }
+
+        impl std::ops::Deref for $t {
+            type Target = crate::io::QIODevice<q::$t>;
+
+            fn deref(&self) -> &Self::Target {
+                &self.device
+            }
+        }
+
+        impl $t {
+            pub fn new(inner: qt_core::QBox<q::$t>) -> Self {
+                Self {
+                    device: crate::io::QIODevice::new(inner),
+                }
+            }
+        }
+    };
+}
+
 macro_rules! qt_binding {
     ($t:ident, $inner:ty) => {
         #[repr(transparent)]
@@ -61,8 +88,9 @@ pub mod core;
 
 pub mod gui;
 
-pub mod io;
-pub use io::QIODevice;
+mod io;
+
+pub mod network;
 
 pub mod traits;
 

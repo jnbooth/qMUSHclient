@@ -8,10 +8,9 @@ use std::rc::Rc;
 use mlua::{UserData, UserDataMethods};
 use qt::core::QSettings;
 use qt::gui::{MoveOperation, QColor, QColorPair, QTextCursor};
-use qt::io::QIODevice;
+use qt::network::QTcpSocket;
 use qt::traits::{Colored, Printable};
 use qt::widgets::{QLineEdit, QTextBrowser};
-use qt_network::QTcpSocket;
 use tr::TrContext;
 
 use crate::constants::Paths;
@@ -29,7 +28,7 @@ pub struct Api {
     output: QTextBrowser,
     input: QLineEdit,
     cursor: QTextCursor,
-    socket: QIODevice<QTcpSocket>,
+    socket: QTcpSocket,
     world: Rc<World>,
     state: Rc<ApiState>,
     pub notepad: Rc<RefCell<Notepad>>,
@@ -58,7 +57,7 @@ impl Api {
     pub fn new(
         output: QTextBrowser,
         input: QLineEdit,
-        socket: QIODevice<QTcpSocket>,
+        socket: QTcpSocket,
         world: Rc<World>,
         state: Rc<ApiState>,
         notepad: Rc<RefCell<Notepad>>,

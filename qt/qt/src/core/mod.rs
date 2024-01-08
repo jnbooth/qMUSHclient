@@ -6,6 +6,9 @@ mod core_application;
 pub(crate) use core_application::CoreApplicationBinding;
 pub use core_application::QCoreApplication;
 
+mod io;
+pub use io::*;
+
 mod locale;
 pub use locale::{QLocale, QTranslator};
 

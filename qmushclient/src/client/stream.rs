@@ -1,8 +1,7 @@
 use std::io::{self, BufReader, Cursor, IoSliceMut, Read};
 use std::mem;
 
-use qt::QIODevice;
-use qt_network::QTcpSocket;
+use qt::network::QTcpSocket;
 
 use crate::constants::config;
 
@@ -10,12 +9,12 @@ type Decompress<T> = flate2::bufread::ZlibDecoder<T>;
 
 #[derive(Debug)]
 enum ZState {
-    Prepend(Cursor<Vec<u8>>, QIODevice<QTcpSocket>),
-    Direct(QIODevice<QTcpSocket>),
+    Prepend(Cursor<Vec<u8>>, QTcpSocket),
+    Direct(QTcpSocket),
 }
 
 impl ZState {
-    pub fn into_socket(self) -> QIODevice<QTcpSocket> {
+    pub fn into_socket(self) -> QTcpSocket {
         match self {
             Self::Prepend(_, socket) => socket,
             Self::Direct(socket) => socket,
@@ -50,13 +49,13 @@ impl Read for ZState {
 }
 
 enum StreamState {
-    Uncompressed(QIODevice<QTcpSocket>),
+    Uncompressed(QTcpSocket),
     Compressed(Decompress<BufReader<ZState>>),
     Transitioning,
 }
 
 impl StreamState {
-    pub fn into_socket(self) -> QIODevice<QTcpSocket> {
+    pub fn into_socket(self) -> QTcpSocket {
         match self {
             StreamState::Uncompressed(socket) => socket,
             StreamState::Compressed(reader) => reader.into_inner().into_inner().into_socket(),
@@ -68,7 +67,7 @@ impl StreamState {
 pub struct MudStream(StreamState);
 
 impl MudStream {
-    pub const fn new(socket: QIODevice<QTcpSocket>) -> Self {
+    pub const fn new(socket: QTcpSocket) -> Self {
         Self(StreamState::Uncompressed(socket))
     }
 

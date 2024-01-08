@@ -10,14 +10,11 @@ use std::{mem, str};
 use cpp_core::Ptr;
 use enumeration::Enum;
 use qt::gui::{MoveOperation, QColor, QTextCharFormat, QTextCursor, SelectionType};
-use qt::io::QIODevice;
+use qt::network::{QTcpSocket, SocketState};
 use qt::traits::{Colored, Printable, Widget};
 use qt::widgets::{MessageBoxIcon, QLineEdit, QTextBrowser};
 #[cfg(feature = "show-special")]
 use qt::AlignmentFlag;
-use qt_core::QBox;
-use qt_network::q_abstract_socket::SocketState;
-use qt_network::QTcpSocket;
 use qt_widgets::QWidget;
 use tr::TrContext;
 
@@ -85,7 +82,7 @@ impl<'a> LogConfig<'a> {
 pub struct Client {
     widget: QTextBrowser,
     cursor: QTextCursor,
-    socket: QIODevice<QTcpSocket>,
+    socket: QTcpSocket,
     stream: MudStream,
     bufinput: [u8; config::SOCKET_BUFFER],
     bufoutput: Vec<u8>,
@@ -115,12 +112,11 @@ impl Client {
     pub fn new(
         output: QTextBrowser,
         input: QLineEdit,
-        socket: QBox<QTcpSocket>,
+        socket: QTcpSocket,
         world: Rc<World>,
         paths: &'static Paths,
     ) -> Self {
         let notepad = Rc::new(RefCell::new(Notepad::new(&world.name)));
-        let socket = QIODevice::new(socket);
         let api_state = Rc::new(ApiState::default());
         // SAFETY: all fields are valid.
         let api = Api::new(

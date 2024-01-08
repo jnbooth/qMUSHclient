@@ -5,6 +5,7 @@ use std::rc::Rc;
 use cpp_core::{CastInto, CppBox, Ptr, Ref};
 use enumeration::Enum;
 use qt::gui::{QColor, QTextCursor};
+use qt::network::QTcpSocket;
 use qt::traits::{Printable, QList, Widget};
 use qt::widgets::{QLineEdit, QTextBrowser};
 use qt_core::{
@@ -14,8 +15,9 @@ use qt_gui::q_palette::ColorRole;
 use qt_gui::q_text_block_format::LineHeightTypes;
 use qt_gui::q_text_cursor::{MoveMode, MoveOperation};
 use qt_gui::{QDesktopServices, QTextBlockFormat, QTextDocument, SlotOfQUrl};
+use qt_network as q;
 use qt_network::q_abstract_socket::SocketError;
-use qt_network::{QTcpSocket, SlotOfSocketError};
+use qt_network::SlotOfSocketError;
 use qt_widgets::q_message_box::{ButtonRole, Icon, StandardButton};
 use qt_widgets::*;
 use tr::TrContext;
@@ -98,7 +100,7 @@ pub struct WorldTab {
     pub saved: RefCell<Option<String>>,
     pub notepad: QBox<QTextDocument>,
     pub notepad_title: CppBox<QString>,
-    pub socket: QPtr<QTcpSocket>,
+    pub socket: QPtr<q::QTcpSocket>,
     world: RefCell<Rc<World>>,
     address: RefCell<String>,
     cursor: QTextCursor,
@@ -115,12 +117,12 @@ impl WorldTab {
         let notepad_title = tr!("World Notepad - {}", world.name);
         let world = Rc::new(world);
         unsafe {
-            let socketbox = QTcpSocket::new_1a(&ui.widget);
+            let socketbox = q::QTcpSocket::new_1a(&ui.widget);
             let socket = socketbox.static_upcast();
             let client = Client::new(
                 QTextBrowser::new(ui.output.clone()),
                 QLineEdit::new(ui.input.clone()),
-                socketbox,
+                QTcpSocket::new(socketbox),
                 world.clone(),
                 paths,
             );
