@@ -2,7 +2,8 @@ use cpp_core::{CastFrom, Ptr};
 use qt_core::QPtr;
 use qt_widgets as q;
 
-use crate::traits::Widget;
+use crate::refs::QRef;
+use crate::traits::{Widget, WidgetParent};
 
 qt_binding!(
     TextBrowserBinding,
@@ -13,7 +14,7 @@ qt_binding!(
 #[repr(transparent)]
 #[derive(Clone, Debug)]
 pub struct QTextBrowser {
-    pub(crate) inner: QPtr<q::QTextBrowser>,
+    pub(crate) inner: QRef<q::QTextBrowser>,
 }
 
 impl_deref_binding!(QTextBrowser, TextBrowserBinding);
@@ -26,6 +27,13 @@ impl Widget for QTextBrowser {
 }
 
 impl QTextBrowser {
+    pub fn new<P: WidgetParent>(parent: P) -> Self {
+        Self {
+            // SAFETY: parent.as_parent() is valid and non-null
+            inner: unsafe { q::QTextBrowser::new_1a(parent.as_parent()).into() },
+        }
+    }
+
     /// # Safety
     ///
     /// Inner must be valid and non-null.

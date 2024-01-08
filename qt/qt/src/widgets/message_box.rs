@@ -1,8 +1,9 @@
 use cpp_core::{CastFrom, Ptr};
-use qt_core::{QBox, QFlags, TextFormat, TextInteractionFlag};
+use qt_core::{QFlags, QPtr, TextFormat, TextInteractionFlag};
 use qt_widgets as q;
 use qt_widgets::q_message_box::Icon;
 
+use crate::refs::QRef;
 use crate::traits::{Printable, Widget, WidgetParent};
 
 qt_binding!(
@@ -79,9 +80,9 @@ impl MessageBoxBinding {
 }
 
 #[repr(transparent)]
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct QMessageBox {
-    pub(crate) inner: QBox<q::QMessageBox>,
+    pub(crate) inner: QRef<q::QMessageBox>,
 }
 
 impl_deref_binding!(QMessageBox, MessageBoxBinding);
@@ -97,7 +98,16 @@ impl QMessageBox {
     pub fn new<P: WidgetParent>(parent: P) -> Self {
         Self {
             // SAFETY: parent.as_parent() is valid
-            inner: unsafe { q::QMessageBox::from_q_widget(parent.as_parent()) },
+            inner: unsafe { q::QMessageBox::from_q_widget(parent.as_parent()).into() },
+        }
+    }
+
+    /// # Safety
+    ///
+    /// Inner must be valid and non-null.
+    pub unsafe fn wrap(inner: QPtr<q::QMessageBox>) -> Self {
+        Self {
+            inner: inner.into(),
         }
     }
 }

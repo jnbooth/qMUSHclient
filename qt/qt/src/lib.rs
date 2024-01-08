@@ -10,7 +10,8 @@ macro_rules! impl_deref_binding {
             type Target = $inner;
 
             fn deref(&self) -> &Self::Target {
-                Self::Target::cast(&self.inner)
+                // SAFETY: self.inner is valid and non-null
+                unsafe { Self::Target::cast(&self.inner) }
             }
         }
     };
@@ -64,7 +65,10 @@ macro_rules! qt_binding {
         }
 
         impl $t {
-            pub(crate) fn cast(inner: &$inner) -> &Self {
+            /// # Safety
+            ///
+            /// `inner` must be valid and non-null.
+            pub(crate) unsafe fn cast(inner: &$inner) -> &Self {
                 // SAFETY: #[repr(transparent)]
                 unsafe { &*(inner as *const $inner as *const Self) }
             }
@@ -78,7 +82,8 @@ macro_rules! qt_binding {
             type Target = $inherit;
 
             fn deref(&self) -> &Self::Target {
-                Self::Target::cast(&self.inner)
+                // SAFETY: self.inner is valid and non-null
+                unsafe { Self::Target::cast(&self.inner) }
             }
         }
     };
@@ -91,6 +96,8 @@ pub mod gui;
 mod io;
 
 pub mod network;
+
+mod refs;
 
 pub mod traits;
 
