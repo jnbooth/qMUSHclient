@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
-use qt::{Browse, Widget};
+use qt::traits::{Browse, Widget};
 use qt_core::{slot, QString, SlotNoArgs};
 use qt_widgets::q_dialog_button_box::StandardButton;
 use qt_widgets::*;

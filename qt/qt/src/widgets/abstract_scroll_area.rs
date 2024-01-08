@@ -1,7 +1,7 @@
 use qt_core::QPtr;
 use qt_widgets as q;
 
-use crate::text::QScrollBar;
+use super::scrollbar::QScrollBar;
 
 qt_binding!(
     AbstractScrollAreaBinding,

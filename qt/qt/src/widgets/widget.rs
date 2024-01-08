@@ -6,12 +6,9 @@ use qt_gui::q_palette::ColorRole;
 use qt_gui::QCursor;
 use qt_widgets as q;
 
-use crate::color::{Colored, QColor};
-use crate::font::QFontMetrics;
-use crate::object::ObjectBinding;
-use crate::shapes::QPoint;
-use crate::traits::Widget;
-use crate::{Printable, QRect};
+use crate::core::{ObjectBinding, QPoint, QRect};
+use crate::gui::{QColor, QFontMetrics};
+use crate::traits::{Colored, Printable, Widget};
 
 qt_binding!(WidgetBinding, q::QWidget, ObjectBinding);
 

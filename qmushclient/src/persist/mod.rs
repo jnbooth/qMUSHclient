@@ -57,7 +57,7 @@ pub fn load_world(path: &str) -> Result<World, Error> {
 
 #[cfg(test)]
 mod tests {
-    use qt::Key;
+    use qt::core::Key;
 
     use super::*;
     use crate::script::{Alias, Timer, Trigger};

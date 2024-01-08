@@ -11,7 +11,7 @@ use std::time::Duration;
 use chrono::{NaiveTime, Timelike};
 use cpp_core::{CastInto, CppDeletable, Ptr};
 use enumeration::Enum;
-use qt::{Browse, HasPalette, Widget};
+use qt::traits::{Browse, HasPalette, Widget};
 use qt_core::{slot, QPtr, QString, QTime, SlotNoArgs, SlotOfInt, SlotOfQString};
 use qt_gui::q_palette::ColorRole;
 use qt_widgets::q_dialog::DialogCode;

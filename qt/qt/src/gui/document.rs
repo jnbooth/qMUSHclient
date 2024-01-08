@@ -6,15 +6,14 @@ use qt_core::{CursorMoveStyle, LayoutDirection, QFlags, QPtr, QString, QUrl};
 use qt_gui as q;
 use qt_gui::q_text_cursor::{MoveMode, MoveOperation};
 use qt_gui::q_text_document::{MarkdownFeature, MetaInformation, ResourceType, Stacks};
-pub use qt_gui::q_text_frame_format::Position as FramePosition;
-pub use qt_gui::q_text_list_format::Style as ListStyle;
 
-use super::format::{QTextBlockFormat, QTextCharFormat};
+use super::cursor::QTextCursor;
+use super::font::QFont;
+use super::format::{QTextBlockFormat, QTextCharFormat, QTextFrameFormat};
+use super::graphics::Painter;
 use super::{if_valid, nonnull, Position};
-use crate::graphics::Painter;
-use crate::text::{QTextCursor, QTextFrameFormat};
-use crate::variant::QVariant;
-use crate::{Printable, QFont, QRectF};
+use crate::core::{QRectF, QVariant};
+use crate::traits::Printable;
 
 #[derive(Debug)]
 #[repr(transparent)]

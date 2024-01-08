@@ -3,10 +3,10 @@ use std::os::raw::c_int;
 
 use cpp_core::{CastInto, CppBox, Ptr};
 use qt_gui::q_text_cursor::{MoveMode, MoveOperation, SelectionType};
-pub use qt_gui::q_text_frame_format::Position as FramePosition;
-pub use qt_gui::q_text_list_format::Style as ListStyle;
+use qt_gui::q_text_frame_format::Position as FramePosition;
 use {qt_gui as q, qt_widgets as w};
 
+use super::color::QColor;
 use super::document::{
     QTextBlock, QTextDocument, QTextFragment, QTextFrame, QTextList, QTextTable, Selection,
 };
@@ -14,10 +14,9 @@ use super::format::{
     QTextBlockFormat, QTextCharFormat, QTextFrameFormat, QTextImageFormat, QTextListFormat,
     QTextTableFormat,
 };
+use super::graphics::QImage;
 use super::{if_valid, nonnull, Position};
-use crate::color::{Colored, QColor};
-use crate::graphics::QImage;
-use crate::printable::Printable;
+use crate::traits::{Colored, Printable};
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Formats {

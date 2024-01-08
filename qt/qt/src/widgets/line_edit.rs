@@ -1,9 +1,9 @@
 use qt_core::QPtr;
 use qt_widgets as q;
 
-use crate::Printable;
+use crate::traits::Printable;
 
-qt_binding!(LineEditBinding, q::QLineEdit, super::WidgetBinding);
+qt_binding!(LineEditBinding, q::QLineEdit, super::widget::WidgetBinding);
 
 impl LineEditBinding {
     pub fn text(&self) -> String {

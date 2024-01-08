@@ -5,7 +5,7 @@ use qt_core::*;
 use qt_gui::QListOfDouble;
 use qt_widgets::*;
 
-use crate::Printable;
+use super::Printable;
 
 pub trait QList<T>: CppDeletable {
     /// # Safety

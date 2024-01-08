@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 
 use cpp_core::CppBox;
-use qt::{Printable, QTextCursor, Widget};
+use qt::gui::QTextCursor;
+use qt::traits::{Printable, Widget};
 #[cfg(feature = "show-special")]
 use qt_core::AlignmentFlag;
 use qt_core::{QBox, QString};

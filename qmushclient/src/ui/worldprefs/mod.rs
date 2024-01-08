@@ -3,7 +3,8 @@ use std::collections::HashMap;
 use std::rc::{Rc, Weak};
 
 use cpp_core::{CastInto, Ptr, Ref};
-use qt::{QFont, QForm, Widget};
+use qt::gui::QFont;
+use qt::traits::{QForm, Widget};
 use qt_core::{slot, QPtr};
 use qt_widgets::q_dialog::DialogCode;
 use qt_widgets::*;

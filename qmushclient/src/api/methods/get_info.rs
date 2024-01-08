@@ -6,10 +6,10 @@ use std::time::SystemTime;
 
 use libsqlite3_sys::{SQLITE_VERSION, SQLITE_VERSION_NUMBER};
 use mlua::{Lua, Result, Value};
-use qt::{
-    Colored, GlobalColor, KeyboardModifier, MouseButton, QColor, QFont, QGuiApplication,
-    SocketState, StyleHint, SystemFont,
-};
+use qt::core::{GlobalColor, KeyboardModifier, MouseButton};
+use qt::gui::{QColor, QFont, QGuiApplication, StyleHint, SystemFont};
+use qt::traits::Colored;
+use qt_network::q_abstract_socket::SocketState;
 
 use crate::api::Api;
 use crate::client::state::Mccp;

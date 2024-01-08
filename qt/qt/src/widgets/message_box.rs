@@ -2,7 +2,7 @@ use qt_core::{QBox, QFlags, TextFormat, TextInteractionFlag};
 use qt_widgets as q;
 use qt_widgets::q_message_box::Icon;
 
-use crate::Printable;
+use crate::traits::Printable;
 
 qt_binding!(
     MessageBoxBinding,

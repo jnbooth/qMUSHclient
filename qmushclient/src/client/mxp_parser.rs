@@ -1,7 +1,7 @@
 use std::iter::Iterator;
 use std::{io, mem, str};
 
-use qt::QTextCharFormat;
+use qt::gui::QTextCharFormat;
 
 use super::Client;
 use crate::client::color::{Colors, WorldColor};

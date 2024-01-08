@@ -2,8 +2,7 @@ use q::QCoreApplicationArgs;
 use qt_core as q;
 use qt_core::{ApplicationAttribute, QBox, QString};
 
-use crate::locale::QTranslator;
-use crate::object::ObjectBinding;
+use crate::core::{ObjectBinding, QTranslator};
 
 qt_binding!(CoreApplicationBinding, q::QCoreApplication, ObjectBinding);
 

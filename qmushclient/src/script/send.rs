@@ -5,7 +5,7 @@ use std::time::Duration;
 
 use chrono::{NaiveTime, Timelike};
 use enumeration::Enum;
-use qt::{ColorRole, QColor};
+use qt::gui::{ColorRole, QColor};
 use serde::{Deserialize, Serialize};
 
 use super::Regex;

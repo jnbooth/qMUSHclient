@@ -8,8 +8,8 @@ use qt_core as q;
 use qt_core::iter::QIntoIterator;
 use qt_core::{QBox, QString};
 
-use super::list::QList;
 use super::variant::{self, QVariant};
+use crate::traits::QList;
 
 #[derive(Debug)]
 pub enum Error {

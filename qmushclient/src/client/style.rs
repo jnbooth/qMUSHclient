@@ -2,7 +2,8 @@ use std::fmt::{self, Debug, Formatter};
 use std::rc::Rc;
 
 use enumeration::{Enum, EnumSet};
-use qt::{Colored, QTextCharFormat};
+use qt::gui::QTextCharFormat;
+use qt::traits::Colored;
 
 use crate::client::color::WorldColor;
 use crate::mxp::{SendTo, Span};

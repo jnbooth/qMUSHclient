@@ -1,6 +1,10 @@
+pub use qt_widgets::q_message_box::Icon as MessageBoxIcon;
+
 mod abstract_scroll_area;
-use abstract_scroll_area::AbstractScrollAreaBinding;
 pub use abstract_scroll_area::QAbstractScrollArea;
+
+mod application;
+pub use application::QApplication;
 
 mod dialog;
 pub use dialog::QDialog;
@@ -14,11 +18,14 @@ pub use line_edit::QLineEdit;
 mod message_box;
 pub use message_box::QMessageBox;
 
+mod scrollbar;
+pub use scrollbar::QScrollBar;
+
 mod text_browser;
 pub use text_browser::QTextBrowser;
 
 mod text_edit;
-use text_edit::TextEditBinding;
+pub use text_edit::QTextEdit;
 
 mod widget;
-use widget::WidgetBinding;
+pub use widget::QWidget;

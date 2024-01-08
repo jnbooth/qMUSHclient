@@ -4,7 +4,11 @@ use qt_widgets as q;
 
 use crate::traits::Widget;
 
-qt_binding!(TextBrowserBinding, q::QTextBrowser, super::TextEditBinding);
+qt_binding!(
+    TextBrowserBinding,
+    q::QTextBrowser,
+    super::text_edit::TextEditBinding
+);
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]

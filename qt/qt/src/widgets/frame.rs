@@ -1,9 +1,7 @@
 use qt_core::QPtr;
 use qt_widgets as q;
 
-use super::WidgetBinding;
-
-qt_binding!(FrameBinding, q::QFrame, WidgetBinding);
+qt_binding!(FrameBinding, q::QFrame, super::widget::WidgetBinding);
 
 #[repr(transparent)]
 #[derive(Clone, Debug)]

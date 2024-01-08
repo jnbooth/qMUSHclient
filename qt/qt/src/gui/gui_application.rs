@@ -4,7 +4,7 @@ use qt_gui as q;
 qt_binding!(
     GuiApplicationBinding,
     q::QGuiApplication,
-    super::core_application::CoreApplicationBinding
+    crate::core::CoreApplicationBinding
 );
 
 pub struct QGuiApplication {

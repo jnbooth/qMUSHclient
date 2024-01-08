@@ -5,7 +5,8 @@ use std::path::Path;
 use std::rc::Rc;
 
 use cpp_core::{CppBox, NullPtr};
-use qt::{QSettings, Widget};
+use qt::core::QSettings;
+use qt::traits::Widget;
 use qt_core::{
     slot, FocusReason, QBox, QCoreApplication, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt,
 };

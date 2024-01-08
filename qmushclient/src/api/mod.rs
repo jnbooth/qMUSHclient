@@ -6,10 +6,11 @@ use std::os::raw::c_double;
 use std::rc::Rc;
 
 use mlua::{UserData, UserDataMethods};
-use qt::{
-    Colored, MoveOperation, Printable, QColor, QColorPair, QIODevice, QLineEdit, QSettings,
-    QTextBrowser, QTextCursor,
-};
+use qt::core::QSettings;
+use qt::gui::{MoveOperation, QColor, QColorPair, QTextCursor};
+use qt::io::QIODevice;
+use qt::traits::{Colored, Printable};
+use qt::widgets::{QLineEdit, QTextBrowser};
 use qt_network::QTcpSocket;
 use tr::TrContext;
 

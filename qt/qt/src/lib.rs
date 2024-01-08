@@ -4,16 +4,6 @@ extern crate enumeration;
 #[macro_use]
 extern crate enumeration_derive;
 
-pub use qt_core::{
-    AlignmentFlag, ApplicationAttribute, GlobalColor, Key, KeyboardModifier, MouseButton,
-};
-pub use qt_gui::q_font::StyleHint;
-pub use qt_gui::q_font_database::SystemFont;
-pub use qt_gui::q_palette::ColorRole;
-pub use qt_gui::q_text_cursor::{MoveOperation, SelectionType};
-pub use qt_network::q_abstract_socket::SocketState;
-pub use qt_widgets::q_message_box::Icon as MessageBoxIcon;
-
 macro_rules! impl_deref_binding {
     ($t:ty, $inner:ty) => {
         impl std::ops::Deref for $t {
@@ -67,53 +57,13 @@ macro_rules! qt_binding {
     };
 }
 
-mod application;
-pub use application::{QApplication, QCoreApplication, QGuiApplication};
+pub mod core;
 
-mod color;
-pub use color::{Colored, HasPalette, QColor, QColorPair};
+pub mod gui;
 
-mod font;
-pub use font::QFont;
-
-mod graphics;
-pub use graphics::QImage;
-
-mod io;
+pub mod io;
 pub use io::QIODevice;
 
-mod list;
-pub use list::QList;
+pub mod traits;
 
-mod locale;
-pub use locale::{QLocale, QTranslator};
-
-mod object;
-
-mod printable;
-pub use printable::Printable;
-
-mod settings;
-pub use settings::QSettings;
-
-mod shapes;
-pub use shapes::{QRect, QRectF};
-
-pub mod text;
-pub use text::{
-    QScrollBar, QTextBlock, QTextBlockFormat, QTextCharFormat, QTextCursor, QTextDocument,
-    QTextFormat, QTextFragment, QTextFrame, QTextFrameFormat, QTextImageFormat, QTextLayout,
-    QTextList, QTextListFormat, QTextTable, QTextTableFormat,
-};
-
-mod time;
-pub use time::{QTimer, TimerKind};
-
-pub mod variant;
-pub use variant::QVariant;
-
-mod traits;
-pub use traits::{Browse, QForm, Widget};
-
-mod widgets;
-pub use widgets::{QAbstractScrollArea, QDialog, QFrame, QLineEdit, QMessageBox, QTextBrowser};
+pub mod widgets;

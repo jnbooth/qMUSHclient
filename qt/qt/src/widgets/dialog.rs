@@ -2,7 +2,7 @@ use qt_core::QBox;
 use qt_widgets as q;
 use qt_widgets::q_dialog::DialogCode;
 
-qt_binding!(DialogBinding, q::QDialog, super::WidgetBinding);
+qt_binding!(DialogBinding, q::QDialog, super::widget::WidgetBinding);
 
 impl DialogBinding {
     /// Shows the dialog as a modal dialog, blocking until the user closes it.

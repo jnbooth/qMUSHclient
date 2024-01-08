@@ -9,13 +9,14 @@ use std::{mem, str};
 
 use cpp_core::Ptr;
 use enumeration::Enum;
+use qt::gui::{MoveOperation, QColor, QTextCharFormat, QTextCursor, SelectionType};
+use qt::io::QIODevice;
+use qt::traits::{Colored, Printable, Widget};
+use qt::widgets::{MessageBoxIcon, QLineEdit, QTextBrowser};
 #[cfg(feature = "show-special")]
 use qt::AlignmentFlag;
-use qt::{
-    Colored, MessageBoxIcon, MoveOperation, Printable, QColor, QIODevice, QLineEdit, QTextBrowser,
-    QTextCharFormat, QTextCursor, SelectionType, SocketState, Widget,
-};
 use qt_core::QBox;
+use qt_network::q_abstract_socket::SocketState;
 use qt_network::QTcpSocket;
 use qt_widgets::QWidget;
 use tr::TrContext;

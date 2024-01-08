@@ -3,7 +3,7 @@ use std::{mem, str};
 
 use enumeration::{Enum, EnumSet};
 use mlua::{self, AnyUserData, FromLuaMulti, Function, Lua, Value};
-use qt::{MessageBoxIcon, QMessageBox};
+use qt::widgets::{MessageBoxIcon, QMessageBox};
 use tr::TrContext;
 
 use super::callback::Callback;

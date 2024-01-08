@@ -18,7 +18,7 @@ use qt_core::{
 };
 use uuid::Uuid;
 
-use super::QList;
+use crate::traits::QList;
 
 const TYPE_NAMES: &[&str] = &[
     "UnknownType",

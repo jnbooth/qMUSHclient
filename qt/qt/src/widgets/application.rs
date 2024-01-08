@@ -4,9 +4,11 @@ use cpp_core::Ptr;
 use qt_core::QCoreApplicationArgs;
 use qt_widgets as q;
 
-use crate::object::ObjectBinding;
-
-qt_binding!(ApplicationBinding, qt_widgets::QApplication, ObjectBinding);
+qt_binding!(
+    ApplicationBinding,
+    qt_widgets::QApplication,
+    crate::gui::GuiApplicationBinding
+);
 
 #[repr(transparent)]
 pub struct QApplication {

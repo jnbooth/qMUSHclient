@@ -6,11 +6,10 @@ use qt_core::{AlignmentFlag, LayoutDirection, QFlags, QString, QStringList};
 use qt_gui as q;
 use qt_gui::q_font::Weight;
 use qt_gui::q_text_block_format::LineHeightTypes;
-pub use qt_gui::q_text_frame_format::Position as FramePosition;
-pub use qt_gui::q_text_list_format::Style as ListStyle;
 
-use crate::color::{Colored, QColor};
-use crate::{Printable, QFont, QList};
+use super::color::QColor;
+use super::font::QFont;
+use crate::traits::{Colored, Printable, QList};
 
 unsafe fn optional_string(s: CppBox<QString>) -> Option<String> {
     if unsafe { s.is_empty() } {
@@ -194,7 +193,6 @@ impl QTextCharFormat {
     pub fn size(&self) -> c_double {
         unsafe { self.inner.font_point_size() }
     }
-
     pub fn set_size(&self, size: c_double) {
         unsafe {
             self.inner.set_font_point_size(size);
@@ -213,13 +211,11 @@ impl QTextCharFormat {
     pub fn anchor_href(&self) -> Option<String> {
         unsafe { optional_string(self.inner.anchor_href()) }
     }
-
     pub fn set_anchor_href(&self, href: &str) {
         unsafe {
             self.inner.set_anchor_href(&QString::from_std_str(href));
         }
     }
-
     pub fn clear_anchor_href(&self) {
         unsafe {
             self.inner.set_anchor_href(&QString::new());
@@ -235,14 +231,12 @@ impl QTextCharFormat {
                 .collect()
         }
     }
-
     pub fn set_anchor_names<S: Printable, I: IntoIterator<Item = S>>(&self, names: I) {
         unsafe {
             let list = QStringList::from_iter(names);
             self.inner.set_anchor_names(&list);
         }
     }
-
     pub fn clear_anchor_names(&self) {
         unsafe {
             self.inner.set_anchor_names(&QStringList::new());
