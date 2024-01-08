@@ -266,7 +266,7 @@ impl Client {
         self.latest.input = Instant::now();
         let world = &*self.world;
         if world.display_my_input {
-            if !world.keep_commands_on_same_line && !self.cursor.at_block_start() {
+            if !world.keep_commands_on_same_line && !self.cursor.is_at_block_start() {
                 self.cursor.insert_block();
             }
             let echo_colors = &world.echo_colors;

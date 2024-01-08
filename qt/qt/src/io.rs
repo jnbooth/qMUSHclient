@@ -67,10 +67,10 @@ impl<Q: QIO> QIODevice<Q> {
     pub fn as_ptr(&self) -> &QPtr<Q> {
         &self.inner
     }
-    pub fn readable(&self) -> bool {
+    pub fn is_readable(&self) -> bool {
         unsafe { self.device.is_readable() }
     }
-    pub fn writable(&self) -> bool {
+    pub fn is_writable(&self) -> bool {
         unsafe { self.device.is_writable() }
     }
 

@@ -238,7 +238,7 @@ impl WorldTab {
     }
 
     pub fn notify<S: Printable, Fg: Into<QColor>>(&self, text: S, fg: Fg) {
-        if !self.cursor.at_block_start() {
+        if !self.cursor.is_at_block_start() {
             self.cursor.insert_block();
         }
         self.cursor.insert_text_colored(text, Some(fg.into()), None);

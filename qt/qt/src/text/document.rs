@@ -71,6 +71,10 @@ impl QTextBlock {
     pub fn is_visible(&self) -> bool {
         unsafe { self.inner.is_visible() }
     }
+    /// Sets the block's visibility.
+    pub fn set_visible(&self, visible: bool) {
+        unsafe { self.inner.set_visible(visible) }
+    }
     /// Returns the layout that is used to lay out and display the block's contents.
     pub fn layout(&self) -> QTextLayout<q::QTextBlock> {
         QTextLayout {
@@ -108,10 +112,6 @@ impl QTextBlock {
     /// in a syntax highlighter to store a text parsing state.
     pub fn set_user_state(&self, state: c_int) {
         unsafe { self.inner.set_user_state(state) }
-    }
-    /// Sets the block's visibility.
-    pub fn set_visible(&self, visible: bool) {
-        unsafe { self.inner.set_visible(visible) }
     }
     /// Returns the block's contents as plain text.
     pub fn text(&self) -> String {

@@ -69,22 +69,6 @@ impl QTextCursor {
     pub unsafe fn set<T: CastInto<Ptr<w::QTextEdit>>>(&self, widget: T) {
         unsafe { widget.cast_into().set_text_cursor(&self.inner) }
     }
-    /// Returns `true` if the cursor is at the end of a block; otherwise returns `false`.
-    pub fn at_block_end(&self) -> bool {
-        unsafe { self.inner.at_block_end() }
-    }
-    /// Returns `true` if the cursor is at the start of a block; otherwise returns `false`.
-    pub fn at_block_start(&self) -> bool {
-        unsafe { self.inner.at_block_start() }
-    }
-    /// Returns `true` if the cursor is at the end of the document; otherwise returns `false`.
-    pub fn at_end(&self) -> bool {
-        unsafe { self.inner.at_end() }
-    }
-    /// Returns `true` if the cursor is at the start of the document; otherwise returns `false`.
-    pub fn at_start(&self) -> bool {
-        unsafe { self.inner.at_start() }
-    }
     /// Indicates a block of editing operations on the document that should appear as a single
     /// operation from an undo/redo point of view.
     pub fn transaction<F, R>(&self, f: F) -> R
@@ -269,6 +253,22 @@ impl QTextCursor {
             }
             self.inner.insert_text_2a(&text.to_print(), &fmt);
         }
+    }
+    /// Returns `true` if the cursor is at the end of a block; otherwise returns `false`.
+    pub fn is_at_block_end(&self) -> bool {
+        unsafe { self.inner.at_block_end() }
+    }
+    /// Returns `true` if the cursor is at the start of a block; otherwise returns `false`.
+    pub fn is_at_block_start(&self) -> bool {
+        unsafe { self.inner.at_block_start() }
+    }
+    /// Returns `true` if the cursor is at the end of the document; otherwise returns `false`.
+    pub fn is_at_end(&self) -> bool {
+        unsafe { self.inner.at_end() }
+    }
+    /// Returns `true` if the cursor is at the start of the document; otherwise returns `false`.
+    pub fn is_at_start(&self) -> bool {
+        unsafe { self.inner.at_start() }
     }
     /// Moves the cursor by performing the given operation `n` times, using the specified `mode`,
     /// and returns `true` if all operations were completed successfully; otherwise returns `false`.

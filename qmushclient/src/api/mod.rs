@@ -149,7 +149,7 @@ impl Api {
         let world = &*self.world;
         if world.display_my_input {
             self.cursor.move_position(MoveOperation::End, 1);
-            if !world.keep_commands_on_same_line && !self.cursor.at_block_start() {
+            if !world.keep_commands_on_same_line && !self.cursor.is_at_block_start() {
                 self.cursor.insert_block();
             }
             let echo_colors = &world.echo_colors;
@@ -185,7 +185,7 @@ impl Api {
     }
 
     pub fn _send_packet(&self, data: &[u8]) {
-        if !self.socket.writable() {
+        if !self.socket.is_writable() {
             eprintln!("Tried to send over a closed connection: {:?}", data);
         } else if let Err(e) = self.send(data) {
             eprintln!("Error sending packet {:?}: {}", data, e);
