@@ -4,20 +4,20 @@ use serde::{Deserialize, Serialize};
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum, Deserialize, Serialize)]
 pub enum SendTo {
     World,
-    //WorldDelay,
-    //WorldImmediate,
+    WorldDelay,
+    WorldImmediate,
     Command,
     Output,
     Status,
-    //NotepadNew,
+    NotepadNew,
     NotepadAppend,
     NotepadReplace,
-    //Log,
+    Log,
     Speedwalk,
-    //Execute,
+    Execute,
     Variable,
     Script,
-    //ScriptAfterOmit,
+    ScriptAfterOmit,
 }
 
 impl Default for SendTo {
@@ -30,8 +30,12 @@ impl SendTo {
     pub const fn ignore_empty(self) -> bool {
         !matches!(
             self,
-            Self::NotepadAppend | Self::NotepadReplace | Self::Output | Self::Variable // | Self::NotepadNew
-                                                                                       //| Self::Log
+            Self::NotepadAppend
+                | Self::NotepadReplace
+                | Self::Output
+                | Self::Variable
+                | Self::NotepadNew
+                | Self::Log
         )
     }
 }
@@ -48,17 +52,17 @@ pub mod sendto_serde {
             SendTo::Command => 1,
             SendTo::Output => 2,
             SendTo::Status => 3,
-            // SendTo::NotepadNew => 4,
+            SendTo::NotepadNew => 4,
             SendTo::NotepadAppend => 5,
-            // SendTo::Log => 6,
+            SendTo::Log => 6,
             SendTo::NotepadReplace => 7,
-            //SendTo::WorldDelay => 8,
+            SendTo::WorldDelay => 8,
             SendTo::Variable => 9,
-            //SendTo::Execute => 10,
+            SendTo::Execute => 10,
             SendTo::Speedwalk => 11,
             SendTo::Script => 12,
-            //SendTo::WorldImmediate => 13,
-            //SendTo::ScriptAfterOmit => 14,
+            SendTo::WorldImmediate => 13,
+            SendTo::ScriptAfterOmit => 14,
         }
         .serialize(serializer)
     }
@@ -70,17 +74,17 @@ pub mod sendto_serde {
             1 => Ok(SendTo::Command),
             2 => Ok(SendTo::Output),
             3 => Ok(SendTo::Status),
-            4 => Ok(SendTo::NotepadAppend), // NotepadNew
+            4 => Ok(SendTo::NotepadNew),
             5 => Ok(SendTo::NotepadAppend),
-            6 => Ok(SendTo::Variable), // Log
+            6 => Ok(SendTo::Log),
             7 => Ok(SendTo::NotepadReplace),
-            8 => Ok(SendTo::World), // WorldDelay
+            8 => Ok(SendTo::WorldDelay),
             9 => Ok(SendTo::Variable),
-            10 => Ok(SendTo::World), // Execute
+            10 => Ok(SendTo::Execute),
             11 => Ok(SendTo::Speedwalk),
             12 => Ok(SendTo::Script),
-            13 => Ok(SendTo::World),  // WorldImmediate
-            14 => Ok(SendTo::Script), // ScriptAfterOmit
+            13 => Ok(SendTo::WorldImmediate),
+            14 => Ok(SendTo::ScriptAfterOmit),
             _ => Err(D::Error::invalid_value(
                 Unexpected::Unsigned(pos as u64),
                 &"integer between 0 and 14",

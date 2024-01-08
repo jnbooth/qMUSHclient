@@ -107,9 +107,12 @@ impl PluginEngine {
                 }
                 self.api.send([&request.text, "\n"].concat())?;
             }
+            SendTo::WorldDelay => (),     // TODO
+            SendTo::WorldImmediate => (), // TODO
             SendTo::Command => self.api.command(&request.text),
             SendTo::Output => self.api.note(&request.text),
             SendTo::Status => (), // TODO need to implement status bar first
+            SendTo::NotepadNew => (),
             SendTo::NotepadAppend => self
                 .api
                 .notepad
@@ -120,7 +123,9 @@ impl PluginEngine {
                 .notepad
                 .borrow_mut()
                 .replace(request.pad.unwrap(), &request.text),
+            SendTo::Log => (),       // TODO
             SendTo::Speedwalk => (), // TODO need to implement speedwalk system first
+            SendTo::Execute => (),   // TODO
             SendTo::Variable => {
                 if request.variable.is_empty() {
                     return Ok(());
@@ -135,6 +140,7 @@ impl PluginEngine {
                     Plugin::alert_error(&plugin.metadata, &e);
                 }
             }
+            SendTo::ScriptAfterOmit => (), // TODO
         };
         Ok(())
     }
