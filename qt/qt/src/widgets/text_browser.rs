@@ -1,4 +1,4 @@
-use cpp_core::Ptr;
+use cpp_core::{CastFrom, Ptr};
 use qt_core::QPtr;
 use qt_widgets as q;
 
@@ -18,17 +18,20 @@ pub struct QTextBrowser {
 
 impl_deref_binding!(QTextBrowser, TextBrowserBinding);
 
-impl QTextBrowser {
-    /// # Safety
-    ///
-    /// `inner` must be valid and non-null.
-    pub unsafe fn new(inner: QPtr<q::QTextBrowser>) -> Self {
-        Self { inner }
+impl Widget for QTextBrowser {
+    fn widget(&self) -> Ptr<q::QWidget> {
+        // SAFETY: self.inner is valid
+        unsafe { CastFrom::cast_from(&self.inner) }
     }
 }
 
-impl Widget for QTextBrowser {
-    fn widget(&self) -> Ptr<q::QWidget> {
-        unsafe { self.inner.as_ptr().static_upcast() }
+impl QTextBrowser {
+    /// # Safety
+    ///
+    /// Inner must be valid and non-null.
+    pub unsafe fn wrap(inner: QPtr<q::QTextBrowser>) -> Self {
+        Self {
+            inner: inner.into(),
+        }
     }
 }

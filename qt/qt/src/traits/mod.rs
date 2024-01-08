@@ -12,3 +12,6 @@ pub use printable::Printable;
 
 mod widget;
 pub use widget::{Browse, Widget};
+
+mod widget_parent;
+pub use widget_parent::WidgetParent;

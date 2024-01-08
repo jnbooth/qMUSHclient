@@ -1,8 +1,9 @@
+use cpp_core::{CastFrom, Ptr};
 use qt_core::{QBox, QFlags, TextFormat, TextInteractionFlag};
 use qt_widgets as q;
 use qt_widgets::q_message_box::Icon;
 
-use crate::traits::Printable;
+use crate::traits::{Printable, Widget, WidgetParent};
 
 qt_binding!(
     MessageBoxBinding,
@@ -85,15 +86,18 @@ pub struct QMessageBox {
 
 impl_deref_binding!(QMessageBox, MessageBoxBinding);
 
-impl Default for QMessageBox {
-    fn default() -> Self {
-        Self::new()
+impl Widget for QMessageBox {
+    fn widget(&self) -> Ptr<q::QWidget> {
+        // SAFETY: self.inner is valid
+        unsafe { CastFrom::cast_from(&self.inner) }
     }
 }
 
 impl QMessageBox {
-    pub fn new() -> Self {
-        let inner = unsafe { q::QMessageBox::new() };
-        Self { inner }
+    pub fn new<P: WidgetParent>(parent: P) -> Self {
+        Self {
+            // SAFETY: parent.as_parent() is valid
+            inner: unsafe { q::QMessageBox::from_q_widget(parent.as_parent()) },
+        }
     }
 }

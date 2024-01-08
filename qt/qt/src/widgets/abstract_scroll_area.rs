@@ -1,4 +1,3 @@
-use qt_core::QPtr;
 use qt_widgets as q;
 
 use super::scrollbar::QScrollBar;
@@ -16,22 +15,5 @@ impl AbstractScrollAreaBinding {
 
     pub fn vertical_scroll_bar(&self) -> QScrollBar {
         QScrollBar::get_horizontal(&self.inner)
-    }
-}
-
-#[repr(transparent)]
-#[derive(Clone, Debug)]
-pub struct QAbstractScrollArea {
-    pub(crate) inner: QPtr<q::QAbstractScrollArea>,
-}
-
-impl_deref_binding!(QAbstractScrollArea, AbstractScrollAreaBinding);
-
-impl QAbstractScrollArea {
-    /// # Safety
-    ///
-    /// `inner` must be valid and non-null.
-    pub unsafe fn new(inner: QPtr<q::QAbstractScrollArea>) -> Self {
-        Self { inner }
     }
 }

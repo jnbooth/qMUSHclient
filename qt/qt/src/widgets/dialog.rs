@@ -3,7 +3,7 @@ use qt_core::QBox;
 use qt_widgets as q;
 use qt_widgets::q_dialog::DialogCode;
 
-use crate::traits::Widget;
+use crate::traits::{Widget, WidgetParent};
 
 qt_binding!(DialogBinding, q::QDialog, super::widget::WidgetBinding);
 
@@ -26,5 +26,14 @@ impl Widget for QDialog {
     fn widget(&self) -> Ptr<q::QWidget> {
         // SAFETY: self.inner is valid
         unsafe { CastFrom::cast_from(&self.inner) }
+    }
+}
+
+impl QDialog {
+    pub fn new<P: WidgetParent>(parent: P) -> Self {
+        Self {
+            // SAFETY: parent.as_parent() is valid
+            inner: unsafe { q::QDialog::new_1a(parent.as_parent()) },
+        }
     }
 }

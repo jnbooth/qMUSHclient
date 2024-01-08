@@ -8,6 +8,7 @@ use qt_widgets as q;
 use qt_widgets::q_message_box::Icon;
 
 use super::{Printable, QForm};
+use crate::widgets::QMessageBox;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Browse {
@@ -20,13 +21,11 @@ pub trait Widget {
     fn widget(&self) -> Ptr<q::QWidget>;
 
     fn alert<S: Printable, E: std::error::Error + ?Sized>(&self, icon: Icon, text: S, err: &E) {
-        unsafe {
-            let alert = q::QMessageBox::from_q_widget(self.widget());
-            alert.set_icon(icon);
-            alert.set_text(&text.to_print());
-            alert.set_informative_text(&err.to_string().to_print());
-            alert.exec();
-        }
+        let alert = QMessageBox::new(self.widget());
+        alert.set_icon(icon);
+        alert.set_text(text.to_print());
+        alert.set_informative_text(err.to_string().to_print());
+        alert.exec();
     }
 
     /// # Safety

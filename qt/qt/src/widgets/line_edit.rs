@@ -1,7 +1,8 @@
+use cpp_core::{CastFrom, Ptr};
 use qt_core::QPtr;
 use qt_widgets as q;
 
-use crate::traits::Printable;
+use crate::traits::{Printable, Widget};
 
 qt_binding!(LineEditBinding, q::QLineEdit, super::widget::WidgetBinding);
 
@@ -23,11 +24,18 @@ pub struct QLineEdit {
 
 impl_deref_binding!(QLineEdit, LineEditBinding);
 
+impl Widget for QLineEdit {
+    fn widget(&self) -> Ptr<q::QWidget> {
+        // SAFETY: self.inner is valid
+        unsafe { CastFrom::cast_from(&self.inner) }
+    }
+}
+
 impl QLineEdit {
     /// # Safety
     ///
     /// `inner` must be valid and non-null.
-    pub unsafe fn new(inner: QPtr<q::QLineEdit>) -> Self {
+    pub unsafe fn wrap(inner: QPtr<q::QLineEdit>) -> Self {
         Self { inner }
     }
 }

@@ -1,7 +1,6 @@
 pub use qt_widgets::q_message_box::Icon as MessageBoxIcon;
 
 mod abstract_scroll_area;
-pub use abstract_scroll_area::QAbstractScrollArea;
 
 mod application;
 pub use application::QApplication;

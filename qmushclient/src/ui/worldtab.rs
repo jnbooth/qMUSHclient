@@ -122,8 +122,8 @@ impl WorldTab {
             let socketbox = q::QTcpSocket::new_1a(&ui.widget);
             let socket = socketbox.static_upcast();
             let client = Client::new(
-                QTextBrowser::new(ui.output.clone()),
-                QLineEdit::new(ui.input.clone()),
+                QTextBrowser::wrap(ui.output.clone()),
+                QLineEdit::wrap(ui.input.clone()),
                 QTcpSocket::new(socketbox),
                 world.clone(),
                 paths,
