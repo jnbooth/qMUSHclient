@@ -45,7 +45,12 @@ impl QTextFormat {
         }
     }
 
-    qt_field!(layout_direction, set_layout_direction, LayoutDirection);
+    pub fn layout_direction(&self) -> LayoutDirection {
+        unsafe { self.inner.layout_direction() }
+    }
+    pub fn set_layout_direction(&self, layout_direction: LayoutDirection) {
+        unsafe { self.inner.set_layout_direction(layout_direction) }
+    }
 }
 
 impl Colored for QTextFormat {
@@ -125,19 +130,22 @@ impl QTextBlockFormat {
     pub fn alignment(&self) -> QFlags<AlignmentFlag> {
         unsafe { self.inner.alignment() }
     }
-
     pub fn set_alignment<T: Into<QFlags<AlignmentFlag>>>(&self, align: T) {
         unsafe {
             self.inner.set_alignment(align.into());
         }
     }
 
-    qt_field!(heading_level, set_heading_level, c_int);
+    pub fn heading_level(&self) -> c_int {
+        unsafe { self.inner.heading_level() }
+    }
+    pub fn set_heading_level(&self, heading_level: c_int) {
+        unsafe { self.inner.set_heading_level(heading_level) }
+    }
 
     pub fn line_height(&self) -> c_double {
         unsafe { self.inner.line_height_0a() / 100.0 }
     }
-
     pub fn set_line_height(&self, line_height: c_double) {
         unsafe {
             self.inner.set_line_height(
@@ -196,7 +204,6 @@ impl QTextCharFormat {
     pub fn is_anchor(&self) -> bool {
         unsafe { self.inner.is_anchor() }
     }
-
     pub fn set_anchor(&self, enable: bool) {
         unsafe {
             self.inner.set_anchor(enable);

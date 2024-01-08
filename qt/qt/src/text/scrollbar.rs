@@ -27,35 +27,85 @@ impl<'a> QScrollBar<'a> {
         }
     }
 
-    pub fn set_range(&self, min: c_int, max: c_int) {
-        unsafe { self.inner.set_range(min, max) }
+    pub fn has_tracking(&self) -> bool {
+        unsafe { self.inner.has_tracking() }
+    }
+    pub fn set_tracking(&self, has_tracking: bool) {
+        unsafe { self.inner.set_tracking(has_tracking) }
     }
 
-    pub fn trigger_action(&self, action: SliderAction) {
-        unsafe { self.inner.trigger_action(action) }
+    pub fn maximum(&self) -> c_int {
+        unsafe { self.inner.maximum() }
+    }
+    pub fn set_maximum(&self, maximum: c_int) {
+        unsafe { self.inner.set_maximum(maximum) }
+    }
+
+    pub fn minimum(&self) -> c_int {
+        unsafe { self.inner.minimum() }
+    }
+    pub fn set_minimum(&self, minimum: c_int) {
+        unsafe { self.inner.set_minimum(minimum) }
+    }
+
+    pub fn inverted_appearance(&self) -> bool {
+        unsafe { self.inner.inverted_appearance() }
+    }
+    pub fn set_inverted_appearance(&self, inverted_appearance: bool) {
+        unsafe { self.inner.set_inverted_appearance(inverted_appearance) }
+    }
+
+    pub fn is_slider_down(&self) -> bool {
+        unsafe { self.inner.is_slider_down() }
+    }
+    pub fn set_slider_down(&self, is_slider_down: bool) {
+        unsafe { self.inner.set_slider_down(is_slider_down) }
     }
 
     pub fn is_displayed(&self) -> bool {
         self.minimum() != self.maximum()
     }
 
-    qt_field!(has_tracking, set_tracking, bool);
+    pub fn orientation(&self) -> Orientation {
+        unsafe { self.inner.orientation() }
+    }
+    pub fn set_orientation(&self, orientation: Orientation) {
+        unsafe { self.inner.set_orientation(orientation) }
+    }
 
-    qt_field!(inverted_appearance, set_inverted_appearance, bool);
+    pub fn set_range(&self, min: c_int, max: c_int) {
+        unsafe { self.inner.set_range(min, max) }
+    }
 
-    qt_field!(is_slider_down, set_slider_down, bool);
+    pub fn page_step(&self) -> c_int {
+        unsafe { self.inner.page_step() }
+    }
+    pub fn set_page_step(&self, page_step: c_int) {
+        unsafe { self.inner.set_page_step(page_step) }
+    }
 
-    qt_field!(maximum, set_maximum, c_int);
+    pub fn single_step(&self) -> c_int {
+        unsafe { self.inner.single_step() }
+    }
+    pub fn set_single_step(&self, single_step: c_int) {
+        unsafe { self.inner.set_single_step(single_step) }
+    }
 
-    qt_field!(minimum, set_minimum, c_int);
+    pub fn slider_position(&self) -> c_int {
+        unsafe { self.inner.slider_position() }
+    }
+    pub fn set_slider_position(&self, slider_position: c_int) {
+        unsafe { self.inner.set_slider_position(slider_position) }
+    }
 
-    qt_field!(orientation, set_orientation, Orientation);
+    pub fn trigger_action(&self, action: SliderAction) {
+        unsafe { self.inner.trigger_action(action) }
+    }
 
-    qt_field!(page_step, set_page_step, c_int);
-
-    qt_field!(single_step, set_single_step, c_int);
-
-    qt_field!(slider_position, set_slider_position, c_int);
-
-    qt_field!(value, set_value, c_int);
+    pub fn value(&self) -> c_int {
+        unsafe { self.inner.value() }
+    }
+    pub fn set_value(&self, value: c_int) {
+        unsafe { self.inner.set_value(value) }
+    }
 }

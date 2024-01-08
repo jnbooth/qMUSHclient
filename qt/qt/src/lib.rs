@@ -67,17 +67,6 @@ macro_rules! qt_binding {
     };
 }
 
-macro_rules! qt_field {
-    ($get:ident, $set:ident, $t:ty) => {
-        pub fn $get(&self) -> $t {
-            unsafe { self.inner.$get() }
-        }
-        pub fn $set(&self, $get: $t) {
-            unsafe { self.inner.$set($get) }
-        }
-    };
-}
-
 mod application;
 pub use application::{QApplication, QCoreApplication, QGuiApplication};
 

@@ -109,6 +109,13 @@ impl QFont {
         Self::default()
     }
 
+    pub fn capitalization(&self) -> Capitalization {
+        unsafe { self.inner.capitalization() }
+    }
+    pub fn set_capitalization(&self, capitalization: Capitalization) {
+        unsafe { self.inner.set_capitalization(capitalization) }
+    }
+
     pub fn family(&self) -> String {
         unsafe { self.inner.family().to_std_string() }
     }
@@ -118,6 +125,24 @@ impl QFont {
         }
     }
 
+    pub fn fixed_pitch(&self) -> bool {
+        unsafe { self.inner.fixed_pitch() }
+    }
+    pub fn set_fixed_pitch(&self, fixed_pitch: bool) {
+        unsafe { self.inner.set_fixed_pitch(fixed_pitch) }
+    }
+
+    pub fn italic(&self) -> bool {
+        unsafe { self.inner.italic() }
+    }
+    pub fn set_italic(&self, italic: bool) {
+        unsafe { self.inner.set_italic(italic) }
+    }
+
+    pub fn metrics(&self) -> QFontMetrics {
+        QFontMetrics::new(unsafe { q::QFontMetrics::new_1a(&self.inner) })
+    }
+
     pub fn size(&self) -> c_int {
         unsafe { self.inner.point_size() }
     }
@@ -125,6 +150,20 @@ impl QFont {
         unsafe {
             self.inner.set_point_size(size);
         }
+    }
+
+    pub fn strike_out(&self) -> bool {
+        unsafe { self.inner.strike_out() }
+    }
+    pub fn set_strike_out(&self, strike_out: bool) {
+        unsafe { self.inner.set_strike_out(strike_out) }
+    }
+
+    pub fn style(&self) -> Style {
+        unsafe { self.inner.style() }
+    }
+    pub fn set_style(&self, style: Style) {
+        unsafe { self.inner.set_style(style) }
     }
 
     pub fn style_hint(&self) -> StyleHint {
@@ -137,29 +176,19 @@ impl QFont {
         }
     }
 
+    pub fn underline(&self) -> bool {
+        unsafe { self.inner.underline() }
+    }
+    pub fn set_underline(&self, underline: bool) {
+        unsafe { self.inner.set_underline(underline) }
+    }
+
     pub fn weight(&self) -> Weight {
         Weight::from_int(unsafe { self.inner.weight() })
     }
-
     pub fn set_weight(&self, weight: Weight) {
         unsafe { self.inner.set_weight(weight.to_int()) }
     }
-
-    pub fn metrics(&self) -> QFontMetrics {
-        QFontMetrics::new(unsafe { q::QFontMetrics::new_1a(&self.inner) })
-    }
-
-    qt_field!(style, set_style, Style);
-
-    qt_field!(italic, set_italic, bool);
-
-    qt_field!(underline, set_underline, bool);
-
-    qt_field!(strike_out, set_strike_out, bool);
-
-    qt_field!(fixed_pitch, set_fixed_pitch, bool);
-
-    qt_field!(capitalization, set_capitalization, Capitalization);
 }
 
 #[cfg(feature = "serde")]
