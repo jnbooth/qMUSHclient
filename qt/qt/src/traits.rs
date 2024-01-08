@@ -3,7 +3,7 @@ use std::os::raw::{c_double, c_int};
 use std::path::PathBuf;
 use std::rc;
 
-use cpp_core::{CppBox, Ptr, StaticUpcast};
+use cpp_core::{Ptr, StaticUpcast};
 use enumeration::Enum;
 use qt_core::{q_event, Key, QFlags, QObject, QPtr, QString, SlotNoArgs, SlotOfBool, SlotOfInt};
 use qt_gui::q_palette::ColorRole;
@@ -38,7 +38,7 @@ pub trait Widget {
     /// # Safety
     ///
     /// `button` and `field` must be valid.
-    unsafe fn connect_browse_button<T, F>(
+    unsafe fn connect_browse_button<S, T, F>(
         &self,
         browse: Browse,
         button: &QPtr<T>,
@@ -46,8 +46,9 @@ pub trait Widget {
         suggest: F,
         ext: &str,
     ) where
+        S: Printable,
         T: StaticUpcast<QObject> + StaticUpcast<q::QAbstractButton>,
-        F: 'static + Fn() -> CppBox<QString>,
+        F: 'static + Fn() -> S,
     {
         unsafe {
             let caption = QString::new();
@@ -61,10 +62,12 @@ pub trait Widget {
                 QFlags::from(0),
             );
             button.clicked().connect(&SlotNoArgs::new(widget, move || {
-                let mut suggested = field.text();
-                if suggested.is_empty() {
-                    suggested = suggest();
-                }
+                let default_suggestion = field.text();
+                let suggested = if default_suggestion.is_empty() {
+                    suggest().to_print()
+                } else {
+                    default_suggestion.to_print()
+                };
                 let filename = match browse {
                     Browse::Open => {
                         q::QFileDialog::get_open_file_name_4a(widget, &caption, &suggested, &filter)

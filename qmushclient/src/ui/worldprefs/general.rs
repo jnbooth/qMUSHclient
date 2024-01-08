@@ -173,9 +173,7 @@ impl PrefsLogging {
                 Browse::Save,
                 &ui.log_file_browse,
                 &ui.auto_log_file_name,
-                move || QString::from_std_str(
-                    format!("logs/{}.txt", world.upgrade().unwrap().borrow().name)
-                ),
+                move || format!("logs/{}.txt", world.upgrade().unwrap().borrow().name),
                 "Text files (*.txt)",
             );
             ui.button_box.help_requested().connect(&self.slot_show_help());
@@ -249,7 +247,7 @@ impl PrefsChat {
                 Browse::Directory,
                 &ui.chat_file_save_directory_browse,
                 &ui.chat_file_save_directory,
-                || QString::new(),
+                || "",
                 "",
             );
         }

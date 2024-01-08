@@ -246,7 +246,7 @@ impl QTextCharFormat {
         unsafe { optional_string(self.inner.tool_tip()) }
     }
     pub fn set_tooltip<S: Printable>(&self, tooltip: S) {
-        unsafe { self.inner.set_tool_tip(tooltip.to_print()) }
+        unsafe { self.inner.set_tool_tip(&tooltip.to_print()) }
     }
     pub fn clear_tooltip(&self) {
         unsafe {

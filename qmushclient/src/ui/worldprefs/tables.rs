@@ -102,7 +102,7 @@ impl TriggerEdit {
                 Browse::Open,
                 &ui.sound_browse,
                 &ui.sound,
-                move || QString::from_std_str("sounds/"),
+                || "sounds/",
                 "Waveaudio files (*.wav)",
             );
         }
@@ -753,7 +753,7 @@ impl PrefsTriggers {
                 Browse::Open,
                 &dialog.ui.sound_browse,
                 &dialog.ui.sound,
-                move || QString::from_std_str("sounds/"),
+                || "sounds/",
                 "Waveaudio files (*.wav)",
             );
         }
