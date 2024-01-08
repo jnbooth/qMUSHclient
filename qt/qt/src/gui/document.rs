@@ -338,14 +338,14 @@ pub struct QTextDocument {
 impl QTextDocument {
     /// Adds a `resource` to the resource cache, using `resource_type` and `name` as identifiers.
     ///
-    /// Note: below, `cursor` is a [`Cursor`](super::cursor::Cursor).
+    /// Note: below, `cursor` is a [`QTextCursor`](super::cursor::QTextCursor).
     ///
     ///```
     /// use qt_gui::q_text_document::ResourceType;
-    /// # let (argc, argv) = qt_core::QCoreApplicationArgs::new().get();
-    /// # let app = unsafe { qt_widgets::QApplication::new_2a(argc, argv) };
-    /// # let image = qmushclient::binding::variant::RVariant::from(unsafe { qt_core::QVariant::new() });
-    /// # let cursor = unsafe { qmushclient::binding::text::Cursor::get(qt_widgets::QTextEdit::new().into_ptr()) };
+    /// # let app = qt::widgets::QApplication::new();
+    /// # let text_edit = qt::widgets::QTextEdit::new(cpp_core::NullPtr);
+    /// # let image = qt::core::QVariant::from(qt::gui::QImage::new());
+    /// # let cursor = text_edit.text_cursor();
     ///
     /// let document = cursor.document();
     ///

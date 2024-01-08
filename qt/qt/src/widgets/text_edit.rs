@@ -4,7 +4,7 @@ use qt_widgets as q;
 
 use crate::gui::QTextCursor;
 use crate::refs::QRef;
-use crate::traits::{Widget, WidgetParent};
+use crate::traits::{Printable, Widget, WidgetParent};
 
 qt_binding!(
     TextEditBinding,
@@ -13,6 +13,24 @@ qt_binding!(
 );
 
 impl TextEditBinding {
+    pub fn clear(&self) {
+        unsafe { self.inner.clear() }
+    }
+
+    pub fn read_only(&self) -> bool {
+        unsafe { self.inner.is_read_only() }
+    }
+    pub fn set_read_only(&self, read_only: bool) {
+        unsafe { self.inner.set_read_only(read_only) }
+    }
+
+    pub fn window_title(&self) -> String {
+        unsafe { self.inner.window_title().to_std_string() }
+    }
+    pub fn set_window_title<S: Printable>(&self, window_title: S) {
+        unsafe { self.inner.set_window_title(&window_title.to_print()) }
+    }
+
     pub fn text_cursor(&self) -> QTextCursor {
         QTextCursor::get(&self.inner)
     }

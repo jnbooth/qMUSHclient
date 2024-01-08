@@ -90,8 +90,7 @@ trait PrefPageExt: 'static + PrefPage + Widget {
     /// `field` must be valid.
     unsafe fn connect<T, Q, F>(self: &Rc<Self>, world: &mut World, field: &Q, getter: F)
     where
-        T: 'static,
-        Q: 'static + QForm<T>,
+        Q: QForm<T>,
         F: 'static + Clone + Fn(&mut World) -> &mut T,
     {
         // SAFETY: `field` is valid.

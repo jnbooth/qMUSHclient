@@ -213,7 +213,7 @@ impl Client {
     }
 
     pub fn retitle(&mut self, name: &str) {
-        self.notepad.borrow_mut().retitle(name);
+        self.notepad.borrow_mut().set_name(name);
     }
 
     pub fn connect(&mut self) {
