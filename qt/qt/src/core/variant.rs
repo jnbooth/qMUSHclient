@@ -5,17 +5,10 @@ use std::os::raw::*;
 
 use chrono::{Datelike, NaiveDate, NaiveDateTime, NaiveTime, Timelike};
 use cpp_core::{CppBox, Ref};
-use qt_core as q;
 use qt_core::iter::{QEntryIterable, QIntoIterator};
 use qt_core::q_meta_type::Type;
-use qt_core::{
-    QBitArray, QByteArray, QChar, QDate, QDateTime, QEasingCurve, QHashOfQStringQVariant,
-    QJsonArray, QJsonDocument, QJsonObject, QJsonValue, QLatin1String, QLine, QLineF,
-    QListOfQVariant, QLocale, QMapOfQStringQVariant, QModelIndex, QPersistentModelIndex, QPoint,
-    QPointF, QRect, QRectF, QRegExp, QRegularExpression, QSize, QSizeF, QString, QStringList, QTime,
-    QUrl, QUuid,
-};
 use uuid::Uuid;
+use {qt_core as q, qt_gui as g, qt_widgets as w};
 
 use crate::traits::QList;
 
@@ -143,8 +136,9 @@ impl QVariant {
 
     fn from_strings<S: AsRef<str>, I: IntoIterator<Item = S>>(iter: I) -> Self {
         unsafe {
-            QVariant::from(QStringList::from_iter(
-                iter.into_iter().map(|x| QString::from_std_str(x.as_ref())),
+            QVariant::from(q::QStringList::from_iter(
+                iter.into_iter()
+                    .map(|x| q::QString::from_std_str(x.as_ref())),
             ))
         }
     }
@@ -156,9 +150,9 @@ impl QVariant {
         T: IntoIterator<Item = (K, V)>,
     {
         unsafe {
-            let hashmap = QHashOfQStringQVariant::new();
+            let hashmap = q::QHashOfQStringQVariant::new();
             for (k, v) in value {
-                hashmap.insert(&QString::from_std_str(k), &v.into().inner);
+                hashmap.insert(&q::QString::from_std_str(k), &v.into().inner);
             }
             QVariant::from(hashmap)
         }
@@ -169,7 +163,7 @@ impl QVariant {
         V: TryFrom<QVariant, Error = Error>,
         T: FromIterator<(String, V)>,
     {
-        let hashmap = CppBox::<QHashOfQStringQVariant>::try_from(self)?;
+        let hashmap = CppBox::<q::QHashOfQStringQVariant>::try_from(self)?;
         unsafe {
             hashmap
                 .entries()
@@ -210,6 +204,25 @@ macro_rules! impl_from_ref {
     };
 }
 
+macro_rules! impl_into {
+    ($t:ty) => {
+        impl From<&CppBox<$t>> for QVariant {
+            fn from(value: &CppBox<$t>) -> Self {
+                Self {
+                    inner: unsafe { value.to_q_variant() },
+                }
+            }
+        }
+        impl From<CppBox<$t>> for QVariant {
+            fn from(value: CppBox<$t>) -> Self {
+                Self {
+                    inner: unsafe { value.to_q_variant() },
+                }
+            }
+        }
+    };
+}
+
 impl_from!(from_int, c_int);
 impl_from!(from_uint, c_uint);
 impl_from!(from_i64, i64);
@@ -217,36 +230,62 @@ impl_from!(from_u64, u64);
 impl_from!(from_bool, bool);
 impl_from!(from_double, c_double);
 impl_from!(from_float, c_float);
-impl_from_ref!(from_q_byte_array, QByteArray);
-impl_from_ref!(from_q_bit_array, QBitArray);
-impl_from_ref!(from_q_string, QString);
-impl_from_ref!(from_q_latin1_string, QLatin1String);
-impl_from_ref!(from_q_string_list, QStringList);
-impl_from_ref!(from_q_char, QChar);
-impl_from_ref!(from_q_date, QDate);
-impl_from_ref!(from_q_time, QTime);
-impl_from_ref!(from_q_date_time, QDateTime);
-impl_from_ref!(from_q_list_of_q_variant, QListOfQVariant);
-impl_from_ref!(from_q_map_of_q_string_q_variant, QMapOfQStringQVariant);
-impl_from_ref!(from_q_hash_of_q_string_q_variant, QHashOfQStringQVariant);
-impl_from_ref!(from_q_size, QSize);
-impl_from_ref!(from_q_size_f, QSizeF);
-impl_from_ref!(from_q_point, QPoint);
-impl_from_ref!(from_q_line, QLine);
-impl_from_ref!(from_q_line_f, QLineF);
-impl_from_ref!(from_q_rect, QRect);
-impl_from_ref!(from_q_locale, QLocale);
-impl_from_ref!(from_q_reg_exp, QRegExp);
-impl_from_ref!(from_q_regular_expression, QRegularExpression);
-impl_from_ref!(from_q_url, QUrl);
-impl_from_ref!(from_q_easing_curve, QEasingCurve);
-impl_from_ref!(from_q_uuid, QUuid);
-impl_from_ref!(from_q_model_index, QModelIndex);
-impl_from_ref!(from_q_persistent_model_index, QPersistentModelIndex);
-impl_from_ref!(from_q_json_value, QJsonValue);
-impl_from_ref!(from_q_json_object, QJsonObject);
-impl_from_ref!(from_q_json_array, QJsonArray);
-impl_from_ref!(from_q_json_document, QJsonDocument);
+impl_from_ref!(from_q_byte_array, q::QByteArray);
+impl_from_ref!(from_q_bit_array, q::QBitArray);
+impl_from_ref!(from_q_string, q::QString);
+impl_from_ref!(from_q_latin1_string, q::QLatin1String);
+impl_from_ref!(from_q_string_list, q::QStringList);
+impl_from_ref!(from_q_char, q::QChar);
+impl_from_ref!(from_q_date, q::QDate);
+impl_from_ref!(from_q_time, q::QTime);
+impl_from_ref!(from_q_date_time, q::QDateTime);
+impl_from_ref!(from_q_list_of_q_variant, q::QListOfQVariant);
+impl_from_ref!(from_q_map_of_q_string_q_variant, q::QMapOfQStringQVariant);
+impl_from_ref!(from_q_hash_of_q_string_q_variant, q::QHashOfQStringQVariant);
+impl_from_ref!(from_q_size, q::QSize);
+impl_from_ref!(from_q_size_f, q::QSizeF);
+impl_from_ref!(from_q_point, q::QPoint);
+impl_from_ref!(from_q_point_f, q::QPointF);
+impl_from_ref!(from_q_line, q::QLine);
+impl_from_ref!(from_q_line_f, q::QLineF);
+impl_from_ref!(from_q_rect, q::QRect);
+impl_from_ref!(from_q_rect_f, q::QRectF);
+impl_from_ref!(from_q_locale, q::QLocale);
+impl_from_ref!(from_q_reg_exp, q::QRegExp);
+impl_from_ref!(from_q_regular_expression, q::QRegularExpression);
+impl_from_ref!(from_q_url, q::QUrl);
+impl_from_ref!(from_q_easing_curve, q::QEasingCurve);
+impl_from_ref!(from_q_uuid, q::QUuid);
+impl_from_ref!(from_q_model_index, q::QModelIndex);
+impl_from_ref!(from_q_persistent_model_index, q::QPersistentModelIndex);
+impl_from_ref!(from_q_json_value, q::QJsonValue);
+impl_from_ref!(from_q_json_object, q::QJsonObject);
+impl_from_ref!(from_q_json_array, q::QJsonArray);
+impl_from_ref!(from_q_json_document, q::QJsonDocument);
+impl_into!(g::QColor);
+impl_into!(g::QRegion);
+impl_into!(g::QKeySequence);
+impl_into!(g::QVector2D);
+impl_into!(g::QFont);
+impl_into!(g::QPolygon);
+impl_into!(g::QPolygonF);
+impl_into!(g::QMatrix);
+impl_into!(g::QTransform);
+impl_into!(g::QImage);
+impl_into!(g::QPixmap);
+impl_into!(g::QBrush);
+impl_into!(g::QPen);
+impl_into!(g::QTextLength);
+impl_into!(g::QTextFormat);
+impl_into!(g::QPalette);
+impl_into!(g::QIcon);
+impl_into!(g::QCursor);
+impl_into!(g::QBitmap);
+impl_into!(g::QVector3D);
+impl_into!(g::QVector4D);
+impl_into!(g::QQuaternion);
+impl_into!(g::QMatrix4X4);
+impl_into!(w::QSizePolicy);
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Error {
@@ -295,52 +334,57 @@ macro_rules! impl_try_from {
     };
 }
 macro_rules! impl_try_box {
-    ($me:ident, $t:ident) => {
-        impl_try_from!($me, CppBox<$t>, $t);
-    };
     ($me:ident, $t:ty, $($qt:ident),+) => {
         impl_try_from!($me, CppBox<$t>, $($qt),+);
     };
 }
 
-impl_try_box!(to_bit_array, QBitArray);
+impl_try_box!(to_bit_array, q::QBitArray, QBitArray);
 impl_try_from!(to_bool, bool, Bool);
-impl_try_box!(to_byte_array, QByteArray);
-impl_try_box!(to_char, QChar);
-impl_try_box!(to_date, QDate);
-impl_try_box!(to_date_time, QDateTime);
+impl_try_box!(to_byte_array, q::QByteArray, QByteArray);
+impl_try_box!(to_char, q::QChar, QChar);
+impl_try_box!(to_date, q::QDate, QDate);
+impl_try_box!(to_date_time, q::QDateTime, QDateTime);
 impl_try_from!(to_double_0a, c_double, Double);
-impl_try_box!(to_easing_curve, QEasingCurve);
+impl_try_box!(to_easing_curve, q::QEasingCurve, QEasingCurve);
 impl_try_from!(to_float_0a, c_float, Float);
-impl_try_box!(to_hash, QHashOfQStringQVariant, QVariantHash);
+impl_try_box!(to_hash, q::QHashOfQStringQVariant, QVariantHash);
 impl_try_from!(to_int_0a, c_int, Int);
-impl_try_box!(to_json_array, QJsonArray);
-impl_try_box!(to_json_document, QJsonDocument);
-impl_try_box!(to_json_object, QJsonObject);
-impl_try_box!(to_json_value, QJsonValue);
-impl_try_box!(to_line, QLine);
-impl_try_box!(to_line_f, QLineF);
-impl_try_box!(to_list, QListOfQVariant, QVariantList, QStringList);
-impl_try_box!(to_locale, QLocale);
+impl_try_box!(to_json_array, q::QJsonArray, QJsonArray);
+impl_try_box!(to_json_document, q::QJsonDocument, QJsonDocument);
+impl_try_box!(to_json_object, q::QJsonObject, QJsonObject);
+impl_try_box!(to_json_value, q::QJsonValue, QJsonValue);
+impl_try_box!(to_line, q::QLine, QLine);
+impl_try_box!(to_line_f, q::QLineF, QLineF);
+impl_try_box!(to_list, q::QListOfQVariant, QVariantList, QStringList);
+impl_try_box!(to_locale, q::QLocale, QLocale);
 impl_try_from!(to_long_long_0a, i64, LongLong);
-impl_try_box!(to_map, QMapOfQStringQVariant, QVariantMap);
-impl_try_box!(to_model_index, QModelIndex);
-impl_try_box!(to_persistent_model_index, QPersistentModelIndex);
-impl_try_box!(to_point, QPoint);
-impl_try_box!(to_point_f, QPointF);
-impl_try_box!(to_rect, QRect);
-impl_try_box!(to_rect_f, QRectF);
-impl_try_box!(to_reg_exp, QRegExp);
-impl_try_box!(to_regular_expression, QRegularExpression);
-impl_try_box!(to_size, QSize);
-impl_try_box!(to_size_f, QSizeF);
-impl_try_box!(to_string, QString);
-impl_try_box!(to_string_list, QStringList, QStringList, QString);
-impl_try_box!(to_time, QTime);
+impl_try_box!(to_map, q::QMapOfQStringQVariant, QVariantMap);
+impl_try_box!(to_model_index, q::QModelIndex, QModelIndex);
+impl_try_box!(
+    to_persistent_model_index,
+    q::QPersistentModelIndex,
+    QPersistentModelIndex
+);
+impl_try_box!(to_point, q::QPoint, QPoint);
+impl_try_box!(to_point_f, q::QPointF, QPointF);
+impl_try_box!(to_rect, q::QRect, QRect);
+impl_try_box!(to_rect_f, q::QRectF, QRectF);
+impl_try_box!(to_reg_exp, q::QRegExp, QRegExp);
+impl_try_box!(
+    to_regular_expression,
+    q::QRegularExpression,
+    QRegularExpression
+);
+impl_try_box!(to_size, q::QSize, QSize);
+impl_try_box!(to_size_f, q::QSizeF, QSizeF);
+impl_try_box!(to_string, q::QString, QString);
+impl_try_box!(to_string_list, q::QStringList, QStringList, QString);
+impl_try_box!(to_time, q::QTime, QTime);
 impl_try_from!(to_u_int_0a, c_uint, UInt);
 impl_try_from!(to_u_long_long_0a, u64, ULongLong);
-impl_try_box!(to_url, QUrl);
-impl_try_box!(to_uuid, QUuid);
+impl_try_box!(to_url, q::QUrl, QUrl);
+impl_try_box!(to_uuid, q::QUuid, QUuid);
 
 impl From<char> for QVariant {
     fn from(value: char) -> Self {
@@ -367,7 +411,7 @@ impl TryFrom<QVariant> for char {
 impl From<NaiveDate> for QVariant {
     fn from(value: NaiveDate) -> Self {
         QVariant::from(unsafe {
-            QDate::new_3a(value.year(), value.month() as c_int, value.day() as c_int)
+            q::QDate::new_3a(value.year(), value.month() as c_int, value.day() as c_int)
         })
     }
 }
@@ -376,7 +420,7 @@ impl TryFrom<QVariant> for NaiveDate {
     type Error = Error;
 
     fn try_from(value: QVariant) -> Result<Self, Error> {
-        let date = CppBox::<QDate>::try_from(value)?;
+        let date = CppBox::<q::QDate>::try_from(value)?;
         unsafe {
             let year = date.year_0a();
             let day = date.day_of_year_0a() as u32;
@@ -397,7 +441,7 @@ impl From<NaiveTime> for QVariant {
         let secs = value.num_seconds_from_midnight();
         let nano = value.nanosecond();
         let milli = secs * MILLI + nano / NANO;
-        QVariant::from(unsafe { QTime::from_m_secs_since_start_of_day(milli as c_int) })
+        QVariant::from(unsafe { q::QTime::from_m_secs_since_start_of_day(milli as c_int) })
     }
 }
 
@@ -405,7 +449,7 @@ impl TryFrom<QVariant> for NaiveTime {
     type Error = Error;
 
     fn try_from(value: QVariant) -> Result<Self, Error> {
-        let time = CppBox::<QTime>::try_from(value)?;
+        let time = CppBox::<q::QTime>::try_from(value)?;
         let msecs = unsafe { time.msecs_since_start_of_day() } as u32;
         let secs = msecs / MILLI;
         let nano = (msecs % MILLI) * NANO;
@@ -419,7 +463,9 @@ impl TryFrom<QVariant> for NaiveTime {
 
 impl From<NaiveDateTime> for QVariant {
     fn from(value: NaiveDateTime) -> Self {
-        QVariant::from(unsafe { QDateTime::from_m_secs_since_epoch_i64(value.timestamp_millis()) })
+        QVariant::from(unsafe {
+            q::QDateTime::from_m_secs_since_epoch_i64(value.timestamp_millis())
+        })
     }
 }
 
@@ -427,7 +473,7 @@ impl TryFrom<QVariant> for NaiveDateTime {
     type Error = Error;
 
     fn try_from(value: QVariant) -> Result<Self, Error> {
-        let datetime = CppBox::<QDateTime>::try_from(value)?;
+        let datetime = CppBox::<q::QDateTime>::try_from(value)?;
         let msecs = unsafe { datetime.to_m_secs_since_epoch() };
         let secs = msecs / MILLI as i64;
         let nano = (msecs % MILLI as i64) as u32 * NANO;
@@ -441,7 +487,9 @@ impl TryFrom<QVariant> for NaiveDateTime {
 
 impl From<Uuid> for QVariant {
     fn from(value: Uuid) -> Self {
-        QVariant::from(unsafe { QUuid::from_rfc4122(&QByteArray::from_slice(value.as_bytes())) })
+        QVariant::from(unsafe {
+            q::QUuid::from_rfc4122(&q::QByteArray::from_slice(value.as_bytes()))
+        })
     }
 }
 
@@ -449,7 +497,7 @@ impl TryFrom<QVariant> for Uuid {
     type Error = Error;
 
     fn try_from(value: QVariant) -> Result<Self, Error> {
-        let quuid = CppBox::<QUuid>::try_from(value)?;
+        let quuid = CppBox::<q::QUuid>::try_from(value)?;
         let array = unsafe { quuid.to_rfc4122() };
         Ok(Uuid::from_slice(&array.to_vec()).unwrap())
     }
@@ -457,7 +505,7 @@ impl TryFrom<QVariant> for Uuid {
 
 impl From<String> for QVariant {
     fn from(value: String) -> Self {
-        QVariant::from(QString::from_std_str(value))
+        QVariant::from(q::QString::from_std_str(value))
     }
 }
 
@@ -465,19 +513,19 @@ impl TryFrom<QVariant> for String {
     type Error = Error;
 
     fn try_from(value: QVariant) -> Result<Self, Error> {
-        Ok(CppBox::<QString>::try_from(value)?.to_std_string())
+        Ok(CppBox::<q::QString>::try_from(value)?.to_std_string())
     }
 }
 
 impl From<&str> for QVariant {
     fn from(value: &str) -> Self {
-        QVariant::from(QString::from_std_str(value))
+        QVariant::from(q::QString::from_std_str(value))
     }
 }
 
 impl From<&String> for QVariant {
     fn from(value: &String) -> Self {
-        QVariant::from(QString::from_std_str(value))
+        QVariant::from(q::QString::from_std_str(value))
     }
 }
 
@@ -510,7 +558,7 @@ impl TryFrom<QVariant> for Vec<String> {
 
     fn try_from(value: QVariant) -> Result<Self, Error> {
         unsafe {
-            Ok(CppBox::<QStringList>::try_from(value)?
+            Ok(CppBox::<q::QStringList>::try_from(value)?
                 .into_iter()
                 .map(|x| x.to_std_string())
                 .collect())

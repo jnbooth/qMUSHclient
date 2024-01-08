@@ -34,7 +34,7 @@ pub use format::{
 };
 
 mod graphics;
-pub use graphics::{Painter, QImage};
+pub use graphics::{QImage, QPainter};
 
 pub type Position = c_int;
 

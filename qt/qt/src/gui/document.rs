@@ -10,7 +10,7 @@ use qt_gui::q_text_document::{MarkdownFeature, MetaInformation, ResourceType, St
 use super::cursor::QTextCursor;
 use super::font::QFont;
 use super::format::{QTextBlockFormat, QTextCharFormat, QTextFrameFormat};
-use super::graphics::Painter;
+use super::graphics::QPainter;
 use super::{if_valid, nonnull, Position};
 use crate::core::{QRectF, QVariant};
 use crate::traits::Printable;
@@ -478,11 +478,11 @@ impl QTextDocument {
         unsafe { self.inner.set_document_layout(&layout.inner) }
     }
     /// Draws the content of the document with `painter`.
-    pub fn draw_contents(&self, painter: &Painter) {
+    pub fn draw_contents(&self, painter: &QPainter) {
         unsafe { self.inner.draw_contents_1a(&painter.inner) }
     }
     /// Draws the content of the document with `painter`, clipped to `rect`.
-    pub fn draw_contents_in(&self, painter: &Painter, rect: QRectF) {
+    pub fn draw_contents_in(&self, painter: &QPainter, rect: QRectF) {
         unsafe {
             self.inner
                 .draw_contents_2a(&painter.inner, &CppBox::<qt_core::QRectF>::from(rect))

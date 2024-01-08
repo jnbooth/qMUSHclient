@@ -3,6 +3,32 @@ use std::os::raw::{c_double, c_int};
 use cpp_core::CppBox;
 use qt_core as q;
 
+use super::variant::QVariant;
+
+macro_rules! impl_qvariant {
+    ($t:ty, $q:ty) => {
+        impl From<CppBox<$q>> for $t {
+            fn from(value: CppBox<$q>) -> Self {
+                <Self as From<&$q>>::from(&value)
+            }
+        }
+
+        impl From<$t> for QVariant {
+            fn from(value: $t) -> Self {
+                QVariant::from(CppBox::<$q>::from(value))
+            }
+        }
+
+        impl TryFrom<QVariant> for $t {
+            type Error = super::variant::Error;
+
+            fn try_from(value: QVariant) -> Result<Self, super::variant::Error> {
+                CppBox::<$q>::try_from(value).map(From::from)
+            }
+        }
+    };
+}
+
 macro_rules! impl_qpoint {
     ($t:ty, $q:ty, $n:ty) => {
         impl $t {
@@ -40,6 +66,7 @@ pub struct QPoint {
     pub y: c_int,
 }
 impl_qpoint!(QPoint, q::QPoint, c_int);
+impl_qvariant!(QPoint, q::QPoint);
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
 pub struct QPointF {
@@ -47,6 +74,7 @@ pub struct QPointF {
     pub y: c_double,
 }
 impl_qpoint!(QPointF, q::QPointF, c_double);
+impl_qvariant!(QPointF, q::QPointF);
 
 macro_rules! impl_qrect {
     ($t:ty, $q:ty, $n:ty, $from:ident) => {
@@ -96,6 +124,7 @@ pub struct QRect {
     pub height: c_int,
 }
 impl_qrect!(QRect, q::QRect, c_int, from_4_int);
+impl_qvariant!(QRect, q::QRect);
 
 impl QRect {
     pub const fn right(&self) -> c_int {
@@ -161,6 +190,7 @@ pub struct QSize {
     pub height: c_int,
 }
 impl_qsize!(QSize, q::QSize, c_int);
+impl_qvariant!(QSize, q::QSize);
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
 pub struct QSizeF {
@@ -168,3 +198,4 @@ pub struct QSizeF {
     pub height: c_double,
 }
 impl_qsize!(QSizeF, q::QSizeF, c_double);
+impl_qvariant!(QSizeF, q::QSizeF);
