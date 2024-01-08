@@ -22,6 +22,12 @@ impl WidgetParent for NullPtr {
     }
 }
 
+impl WidgetParent for () {
+    fn as_parent(self) -> Ptr<q::QWidget> {
+        unsafe { Ptr::null() }
+    }
+}
+
 impl WidgetParent for Ptr<q::QWidget> {
     fn as_parent(self) -> Ptr<q::QWidget> {
         self

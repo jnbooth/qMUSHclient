@@ -1,7 +1,6 @@
 use std::cmp::Ordering;
 use std::{mem, str};
 
-use cpp_core::NullPtr;
 use enumeration::{Enum, EnumSet};
 use mlua::{self, AnyUserData, FromLuaMulti, Function, Lua, Value};
 use qt::widgets::{MessageBoxIcon, QMessageBox};
@@ -72,8 +71,7 @@ impl Plugin {
     }
 
     pub fn alert_error(metadata: &PluginMetadata, error: &mlua::Error) {
-        // TODO make this more complicated
-        let msgbox = QMessageBox::new(NullPtr);
+        let msgbox = QMessageBox::new(());
         msgbox.set_icon(MessageBoxIcon::Warning);
         msgbox.set_text(tr!("Script error in {}", metadata.name));
         msgbox.set_informative_text(error.to_string());
