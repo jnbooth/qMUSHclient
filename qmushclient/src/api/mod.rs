@@ -1,5 +1,5 @@
 use std::borrow::Borrow;
-use std::cell::RefCell;
+use std::cell::{RefCell, RefMut};
 use std::collections::HashMap;
 use std::io;
 use std::os::raw::c_double;
@@ -34,8 +34,8 @@ pub struct Api {
     socket: QTcpSocket,
     world: Rc<World>,
     state: Rc<ApiState>,
-    pub notepad: Rc<RefCell<Notepad>>,
-    pub senders: Rc<RefCell<Senders>>,
+    notepad: Rc<RefCell<Notepad>>,
+    senders: Rc<RefCell<Senders>>,
     custom_colors: HashMap<String, QColorPair>,
     variables: RefCell<HashMap<String, String>>,
     variables_key: String,
@@ -113,6 +113,14 @@ impl Api {
         }
     }
 
+    pub fn notepad_mut(&self) -> RefMut<Notepad> {
+        self.notepad.borrow_mut()
+    }
+
+    pub fn senders_mut(&self) -> RefMut<Senders> {
+        self.senders.borrow_mut()
+    }
+
     pub fn set_index(&mut self, index: PluginIndex) {
         self.index = index;
     }
@@ -145,7 +153,7 @@ impl Api {
     }
 
     pub fn append_to_notepad<S: Printable>(&self, title: String, text: S) {
-        self.notepad.borrow_mut().append(Pad::Script(title), text);
+        self.notepad_mut().append(Pad::Script(title), text);
     }
 
     pub fn echo<S: Printable>(&self, text: S) {

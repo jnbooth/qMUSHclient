@@ -24,13 +24,13 @@ pub struct Indexer<T>(Vec<Indexed<T>>);
 
 impl<T> Default for Indexer<T> {
     fn default() -> Self {
-        Self(Vec::new())
+        Self::new()
     }
 }
 
-impl<T: Ord> Indexer<T> {
-    pub fn new() -> Self {
-        Self::default()
+impl<T> Indexer<T> {
+    pub const fn new() -> Self {
+        Self(Vec::new())
     }
 
     pub fn clear(&mut self) {
@@ -58,11 +58,17 @@ impl<T: Ord> Indexer<T> {
         self.0.extend(new_iter);
     }
 
-    pub fn sort(&mut self) {
+    pub fn sort(&mut self)
+    where
+        T: Ord,
+    {
         self.0.sort_unstable();
     }
 
-    pub fn add(&mut self, plugin: PluginIndex, val: T) {
+    pub fn add(&mut self, plugin: PluginIndex, val: T)
+    where
+        T: Ord,
+    {
         self.0.push(Indexed { val, plugin });
         self.sort();
     }
@@ -73,6 +79,47 @@ impl<T: Ord> Indexer<T> {
 
     pub fn iter_mut(&mut self) -> impl Iterator<Item = (PluginIndex, &mut T)> {
         self.into_iter()
+    }
+
+    pub fn matches<'a, 'b: 'a>(&'a self, line: &'b str) -> impl Iterator<Item = SendMatch<'a, 'b, T>>
+    where
+        T: AsRef<Reaction> + Clone,
+    {
+        self.0.iter().enumerate().flat_map(move |(pos, indexed)| {
+            let reaction = indexed.val.as_ref();
+            if !reaction.enabled || !matches!(reaction.regex.is_match(line), Ok(true)) {
+                return MatchIter::Repeat {
+                    count: 0,
+                    val: None,
+                };
+            }
+
+            if reaction.script.is_empty() && !reaction.text.contains('$') {
+                // We don't need captures, so we can simply replicate
+                let count = if reaction.repeat {
+                    reaction.regex.find_iter(line).count()
+                } else {
+                    1
+                };
+                let val = SendMatch {
+                    plugin: indexed.plugin,
+                    sender: &indexed.val,
+                    pos,
+                    text: Cow::Borrowed(&reaction.text),
+                    wildcards: Vec::new(),
+                };
+                MatchIter::Repeat {
+                    count,
+                    val: Some(val),
+                }
+            } else {
+                MatchIter::Captures {
+                    pos,
+                    iter: reaction.regex.captures_iter(line),
+                    indexed,
+                }
+            }
+        })
     }
 }
 
@@ -192,49 +239,6 @@ impl<'a, 'b, T: AsRef<Reaction> + Clone> Iterator for MatchIter<'a, 'b, T> {
 }
 impl<'a, 'b, T: AsRef<Reaction> + Clone> FusedIterator for MatchIter<'a, 'b, T> {}
 
-impl<T: AsRef<Reaction> + Clone> Indexer<T> {
-    pub fn matches<'a, 'b: 'a>(
-        &'a self,
-        line: &'b str,
-    ) -> impl Iterator<Item = SendMatch<'a, 'b, T>> {
-        self.0.iter().enumerate().flat_map(move |(pos, indexed)| {
-            let reaction = indexed.val.as_ref();
-            if !reaction.enabled || !matches!(reaction.regex.is_match(line), Ok(true)) {
-                return MatchIter::Repeat {
-                    count: 0,
-                    val: None,
-                };
-            }
-
-            if reaction.script.is_empty() && !reaction.text.contains('$') {
-                // We don't need captures, so we can simply replicate
-                let count = if reaction.repeat {
-                    reaction.regex.find_iter(line).count()
-                } else {
-                    1
-                };
-                let val = SendMatch {
-                    plugin: indexed.plugin,
-                    sender: &indexed.val,
-                    pos,
-                    text: Cow::Borrowed(&reaction.text),
-                    wildcards: Vec::new(),
-                };
-                MatchIter::Repeat {
-                    count,
-                    val: Some(val),
-                }
-            } else {
-                MatchIter::Captures {
-                    pos,
-                    iter: reaction.regex.captures_iter(line),
-                    indexed,
-                }
-            }
-        })
-    }
-}
-
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Senders {
     aliases: Indexer<Alias>,
@@ -243,8 +247,12 @@ pub struct Senders {
 }
 
 impl Senders {
-    pub fn new() -> Self {
-        Self::default()
+    pub const fn new() -> Self {
+        Self {
+            aliases: Indexer::new(),
+            timers: Indexer::new(),
+            triggers: Indexer::new(),
+        }
     }
 
     pub fn clear(&mut self) {

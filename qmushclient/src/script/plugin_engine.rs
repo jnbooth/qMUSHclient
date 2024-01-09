@@ -1,4 +1,3 @@
-use std::cell::RefCell;
 use std::collections::hash_map::Entry;
 use std::collections::HashMap;
 use std::fmt::Write;
@@ -13,7 +12,7 @@ use enumeration::EnumSet;
 use mlua::{self, UserData, Value};
 use qmushclient_scripting::{
     Alias, Callback, Event, LoadError, Pad, Plugin, PluginHandler, PluginIndex, PluginPack,
-    ScriptArgs, ScriptRes, SendMatch, SendTo, Sendable, Senders, Timer, Trigger, TriggerEffects,
+    ScriptArgs, ScriptRes, SendMatch, SendTo, Sendable, Timer, Trigger, TriggerEffects,
 };
 use qt::core::{QTimer, TimerKind};
 use uuid::Uuid;
@@ -72,7 +71,6 @@ pub struct PluginEngine {
     api: Api,
     initialize: String,
     plugins: Vec<Plugin>,
-    senders: Rc<RefCell<Senders>>,
     timers: HashMap<Uuid, QTimer>,
 }
 
@@ -115,13 +113,11 @@ impl PluginEngine {
             SendTo::NotepadNew => (),
             SendTo::NotepadAppend => self
                 .api
-                .notepad
-                .borrow_mut()
+                .notepad_mut()
                 .append(request.pad.unwrap(), &request.text),
             SendTo::NotepadReplace => self
                 .api
-                .notepad
-                .borrow_mut()
+                .notepad_mut()
                 .replace(request.pad.unwrap(), &request.text),
             SendTo::Log => (),       // TODO
             SendTo::Speedwalk => (), // TODO need to implement speedwalk system first
@@ -240,7 +236,6 @@ impl PluginHandler for PluginEngine {
 
         Self {
             event_handler: Weak::new(),
-            senders: api.senders.clone(),
             api,
             initialize,
             plugins: Vec::new(),
@@ -264,7 +259,7 @@ impl PluginHandler for PluginEngine {
         Ok(())
     }
     fn sort(&mut self) {
-        let mut senders = self.senders.borrow_mut();
+        let mut senders = self.api.senders_mut();
         senders.clear();
         self.plugins.sort_unstable();
         self.timers.clear();
@@ -307,14 +302,15 @@ impl PluginHandler for PluginEngine {
             };
             self.plugins[i] = self.init_plugin(pack)?;
         }
+        let mut senders = self.api.senders_mut();
         if old.triggers != new.triggers {
-            self.senders.borrow_mut().replace_all(i, &new.triggers);
+            senders.replace_all(i, &new.triggers);
         }
         if old.aliases != new.aliases {
-            self.senders.borrow_mut().replace_all(i, &new.aliases);
+            senders.replace_all(i, &new.aliases);
         }
         if old.timers != new.timers {
-            self.senders.borrow_mut().replace_all(i, &new.timers);
+            senders.replace_all(i, &new.timers);
         }
         Ok(())
     }
@@ -323,7 +319,7 @@ impl PluginHandler for PluginEngine {
         let mut requests = Vec::new();
         let mut delete_oneshots = Vec::new();
         {
-            let mut senders = self.senders.borrow_mut();
+            let mut senders = self.api.senders_mut();
             for send in senders.matches::<Alias>(line) {
                 let alias = &send.sender;
                 if alias.one_shot && delete_oneshots.last() != Some(&send.pos) {
@@ -360,7 +356,7 @@ impl PluginHandler for PluginEngine {
         let mut requests = Vec::new();
         let mut delete_oneshots = Vec::new();
         {
-            let mut senders = self.senders.borrow_mut();
+            let mut senders = self.api.senders_mut();
             for send in senders.matches::<Trigger>(line) {
                 let trigger = &send.sender;
                 if trigger.one_shot && delete_oneshots.last() != Some(&send.pos) {

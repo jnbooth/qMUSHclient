@@ -8,7 +8,7 @@ use std::time::Instant;
 use std::{mem, str};
 
 use enumeration::Enum;
-use qmushclient_scripting::{Callback, PluginHandler, Senders};
+use qmushclient_scripting::{Callback, PluginHandler};
 #[cfg(feature = "show-special")]
 use qmushlient_scripting::Pad;
 #[cfg(feature = "show-special")]
@@ -116,7 +116,7 @@ impl<P: PluginHandler<Userdata = Api>> Client<P> {
             world.clone(),
             api_state.clone(),
             notepad.clone(),
-            Rc::new(RefCell::new(Senders::new())),
+            Rc::default(),
             paths,
         );
 
@@ -153,10 +153,11 @@ impl<P: PluginHandler<Userdata = Api>> Client<P> {
         self.cursor.format.block.set_line_height(spacing);
         self.plugins.alter_userdata(|api| api.set_spacing(spacing));
     }
-}
 
-impl<P: PluginHandler<Userdata = Api, PluginWorld = World>> Client<P> {
-    pub fn set_world(&mut self, world: Rc<World>) {
+    pub fn set_world(&mut self, world: Rc<World>)
+    where
+        P: PluginHandler<PluginWorld = World>,
+    {
         let reload_log = self.world.auto_log_file_name != world.auto_log_file_name;
         let reload_plugins = self.world.plugins != world.plugins;
         self.style.set_world(world.clone());
