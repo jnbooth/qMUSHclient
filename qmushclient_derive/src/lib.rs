@@ -2,7 +2,6 @@ use proc_macro::TokenStream;
 
 mod api;
 mod error;
-mod ui_form;
 
 #[proc_macro_attribute]
 pub fn api(attrs: TokenStream, input: TokenStream) -> TokenStream {
@@ -20,9 +19,4 @@ pub fn derive_error(input: TokenStream) -> TokenStream {
         Ok(output) => output,
         Err(err) => TokenStream::from(err.into_compile_error()),
     }
-}
-
-#[proc_macro_attribute]
-pub fn ui_form(attrs: TokenStream, input: TokenStream) -> TokenStream {
-    crate::ui_form::ui_form(attrs, input)
 }
