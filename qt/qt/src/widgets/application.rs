@@ -1,7 +1,6 @@
 use std::os::raw::c_int;
 
 use cpp_core::Ptr;
-use qt_core::QCoreApplicationArgs;
 use qt_widgets as q;
 
 qt_binding!(
@@ -18,13 +17,6 @@ pub struct QApplication {
 impl_deref_binding!(QApplication, ApplicationBinding);
 
 impl QApplication {
-    pub fn new() -> Self {
-        let mut args = QCoreApplicationArgs::new();
-        let (argc, argv) = args.get();
-        let app = unsafe { q::QApplication::new_2a(argc, argv).as_ptr() };
-        Self { inner: app }
-    }
-
     pub fn exec() -> c_int {
         unsafe { q::QApplication::exec() }
     }

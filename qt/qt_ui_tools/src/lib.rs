@@ -1,3 +1,4 @@
+#![allow(clippy::all)]
 #![cfg_attr(feature = "ritual_rustdoc_nightly", feature(doc_cfg))]
 //! Bindings for QtUiTools C++ library.
 //!

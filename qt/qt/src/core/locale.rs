@@ -16,6 +16,12 @@ impl From<CppBox<q::QLocale>> for QLocale {
     }
 }
 
+impl Default for QLocale {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl QLocale {
     pub fn new() -> Self {
         Self {
@@ -32,6 +38,12 @@ pub struct QTranslator {
 impl From<QBox<q::QTranslator>> for QTranslator {
     fn from(value: QBox<q::QTranslator>) -> Self {
         Self { inner: value }
+    }
+}
+
+impl Default for QTranslator {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

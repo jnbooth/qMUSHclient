@@ -31,7 +31,7 @@ impl PartialEq for QColor {
 impl Eq for QColor {}
 impl PartialOrd for QColor {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.code.partial_cmp(&other.code)
+        Some(self.cmp(other))
     }
 }
 impl Ord for QColor {

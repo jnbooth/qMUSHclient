@@ -409,7 +409,7 @@ mod tests {
             SendMatch {
                 plugin: 0,
                 pos: 0,
-                sender: Box::leak(Box::new(Alias::default())),
+                sender: Box::leak(Box::default()),
                 text: Cow::Borrowed(""),
                 wildcards: Vec::new(),
             }

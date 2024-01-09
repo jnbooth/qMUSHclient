@@ -4,7 +4,7 @@
 //! See [README](https://github.com/rust-qt/ritual) of the repository root for more information.
 
 #![forbid(unsafe_code)]
-#![allow(clippy::cognitive_complexity)]
+#![allow(clippy::all)]
 
 use serde_derive::{Deserialize, Serialize};
 

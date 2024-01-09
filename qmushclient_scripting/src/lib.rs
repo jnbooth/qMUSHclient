@@ -1,4 +1,5 @@
 #![warn(unsafe_op_in_unsafe_fn)]
+#![allow(clippy::result_large_err)]
 
 #[macro_use]
 extern crate enumeration;

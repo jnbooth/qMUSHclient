@@ -55,7 +55,7 @@ impl Notepad {
     pub fn set_name(&mut self, name: &str) {
         self.name = name.to_owned();
         for pad in self.pads.values_mut() {
-            pad.set_name(&name);
+            pad.set_name(name);
         }
     }
 

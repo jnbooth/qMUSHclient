@@ -29,6 +29,12 @@ impl From<&QImage> for QVariant {
     }
 }
 
+impl Default for QImage {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl QImage {
     pub fn new() -> Self {
         Self {

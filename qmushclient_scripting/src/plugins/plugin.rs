@@ -33,7 +33,7 @@ impl Eq for Plugin {}
 
 impl PartialOrd for Plugin {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.metadata.partial_cmp(&other.metadata)
+        Some(self.cmp(other))
     }
 }
 

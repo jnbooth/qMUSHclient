@@ -75,7 +75,7 @@ impl uic::WorldTab {
             self.input
                 .set_frame(world.input_colors.background.alpha() == 255);
             self.input
-                .set_style_sheet(&QString::from_std_str(&world.input_colors.stylesheet()));
+                .set_style_sheet(&QString::from_std_str(world.input_colors.stylesheet()));
         }
     }
 

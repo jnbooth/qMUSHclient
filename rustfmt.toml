@@ -1,5 +1,5 @@
 group_imports = "StdExternalCrate"
-ignore = ["lib/", "uic.rs"]
+ignore = ["ritual/", "qt/qt_*", "uic.rs"]
 imports_granularity = "Module"
 max_width = 101
 unstable_features = true

@@ -7,6 +7,7 @@ pub trait WidgetParent {
     /// # Safety
     ///
     /// The returned pointer is nullable, but it must be valid.
+    #[allow(clippy::wrong_self_convention)]
     fn as_parent(self) -> Ptr<q::QWidget>;
 }
 

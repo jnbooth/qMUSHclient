@@ -5,7 +5,6 @@ use std::rc::Rc;
 use std::{io, str};
 
 use enumeration::EnumSet;
-use mlua;
 use qt::gui::QColor;
 
 use super::file::PluginPack;

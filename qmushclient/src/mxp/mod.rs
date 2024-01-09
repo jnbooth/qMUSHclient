@@ -211,7 +211,7 @@ impl EntityMap {
         if key.starts_with('#') {
             let id = match key.strip_prefix('x') {
                 Some(hex) => u8::from_str_radix(hex, 16),
-                None => u8::from_str_radix(key, 10),
+                None => key.parse::<u8>(),
             }
             .map_err(|_| ParseError::new(key, Error::InvalidEntityNumber))?;
             if id < 32 && id != b'\t' && id != b'\n' && id != b'\r' {

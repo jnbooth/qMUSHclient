@@ -7,6 +7,7 @@
 
 #![forbid(unsafe_code)]
 #![deny(missing_docs)]
+#![allow(clippy::all)]
 
 use std::env;
 use std::fs::create_dir_all;

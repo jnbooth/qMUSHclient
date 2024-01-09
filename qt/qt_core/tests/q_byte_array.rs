@@ -9,9 +9,7 @@ fn qrect() {
 
         assert_eq!(array.as_slice(), &[42, 46]);
 
-        let slice = array.as_mut_slice();
-        slice[1] = 47;
-        drop(slice);
+        array.as_mut_slice()[1] = 47;
 
         assert_eq!(array.index_int(0), 42);
         assert_eq!(array.index_int(1), 47);

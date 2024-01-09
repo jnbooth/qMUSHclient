@@ -1,6 +1,5 @@
-#![allow(clippy::wrong_self_convention)]
-#![allow(clippy::from_str_radix_10)]
 #![warn(unsafe_op_in_unsafe_fn)]
+#![allow(clippy::result_large_err)]
 
 #[macro_use]
 extern crate enumeration;
