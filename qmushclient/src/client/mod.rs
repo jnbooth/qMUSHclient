@@ -319,7 +319,7 @@ impl<P: PluginHandler> Client<P> {
     fn handle_line(&mut self, line: Option<&[u8]>) -> io::Result<()> {
         let line = line.unwrap_or(&self.line);
         let s = String::from_utf8_lossy(line);
-        self.plugins.send_to_all(Callback::LineReceived, line);
+        self.plugins.send_to_all(Callback::LineReceived, &s);
         let requests = self.plugins.trigger(&s)?;
 
         if requests.hide {

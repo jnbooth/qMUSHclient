@@ -4,25 +4,24 @@ use std::ffi::{OsStr, OsString};
 use std::hash::{BuildHasher, Hash};
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
-use std::str;
 use std::time::{Duration, SystemTime};
+use std::{slice, str};
 
 use cpp_core::{CppBox, CppDeletable, Ptr, Ref, StaticUpcast};
 use mlua::{self, FromLuaMulti, IntoLua, IntoLuaMulti, LightUserData, Lua, MultiValue, Value};
 use qt::core::{QBox, QObject, QPtr, QString};
 use qt::gui::{QColor, QFont};
 
+#[inline]
+fn create_string<'lua>(lua: &'lua Lua, value: &[u8]) -> mlua::Result<Value<'lua>> {
+    lua.create_string(value).map(Value::String)
+}
+
 pub trait ScriptRes: for<'lua> FromLuaMulti<'lua> {}
 impl<T: for<'lua> FromLuaMulti<'lua>> ScriptRes for T {}
 
 pub trait ScriptArg {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value>;
-}
-
-impl ScriptArg for &QString {
-    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        self.to_std_string().to_arg(lua)
-    }
 }
 
 impl<T: ScriptArg> ScriptArg for Option<T> {
@@ -34,51 +33,70 @@ impl<T: ScriptArg> ScriptArg for Option<T> {
     }
 }
 
+impl ScriptArg for &[u8] {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        create_string(lua, self)
+    }
+}
+
+impl ScriptArg for &QString {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        unsafe {
+            let buf = self.to_utf8();
+            let bytes = slice::from_raw_parts(buf.const_data() as *const u8, buf.size() as usize);
+            create_string(lua, bytes)
+        }
+    }
+}
+
 impl ScriptArg for &String {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        self.as_str().to_arg(lua)
+        create_string(lua, self.as_bytes())
+    }
+}
+
+impl<'a> ScriptArg for &Cow<'a, str> {
+    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
+        create_string(lua, self.as_bytes())
     }
 }
 
 impl<'a> ScriptArg for Cow<'a, str> {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        match self {
-            Cow::Borrowed(s) => s.to_arg(lua),
-            Cow::Owned(s) => s.to_arg(lua),
-        }
+        create_string(lua, self.as_bytes())
     }
 }
 
 impl ScriptArg for &OsStr {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        self.to_string_lossy().to_arg(lua)
+        create_string(lua, self.as_encoded_bytes())
     }
 }
 
 impl ScriptArg for &OsString {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        self.as_os_str().to_arg(lua)
+        create_string(lua, self.as_encoded_bytes())
     }
 }
 
 impl ScriptArg for &Path {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        self.as_os_str().to_arg(lua)
+        create_string(lua, self.as_os_str().as_encoded_bytes())
     }
 }
 
 impl ScriptArg for &PathBuf {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        self.as_path().to_arg(lua)
+        create_string(lua, self.as_os_str().as_encoded_bytes())
     }
 }
 
 impl ScriptArg for &Option<PathBuf> {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        self.as_ref()
-            .and_then(|x| x.to_str())
-            .unwrap_or("")
-            .to_arg(lua)
+        match self {
+            Some(path) => create_string(lua, path.as_os_str().as_encoded_bytes()),
+            None => create_string(lua, b""),
+        }
     }
 }
 
@@ -196,12 +214,6 @@ where
 impl<T: ScriptArg> ScriptArg for Vec<T> {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
         create_sequence(lua, self)
-    }
-}
-
-impl ScriptArg for &[u8] {
-    fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        lua.create_string(self).map(Value::String)
     }
 }
 
