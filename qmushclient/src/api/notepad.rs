@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
 use qmushclient_scripting::Pad;
-#[cfg(feature = "show-special")]
 use qt::core::AlignmentFlag;
 use qt::gui::QTextCursor;
 use qt::traits::Printable;
@@ -69,7 +68,6 @@ impl Notepad {
         &self.pads[&kind]
     }
 
-    #[cfg(feature = "show-special")]
     pub fn append_aligned<S: Printable>(&mut self, kind: Pad, align: AlignmentFlag, text: S) {
         let pad = self.get_or_create(kind);
         if align == AlignmentFlag::AlignLeft {

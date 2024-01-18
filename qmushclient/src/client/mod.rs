@@ -8,10 +8,7 @@ use std::time::Instant;
 use std::{mem, str};
 
 use enumeration::Enum;
-use qmushclient_scripting::{Callback, PluginHandler};
-#[cfg(feature = "show-special")]
-use qmushlient_scripting::Pad;
-#[cfg(feature = "show-special")]
+use qmushclient_scripting::{Callback, Pad, PluginHandler};
 use qt::core::AlignmentFlag;
 use qt::gui::{MoveOperation, QColor, QTextCharFormat, QTextCursor, SelectionType};
 use qt::network::{QTcpSocket, SocketState};
@@ -314,7 +311,7 @@ impl<P: PluginHandler> Client<P> {
         self.insert_text(text);
     }
 
-    #[cfg(feature = "show-special")]
+    #[allow(unused)]
     pub fn append_to_notepad<S: Printable>(&self, kind: Pad, align: AlignmentFlag, text: S) {
         self.notepad.borrow_mut().append_aligned(kind, align, text);
     }

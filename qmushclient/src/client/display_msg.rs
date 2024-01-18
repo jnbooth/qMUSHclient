@@ -1,15 +1,9 @@
 use std::iter::Iterator;
 use std::{io, str};
 
-#[cfg(feature = "show-special")]
-use qmushclient_scripting::Pad;
 use qmushclient_scripting::{Callback, PluginHandler};
-#[cfg(feature = "show-special")]
-use qt::core::AlignmentFlag;
 
 use super::Client;
-#[cfg(feature = "show-special")]
-use crate::client::color::WorldColor;
 use crate::client::state::{Mccp, Phase};
 use crate::client::Log;
 use crate::escape::telnet;
@@ -40,6 +34,38 @@ impl<P: PluginHandler> Client<P> {
         }
     }
 
+    #[cfg(feature = "show-special")]
+    fn show_special(&mut self, old_phase: &mut Phase, c: u8) -> io::Result<()> {
+        use qmushclient_scripting::Pad;
+        use qt::core::AlignmentFlag;
+        use qt::traits::Printable;
+
+        use crate::client::color::WorldColor;
+
+        if self.phase != *old_phase {
+            self.flush()?;
+            self.cursor.insert_text_colored(
+                self.phase.to_str(),
+                Some(self.world.color(&WorldColor::BRIGHT_BLACK)),
+                None,
+            );
+            *old_phase = self.phase;
+        }
+
+        if self.phase != Phase::Normal {
+            let data = if let Some(escaped) = telnet::escape_char(c) {
+                escaped.to_print()
+            } else if c.is_ascii() {
+                [c].to_print()
+            } else {
+                format!("{:#X}", c).to_print()
+            };
+            self.append_to_notepad(Pad::PacketDebug, AlignmentFlag::AlignLeft, data)
+        }
+
+        Ok(())
+    }
+
     pub(super) fn display_msg(&mut self, mut data: Vec<u8>) -> io::Result<()> {
         data = self
             .plugins
@@ -56,27 +82,7 @@ impl<P: PluginHandler> Client<P> {
 
         while let Some(&mut c) = iter.next() {
             #[cfg(feature = "show-special")]
-            {
-                if self.phase != old_phase {
-                    self.flush()?;
-                    self.cursor.insert_text_colored(
-                        self.phase.to_str(),
-                        Some(self.world.color(&WorldColor::BRIGHT_BLACK)),
-                        None,
-                    );
-                    old_phase = self.phase;
-                }
-                if self.phase != Phase::Normal {
-                    let data = if let Some(escaped) = telnet::escape_char(c) {
-                        escaped.to_print()
-                    } else if c.is_ascii() {
-                        [c].to_print()
-                    } else {
-                        format!("{:#X}", c).to_print()
-                    };
-                    self.append_to_notepad(Pad::PacketDebug, AlignmentFlag::AlignLeft, data)
-                }
-            }
+            self.show_special(&mut old_phase, c)?;
 
             if self.phase == Phase::Utf8Character && (c & 0x80) == 0 {
                 self.output_bad_utf8();
