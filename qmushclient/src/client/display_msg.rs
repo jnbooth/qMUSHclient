@@ -6,18 +6,9 @@ use qmushclient_scripting::{Callback, PluginHandler};
 use super::Client;
 use crate::client::state::{Mccp, Phase};
 use crate::client::Log;
-use crate::escape::{telnet, utf8};
+use crate::escape::{ansi, telnet, utf8};
 use crate::mxp;
 use crate::world::{LogFormat, UseMxp};
-
-#[inline]
-fn left<T>(xs: &[T], amt: usize) -> &[T] {
-    if xs.len() > amt {
-        &xs[..amt]
-    } else {
-        xs
-    }
-}
 
 impl<P: PluginHandler> Client<P> {
     fn telnet_callbacks(&mut self, c: u8, verb: &str, confirm: &str) -> bool {
@@ -70,9 +61,11 @@ impl<P: PluginHandler> Client<P> {
         data = self
             .plugins
             .receive_from_all(Callback::PacketReceived, data);
+
         if data.is_empty() {
             return Ok(());
         }
+
         self.style.clear_flags();
 
         let mut iter = data.iter_mut();
@@ -124,25 +117,30 @@ impl<P: PluginHandler> Client<P> {
                 | Phase::Background24bgFinish
                 | Phase::Background24bbFinish => {
                     self.flush()?;
-                    if c.is_ascii_digit() {
-                        self.state.ansi_code = self.state.ansi_code * 10 + (c - b'0');
-                    } else if c == b'm' {
-                        self.interpret_code();
-                        self.phase = Phase::Normal;
-                    } else if c == b';' || c == b':' {
-                        self.interpret_code();
-                        self.state.ansi_code = 0;
-                    } else if c == b'z' {
-                        let mode = mxp::Mode(self.state.ansi_code);
-                        if mode == mxp::Mode::RESET {
-                            self.mxp_off(false);
-                        } else {
-                            self.mxp_mode_change(Some(mode));
+                    match c {
+                        b'm' => {
+                            self.interpret_code();
+                            self.phase = Phase::Normal;
                         }
-                        self.phase = Phase::Normal;
-                    } else {
-                        self.phase = Phase::Normal;
-                    }
+                        b';' | b':' => {
+                            self.interpret_code();
+                            self.state.ansi_code = 0;
+                        }
+                        b'z' => {
+                            let mode = mxp::Mode(self.state.ansi_code);
+                            if mode == mxp::Mode::RESET {
+                                self.mxp_off(false);
+                            } else {
+                                self.mxp_mode_change(Some(mode));
+                            }
+                            self.phase = Phase::Normal;
+                        }
+                        b'0'..=b'9' => {
+                            self.state.ansi_code =
+                                ansi::append_digit_to_code(self.state.ansi_code, c);
+                        }
+                        _ => self.phase = Phase::Normal,
+                    };
                 }
 
                 Phase::Iac => {
@@ -175,20 +173,21 @@ impl<P: PluginHandler> Client<P> {
                 Phase::Will => {
                     self.phase = Phase::Normal;
                     let verb = match c {
-                        telnet::COMPRESS | telnet::COMPRESS2 => {
-                            if self.world.disable_compression
-                                || (c == telnet::COMPRESS && self.api_state.supports_mccp_2.get())
-                            {
+                        telnet::COMPRESS | telnet::COMPRESS2 if self.world.disable_compression => {
+                            telnet::DONT
+                        }
+                        telnet::COMPRESS => {
+                            if self.api_state.supports_mccp_2.get() {
                                 telnet::DONT
                             } else {
-                                if c == telnet::COMPRESS2 {
-                                    self.api_state.supports_mccp_2.set(true);
-                                }
                                 telnet::DO
                             }
                         }
-                        telnet::SGA => telnet::DO,
-                        telnet::MUD_SPECIFIC => telnet::DO,
+                        telnet::COMPRESS2 => {
+                            self.api_state.supports_mccp_2.set(true);
+                            telnet::DO
+                        }
+                        telnet::SGA | telnet::MUD_SPECIFIC => telnet::DO,
                         telnet::ECHO => {
                             if self.world.no_echo_off {
                                 telnet::DONT
@@ -203,7 +202,7 @@ impl<P: PluginHandler> Client<P> {
                                 self.mxp_on(false, false);
                                 telnet::DO
                             }
-                            _ => telnet::DO,
+                            UseMxp::Always | UseMxp::Command => telnet::DO,
                         },
                         telnet::WILL_EOR => {
                             if self.world.convert_ga_to_newline {
@@ -213,13 +212,8 @@ impl<P: PluginHandler> Client<P> {
                             }
                         }
                         telnet::CHARSET => telnet::DO,
-                        _ => {
-                            if self.telnet_callbacks(c, "WILL", "SENT_DO") {
-                                telnet::DO
-                            } else {
-                                telnet::DONT
-                            }
-                        }
+                        _ if self.telnet_callbacks(c, "WILL", "SENT_DO") => telnet::DO,
+                        _ => telnet::DONT,
                     };
                     self.send_packet(&[telnet::IAC, verb, c])?;
                 }
@@ -258,15 +252,10 @@ impl<P: PluginHandler> Client<P> {
                                 self.mxp_on(false, false);
                                 telnet::WILL
                             }
-                            _ => telnet::WILL,
+                            UseMxp::Always | UseMxp::Command => telnet::WILL,
                         },
-                        _ => {
-                            if self.telnet_callbacks(c, "DO", "SENT_WILL") {
-                                telnet::WILL
-                            } else {
-                                telnet::WONT
-                            }
-                        }
+                        _ if self.telnet_callbacks(c, "DO", "SENT_WILL") => telnet::WILL,
+                        _ => telnet::WONT,
                     };
                     self.send_packet(&[telnet::IAC, verb, c])?;
                 }
@@ -342,63 +331,28 @@ impl<P: PluginHandler> Client<P> {
                                 if self.state.subnegotiation_data.first()
                                     == Some(&telnet::TTYPE_SEND)
                                 {
-                                    let p1 = [
-                                        telnet::IAC,
-                                        telnet::SB,
-                                        telnet::TERMINAL_TYPE,
-                                        telnet::TTYPE_IS,
-                                    ];
-                                    let text = match self.state.ttype_sequence {
+                                    match self.state.ttype_sequence {
                                         0 => {
                                             self.state.ttype_sequence += 1;
-                                            left(self.world.terminal_identification.as_bytes(), 20)
+                                            let ttype = &self.world.terminal_identification;
+                                            self.send_packet(&telnet::wrap_ttype(ttype))
                                         }
                                         1 => {
                                             self.state.ttype_sequence += 1;
-                                            b"ANSI"
+                                            self.send_packet(telnet::TTYPE_ANSI)
                                         }
-                                        _ if self.world.utf_8 => b"MTTS 13",
-                                        _ => b"MTTS 9",
-                                    };
-                                    let p2 = [telnet::IAC, telnet::SE];
-                                    let packet = [&p1, text, &p2].concat();
-                                    self.send_packet(&packet)?;
+                                        _ if self.world.utf_8 => {
+                                            self.send_packet(telnet::TTYPE_UTF8)
+                                        }
+                                        _ => self.send_packet(telnet::TTYPE_XTERM),
+                                    }?;
                                 }
                             }
                             telnet::CHARSET => {
-                                let data = self.state.subnegotiation_data.clone();
+                                let data = &self.state.subnegotiation_data;
                                 if data.len() >= 3 && data[0] == 1 {
-                                    let delim = data[1];
-                                    let charset: &[u8] = if self.world.utf_8 {
-                                        b"UTF-8"
-                                    } else {
-                                        b"US-ASCII"
-                                    };
-                                    let mut found = false;
-                                    for fragment in data[2..].split(|&c| c == delim) {
-                                        if fragment == charset {
-                                            found = true;
-                                            let p1 = [
-                                                telnet::IAC,
-                                                telnet::SB,
-                                                telnet::CHARSET,
-                                                telnet::ACCEPT,
-                                            ];
-                                            let p2 = [telnet::IAC, telnet::SE];
-                                            let packet = [&p1, left(fragment, 20), &p2].concat();
-                                            self.send_packet(&packet)?;
-                                        }
-                                    }
-                                    if !found {
-                                        let packet = [
-                                            telnet::IAC,
-                                            telnet::SB,
-                                            telnet::REJECT,
-                                            telnet::IAC,
-                                            telnet::SE,
-                                        ];
-                                        self.send_packet(&packet)?;
-                                    }
+                                    let charset = telnet::find_charset(data, self.world.utf_8);
+                                    self.send_packet(charset)?;
                                 }
                             }
                             telnet::MUD_SPECIFIC => {

@@ -82,6 +82,20 @@ pub mod telnet {
     pub const ACCEPT: u8 = 0x02;
     pub const REJECT: u8 = 0x03;
 
+    macro_rules! ttype {
+        ($($b:literal),*) => (&[IAC, SB, TERMINAL_TYPE, TTYPE_IS, $($b,)* IAC, SE])
+    }
+    pub const TTYPE_ANSI: &[u8] = ttype!(b'A', b'N', b'S', b'I');
+    pub const TTYPE_XTERM: &[u8] = ttype!(b'M', b'T', b'T', b'S', b' ', b'9');
+    pub const TTYPE_UTF8: &[u8] = ttype!(b'M', b'T', b'T', b'S', b' ', b'1', b'3');
+
+    macro_rules! charset {
+        ($($b:literal),*) => (&[IAC, SB, CHARSET, ACCEPT, $($b,)* IAC, SE])
+    }
+    const CHARSET_UTF8: &[u8] = charset!(b'U', b'T', b'F', b'-', b'8');
+    const CHARSET_US_ASCII: &[u8] = charset!(b'U', b'S', b'-', b'A', b'S', b'C', b'I', b'I');
+    const REJECT_SUBNEGOTIATION: &[u8] = &[IAC, SB, REJECT, IAC, SE];
+
     pub const fn escape_char(s: u8) -> Option<&'static [u8]> {
         Some(match s {
             self::ESC => b"[ESC]",
@@ -132,6 +146,42 @@ pub mod telnet {
         }
         escaped
     }
+
+    pub fn wrap_ttype<T: AsRef<[u8]>>(ttype: T) -> Vec<u8> {
+        let bytes = ttype.as_ref();
+        let trimmed = if bytes.len() > 20 {
+            &bytes[..20]
+        } else {
+            bytes
+        };
+        [&[IAC, SB, TERMINAL_TYPE, TTYPE_IS], trimmed, &[IAC, SE]].concat()
+    }
+
+    pub fn find_charset(data: &[u8], utf8: bool) -> &'static [u8] {
+        let delim = data[1];
+        let mut fragments = data[2..].split(|&c| c == delim);
+        if !utf8 {
+            return if fragments.any(|x| x == b"US-ASCII") {
+                CHARSET_US_ASCII
+            } else {
+                REJECT_SUBNEGOTIATION
+            };
+        };
+        let mut supports_ascii = false;
+        for fragment in fragments {
+            if fragment == b"UTF-8" {
+                return CHARSET_UTF8;
+            }
+            if fragment == b"US-ASCII" {
+                supports_ascii = true;
+            }
+        }
+        if supports_ascii {
+            CHARSET_US_ASCII
+        } else {
+            REJECT_SUBNEGOTIATION
+        }
+    }
 }
 
 pub mod ansi {
@@ -173,6 +223,10 @@ pub mod ansi {
     pub const BG_WHITE: u8 = 47;
     pub const BG_256_COLOR: u8 = 48;
     pub const BG_DEFAULT: u8 = 49;
+
+    pub const fn append_digit_to_code(code: u8, digit: u8) -> u8 {
+        code * 10 + (digit - b'0')
+    }
 }
 
 pub mod utf8 {
