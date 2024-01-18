@@ -6,7 +6,7 @@ use qmushclient_scripting::{Callback, PluginHandler};
 use super::Client;
 use crate::client::state::{Mccp, Phase};
 use crate::client::Log;
-use crate::escape::telnet;
+use crate::escape::{telnet, utf8};
 use crate::mxp;
 use crate::world::{LogFormat, UseMxp};
 
@@ -84,25 +84,18 @@ impl<P: PluginHandler> Client<P> {
             #[cfg(feature = "show-special")]
             self.show_special(&mut old_phase, c)?;
 
-            if self.phase == Phase::Utf8Character && (c & 0x80) == 0 {
-                self.output_bad_utf8();
+            if self.phase == Phase::Utf8Character && !utf8::is_continuation(c) {
+                self.bufoutput.append(&mut self.state.utf8_sequence);
+                self.phase = Phase::Normal;
             }
 
-            if !(self.phase == Phase::Iac && c == telnet::IAC)
-                && self.phase != Phase::Sb
-                && self.phase != Phase::Subnegotiation
-                && self.phase != Phase::SubnegotiationIac
-                && matches!(c, b'\r' | b'\n' | b'\x1b' | b'\xff')
-            {
-                if self.phase == Phase::MxpRoomName
-                    || self.phase == Phase::MxpRoomDescription
-                    || self.phase == Phase::MxpRoomExits
-                    || self.phase == Phase::MxpWelcome
-                {
+            if self.phase.is_phase_reset(c) {
+                if self.phase.is_mxp_mode_change() {
                     self.mxp_mode_change(None);
                 }
                 self.phase = Phase::Normal;
             }
+
             match self.phase {
                 Phase::Esc => {
                     if c == b'[' {
@@ -115,16 +108,6 @@ impl<P: PluginHandler> Client<P> {
 
                 Phase::Utf8Character => {
                     self.state.utf8_sequence.push(c);
-
-                    if let Ok(utf8array) = self.state.utf8_sequence.as_slice().try_into() {
-                        match char::from_u32(u32::from_be_bytes(utf8array)) {
-                            None => self.output_bad_utf8(),
-                            Some(..) => {
-                                self.phase = Phase::Normal;
-                                self.bufoutput.append(&mut self.state.utf8_sequence);
-                            }
-                        }
-                    }
                 }
 
                 Phase::DoingCode
@@ -529,6 +512,10 @@ impl<P: PluginHandler> Client<P> {
                     b'&' if self.api_state.mxp_active.get() && self.state.mxp_mode.is_mxp() => {
                         self.state.mxp_string.clear();
                         self.phase = Phase::MxpEntity;
+                    }
+                    _ if utf8::is_higher_order(c) => {
+                        self.state.utf8_sequence.push(c);
+                        self.phase = Phase::Utf8Character;
                     }
                     _ => self.bufoutput.push(c),
                 },

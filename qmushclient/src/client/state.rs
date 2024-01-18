@@ -3,6 +3,11 @@ use std::time::Instant;
 use enumeration::Enum;
 
 use super::mxp;
+use crate::escape::telnet;
+
+const fn is_phase_reset_character(c: u8) -> bool {
+    matches!(c, b'\r' | b'\n' | telnet::ESC | telnet::IAC)
+}
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Enum)]
 pub enum Phase {
@@ -98,6 +103,28 @@ impl Phase {
                 | Self::MxpRoomExits
                 | Self::MxpWelcome
         )
+    }
+
+    pub const fn is_mxp_mode_change(self) -> bool {
+        matches!(
+            self,
+            Self::MxpRoomName | Self::MxpRoomDescription | Self::MxpRoomExits | Self::MxpWelcome
+        )
+    }
+
+    pub const fn is_phase_reset(self, c: u8) -> bool {
+        is_phase_reset_character(c) && !self.is_iac(c) && !self.is_subnegotiation()
+    }
+
+    const fn is_subnegotiation(self) -> bool {
+        matches!(
+            self,
+            Self::Sb | Self::Subnegotiation | Self::SubnegotiationIac
+        )
+    }
+
+    const fn is_iac(self, c: u8) -> bool {
+        c == telnet::IAC && matches!(self, Self::Iac)
     }
 }
 

@@ -417,10 +417,6 @@ impl<P: PluginHandler> Client<P> {
         }
     }
 
-    fn output_bad_utf8(&mut self) {
-        self.bufoutput.append(&mut self.state.utf8_sequence);
-    }
-
     fn interpret_ansi(&mut self, code: u8) {
         match code {
             ansi::RESET => self.style.reset(),

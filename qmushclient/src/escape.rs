@@ -81,6 +81,7 @@ pub mod telnet {
     pub const TTYPE_SEND: u8 = 0x01;
     pub const ACCEPT: u8 = 0x02;
     pub const REJECT: u8 = 0x03;
+
     pub const fn escape_char(s: u8) -> Option<&'static [u8]> {
         Some(match s {
             self::ESC => b"[ESC]",
@@ -120,6 +121,7 @@ pub mod telnet {
             _ => return None,
         })
     }
+
     pub fn escape(s: &[u8]) -> Vec<u8> {
         let mut escaped = Vec::with_capacity(s.len());
         for &c in s {
@@ -171,4 +173,14 @@ pub mod ansi {
     pub const BG_WHITE: u8 = 47;
     pub const BG_256_COLOR: u8 = 48;
     pub const BG_DEFAULT: u8 = 49;
+}
+
+pub mod utf8 {
+    pub const fn is_higher_order(c: u8) -> bool {
+        (c & 0x80) != 0
+    }
+
+    pub const fn is_continuation(c: u8) -> bool {
+        (c & 0xC0) != 0x80
+    }
 }
