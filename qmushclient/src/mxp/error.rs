@@ -5,6 +5,7 @@ use enumeration::Enum;
 use mlua::{self, Lua, Value};
 use qmushclient_scripting::ScriptArg;
 
+use super::Tag;
 use crate::client::state::Phase;
 
 pub fn is_valid(target: &str) -> bool {
@@ -36,11 +37,52 @@ impl Display for ParseError {
 impl std::error::Error for ParseError {}
 
 impl ParseError {
-    pub fn new(target: &str, error: Error) -> Self {
+    #[allow(private_bounds)]
+    pub fn new<T: ParseErrorTarget>(target: T, error: Error) -> Self {
         Self {
-            target: target.to_owned(),
+            target: target.into_target(),
             error,
         }
+    }
+}
+
+trait ParseErrorTarget {
+    fn into_target(self) -> String;
+}
+
+impl ParseErrorTarget for String {
+    fn into_target(self) -> String {
+        self
+    }
+}
+
+impl ParseErrorTarget for &String {
+    fn into_target(self) -> String {
+        self.clone()
+    }
+}
+
+impl ParseErrorTarget for &str {
+    fn into_target(self) -> String {
+        self.to_owned()
+    }
+}
+
+impl ParseErrorTarget for &[u8] {
+    fn into_target(self) -> String {
+        String::from_utf8_lossy(self).into_owned()
+    }
+}
+
+impl ParseErrorTarget for &Vec<u8> {
+    fn into_target(self) -> String {
+        String::from_utf8_lossy(self).into_owned()
+    }
+}
+
+impl ParseErrorTarget for &Tag {
+    fn into_target(self) -> String {
+        self.name.clone()
     }
 }
 

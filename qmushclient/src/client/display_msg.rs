@@ -379,7 +379,7 @@ impl<P: PluginHandler> Client<P> {
                     b'<' => {
                         self.state.mxp_string.push(c);
                         self.handle_mxp_error(mxp::ParseError::new(
-                            &String::from_utf8_lossy(&self.state.mxp_string),
+                            &self.state.mxp_string,
                             mxp::Error::UnterminatedElement,
                         ));
                         self.state.mxp_string.clear();
@@ -423,7 +423,7 @@ impl<P: PluginHandler> Client<P> {
                     b'&' => {
                         self.state.mxp_string.push(c);
                         self.handle_mxp_error(mxp::ParseError::new(
-                            &String::from_utf8_lossy(&self.state.mxp_string),
+                            &self.state.mxp_string,
                             mxp::Error::UnterminatedEntity,
                         ));
                         self.state.mxp_string.clear();
@@ -431,7 +431,7 @@ impl<P: PluginHandler> Client<P> {
                     b'<' => {
                         self.state.mxp_string.push(c);
                         self.handle_mxp_error(mxp::ParseError::new(
-                            &String::from_utf8_lossy(&self.state.mxp_string),
+                            &self.state.mxp_string,
                             mxp::Error::UnterminatedEntity,
                         ));
                         self.state.mxp_string.clear();

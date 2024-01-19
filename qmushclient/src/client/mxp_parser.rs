@@ -144,7 +144,7 @@ impl<P: PluginHandler> Client<P> {
             }
             if !secure && tag.secure {
                 return Err(mxp::ParseError::new(
-                    &tag.name,
+                    tag,
                     mxp::Error::OpenTagBlockedBySecureTag,
                 ));
             }
