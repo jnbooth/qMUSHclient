@@ -249,6 +249,10 @@ impl WorldTab {
         }
         self.cursor.insert_text_colored(text, Some(fg.into()), None);
         self.cursor.insert_block();
+        unsafe {
+            let scrollbar = self.ui.output.vertical_scroll_bar();
+            scrollbar.set_value(scrollbar.maximum());
+        }
     }
 
     #[slot(SlotOfSocketError)]

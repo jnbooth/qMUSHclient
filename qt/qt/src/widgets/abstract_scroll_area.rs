@@ -14,6 +14,6 @@ impl AbstractScrollAreaBinding {
     }
 
     pub fn vertical_scroll_bar(&self) -> QScrollBar {
-        QScrollBar::get_horizontal(&self.inner)
+        QScrollBar::get_vertical(&self.inner)
     }
 }
