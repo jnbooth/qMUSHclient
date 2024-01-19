@@ -69,6 +69,17 @@ impl<P: PluginHandler> Client<P> {
         }
     }
 
+    fn take_mxp_string(&mut self) -> Result<String, ParseError> {
+        let bytes = mem::take(&mut self.state.mxp_string);
+        String::from_utf8(bytes).map_err(|e| {
+            let bytes_debug = format!("{:?}", e.as_bytes());
+            ParseError::Mxp(mxp::ParseError::new(
+                bytes_debug,
+                mxp::Error::MalformedBytes,
+            ))
+        })
+    }
+
     fn mxp_restore_mode(&mut self) {
         if self.state.mxp_mode == mxp::Mode::SECURE_ONCE {
             self.state.mxp_mode = self.state.mxp_mode_previous;
@@ -246,15 +257,12 @@ impl<P: PluginHandler> Client<P> {
             *self.state.mxp_string.first().ok_or_else(|| {
                 mxp::ParseError::new("collected element", mxp::Error::EmptyElement)
             })?;
-        let bytestring = mem::take(&mut self.state.mxp_string);
-        let text = str::from_utf8(&bytestring).map_err(|_| {
-            mxp::ParseError::new(&format!("{:?}", bytestring), mxp::Error::MalformedBytes)
-        })?;
+        let text = self.take_mxp_string()?;
 
         match tag {
             b'!' => self.mxp_definition(&text[1..]).map_err(Into::into),
             b'/' => self.mxp_endtag(&text[1..]).map_err(Into::into),
-            _ => self.mxp_start_tag(text),
+            _ => self.mxp_start_tag(&text),
         }
     }
 
@@ -351,12 +359,10 @@ impl<P: PluginHandler> Client<P> {
         use mxp::{Action, Atom, InList, Keyword, Link, SendTo};
         const SPECIAL_LINK: &str = "&text;";
         let world = &*self.world;
-        let get_color = |name: &str| {
-            if world.ignore_mxp_color_changes {
-                None
-            } else {
-                Colors::named(name)
-            }
+        let get_color = if world.ignore_mxp_color_changes {
+            |_name: &str| None
+        } else {
+            Colors::named
         };
         if action == Action::Hyperlink && args.get("xch_cmd").is_some() {
             self.api_state.pueblo_active.set(true);
@@ -378,15 +384,11 @@ impl<P: PluginHandler> Client<P> {
             }
             Action::Color => {
                 let mut scanner = args.scan();
-                if let Some(fg) = scanner.next_or(&["fore"]) {
-                    if let Some(fg) = get_color(fg) {
-                        span.foreground = Some(fg.into_owned());
-                    }
+                if let Some(fg) = scanner.next_or(&["fore"]).and_then(get_color) {
+                    span.foreground = Some(fg.into_owned());
                 }
-                if let Some(bg) = scanner.next_or(&["back"]) {
-                    if let Some(bg) = get_color(bg) {
-                        span.background = Some(bg.into_owned());
-                    }
+                if let Some(bg) = scanner.next_or(&["back"]).and_then(get_color) {
+                    span.background = Some(bg.into_owned());
                 }
             }
             Action::High => {
@@ -413,9 +415,9 @@ impl<P: PluginHandler> Client<P> {
                 if action.contains(SPECIAL_LINK) {
                     if let Some(tag) = self.state.mxp_active_tags.last_mut() {
                         let template = if args.has_keyword(Keyword::Prompt) {
-                            ["echo:", action].concat()
+                            format!("echo:{}", action)
                         } else {
-                            ["send:", action].concat()
+                            format!("send:{}", action)
                         };
                         tag.anchor_template = Some(template);
                     }
@@ -454,10 +456,8 @@ impl<P: PluginHandler> Client<P> {
                         }
                     }
                 }
-                if let Some(bg) = scanner.next_or(&["back", "bgcolor"]) {
-                    if let Some(bg) = get_color(bg) {
-                        span.background = Some(bg.into_owned());
-                    }
+                if let Some(bg) = scanner.next_or(&["back", "bgcolor"]).and_then(get_color) {
+                    span.background = Some(bg.into_owned());
                 }
             }
             Action::Version => {
@@ -590,13 +590,10 @@ impl<P: PluginHandler> Client<P> {
     }
 
     pub(super) fn mxp_collected_entity(&mut self) -> Result<(), ParseError> {
-        let bytestring = mem::take(&mut self.state.mxp_string);
-        let text = str::from_utf8(&bytestring).map_err(|_| {
-            mxp::ParseError::new(&format!("{:?}", bytestring), mxp::Error::MalformedBytes)
-        })?;
-        let name = text.trim();
+        let mxp_string = self.take_mxp_string()?;
+        let name = mxp_string.trim();
         mxp::validate(name, mxp::Error::InvalidEntityName)?;
-        if let Some(entity) = self.state.mxp_entities.get(text)? {
+        if let Some(entity) = self.state.mxp_entities.get(name)? {
             let text = entity.as_bytes().to_vec();
             self.api_state.mxp_active.set(false);
             self.display_msg(text)?;
