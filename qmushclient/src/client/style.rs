@@ -109,30 +109,33 @@ impl Style {
     }
 
     pub fn add_flag(&mut self, flag: TextStyle) {
-        if !self.ansi_flags.contains(flag) {
-            self.ansi_flags.insert(flag);
-            match flag {
-                TextStyle::Underline => self.format.set_underline(true),
-                TextStyle::Italic => self.format.set_italic(true),
-                TextStyle::Strikeout => self.format.set_strikeout(true),
-                TextStyle::Inverse => invert(&self.format),
-                TextStyle::Bold => self.set_ansi_bold(true),
-            }
+        if self.ansi_flags.contains(flag) {
+            return;
+        }
+        self.ansi_flags.insert(flag);
+        match flag {
+            TextStyle::Underline => self.format.set_underline(true),
+            TextStyle::Italic => self.format.set_italic(true),
+            TextStyle::Strikeout => self.format.set_strikeout(true),
+            TextStyle::Inverse => invert(&self.format),
+            TextStyle::Bold => self.set_ansi_bold(true),
         }
     }
 
     pub fn remove_flag(&mut self, flag: TextStyle) {
-        if self.ansi_flags.contains(flag) {
-            self.ansi_flags.remove(flag);
-            if !self.span_flags.contains(flag) {
-                match flag {
-                    TextStyle::Underline => self.format.set_underline(false),
-                    TextStyle::Italic => self.format.set_italic(false),
-                    TextStyle::Strikeout => self.format.set_strikeout(false),
-                    TextStyle::Inverse => invert(&self.format),
-                    TextStyle::Bold => self.set_ansi_bold(false),
-                }
-            }
+        if !self.ansi_flags.contains(flag) {
+            return;
+        }
+        self.ansi_flags.remove(flag);
+        if self.span_flags.contains(flag) {
+            return;
+        }
+        match flag {
+            TextStyle::Underline => self.format.set_underline(false),
+            TextStyle::Italic => self.format.set_italic(false),
+            TextStyle::Strikeout => self.format.set_strikeout(false),
+            TextStyle::Inverse => invert(&self.format),
+            TextStyle::Bold => self.set_ansi_bold(false),
         }
     }
 
@@ -161,39 +164,35 @@ impl Style {
     }
 
     fn set_foreground_raw(&mut self, color: WorldColor) {
-        if self.foreground != color {
-            if color != WorldColor::WHITE {
-                self.format.set_foreground_color(self.world.color(&color));
-            } else if let Some(newcolor) = self
-                .spans
-                .iter()
-                .rev()
-                .find_map(|span| span.foreground.as_ref())
-            {
-                self.format.set_foreground_color(newcolor);
-            } else {
-                self.format.clear_foreground();
-            };
-            self.foreground = color;
-        }
+        if color != WorldColor::WHITE {
+            self.format.set_foreground_color(self.world.color(&color));
+        } else if let Some(newcolor) = self
+            .spans
+            .iter()
+            .rev()
+            .find_map(|span| span.foreground.as_ref())
+        {
+            self.format.set_foreground_color(newcolor);
+        } else {
+            self.format.clear_foreground();
+        };
+        self.foreground = color;
     }
 
     fn set_background_raw(&mut self, color: WorldColor) {
-        if self.background != color {
-            if color != WorldColor::BLACK {
-                self.format.set_background_color(self.world.color(&color));
-            } else if let Some(newcolor) = self
-                .spans
-                .iter()
-                .rev()
-                .find_map(|span| span.background.as_ref())
-            {
-                self.format.set_background_color(newcolor);
-            } else {
-                self.format.clear_background();
-            };
-            self.background = color;
-        }
+        if color != WorldColor::BLACK {
+            self.format.set_background_color(self.world.color(&color));
+        } else if let Some(newcolor) = self
+            .spans
+            .iter()
+            .rev()
+            .find_map(|span| span.background.as_ref())
+        {
+            self.format.set_background_color(newcolor);
+        } else {
+            self.format.clear_background();
+        };
+        self.background = color;
     }
 
     pub fn set_foreground(&mut self, color: WorldColor) {
@@ -287,8 +286,17 @@ impl Style {
         if i >= self.len() {
             return;
         }
-        let recalculate_style = self.spans[i..].iter().any(|span| span.action.is_some());
+        let spans = self.spans[i..].iter();
+        let recalculate_fg = spans.clone().any(|span| span.foreground.is_some());
+        let recalculate_bg = spans.clone().any(|span| span.background.is_some());
+        let recalculate_style = spans.clone().any(|span| span.action.is_some());
         self.spans.truncate(i);
+        if recalculate_fg {
+            self.set_foreground_raw(WorldColor::WHITE);
+        }
+        if recalculate_bg {
+            self.set_background_raw(WorldColor::BLACK);
+        }
         if !recalculate_style {
             return;
         }
