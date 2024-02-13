@@ -59,6 +59,25 @@ pub enum Keyword {
     IsMap,
 }
 
+impl Keyword {
+    fn parse(s: &str) -> Option<Self> {
+        match s.to_ascii_lowercase().as_str() {
+            "delete" => Some(Self::Delete),
+            "open" => Some(Self::Open),
+            "empty" => Some(Self::Empty),
+            "prompt" => Some(Self::Prompt),
+            "off" => Some(Self::Off),
+            "defaultopen" => Some(Self::DefaultOpen),
+            "defaultsecure" => Some(Self::DefaultSecure),
+            "defaultlocked" => Some(Self::DefaultLocked),
+            "usenewlines" => Some(Self::UseNewlines),
+            "ignorenewlines" => Some(Self::IgnoreNewlines),
+            "ismap" => Some(Self::IsMap),
+            _ => None,
+        }
+    }
+}
+
 #[derive(Clone, Debug)]
 pub struct Scan<'a> {
     inner: iter::Map<slice::Iter<'a, Argument>, fn(&Argument) -> &Arg>,
@@ -189,7 +208,7 @@ impl Arguments {
                     .next()
                     .ok_or_else(|| ParseError::new(name, Error::NoArgument))?;
                 self.named.insert(name.to_lowercase(), val.to_owned());
-            } else if let Some(keyword) = Keyword::parse_ci(name) {
+            } else if let Some(keyword) = Keyword::parse(name) {
                 self.keywords.insert(keyword);
             } else {
                 self.positional.push(name.to_owned());

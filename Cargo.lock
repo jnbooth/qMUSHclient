@@ -200,13 +200,13 @@ checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
 
 [[package]]
 name = "enumeration"
-version = "0.1.0"
-source = "git+https://github.com/jnbooth/enumeration#bfd544027d39be7572572c822a9b80f46df6938f"
+version = "0.4.2"
+source = "git+https://github.com/jnbooth/enumeration#655cf923d346b47ffe69baaa88a07dcfee1f2ee9"
 
 [[package]]
 name = "enumeration_derive"
-version = "0.1.0"
-source = "git+https://github.com/jnbooth/enumeration#bfd544027d39be7572572c822a9b80f46df6938f"
+version = "0.4.2"
+source = "git+https://github.com/jnbooth/enumeration#655cf923d346b47ffe69baaa88a07dcfee1f2ee9"
 dependencies = [
  "proc-macro2",
  "quote",

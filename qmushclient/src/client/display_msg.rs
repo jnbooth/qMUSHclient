@@ -36,7 +36,7 @@ impl<P: PluginHandler> Client<P> {
         if self.phase != *old_phase {
             self.flush()?;
             self.cursor.insert_text_colored(
-                self.phase.to_str(),
+                format!("{:?}", self.phase),
                 Some(self.world.color(&WorldColor::BRIGHT_BLACK)),
                 None,
             );

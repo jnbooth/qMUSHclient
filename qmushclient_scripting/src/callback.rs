@@ -1,5 +1,3 @@
-use std::str;
-
 use enumeration::Enum;
 use mlua::{Lua, Value};
 
@@ -73,6 +71,6 @@ pub enum Callback {
 
 impl ScriptArg for Callback {
     fn to_arg(self, lua: &Lua) -> mlua::Result<Value> {
-        self.to_str().to_arg(lua)
+        format!("{:?}", self).to_arg(lua)
     }
 }

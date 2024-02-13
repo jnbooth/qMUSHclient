@@ -52,7 +52,12 @@ impl Plugin {
         let globals = engine.globals();
 
         let callbacks = Callback::enumerate(..)
-            .filter(|cb| matches!(globals.raw_get(cb.to_str()), Ok(Value::Function(..))))
+            .filter(|cb| {
+                matches!(
+                    globals.raw_get(format!("{:?}", cb)),
+                    Ok(Value::Function(..))
+                )
+            })
             .collect();
 
         mem::drop(globals);
@@ -121,6 +126,6 @@ impl Plugin {
         A: ScriptArgs,
         R: FromLuaMulti<'lua>,
     {
-        self.invoke(cb.to_str(), args)
+        self.invoke(&format!("{:?}", cb), args)
     }
 }
