@@ -12,8 +12,6 @@ extern crate tr;
 #[macro_use]
 extern crate tr_derive;
 
-extern crate libsqlite3_sys;
-
 #[cfg(debug_assertions)]
 #[macro_use]
 mod rgbtrace;

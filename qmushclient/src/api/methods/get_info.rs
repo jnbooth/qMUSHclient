@@ -4,9 +4,8 @@ use std::os::raw::c_int;
 use std::str;
 use std::time::SystemTime;
 
-use libsqlite3_sys::{SQLITE_VERSION, SQLITE_VERSION_NUMBER};
 use mlua::{Lua, Result, Value};
-use qmushclient_scripting::{Callback, ScriptArg};
+use qmushclient_scripting::{Callback, ScriptArg, SQLITE_VERSION, SQLITE_VERSION_NUMBER};
 use qt::core::{GlobalColor, KeyboardModifier, MouseButton};
 use qt::gui::{QColor, QFont, QGuiApplication, StyleHint, SystemFont};
 use qt::network::SocketState;

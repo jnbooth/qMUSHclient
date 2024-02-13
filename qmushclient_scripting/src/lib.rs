@@ -9,8 +9,8 @@ extern crate tr;
 #[macro_use]
 extern crate tr_derive;
 
-extern crate luajit_src;
-extern crate pcre2_sys;
+extern crate lua_modules_sys;
+pub use lua_modules_sys::{SQLITE_VERSION, SQLITE_VERSION_NUMBER};
 
 #[macro_use]
 mod in_place;

@@ -447,6 +447,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "lua-modules-sys"
+version = "0.0.0"
+dependencies = [
+ "cc",
+ "libsqlite3-sys",
+ "luajit-src",
+ "mlua",
+ "pcre2-sys",
+]
+
+[[package]]
 name = "lua-src"
 version = "546.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -607,7 +618,6 @@ dependencies = [
  "flate2",
  "gethostname",
  "itertools 0.12.0",
- "libsqlite3-sys",
  "mlua",
  "once_cell",
  "qmushclient_derive",
@@ -640,16 +650,13 @@ dependencies = [
 name = "qmushclient_scripting"
 version = "0.0.0"
 dependencies = [
- "cc",
  "chrono",
  "cpp_core",
  "enumeration",
  "enumeration_derive",
  "fancy-regex",
- "libsqlite3-sys",
- "luajit-src",
+ "lua-modules-sys",
  "mlua",
- "pcre2-sys",
  "qt",
  "quick-xml",
  "serde",
